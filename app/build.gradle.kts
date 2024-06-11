@@ -5,6 +5,7 @@ plugins {
 
     id("kotlin-kapt")
     id("com.google.dagger.hilt.android")
+    id ("kotlin-parcelize")
 }
 
 android {
@@ -67,6 +68,7 @@ dependencies {
 
     implementation("com.google.dagger:hilt-android:2.46")
     implementation("androidx.annotation:annotation:1.7.1")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.1")
     kapt("com.google.dagger:hilt-android-compiler:2.46")
 
     implementation(libs.androidx.core.ktx)
