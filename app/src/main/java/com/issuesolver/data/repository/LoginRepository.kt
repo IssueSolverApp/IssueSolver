@@ -1,9 +1,11 @@
 package com.issuesolver.data.repository
 
-import com.issuesolver.data.network.LoginService
+import com.issuesolver.data.network.auth.LoginService
 import com.issuesolver.domain.entity.mapper.LoginRequest
 import com.issuesolver.domain.entity.mapper.LoginResponse
 import javax.inject.Inject
+
+
 
 interface LoginRepositoryInterface {
     suspend fun login(request: LoginRequest): Result<LoginResponse>
