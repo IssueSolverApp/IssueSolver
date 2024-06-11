@@ -1,8 +1,8 @@
-package com.issuesolver.data.di
+package com.issuesolver.data.network.di
 
 import android.util.Log
 import com.google.gson.Gson
-import com.issuesolver.data.network.ApiService
+import com.issuesolver.data.network.auth.LoginService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -39,8 +39,8 @@ class ApiModule {
 
     @Provides
     @Singleton
-    fun provideApiService(retrofit: Retrofit): ApiService {
-        return retrofit.create(ApiService::class.java)
+    fun provideApiService(retrofit: Retrofit): LoginService {
+        return retrofit.create(LoginService::class.java)
     }
 
     private val loggingInterceptor = HttpLoggingInterceptor { message -> Log.d("OkHttp", message) }.apply {
