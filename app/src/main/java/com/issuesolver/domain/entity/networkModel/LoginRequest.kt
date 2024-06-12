@@ -1,4 +1,4 @@
-package com.issuesolver.domain.entity.mapper
+package com.issuesolver.domain.entity.networkModel
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
