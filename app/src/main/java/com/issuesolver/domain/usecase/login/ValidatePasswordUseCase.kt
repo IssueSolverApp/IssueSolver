@@ -1,6 +1,6 @@
 package com.issuesolver.domain.usecase.login
 
-class ValidatePassword {
+class ValidatePasswordUseCase {
     fun execute(password: String): ValidationResult {
         if(password.length < 8) {
             return ValidationResult(
