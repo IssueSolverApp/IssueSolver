@@ -1,6 +1,6 @@
 package com.issuesolver.presentation.login.daxil_ol_page
 
-data class daxil_ol_page_state(
+data class DaxilOlPageState(
     val email: String = "",
     val emailError: String? = null,
     val password: String = "",

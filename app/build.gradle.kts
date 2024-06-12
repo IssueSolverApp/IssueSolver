@@ -71,6 +71,10 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime.compose.android)
     kapt("com.google.dagger:hilt-android-compiler:2.46")
 
+
+    implementation ("androidx.compose.ui:ui-text-google-fonts:1.6.7")
+
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)

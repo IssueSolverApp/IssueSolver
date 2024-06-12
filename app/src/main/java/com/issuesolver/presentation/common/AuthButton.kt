@@ -1,67 +1,66 @@
 package com.issuesolver.presentation.common
 
-import android.graphics.Color
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.semantics.Role.Companion.Button
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.compose.ui.tooling.preview.Preview
+import com.issuesolver.R
 
 @Composable
 fun AuthButton(
     text: String,
-    backgroundColor: Color,
-    contentColor: Color,
-    enabled:Boolean = true,
-    onButtonClick: () -> Unit,
-    isLoading: Boolean,
-    modifier: Modifier = Modifier
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    isLoading: Boolean = false
 ) {
+    val buttonColor=Color(0xFF2981FF)
     Button(
-        modifier = modifier,
-        onClick = {
-            onButtonClick()
-        },
-        shape = RoundedCornerShape(25.dp),
+        onClick = { onClick() },
+        modifier = modifier
+            .padding(horizontal = 24.dp, vertical = 16.dp)
+            .fillMaxWidth()
+            .height(55.dp),
+        shape = RoundedCornerShape(50.dp),
+        enabled = enabled,
         colors = ButtonDefaults.buttonColors(
-            backgroundColor = backgroundColor,
-            contentColor = contentColor,
-            disabledBackgroundColor = backgroundColor,
-            disabledContentColor = contentColor
-        ),
-        enabled = enabled
-    ){
-        if(isLoading){
-            CircularProgressIndicator(
-                color = contentColor,
-                modifier = Modifier.size(20.dp)
-            )
-        }else{
-            Text(
-                text = text,
-                style = MaterialTheme.typography.body1
-            )
-        }
+            containerColor = buttonColor
+        )
+    ) {
+        val PlusJakartaSans= FontFamily(
+            Font(R.font.plus_jakarta_sans_regular, FontWeight.Normal),
+            Font(R.font.plus_jakarta_sans_medium, FontWeight.Medium),
+            Font(R.font.plus_jakarta_sans_bold, FontWeight.Bold)
+        )
+        Text(
+            text = text,
+            fontFamily = PlusJakartaSans,
+            fontWeight = FontWeight.W500,
+            fontSize = 18.sp,
+            color = Color.White,
+            modifier = Modifier.align(Alignment.CenterVertically)
+        )
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun AuthButtonPreview() {
+fun PreviewAuthButton() {
     AuthButton(
-        text = "Login",
-        backgroundColor = orange,
-        contentColor = white,
-        onButtonClick = { /TODO/ },
-        isLoading = true,
-        modifier = Modifier
-            .fillMaxWidth()
-       )
+        text = "Təsdiq kodu göndər",
+        onClick = {}
+    )
 }

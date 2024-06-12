@@ -14,6 +14,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.issuesolver.presentation.common.AuthButton
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -93,12 +94,11 @@ fun EmailVerificationPage() {
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Bottom
             ) {
-                Button(
+                AuthButton(
+                    text = "Təsdiq kodu göndər",
                     onClick = {},
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Text("Təsdiq kodu göndər")
-                }
+                    modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp)
+                )
             }
         }
 
