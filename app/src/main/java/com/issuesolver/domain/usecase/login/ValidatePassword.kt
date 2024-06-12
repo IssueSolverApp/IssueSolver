@@ -2,21 +2,23 @@ package com.issuesolver.domain.usecase.login
 
 class ValidatePassword {
     fun execute(password: String): ValidationResult {
-        if(password.length < 7) {
+        if(password.length < 8) {
             return ValidationResult(
                 successful = false,
-                errorMessage = "Şifrə ən azı 6 simvoldan ibarət olmalıdır."
+                errorMessage = "Şifrə ən azı 8 simvoldan ibarət olmalıdır"
             )
         }
 
 
-        val apiError = null
-        if((apiError != null && apiError.status == 400 && apiError.message == "user not found") {
+        if ((!password.any { it.isUpperCase() })&& (!password.any { it.isLowerCase() })&&(!password.any { it.isDigit() }) ) {
             return ValidationResult(
                 successful = false,
-                errorMessage = "E-poçt və ya şifrə yanlışdır."
+                errorMessage = "Şifrədə ən azı bir böyük latın hərfi, bir kiçik latın hərfi və rəqəm istifadə olunmalıdır"
             )
         }
+
+
+
         return ValidationResult(
             successful = true
         )

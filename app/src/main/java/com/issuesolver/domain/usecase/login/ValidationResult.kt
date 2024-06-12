@@ -5,3 +5,4 @@ data class ValidationResult(
     val errorMessage: String? = null
 
 )
+

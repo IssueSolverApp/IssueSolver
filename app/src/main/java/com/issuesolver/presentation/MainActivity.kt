@@ -4,16 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.issuesolver.data.network.ApiService
-import com.issuesolver.data.network.LoginService
-import com.issuesolver.presentation.login.daxil_ol_page.LoginPage
+import com.issuesolver.presentation.login.daxil_ol_verification_code.VerificationCodePage
 import com.issuesolver.ui.theme.IssueSolverTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -24,7 +15,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             IssueSolverTheme {
-               LoginPage()
+               VerificationCodePage()
             }
         }
     }
