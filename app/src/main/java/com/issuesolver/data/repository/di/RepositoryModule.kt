@@ -4,6 +4,8 @@ import com.issuesolver.data.repository.LoginRepositoryImpl
 import com.issuesolver.data.repository.LoginRepositoryInterface
 import com.issuesolver.data.repository.RegisterRepositoryImpl
 import com.issuesolver.data.repository.RegisterRepositoryInterface
+import com.issuesolver.data.repository.ResendOtpRepositoryImpl
+import com.issuesolver.data.repository.ResendOtpRepositoryInterface
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -22,6 +24,10 @@ abstract class RepositoryModule {
     @Binds
     @Singleton
     abstract fun provideRegisterRepository(repository: RegisterRepositoryImpl): RegisterRepositoryInterface
+
+    @Binds
+    @Singleton
+    abstract fun provideResendOtpRepository(repository: ResendOtpRepositoryImpl): ResendOtpRepositoryInterface
 
 
 }

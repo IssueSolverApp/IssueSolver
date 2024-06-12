@@ -1,6 +1,8 @@
 package com.issuesolver.domain.useCase
 
 import com.issuesolver.data.repository.RegisterRepositoryInterface
+import com.issuesolver.data.repository.ResendOtpRepositoryImpl
+import com.issuesolver.data.repository.ResendOtpRepositoryInterface
 import com.issuesolver.domain.entity.networkModel.RegisterRequestModel
 import dagger.Module
 import dagger.Provides
@@ -34,5 +36,10 @@ class UseCaseModule {
     fun provideRegisterUseCase(registerRepository: RegisterRepositoryInterface) =
         RegisterUseCase(registerRepository)
 
+
+    @Provides
+    @Singleton
+    fun provideResendOtpUseCase(resendOtpRepository: ResendOtpRepositoryInterface) =
+        ResendOtpUseCase(resendOtpRepository)
 
 }

@@ -6,6 +6,7 @@ import com.issuesolver.domain.entity.networkModel.RegisterRequestModel
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.POST
+import retrofit2.http.Query
 
 
 interface LoginService {
@@ -17,8 +18,8 @@ interface LoginService {
     suspend fun register(@Body request: RegisterRequestModel): Response<Any>
 
 
-//    @POST("/api/v1/auth/resend-otp")
-//    suspend fun resendOtp()
+    @POST("/api/v1/auth/resend-otp")
+    suspend fun resendOtp(@Query("email") email: String?):Response<Any>
 
 }
 
