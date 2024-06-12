@@ -15,6 +15,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.issuesolver.presentation.common.AuthButton
 
 @OptIn( ExperimentalMaterial3Api::class)
 @Composable
@@ -22,6 +23,7 @@ fun LoginPage() {
     var email by remember { mutableStateOf("") }
     var emailError by remember { mutableStateOf(false) }
     var password by remember { mutableStateOf("") }
+
 
 
     Scaffold { padding ->
@@ -40,15 +42,18 @@ fun LoginPage() {
                         style = MaterialTheme.typography.headlineMedium,
                         fontSize = 28.sp,
                         fontWeight = FontWeight.SemiBold,
-                        textAlign = TextAlign.Start
+                        textAlign = TextAlign.Start,
+                        color = Color.Black,
 
-                    )
+
+                        )
 
                     Text(
                         "Zəhmət olmasa, giriş üçün məlumatlarınızı daxil edin.",
                         style = MaterialTheme.typography.bodySmall,
                         fontSize = 15.sp,
                         textAlign = TextAlign.Start,
+                        color = Color(0xFF9D9D9D)
 
                     )
                 }
@@ -80,9 +85,10 @@ fun LoginPage() {
                             emailError = false
                         },
                         isError = emailError,
-                        placeholder = { ("E-poçtunuzu daxil edin") },
+                        placeholder = { Text("E-poçtunuzu daxil edin",
+                            color = Color(0xFF9D9D9D)) },
                         singleLine = true,
-                        modifier = Modifier.fillMaxWidth(),
+                        modifier =  Modifier.fillMaxWidth(),
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
                       colors = TextFieldDefaults.textFieldColors(
                           focusedIndicatorColor = Color.Transparent,
@@ -101,7 +107,8 @@ fun LoginPage() {
                         shape = RoundedCornerShape(12.dp),
                         value = password,
                         onValueChange = { password = it },
-                        placeholder = { Text("Şifrənizi daxil edin") },
+                        placeholder = { Text("Şifrənizi daxil edin",
+                            color = Color(0xFF9D9D9D)) },
                         singleLine = true,
                         modifier = Modifier.fillMaxWidth(),
                         colors = TextFieldDefaults.textFieldColors(
@@ -133,20 +140,20 @@ fun LoginPage() {
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Bottom
             ) {
-                Button(
+                AuthButton(
+                    text = "Daxil ol",
                     onClick = {},
-                    modifier = Modifier.fillMaxWidth()
-
-                ) {
-                    Text("Daxil Ol")
-                }
+                    modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp)
+                )
 
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center,
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    Text("Hesabınız yoxdur?")
+                    Text("Hesabınız yoxdur?",
+                        color = Color(0xFF9D9D9D)
+                          )
                     TextButton(onClick = { }) {
                         Text("Qeydiyyatdan keç", color = MaterialTheme.colorScheme.primary)
                     }
