@@ -55,8 +55,9 @@ fun PasswordChangePage() {
                     )}
             Spacer(modifier = Modifier.height(8.dp))
 
-            Divider(
-                color = Color.Gray, thickness = 0.5.dp,
+                Divider(
+                    thickness = 0.5.dp,
+                    color=Color(0xFF2981FF)
 
                 )
             Spacer(modifier = Modifier.height(8.dp))

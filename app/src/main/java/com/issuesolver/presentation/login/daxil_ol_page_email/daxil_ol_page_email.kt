@@ -57,9 +57,10 @@ fun EmailVerificationPage() {
                 Spacer(modifier = Modifier.height(8.dp))
 
                 Divider(
-                     thickness = 0.5.dp,
+                    thickness = 0.5.dp,
+                    color=Color(0xFF2981FF)
 
-                    )
+                )
                 Spacer(modifier = Modifier.height(8.dp))
 
 
