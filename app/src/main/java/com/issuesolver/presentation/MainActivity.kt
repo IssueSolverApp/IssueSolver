@@ -9,6 +9,7 @@ import com.issuesolver.presentation.login.daxil_ol_page_email.EmailVerificationP
 import com.issuesolver.presentation.login.daxil_ol_verification_code.VerificationCodePage
 import com.issuesolver.ui.theme.IssueSolverTheme
 import dagger.hilt.android.AndroidEntryPoint
+import kotlin.text.Typography.dagger
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -17,7 +18,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             IssueSolverTheme {
-                LoginPage()
+                VerificationCodePage()
             }
         }
     }

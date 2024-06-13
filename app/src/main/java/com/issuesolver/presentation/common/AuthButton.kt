@@ -12,7 +12,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -31,7 +30,6 @@ fun AuthButton(
     Button(
         onClick = { onClick() },
         modifier = modifier
-            .padding(horizontal = 24.dp, vertical = 16.dp)
             .fillMaxWidth()
             .height(55.dp),
         shape = RoundedCornerShape(50.dp),
@@ -40,14 +38,8 @@ fun AuthButton(
             containerColor = buttonColor
         )
     ) {
-        val PlusJakartaSans= FontFamily(
-            Font(R.font.plus_jakarta_sans_regular, FontWeight.Normal),
-            Font(R.font.plus_jakarta_sans_medium, FontWeight.Medium),
-            Font(R.font.plus_jakarta_sans_bold, FontWeight.Bold)
-        )
         Text(
             text = text,
-            fontFamily = PlusJakartaSans,
             fontWeight = FontWeight.W500,
             fontSize = 18.sp,
             color = Color.White,
@@ -55,6 +47,7 @@ fun AuthButton(
         )
     }
 }
+
 
 @Preview(showBackground = true)
 @Composable

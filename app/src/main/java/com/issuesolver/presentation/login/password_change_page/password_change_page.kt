@@ -14,6 +14,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.issuesolver.presentation.common.AuthButton
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -32,17 +33,24 @@ fun PasswordChangePage() {
 
             Column() {
                 Column(
+                    Modifier.padding(bottom = 20.dp)
+
                 ) {
             Text("Yeni şifrə",
                 style = MaterialTheme.typography.headlineMedium,
                 fontSize = 28.sp,
                 fontWeight = FontWeight.SemiBold,
-                textAlign = TextAlign.Start
+                textAlign = TextAlign.Start,
+                color = Color.Black,
 
             )
                 Text("Daxil olmaq üçün yeni şifrə təyin edin.", style = MaterialTheme.typography.bodySmall,
                     fontSize = 15.sp,
                     textAlign = TextAlign.Start,
+                    color = Color(0xFF9D9D9D),
+                    modifier = Modifier
+                        .padding(top = 10.dp),
+
 
                     )}
             Spacer(modifier = Modifier.height(8.dp))
@@ -53,7 +61,10 @@ fun PasswordChangePage() {
                 )
             Spacer(modifier = Modifier.height(8.dp))
 
-            Column() {
+            Column(
+                Modifier.padding(top = 20.dp)
+
+            ) {
                 Text(
                     "Şifrə",
                     style = MaterialTheme.typography.bodySmall,
@@ -68,13 +79,25 @@ fun PasswordChangePage() {
                         passwordError = false
                     },
 
-                    placeholder = {Text ("Şifrənizi təyin edin") },
+                    placeholder = {
+                        Text (
+                            "Şifrənizi təyin edin",
+                            color = Color(0xFF9D9D9D)
+                    )
+                                  },
                     singleLine = true,
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth()
+                        .padding(top = 10.dp),
+
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
                     colors = TextFieldDefaults.textFieldColors(
-                        focusedIndicatorColor = Color.Transparent,
-                        unfocusedIndicatorColor = Color.Transparent
+                        containerColor = Color.White, // Background color of the TextField
+                        focusedIndicatorColor = Color.White, // Underline color when focused
+                        unfocusedIndicatorColor = Color.White, // Underline color when unfocused
+                        disabledTextColor = Color.Gray, // Text color when TextField is disabled
+                        errorIndicatorColor = Color.Red, // Underline color when in error state
+                        errorCursorColor = Color.Red, // Cursor color when in error state
+                        cursorColor = Color.White // Cursor color
                     )
                 )
 
@@ -89,12 +112,18 @@ fun PasswordChangePage() {
                     shape = RoundedCornerShape(12.dp),
                     value = confirmPassword,
                     onValueChange = { confirmPassword = it },
-                    placeholder = { Text("Şifrənizi təsdiq edin") },
+                    placeholder = { Text("Şifrənizi təsdiq edin",
+                        color = Color(0xFF9D9D9D)) },
                     singleLine = true,
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth().padding(top = 10.dp),
                     colors = TextFieldDefaults.textFieldColors(
-                        focusedIndicatorColor = Color.Transparent, // Transparent underline when focused
-                        unfocusedIndicatorColor = Color.Transparent // Transparent underline when unfocused
+                        containerColor = Color.White, // Background color of the TextField
+                        focusedIndicatorColor = Color.White, // Underline color when focused
+                        unfocusedIndicatorColor = Color.White, // Underline color when unfocused
+                        disabledTextColor = Color.Gray, // Text color when TextField is disabled
+                        errorIndicatorColor = Color.Red, // Underline color when in error state
+                        errorCursorColor = Color.Red, // Cursor color when in error state
+                        cursorColor = Color.White // Cursor color
                     ),
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
                 )
@@ -110,12 +139,13 @@ fun PasswordChangePage() {
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Bottom
                 ) {
-                    Button(
+                    AuthButton(
+                        text = "Yenilə",
                         onClick = {},
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        Text("Yenilə")
-                    }
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(bottom = 16.dp)
+                    )
 
                 }
 

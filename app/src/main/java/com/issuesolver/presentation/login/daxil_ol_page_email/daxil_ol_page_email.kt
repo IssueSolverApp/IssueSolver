@@ -38,26 +38,34 @@ fun EmailVerificationPage() {
                         style = MaterialTheme.typography.headlineMedium,
                         fontSize = 28.sp,
                         fontWeight = FontWeight.SemiBold,
-                        textAlign = TextAlign.Start
-                    )
+                        textAlign = TextAlign.Start,
+                        color = Color.Black
+
+                        )
                     Text(
                         "E-poçt hesabınıza təsdiq kod göndəriləcək.",
                         style = MaterialTheme.typography.bodySmall,
                         fontSize = 15.sp,
-                        textAlign = TextAlign.Start
+                        textAlign = TextAlign.Start,
+                        color = Color(0xFF9D9D9D),
+                        modifier = Modifier
+                            .padding(top = 10.dp),
 
-                    )
+
+                        )
                 }
                 Spacer(modifier = Modifier.height(8.dp))
 
                 Divider(
-                    color = Color.Gray, thickness = 0.5.dp,
+                     thickness = 0.5.dp,
 
                     )
                 Spacer(modifier = Modifier.height(8.dp))
 
 
-                Column() {
+                Column(
+                    Modifier.padding(top = 20.dp)
+                ) {
                     Text(
                         "E-poçt",
                         style = MaterialTheme.typography.bodySmall,
@@ -75,11 +83,17 @@ fun EmailVerificationPage() {
 
                         placeholder = { Text("E-poçtunuzu daxil edin") },
                         singleLine = true,
-                        modifier = Modifier.fillMaxWidth(),
+                        modifier = Modifier.fillMaxWidth()
+                            .padding(top = 10.dp),
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
                         colors = TextFieldDefaults.textFieldColors(
-                            focusedIndicatorColor = Color.Transparent,
-                            unfocusedIndicatorColor = Color.Transparent
+                            containerColor = Color.White, // Background color of the TextField
+                            focusedIndicatorColor = Color.White, // Underline color when focused
+                            unfocusedIndicatorColor = Color.White, // Underline color when unfocused
+                            disabledTextColor = Color.Gray, // Text color when TextField is disabled
+                            errorIndicatorColor = Color.Red, // Underline color when in error state
+                            errorCursorColor = Color.Red, // Cursor color when in error state
+                            cursorColor = Color.White // Cursor color
                         )
 
                     )

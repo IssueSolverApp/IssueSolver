@@ -1,5 +1,6 @@
 package com.issuesolver.presentation.login.daxil_ol_page
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -17,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.issuesolver.presentation.common.AuthButton
 
-@OptIn( ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LoginPage() {
     var email by remember { mutableStateOf("") }
@@ -27,16 +28,22 @@ fun LoginPage() {
 
 
     Scaffold { padding ->
-        Box(modifier = Modifier
-            .fillMaxSize()
-            .padding(top = 24.dp)
-            .padding(20.dp)
-            .imePadding()
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(top = 24.dp)
+                .padding(20.dp)
+                .imePadding()
+
         ) {
 
-            Column() {
+            Column(
+
+            ) {
                 Column(
-                    ) {
+                    Modifier.padding(bottom = 20.dp)
+
+                ) {
                     Text(
                         "Daxil olun",
                         style = MaterialTheme.typography.headlineMedium,
@@ -53,7 +60,11 @@ fun LoginPage() {
                         style = MaterialTheme.typography.bodySmall,
                         fontSize = 15.sp,
                         textAlign = TextAlign.Start,
-                        color = Color(0xFF9D9D9D)
+                        color = Color(0xFF9D9D9D),
+                        modifier = Modifier
+                            .padding(top = 10.dp),
+
+
 
                     )
                 }
@@ -62,16 +73,19 @@ fun LoginPage() {
                 Spacer(modifier = Modifier.height(8.dp))
 
                 Divider(
-                    color = Color.Gray, thickness = 0.5.dp,
+                     thickness = 0.5.dp,
 
-                )
+                    )
                 Spacer(modifier = Modifier.height(8.dp))
 
 
 
 
 
-                Column() {
+                Column(
+                    Modifier.padding(top = 20.dp)
+
+                ) {
                     Text(
                         "E-poçt",
                         style = MaterialTheme.typography.bodySmall,
@@ -85,15 +99,25 @@ fun LoginPage() {
                             emailError = false
                         },
                         isError = emailError,
-                        placeholder = { Text("E-poçtunuzu daxil edin",
-                            color = Color(0xFF9D9D9D)) },
+                        placeholder = {
+                            Text(
+                                "E-poçtunuzu daxil edin",
+                                color = Color(0xFF9D9D9D)
+                            )
+                        },
                         singleLine = true,
-                        modifier =  Modifier.fillMaxWidth(),
+                        modifier = Modifier.fillMaxWidth()
+                            .padding(top = 10.dp),
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-                      colors = TextFieldDefaults.textFieldColors(
-                          focusedIndicatorColor = Color.Transparent,
-                        unfocusedIndicatorColor = Color.Transparent
-                    )
+                        colors = TextFieldDefaults.textFieldColors(
+                            containerColor = Color.White, // Background color of the TextField
+                            focusedIndicatorColor = Color.White, // Underline color when focused
+                            unfocusedIndicatorColor = Color.White, // Underline color when unfocused
+                            disabledTextColor = Color.Gray, // Text color when TextField is disabled
+                            errorIndicatorColor = Color.Red, // Underline color when in error state
+                            errorCursorColor = Color.Red, // Cursor color when in error state
+                            cursorColor = Color.White // Cursor color
+                        )
                     )
 
                     Spacer(modifier = Modifier.height(8.dp))
@@ -107,25 +131,40 @@ fun LoginPage() {
                         shape = RoundedCornerShape(12.dp),
                         value = password,
                         onValueChange = { password = it },
-                        placeholder = { Text("Şifrənizi daxil edin",
-                            color = Color(0xFF9D9D9D)) },
+                        placeholder = {
+                            Text(
+                                "Şifrənizi daxil edin",
+                                color = Color(0xFF9D9D9D)
+                            )
+                        },
                         singleLine = true,
-                        modifier = Modifier.fillMaxWidth(),
+                        modifier = Modifier.fillMaxWidth()  .padding(top = 10.dp),
                         colors = TextFieldDefaults.textFieldColors(
-                            focusedIndicatorColor = Color.Transparent, // Transparent underline when focused
-                            unfocusedIndicatorColor = Color.Transparent // Transparent underline when unfocused
+                            containerColor = Color.White, // Background color of the TextField
+                            focusedIndicatorColor = Color.White, // Underline color when focused
+                            unfocusedIndicatorColor = Color.White, // Underline color when unfocused
+                            disabledTextColor = Color.Gray, // Text color when TextField is disabled
+                            errorIndicatorColor = Color.Red, // Underline color when in error state
+                            errorCursorColor = Color.Red, // Cursor color when in error state
+                            cursorColor = Color.White // Cursor color
                         ),
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
                     )
 
-                    TextButton(
-                        onClick = { },
+                    Text(
                         modifier = Modifier
+                            .clickable {}
                             .fillMaxWidth()
                             .wrapContentWidth(Alignment.End)
-                    ) {
-                        Text("Şifrənizi unutmusunuz?")
-                    }
+                            .padding(top=10.dp)
+                        , text = "Şifrənizi unutmusunuz?",
+
+                        color = MaterialTheme.colorScheme.primary
+                    )
+
+
+
+
                 }
 
 
@@ -143,7 +182,9 @@ fun LoginPage() {
                 AuthButton(
                     text = "Daxil ol",
                     onClick = {},
-                    modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp)
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 16.dp)
                 )
 
                 Row(
@@ -151,11 +192,16 @@ fun LoginPage() {
                     horizontalArrangement = Arrangement.Center,
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    Text("Hesabınız yoxdur?",
-                        color = Color(0xFF9D9D9D)
-                          )
-                    TextButton(onClick = { }) {
-                        Text("Qeydiyyatdan keç", color = MaterialTheme.colorScheme.primary)
+                    Row {
+                        Text(
+                            "Hesabınız yoxdur?",
+                            color = Color(0xFF9D9D9D)
+                        )
+                        Text(modifier = Modifier.clickable {
+
+                        }, text = "Qeydiyyatdan keç",
+
+                            color = MaterialTheme.colorScheme.primary)
                     }
                 }
 
@@ -165,13 +211,7 @@ fun LoginPage() {
 
     }
 }
-@Composable
-fun HorizontalDivider(
-    modifier: Modifier = Modifier,
-    thickness: Dp = DividerDefaults.Thickness,
-    color: androidx.compose.ui.graphics.Color = DividerDefaults.color
-): Unit {
-}
+
 
 @Preview(showBackground = true)
 @Composable
