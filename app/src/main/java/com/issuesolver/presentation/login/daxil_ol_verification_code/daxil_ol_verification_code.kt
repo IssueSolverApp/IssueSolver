@@ -6,6 +6,7 @@ package com.issuesolver.presentation.login.daxil_ol_verification_code
 
 import android.app.Activity
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -18,6 +19,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
@@ -26,6 +28,7 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -36,6 +39,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.issuesolver.R
 import com.issuesolver.presentation.common.AuthButton
 import kotlinx.coroutines.delay
 
@@ -81,12 +85,31 @@ fun VerificationCodePage() {
                     Modifier.padding(bottom = 20.dp)
 
                 ) {
+                    Box(
+                        modifier = Modifier
+
+                            .padding(top = 20.dp)
+                            .size(40.dp)
+                            .clip(RoundedCornerShape(100.dp)) // Apply rounded corners to the background
+                            .background(Color.White) // Set the background color
+                            .clickable { /* Handle back press */ },
+                        contentAlignment = Alignment.Center // Center the content inside the Box
+
+                    ) {
+                        Image(
+                            painter = painterResource(R.drawable.backarray),
+                            contentDescription = "Back",
+                            modifier = Modifier.size(24.dp) // Ensures the image fills the Box
+                        )
+                    }
             Text("Təsdiq Kodu",
                 style = MaterialTheme.typography.headlineMedium,
                 fontSize = 28.sp,
                 fontWeight = FontWeight.SemiBold,
                 textAlign = TextAlign.Start,
                 color = Color.Black,
+                modifier = Modifier
+                    .padding(top = 24.dp),
 
 
             )
@@ -96,7 +119,7 @@ fun VerificationCodePage() {
                 textAlign = TextAlign.Start,
                 color = Color(0xFF9D9D9D),
                 modifier = Modifier
-                    .padding(top = 10.dp),
+                    .padding(top = 10.dp,bottom = 20.dp),
 
                 )
                     Spacer(modifier = Modifier.height(8.dp))

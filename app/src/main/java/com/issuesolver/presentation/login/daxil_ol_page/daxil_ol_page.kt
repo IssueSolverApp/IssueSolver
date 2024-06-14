@@ -4,6 +4,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -11,11 +12,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.constraintlayout.compose.Visibility
 import com.issuesolver.presentation.common.AuthButton
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -24,6 +28,9 @@ fun LoginPage() {
     var email by remember { mutableStateOf("") }
     var emailError by remember { mutableStateOf(false) }
     var password by remember { mutableStateOf("") }
+    var showPassword by remember { mutableStateOf(value = false) }
+
+
 
 
 
@@ -102,13 +109,22 @@ fun LoginPage() {
                         isError = emailError,
                         placeholder = {
                             Text(
-                                "E-poçtunuzu daxil edin",
+                                ("E-poçtunuzu daxil edin"),
                                 color = Color(0xFF9D9D9D)
                             )
                         },
                         singleLine = true,
                         modifier = Modifier.fillMaxWidth()
                             .padding(top = 10.dp),
+                        visualTransformation = if (showPassword) {
+
+                            VisualTransformation.None
+
+                        } else {
+
+                            PasswordVisualTransformation()
+
+                        },
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
                         colors = TextFieldDefaults.textFieldColors(
                             containerColor = Color.White, // Background color of the TextField
@@ -118,7 +134,26 @@ fun LoginPage() {
                             errorIndicatorColor = Color.Red, // Underline color when in error state
                             errorCursorColor = Color.Red, // Cursor color when in error state
                             cursorColor = Color.White // Cursor color
-                        )
+                        ),
+                        trailingIcon = {
+                            if (showPassword) {
+                                IconButton(onClick = { showPassword = false }) {
+                                    Icon(
+                                        imageVector = Icons.Filled.Visibility,
+                                        contentDescription = "hide_password"
+                                    )
+                                }
+                            } else {
+                                IconButton(
+                                    onClick = { showPassword = true }) {
+                                    Icon(
+                                        imageVector = Icons.Filled.VisibilityOff,
+                                        contentDescription = "hide_password"
+                                    )
+                                }
+                            }
+                        }
+
                     )
 
                     Spacer(modifier = Modifier.height(8.dp))
