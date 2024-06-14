@@ -2,9 +2,9 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
 
-    id("kotlin-parcelize")
     id("kotlin-kapt")
     id("com.google.dagger.hilt.android")
+    id ("kotlin-parcelize")
 }
 
 android {
@@ -67,7 +67,19 @@ dependencies {
 
     implementation("com.google.dagger:hilt-android:2.46")
     implementation("androidx.annotation:annotation:1.7.1")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.1")
+    implementation(libs.androidx.lifecycle.runtime.compose.android)
+    implementation(libs.androidx.constraintlayout.compose)
     kapt("com.google.dagger:hilt-android-compiler:2.46")
+
+
+    implementation ("androidx.compose.ui:ui-text-google-fonts:1.6.7")
+    implementation ("androidx.compose.material:material-icons-extended:1.6.8")
+
+    implementation ("androidx.navigation:navigation-compose:2.7.7")
+
+
+
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
