@@ -29,6 +29,8 @@ fun PasswordChangePage(navController: NavController) {
     var confirmPassword by remember { mutableStateOf("") }
     var passwordError by remember { mutableStateOf(false) }
     var showPassword by remember { mutableStateOf(value = false) }
+    var showPassword1 by remember { mutableStateOf(value = false) }
+
 
 
     Scaffold { padding ->
@@ -144,11 +146,11 @@ fun PasswordChangePage(navController: NavController) {
                         cursorColor = Color.White // Cursor color
                     ),
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-                    visualTransformation = if (showPassword) VisualTransformation.None else PasswordVisualTransformation(),
+                    visualTransformation = if (showPassword1) VisualTransformation.None else PasswordVisualTransformation(),
                     trailingIcon = {
-                        val icon = if (showPassword) painterResource(R.drawable.unhiddeneye) else painterResource(R.drawable.hiddeneye)
-                        val description = if (showPassword) "Hide password" else "Show password"
-                        IconButton(onClick = { showPassword = !showPassword }) {
+                        val icon = if (showPassword1) painterResource(R.drawable.unhiddeneye) else painterResource(R.drawable.hiddeneye)
+                        val description = if (showPassword1) "Hide password" else "Show password"
+                        IconButton(onClick = { showPassword1 = !showPassword1 }) {
                             Icon(painter = icon,tint= Color(0xFF2981FF), contentDescription = description)
                         }
                     }
