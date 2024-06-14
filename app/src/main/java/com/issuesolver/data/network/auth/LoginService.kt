@@ -3,6 +3,7 @@ package com.issuesolver.data.network.auth
 import com.issuesolver.domain.entity.networkModel.LoginRequest
 import com.issuesolver.domain.entity.networkModel.LoginResponse
 import com.issuesolver.domain.entity.networkModel.RegisterRequestModel
+import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.POST
@@ -15,11 +16,14 @@ interface LoginService {
 
 
     @POST("api/Auths/register")
-    suspend fun register(@Body request: RegisterRequestModel): Response<Any>
+    suspend fun register(@Body request: RegisterRequestModel): Response<ResponseBody>
 
 
     @POST("/api/v1/auth/resend-otp")
-    suspend fun resendOtp(@Query("email") email: String?):Response<Any>
+    suspend fun resendOtp(@Query("email") email: String?):Response<ResponseBody>
+
+    @POST("/api/v1/auth/confirm-otp")
+    suspend fun confirmOtp(@Query("otp") otp: String?):Response<ResponseBody>
 
 }
 
