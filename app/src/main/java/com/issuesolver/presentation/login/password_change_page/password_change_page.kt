@@ -8,12 +8,16 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.issuesolver.R
 import com.issuesolver.presentation.common.AuthButton
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -22,6 +26,8 @@ fun PasswordChangePage() {
     var newPassword by remember { mutableStateOf("") }
     var confirmPassword by remember { mutableStateOf("") }
     var passwordError by remember { mutableStateOf(false) }
+    var showPassword by remember { mutableStateOf(value = false) }
+
 
     Scaffold { padding ->
         Box(modifier = Modifier
@@ -99,7 +105,16 @@ fun PasswordChangePage() {
                         errorIndicatorColor = Color.Red, // Underline color when in error state
                         errorCursorColor = Color.Red, // Cursor color when in error state
                         cursorColor = Color.White // Cursor color
-                    )
+                    ),
+                    visualTransformation = if (showPassword) VisualTransformation.None else PasswordVisualTransformation(),
+                    trailingIcon = {
+                        val icon = if (showPassword) painterResource(R.drawable.unhiddeneye) else painterResource(
+                            R.drawable.hiddeneye)
+                        val description = if (showPassword) "Hide password" else "Show password"
+                        IconButton(onClick = { showPassword = !showPassword }) {
+                            Icon(painter = icon,tint= Color(0xFF2981FF), contentDescription = description)
+                        }
+                    }
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
@@ -126,7 +141,15 @@ fun PasswordChangePage() {
                         errorCursorColor = Color.Red, // Cursor color when in error state
                         cursorColor = Color.White // Cursor color
                     ),
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                    visualTransformation = if (showPassword) VisualTransformation.None else PasswordVisualTransformation(),
+                    trailingIcon = {
+                        val icon = if (showPassword) painterResource(R.drawable.unhiddeneye) else painterResource(R.drawable.hiddeneye)
+                        val description = if (showPassword) "Hide password" else "Show password"
+                        IconButton(onClick = { showPassword = !showPassword }) {
+                            Icon(painter = icon,tint= Color(0xFF2981FF), contentDescription = description)
+                        }
+                    }
                 )
             }
                 Spacer(modifier = Modifier.height(16.dp))

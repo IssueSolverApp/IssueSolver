@@ -74,7 +74,8 @@ dependencies {
 
 
     implementation ("androidx.compose.ui:ui-text-google-fonts:1.6.7")
-    implementation ("androidx.compose.material:material-icons-extended:1.3.1")
+    implementation ("androidx.compose.material:material-icons-extended:1.6.8")
+
 
 
 
