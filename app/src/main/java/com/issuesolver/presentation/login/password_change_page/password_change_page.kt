@@ -17,12 +17,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.issuesolver.R
 import com.issuesolver.presentation.common.AuthButton
+import com.issuesolver.presentation.navigation.mockNavController
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PasswordChangePage() {
+fun PasswordChangePage(navController: NavController) {
     var newPassword by remember { mutableStateOf("") }
     var confirmPassword by remember { mutableStateOf("") }
     var passwordError by remember { mutableStateOf(false) }
@@ -184,6 +186,6 @@ fun PasswordChangePage() {
 @Composable
 fun PasswordChangePagePreview() {
     MaterialTheme {
-        PasswordChangePage()
+        PasswordChangePage(navController = mockNavController())
     }
 }

@@ -19,12 +19,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.issuesolver.R
 import com.issuesolver.presentation.common.AuthButton
+import com.issuesolver.presentation.navigation.mockNavController
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun EmailVerificationPage() {
+fun EmailVerificationPage(navController: NavController) {
 
     var email by remember { mutableStateOf("") }
 
@@ -47,7 +49,9 @@ fun EmailVerificationPage() {
                             .size(40.dp)
                             .clip(RoundedCornerShape(100.dp)) // Apply rounded corners to the background
                             .background(Color.White) // Set the background color
-                            .clickable { /* Handle back press */ },
+                            .clickable {
+                                navController.popBackStack()
+                            },
                                 contentAlignment = Alignment.Center // Center the content inside the Box
 
                     ) {
@@ -141,7 +145,7 @@ fun EmailVerificationPage() {
             ) {
                 AuthButton(
                     text = "Təsdiq kodu göndər",
-                    onClick = {},
+                    onClick = {navController.navigate("otp")},
                     modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp)
                 )
             }
@@ -154,6 +158,6 @@ fun EmailVerificationPage() {
 @Composable
 fun EmailVerificationPagePreview() {
     MaterialTheme {
-        EmailVerificationPage()
+        EmailVerificationPage(navController = mockNavController())
     }
 }

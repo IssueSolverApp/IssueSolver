@@ -39,13 +39,15 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.issuesolver.R
 import com.issuesolver.presentation.common.AuthButton
+import com.issuesolver.presentation.navigation.mockNavController
 import kotlinx.coroutines.delay
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun VerificationCodePage() {
+fun VerificationCodePage(navController: NavController) {
     val context = LocalContext.current
     var otpValue by remember { mutableStateOf(TextFieldValue("")) }
     var isOtpFilled by remember { mutableStateOf(false) }
@@ -92,7 +94,9 @@ fun VerificationCodePage() {
                             .size(40.dp)
                             .clip(RoundedCornerShape(100.dp)) // Apply rounded corners to the background
                             .background(Color.White) // Set the background color
-                            .clickable { /* Handle back press */ },
+                            .clickable {
+                                navController.popBackStack()
+                            },
                         contentAlignment = Alignment.Center // Center the content inside the Box
 
                     ) {
@@ -326,7 +330,7 @@ internal fun CharacterContainer(
 @Composable
 fun VerificationCodePagePreview() {
    MaterialTheme {
-        VerificationCodePage()
+       VerificationCodePage(navController = mockNavController())
     }
 }
 

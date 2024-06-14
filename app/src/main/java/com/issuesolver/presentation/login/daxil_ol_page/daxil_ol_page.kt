@@ -18,12 +18,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.issuesolver.R
 import com.issuesolver.presentation.common.AuthButton
+import com.issuesolver.presentation.navigation.mockNavController
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LoginPage() {
+fun LoginPage(navController: NavController) {
     var email by remember { mutableStateOf("") }
     var emailError by remember { mutableStateOf(false) }
     var password by remember { mutableStateOf("") }
@@ -170,7 +172,7 @@ fun LoginPage() {
 
                     Text(
                         modifier = Modifier
-                            .clickable {}
+                            .clickable {navController.navigate("password change")}
                             .fillMaxWidth()
                             .wrapContentWidth(Alignment.End)
                             .padding(top=10.dp)
@@ -198,7 +200,7 @@ fun LoginPage() {
             ) {
                 AuthButton(
                     text = "Daxil ol",
-                    onClick = {},
+                    onClick = {navController.navigate("email verification")},
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(bottom = 16.dp)
@@ -234,6 +236,6 @@ fun LoginPage() {
 @Composable
 fun LoginPagePreview() {
     MaterialTheme {
-        LoginPage()
+        LoginPage(navController = mockNavController())
     }
 }
