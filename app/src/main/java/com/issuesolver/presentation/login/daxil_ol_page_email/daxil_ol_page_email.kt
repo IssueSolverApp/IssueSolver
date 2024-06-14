@@ -123,8 +123,6 @@ fun EmailVerificationPage(navController: NavController) {
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
                         colors = TextFieldDefaults.textFieldColors(
                             containerColor = Color.White, // Background color of the TextField
-                            focusedIndicatorColor = Color.White, // Underline color when focused
-                            unfocusedIndicatorColor = Color.White, // Underline color when unfocused
                             disabledTextColor = Color.Gray, // Text color when TextField is disabled
                             errorIndicatorColor = Color.Red, // Underline color when in error state
                             errorCursorColor = Color.Red, // Cursor color when in error state
