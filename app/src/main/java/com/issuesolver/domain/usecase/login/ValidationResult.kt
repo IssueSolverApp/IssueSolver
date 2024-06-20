@@ -1,4 +1,4 @@
-package com.issuesolver.domain.usecase.login
+package com.issuesolver.domain.useCase.login
 
 data class ValidationResult(
     val successful: Boolean,

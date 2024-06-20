@@ -1,8 +1,8 @@
-package com.issuesolver.domain.usecase.di
+package com.issuesolver.domain.useCase.di
 
-import com.issuesolver.domain.usecase.login.ValidateEmailUseCase
-import com.issuesolver.domain.usecase.login.ValidatePasswordUseCase
-import com.issuesolver.domain.usecase.login.ValidateRepeatedPasswordUseCase
+import com.issuesolver.domain.useCase.login.ValidateEmailUseCase
+import com.issuesolver.domain.useCase.login.ValidatePasswordUseCase
+import com.issuesolver.domain.useCase.login.ValidateRepeatedPasswordUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -19,7 +19,7 @@ class UseCaseModule {
 
     @Provides
     @Singleton
-    fun provideValidatePasswordUseCase()=ValidatePasswordUseCase()
+    fun provideValidatePasswordUseCase()= ValidatePasswordUseCase()
 
     @Provides
     @Singleton

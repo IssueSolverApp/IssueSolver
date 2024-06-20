@@ -1,4 +1,4 @@
-package com.issuesolver.domain.usecase.login
+package com.issuesolver.domain.useCase.login
 
 class ValidateRepeatedPasswordUseCase {
     fun execute(password: String, repeatedPassword: String): ValidationResult {
