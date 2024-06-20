@@ -12,10 +12,10 @@ import com.issuesolver.presentation.login.password_change_page.PasswordChangePag
 @Composable
 fun AppNavigation() {
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = "login") {
-        composable("login") { LoginPage(navController) }
-        composable("email verification") { EmailVerificationPage(navController) }
-        composable("otp") { VerificationCodePage(navController) }
-        composable("password change") { PasswordChangePage(navController) }
+    NavHost(navController = navController, startDestination = Routes.LOGIN) {
+        composable(Routes.LOGIN) { LoginPage(navController) }
+        composable(Routes.EMAIL_VERIFICATION) { EmailVerificationPage(navController) }
+        composable(Routes.OTP) { VerificationCodePage(navController) }
+        composable(Routes.PASSWORD_CHANGE) { PasswordChangePage(navController) }
     }
 }
