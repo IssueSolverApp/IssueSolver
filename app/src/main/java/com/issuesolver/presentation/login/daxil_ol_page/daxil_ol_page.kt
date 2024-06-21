@@ -1,8 +1,9 @@
 package com.issuesolver.presentation.login.daxil_ol_page
 
-import androidx.compose.foundation.background
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.scrollBy
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -13,6 +14,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -26,11 +28,13 @@ import androidx.navigation.NavController
 import com.issuesolver.R
 import com.issuesolver.presentation.common.AuthButton
 import com.issuesolver.presentation.common.ErrorText
+import kotlinx.coroutines.launch
 
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
-fun LoginPage(navController: NavController,viewModel: DaxilOlPageViewModel = hiltViewModel()) {
+fun LoginPage(navController: NavController,viewModel: DaxilOlPageViewModel = hiltViewModel(),
+) {
 
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -38,6 +42,7 @@ fun LoginPage(navController: NavController,viewModel: DaxilOlPageViewModel = hil
     val uiState by viewModel.uiState.collectAsState()
     val isEmailError = uiState.emailError != null
     val isPasswordError = uiState.passwordError != null
+
 
 
 
@@ -57,13 +62,20 @@ fun LoginPage(navController: NavController,viewModel: DaxilOlPageViewModel = hil
 
         ) {
 
+
             Column(
 
             ) {
+
                 Column(
+
                     Modifier.padding(bottom = 20.dp)
 
+
                 ) {
+
+
+
                     Text(
                         "Daxil olun",
                         style = MaterialTheme.typography.headlineMedium,
@@ -196,7 +208,7 @@ fun LoginPage(navController: NavController,viewModel: DaxilOlPageViewModel = hil
                         }
                     )
                     ErrorText(
-                        errorMessage = uiState.emailError,
+                        errorMessage = uiState.passwordError,
 //                        isVisible = isPasswordError
                     )
 
@@ -206,7 +218,11 @@ fun LoginPage(navController: NavController,viewModel: DaxilOlPageViewModel = hil
                             .fillMaxWidth()
                             .wrapContentWidth(Alignment.End)
                             .padding(top = 10.dp)
-                        , text = "Şifrənizi unutmusunuz?",
+                            .padding(top = 10.dp)
+
+                        ,
+                         text = "Şifrənizi unutmusunuz?",
+
 
                         color = MaterialTheme.colorScheme.primary
                     )
@@ -229,6 +245,8 @@ fun LoginPage(navController: NavController,viewModel: DaxilOlPageViewModel = hil
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Bottom
             ) {
+
+
                 AuthButton(
                     text = "Daxil ol",
                     onClick = {navController.navigate("email verification")
@@ -238,6 +256,7 @@ fun LoginPage(navController: NavController,viewModel: DaxilOlPageViewModel = hil
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(bottom = 16.dp)
+
 
                 )
 
