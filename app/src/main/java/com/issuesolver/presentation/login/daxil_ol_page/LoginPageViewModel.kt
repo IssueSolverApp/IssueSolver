@@ -1,7 +1,5 @@
 package com.issuesolver.presentation.login.daxil_ol_page
 
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.issuesolver.domain.usecase.login.ValidateEmailUseCase
 import com.issuesolver.domain.usecase.login.ValidatePasswordUseCase
@@ -12,14 +10,14 @@ import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
 
 @HiltViewModel
-class DaxilOlPageViewModel @Inject constructor(
+class LoginPageViewModel @Inject constructor(
 
     private val validateEmailUseCase: ValidateEmailUseCase,
     private val validatePasswordUseCase: ValidatePasswordUseCase
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow(DaxilOlPageState())
-    val uiState: StateFlow<DaxilOlPageState> = _uiState.asStateFlow()
+    private val _uiState = MutableStateFlow(LoginPageState())
+    val uiState: StateFlow<LoginPageState> = _uiState.asStateFlow()
 
     fun handleEvent(event: LoginPageEvent) {
         when (event) {
@@ -41,8 +39,7 @@ class DaxilOlPageViewModel @Inject constructor(
             }
             is LoginPageEvent.Submit -> {
                 if (uiState.value.isInputValid) {
-                    // Proceed with backend authentication
-                    // Handle backend response and update UI state accordingly
+
                 }
             }
         }

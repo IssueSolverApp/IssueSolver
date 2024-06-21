@@ -1,20 +1,17 @@
 package com.issuesolver.presentation.login.daxil_ol_page
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.scrollBy
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -28,12 +25,11 @@ import androidx.navigation.NavController
 import com.issuesolver.R
 import com.issuesolver.presentation.common.AuthButton
 import com.issuesolver.presentation.common.ErrorText
-import kotlinx.coroutines.launch
 
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
-fun LoginPage(navController: NavController,viewModel: DaxilOlPageViewModel = hiltViewModel(),
+fun LoginPage(navController: NavController,viewModel: LoginPageViewModel = hiltViewModel(),
 ) {
 
     var email by remember { mutableStateOf("") }
@@ -52,13 +48,17 @@ fun LoginPage(navController: NavController,viewModel: DaxilOlPageViewModel = hil
 
 
 
-    Scaffold { padding ->
+
+
+    Scaffold (
+        content={ padding ->
         Box(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(top = 24.dp)
                 .padding(20.dp)
                 .imePadding()
+
 
         ) {
 
@@ -110,9 +110,6 @@ fun LoginPage(navController: NavController,viewModel: DaxilOlPageViewModel = hil
 
                 )
                 Spacer(modifier = Modifier.height(8.dp))
-
-
-
 
 
                 Column(
@@ -240,7 +237,8 @@ fun LoginPage(navController: NavController,viewModel: DaxilOlPageViewModel = hil
 
             Column(
                 modifier = Modifier
-                    .fillMaxSize(),
+                    .fillMaxSize()
+                  ,
 
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Bottom
@@ -285,6 +283,7 @@ fun LoginPage(navController: NavController,viewModel: DaxilOlPageViewModel = hil
         }
 
     }
+    )
 }
 
 
