@@ -1,19 +1,42 @@
 package com.issuesolver.presentation.login.qeydiyyat_page
 
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.WindowInsetsSides
+import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.ime
+import androidx.compose.foundation.layout.imeNestedScroll
 import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawing
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.systemBars
+import androidx.compose.foundation.layout.windowInsetsBottomHeight
+import androidx.compose.foundation.layout.windowInsetsEndWidth
+import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.relocation.BringIntoViewRequester
+import androidx.compose.foundation.relocation.bringIntoViewRequester
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -27,9 +50,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.onFocusEvent
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -41,38 +66,51 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.issuesolver.R
 import com.issuesolver.presentation.common.AuthButton
+import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class,
+    ExperimentalLayoutApi::class
+)
 @Composable
-fun RegisterPage() {
+fun RegisterPage(cm: Modifier = Modifier, contentModifier: Modifier = Modifier) {
 
 
     var email by remember { mutableStateOf("") }
     var emailError by remember { mutableStateOf(false) }
     var password by remember { mutableStateOf("") }
+    var confirmPassword by remember { mutableStateOf("") }
     var showPassword by remember { mutableStateOf(value = false) }
+    var confirmShowPassword by remember { mutableStateOf(value = false) }
+
+    var checked by remember { mutableStateOf(false) }
+
+    val bringIntoViewRequester = remember { BringIntoViewRequester() }
+    val coroutineScope = rememberCoroutineScope()
 
 
 
-    Scaffold { padding ->
+
+
+    Scaffold(content = { padding ->
         Box(
-            modifier = Modifier
+            modifier = cm
                 .fillMaxSize()
-                .padding(top = 24.dp)
-                .padding(20.dp)
+                .statusBarsPadding()
+                .navigationBarsPadding()
                 .imePadding()
+                .background(Color.Yellow),
 
-        ) {
-
-            Column(
 
             ) {
-                Column(
-                    Modifier.padding(bottom = 20.dp)
-
-                ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(top = 20.dp, start = 20.dp, end = 20.dp)
+                    .background(Color.Red)
+            ) {
+                Column {
                     Text(
-                        "Daxil olun",
+                        "Qeydiyyat",
                         style = MaterialTheme.typography.headlineMedium,
                         fontSize = 28.sp,
                         fontWeight = FontWeight.SemiBold,
@@ -83,7 +121,7 @@ fun RegisterPage() {
                         )
 
                     Text(
-                        "Zəhmət olmasa, giriş üçün məlumatlarınızı daxil edin.",
+                        "Zəhmət olmasa, şəxsi məlumatlarınızı daxil edin.",
                         style = MaterialTheme.typography.bodySmall,
                         fontSize = 15.sp,
                         textAlign = TextAlign.Start,
@@ -91,67 +129,110 @@ fun RegisterPage() {
                         modifier = Modifier
                             .padding(top = 10.dp),
 
+
                         )
                 }
 
 
-                Spacer(modifier = Modifier.height(8.dp))
-
                 Divider(
+                    modifier = Modifier
+                        .padding(top = 20.dp),
                     thickness = 0.5.dp,
                     color = Color(0xFF2981FF)
 
                 )
-                Spacer(modifier = Modifier.height(8.dp))
 
 
                 Column(
-                    Modifier.padding(top = 20.dp)
+                    modifier = Modifier
+                        .background(Color.Magenta)
+                        .padding(top = 28.dp)
+                        .imePadding()
+                        //.imeNestedScroll()
 
+
+//                        .bringIntoViewRequester(bringIntoViewRequester)
+                        .verticalScroll(rememberScrollState())
                 ) {
-                    Text(
-                        "Ad, Soyad",
-                        style = MaterialTheme.typography.bodySmall,
-                        fontSize = 15.sp,
-                    )
-                    TextField(
-                        shape = RoundedCornerShape(12.dp),
-                        value = email,
-                        onValueChange = {
-                            email = it
-                            emailError = false
-                        },
-                        isError = emailError,
-                        placeholder = {
-                            Text(
-                                ("Ad, Soyad"),
-                                color = Color(0xFF9D9D9D)
-                            )
-                        },
-                        singleLine = true,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = 10.dp),
-
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-                        colors = TextFieldDefaults.textFieldColors(
-                            containerColor = Color.White, // Background color of the TextField
-                            focusedIndicatorColor = Color.White, // Underline color when focused
-                            unfocusedIndicatorColor = Color.White, // Underline color when unfocused
-                            disabledTextColor = Color.Gray, // Text color when TextField is disabled
-                            errorIndicatorColor = Color.Red, // Underline color when in error state
-                            errorCursorColor = Color.Red, // Cursor color when in error state
-                            cursorColor = Color.White // Cursor color
+                    Column {
+                        Text(
+                            "Ad",
+                            style = MaterialTheme.typography.bodySmall,
+                            fontSize = 15.sp,
                         )
+                        TextField(
+                            shape = RoundedCornerShape(12.dp),
+                            value = email,
+                            onValueChange = {
+                                email = it
+                                emailError = false
+                            },
+                            isError = emailError,
+                            placeholder = {
+                                Text(
+                                    ("Ad"),
+                                    color = Color(0xFF9D9D9D)
+                                )
+                            },
+                            singleLine = true,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(top = 10.dp),
 
-                    )
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+                            colors = TextFieldDefaults.textFieldColors(
+                                containerColor = Color.White, // Background color of the TextField
+                                focusedIndicatorColor = Color.White, // Underline color when focused
+                                unfocusedIndicatorColor = Color.White, // Underline color when unfocused
+                                disabledTextColor = Color.Gray, // Text color when TextField is disabled
+                                errorIndicatorColor = Color.Red, // Underline color when in error state
+                                errorCursorColor = Color.Red, // Cursor color when in error state
+                                cursorColor = Color.White // Cursor color
+                            )
 
-                    Spacer(modifier = Modifier.height(8.dp))
+                        )
+                    }
+                    Column(Modifier.padding(top = 20.dp)) {
+                        Text(
+                            "Soyad ",
+                            style = MaterialTheme.typography.bodySmall,
+                            fontSize = 15.sp,
+                        )
+                        TextField(
+                            shape = RoundedCornerShape(12.dp),
+                            value = email,
+                            onValueChange = {
+                                email = it
+                                emailError = false
+                            },
+                            isError = emailError,
+                            placeholder = {
+                                Text(
+                                    ("Soyad"),
+                                    color = Color(0xFF9D9D9D)
+                                )
+                            },
+                            singleLine = true,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(top = 10.dp),
 
-                    Column(
-                        Modifier.padding(top = 20.dp)
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+                            colors = TextFieldDefaults.textFieldColors(
+                                containerColor = Color.White, // Background color of the TextField
+                                focusedIndicatorColor = Color.White, // Underline color when focused
+                                unfocusedIndicatorColor = Color.White, // Underline color when unfocused
+                                disabledTextColor = Color.Gray, // Text color when TextField is disabled
+                                errorIndicatorColor = Color.Red, // Underline color when in error state
+                                errorCursorColor = Color.Red, // Cursor color when in error state
+                                cursorColor = Color.White // Cursor color
+                            )
 
-                    ) {
+                        )
+                    }
+
+
+                    Column(Modifier.padding(top = 20.dp)) {
                         Text(
                             "E-poçt",
                             style = MaterialTheme.typography.bodySmall,
@@ -188,9 +269,10 @@ fun RegisterPage() {
                             )
 
                         )
+                    }
 
-                        Spacer(modifier = Modifier.height(8.dp))
 
+                    Column(Modifier.padding(top = 20.dp)) {
                         Text(
                             "Şifrə",
                             style = MaterialTheme.typography.bodySmall,
@@ -237,21 +319,22 @@ fun RegisterPage() {
                                 }
                             }
                         )
+                    }
 
-                        Spacer(modifier = Modifier.height(8.dp))
 
+                    Column(Modifier.padding(top = 20.dp)) {
                         Text(
-                            "Şifrənin təsdiqi ",
+                            "Şifrənin təsdiqi",
                             style = MaterialTheme.typography.bodySmall,
                             fontSize = 15.sp,
                         )
                         TextField(
                             shape = RoundedCornerShape(12.dp),
-                            value = password,
-                            onValueChange = { password = it },
+                            value = confirmPassword,
+                            onValueChange = { confirmPassword = it },
                             placeholder = {
                                 Text(
-                                    "Şifrəni təsdiq edin",
+                                    "Şifrənizi təsdiq edin",
                                     color = Color(0xFF9D9D9D)
                                 )
                             },
@@ -269,15 +352,17 @@ fun RegisterPage() {
                                 cursorColor = Color.White // Cursor color
                             ),
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-                            visualTransformation = if (showPassword) VisualTransformation.None else PasswordVisualTransformation(),
+                            visualTransformation = if (confirmShowPassword) VisualTransformation.None else PasswordVisualTransformation(),
                             trailingIcon = {
                                 val icon =
-                                    if (showPassword) painterResource(R.drawable.unhiddeneye) else painterResource(
+                                    if (confirmShowPassword) painterResource(R.drawable.unhiddeneye) else painterResource(
                                         R.drawable.hiddeneye
                                     )
                                 val description =
-                                    if (showPassword) "Hide password" else "Show password"
-                                IconButton(onClick = { showPassword = !showPassword }) {
+                                    if (confirmShowPassword) "Hide password" else "Show password"
+                                IconButton(onClick = {
+                                    confirmShowPassword = !confirmShowPassword
+                                }) {
                                     Icon(
                                         painter = icon,
                                         tint = Color(0xFF2981FF),
@@ -286,65 +371,400 @@ fun RegisterPage() {
                                 }
                             }
                         )
-
-                        Text(
-                            modifier = Modifier
-                                .clickable {}
-                                .fillMaxWidth()
-                                .wrapContentWidth(Alignment.End)
-                                .padding(top = 10.dp), text = "Şifrənizi unutmusunuz?",
-
-                            color = MaterialTheme.colorScheme.primary
-                        )
-
-
                     }
-
-
-                }
-
-                Spacer(modifier = Modifier.height(16.dp))
-
-
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize(),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Bottom
-                ) {
-                    AuthButton(
-                        text = "Daxil ol",
-                        onClick = {},
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(bottom = 16.dp)
-                    )
 
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.Center,
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 23.dp)
                     ) {
-                        Row {
-                            Text(
-                                "Hesabınız yoxdur?",
-                                color = Color(0xFF9D9D9D)
-                            )
-                            Text(
-                                modifier = Modifier.clickable {
+                        Checkbox(modifier = Modifier
+                            .background(Color.White)
+                            .size(width = 24.dp, height = 24.dp),
+                            checked = checked,
+                            onCheckedChange = { checked = it }
+                        )
 
-                                }, text = "Qeydiyyatdan keç",
+                        Text(
+                            modifier = Modifier.clickable {
 
-                                color = MaterialTheme.colorScheme.primary
-                            )
-                        }
+                            },
+                            text = "Istifadəçi şərtləri və Məxfilik siyasəti",
+                            color = MaterialTheme.colorScheme.primary,
+                            fontSize = 15.sp
+                        )
+                        Text(
+                            " qəbul edirəm.",
+                            color = Color(0xFF000B1B),
+                            fontSize = 15.sp
+
+                        )
                     }
 
+                }
+
+
+
+
+
+
+
+
+
+            }
+            //----------------------------------------------------------------------------------
+
+            Column(
+                modifier = Modifier
+                    .imePadding()
+                    .align(Alignment.BottomCenter)
+                    .background(Color.Green)
+
+
+            ) {
+                AuthButton(
+                    text = "Daxil ol",
+                    onClick = {},
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 20.dp)
+                )
+
+                Row(
+                    horizontalArrangement = Arrangement.Center,
+                    modifier = Modifier.fillMaxWidth()
+
+                ) {
+                    Text(
+                        "Hesabınız varmı?",
+                        color = Color(0xFF9D9D9D)
+                    )
+                    Text(
+                        modifier = Modifier.clickable {
+
+                        },
+                        text = "Daxil olun",
+                        color = MaterialTheme.colorScheme.primary
+                    )
 
                 }
+
+
             }
 
-        }
 
-    }
+        }
+//---------------------------------------------------------------------------------------------------
+
+//            //Box(Modifier.background(Color.Black)) {
+//            Column(
+//                modifier = Modifier
+//                    .background(Color.Green)
+//                    .imePadding()
+//                    .fillMaxSize()
+//                    .padding(top = 24.dp)
+//                    .padding(20.dp)
+//
+//
+//            ) {
+//
+//                Column(
+//                    Modifier
+//                        .background(Color.Yellow)
+//                        .verticalScroll(rememberScrollState())
+//                        .consumeWindowInsets(
+//                            WindowInsets.systemBars.only(WindowInsetsSides.Vertical)
+//                        )
+//
+//                ) {
+//                    Column(
+//                        Modifier.padding(bottom = 20.dp)
+//
+//                    ) {
+//                        Text(
+//                            "Daxil olun",
+//                            style = MaterialTheme.typography.headlineMedium,
+//                            fontSize = 28.sp,
+//                            fontWeight = FontWeight.SemiBold,
+//                            textAlign = TextAlign.Start,
+//                            color = Color.Black,
+//
+//
+//                            )
+//
+//                        Text(
+//                            "Zəhmət olmasa, giriş üçün məlumatlarınızı daxil edin.",
+//                            style = MaterialTheme.typography.bodySmall,
+//                            fontSize = 15.sp,
+//                            textAlign = TextAlign.Start,
+//                            color = Color(0xFF9D9D9D),
+//                            modifier = Modifier
+//                                .padding(top = 10.dp),
+//
+//
+//                            )
+//                    }
+//
+//
+//                    Spacer(modifier = Modifier.height(8.dp))
+//
+//                    Divider(
+//                        thickness = 0.5.dp,
+//                        color = Color(0xFF2981FF)
+//
+//                    )
+//                    Spacer(modifier = Modifier.height(8.dp))
+//
+//
+//
+//
+//
+//                    Column(
+//                        Modifier.padding(top = 20.dp)
+//
+//                    ) {
+//                        Text(
+//                            "Ad, Soyad ",
+//                            style = MaterialTheme.typography.bodySmall,
+//                            fontSize = 15.sp,
+//                        )
+//                        TextField(
+//                            shape = RoundedCornerShape(12.dp),
+//                            value = email,
+//                            onValueChange = {
+//                                email = it
+//                                emailError = false
+//                            },
+//                            isError = emailError,
+//                            placeholder = {
+//                                Text(
+//                                    ("Ad, Soyad"),
+//                                    color = Color(0xFF9D9D9D)
+//                                )
+//                            },
+//                            singleLine = true,
+//                            modifier = Modifier
+//                                .fillMaxWidth()
+//                                .padding(top = 10.dp),
+//
+//                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+//                            colors = TextFieldDefaults.textFieldColors(
+//                                containerColor = Color.White, // Background color of the TextField
+//                                focusedIndicatorColor = Color.White, // Underline color when focused
+//                                unfocusedIndicatorColor = Color.White, // Underline color when unfocused
+//                                disabledTextColor = Color.Gray, // Text color when TextField is disabled
+//                                errorIndicatorColor = Color.Red, // Underline color when in error state
+//                                errorCursorColor = Color.Red, // Cursor color when in error state
+//                                cursorColor = Color.White // Cursor color
+//                            )
+//
+//                        )
+//
+//                        Spacer(modifier = Modifier.height(8.dp))
+//
+//                        Text(
+//                            "E-poçt",
+//                            style = MaterialTheme.typography.bodySmall,
+//                            fontSize = 15.sp,
+//                        )
+//                        TextField(
+//                            shape = RoundedCornerShape(12.dp),
+//                            value = email,
+//                            onValueChange = {
+//                                email = it
+//                                emailError = false
+//                            },
+//                            isError = emailError,
+//                            placeholder = {
+//                                Text(
+//                                    ("E-poçtunuzu daxil edin"),
+//                                    color = Color(0xFF9D9D9D)
+//                                )
+//                            },
+//                            singleLine = true,
+//                            modifier = Modifier
+//                                .fillMaxWidth()
+//                                .padding(top = 10.dp),
+//
+//                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+//                            colors = TextFieldDefaults.textFieldColors(
+//                                containerColor = Color.White, // Background color of the TextField
+//                                focusedIndicatorColor = Color.White, // Underline color when focused
+//                                unfocusedIndicatorColor = Color.White, // Underline color when unfocused
+//                                disabledTextColor = Color.Gray, // Text color when TextField is disabled
+//                                errorIndicatorColor = Color.Red, // Underline color when in error state
+//                                errorCursorColor = Color.Red, // Cursor color when in error state
+//                                cursorColor = Color.White // Cursor color
+//                            )
+//
+//                        )
+//                        Spacer(modifier = Modifier.height(8.dp))
+//
+//                        Text(
+//                            "Şifrə",
+//                            style = MaterialTheme.typography.bodySmall,
+//                            fontSize = 15.sp,
+//                        )
+//                        TextField(
+//                            shape = RoundedCornerShape(12.dp),
+//                            value = password,
+//                            onValueChange = { password = it },
+//                            placeholder = {
+//                                Text(
+//                                    "Şifrənizi təyin edin",
+//                                    color = Color(0xFF9D9D9D)
+//                                )
+//                            },
+//                            singleLine = true,
+//                            modifier = Modifier
+//                                .fillMaxWidth()
+//                                .padding(top = 10.dp),
+//                            colors = TextFieldDefaults.textFieldColors(
+//                                containerColor = Color.White, // Background color of the TextField
+//                                focusedIndicatorColor = Color.White, // Underline color when focused
+//                                unfocusedIndicatorColor = Color.White, // Underline color when unfocused
+//                                disabledTextColor = Color.Gray, // Text color when TextField is disabled
+//                                errorIndicatorColor = Color.Red, // Underline color when in error state
+//                                errorCursorColor = Color.Red, // Cursor color when in error state
+//                                cursorColor = Color.White // Cursor color
+//                            ),
+//                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+//                            visualTransformation = if (showPassword) VisualTransformation.None else PasswordVisualTransformation(),
+//                            trailingIcon = {
+//                                val icon =
+//                                    if (showPassword) painterResource(R.drawable.unhiddeneye) else painterResource(
+//                                        R.drawable.hiddeneye
+//                                    )
+//                                val description =
+//                                    if (showPassword) "Hide password" else "Show password"
+//                                IconButton(onClick = { showPassword = !showPassword }) {
+//                                    Icon(
+//                                        painter = icon,
+//                                        tint = Color(0xFF2981FF),
+//                                        contentDescription = description
+//                                    )
+//                                }
+//                            }
+//                        )
+//
+//                        Spacer(modifier = Modifier.height(8.dp))
+//
+//                        Text(
+//                            "Şifrə",
+//                            style = MaterialTheme.typography.bodySmall,
+//                            fontSize = 15.sp,
+//                        )
+//                        TextField(
+//                            shape = RoundedCornerShape(12.dp),
+//                            value = password,
+//                            onValueChange = { password = it },
+//                            placeholder = {
+//                                Text(
+//                                    "Şifrənizi təyin edin",
+//                                    color = Color(0xFF9D9D9D)
+//                                )
+//                            },
+//                            singleLine = true,
+//                            modifier = Modifier
+//                                .fillMaxWidth()
+//                                .padding(top = 10.dp),
+//                            colors = TextFieldDefaults.textFieldColors(
+//                                containerColor = Color.White, // Background color of the TextField
+//                                focusedIndicatorColor = Color.White, // Underline color when focused
+//                                unfocusedIndicatorColor = Color.White, // Underline color when unfocused
+//                                disabledTextColor = Color.Gray, // Text color when TextField is disabled
+//                                errorIndicatorColor = Color.Red, // Underline color when in error state
+//                                errorCursorColor = Color.Red, // Cursor color when in error state
+//                                cursorColor = Color.White // Cursor color
+//                            ),
+//                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+//                            visualTransformation = if (showPassword) VisualTransformation.None else PasswordVisualTransformation(),
+//                            trailingIcon = {
+//                                val icon =
+//                                    if (showPassword) painterResource(R.drawable.unhiddeneye) else painterResource(
+//                                        R.drawable.hiddeneye
+//                                    )
+//                                val description =
+//                                    if (showPassword) "Hide password" else "Show password"
+//                                IconButton(onClick = { showPassword = !showPassword }) {
+//                                    Icon(
+//                                        painter = icon,
+//                                        tint = Color(0xFF2981FF),
+//                                        contentDescription = description
+//                                    )
+//                                }
+//                            }
+//                        )
+//
+//
+//
+//                        Text(
+//                            modifier = Modifier
+//                                .clickable {}
+//                                .fillMaxWidth()
+//                                .wrapContentWidth(Alignment.End)
+//                                .padding(top = 10.dp), text = "Şifrənizi unutmusunuz?",
+//
+//                            color = MaterialTheme.colorScheme.primary
+//                        )
+//
+//
+//                    }
+//
+//
+//                }
+//
+//                Spacer(modifier = Modifier.height(16.dp))
+//
+//
+//                Box {
+//                    Column(
+//                        modifier = Modifier
+//                            .align(Alignment.BottomCenter)
+//                            .wrapContentHeight()
+//                            .fillMaxWidth()
+//                            .background(Color.Red),
+//                        horizontalAlignment = Alignment.CenterHorizontally
+//                    ) {
+//                        AuthButton(
+//                            text = "Daxil ol",
+//                            onClick = {},
+//                            modifier = Modifier
+//                                .fillMaxWidth()
+//                                .padding(bottom = 16.dp)
+//                        )
+//
+//                        Row(
+//                            verticalAlignment = Alignment.CenterVertically,
+//                            horizontalArrangement = Arrangement.Center,
+//                            modifier = Modifier.fillMaxWidth()
+//                        ) {
+//                            Text(
+//                                "Hesabınız varmı?",
+//                                color = Color(0xFF9D9D9D)
+//                            )
+//                            Text(
+//                                modifier = Modifier.clickable {
+//
+//                                },
+//                                text = "Daxil olun",
+//                                color = MaterialTheme.colorScheme.primary
+//                            )
+//
+//                        }
+//
+//
+//                    }
+//                }
+//
+//            }
+//
+//
+//            //}
+
+
+    })
+
 }

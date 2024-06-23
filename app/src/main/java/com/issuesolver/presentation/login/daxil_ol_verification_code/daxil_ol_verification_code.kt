@@ -159,7 +159,6 @@ fun VerificationCodePage() {
                         }
                     }
 
-
             Spacer(modifier = Modifier.height(16.dp))
             Text("Qalan vaxt: $remainingTime", style = MaterialTheme.typography.bodyMedium,
                 fontSize = 17.sp,
@@ -261,9 +260,6 @@ fun CharacterBox(character: String, isFocused: Boolean, modifier: Modifier = Mod
     }
 }
 
-
-
-
 @Composable
 internal fun CharacterContainer(
     index: Int,
@@ -333,7 +329,7 @@ fun VerificationCodePagePreview() {
 
 
 
-//
+
 //@OptIn(ExperimentalComposeUiApi::class)
 //@Composable
 //fun VerificationCodePage() {
