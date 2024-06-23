@@ -2,7 +2,7 @@ package com.issuesolver.data.network.auth
 
 import com.issuesolver.domain.entity.networkModel.LoginRequest
 import com.issuesolver.domain.entity.networkModel.LoginResponse
-import com.issuesolver.domain.entity.networkModel.RegisterErrorResponseModel
+import com.issuesolver.domain.entity.networkModel.RegisterResponseModel
 import com.issuesolver.domain.entity.networkModel.RegisterRequestModel
 import okhttp3.ResponseBody
 import retrofit2.Response
@@ -16,7 +16,7 @@ interface LoginService {
     suspend fun login(@Body request: LoginRequest): Response<LoginResponse>
 
     @POST("api/Auths/register")
-    suspend fun register(@Body request: RegisterRequestModel): Response<RegisterErrorResponseModel>
+    suspend fun register(@Body request: RegisterRequestModel): Response<RegisterResponseModel>
 
     @POST("/api/v1/auth/resend-otp")
     suspend fun resendOtp(@Query("email") email: String?):Response<ResponseBody>

@@ -3,7 +3,7 @@ import com.google.gson.Gson
 import com.issuesolver.common.Resource
 import com.issuesolver.data.repository.RegisterRepositoryInterface
 import com.issuesolver.data.repository.ResendOtpRepositoryInterface
-import com.issuesolver.domain.entity.networkModel.RegisterErrorResponseModel
+import com.issuesolver.domain.entity.networkModel.RegisterResponseModel
 import com.issuesolver.domain.entity.networkModel.RegisterRequestModel
 import dagger.Module
 import dagger.Provides
@@ -42,12 +42,12 @@ class RegisterUseCase @Inject constructor(
         try {
             val response = registerRepository.createUser(request)
             if (response.isSuccessful) {
-                emit(Resource.Success(response.body()?.message))
+                emit(Resource.Success(response.body()?.Message))
             } else {
                 val errorResponse = response.errorBody()?.string()?.let {
                     parseErrorResponse(it)
                 }
-                emit(Resource.Error(errorResponse?.message ?: "Unknown Error"))
+                emit(Resource.Error(errorResponse?.Message ?: "Unknown Error"))
             }
         } catch (e: IOException) {
             emit(Resource.Error("Network Error: ${e.localizedMessage}"))
@@ -58,12 +58,12 @@ class RegisterUseCase @Inject constructor(
         }
     }
 
-    private fun parseErrorResponse(json: String): RegisterErrorResponseModel? {
+    private fun parseErrorResponse(json: String): RegisterResponseModel? {
         // Use your preferred JSON library here (e.g., Gson)
         // Assuming you're using Gson:
         return try {
             val gson = Gson()
-            gson.fromJson(json, RegisterErrorResponseModel::class.java)
+            gson.fromJson(json, RegisterResponseModel::class.java)
         } catch (e: Exception) {
             null
         }

@@ -1,23 +1,19 @@
 package com.issuesolver.data.repository
 
-import com.issuesolver.common.Resource
 import com.issuesolver.data.network.auth.LoginService
-import com.issuesolver.domain.entity.networkModel.RegisterErrorResponseModel
+import com.issuesolver.domain.entity.networkModel.RegisterResponseModel
 import com.issuesolver.domain.entity.networkModel.RegisterRequestModel
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
-import okhttp3.ResponseBody
 import retrofit2.Response
 import javax.inject.Inject
 
 interface RegisterRepositoryInterface{
-    suspend fun createUser(registerRequestModel: RegisterRequestModel): Response<RegisterErrorResponseModel>
+    suspend fun createUser(registerRequestModel: RegisterRequestModel): Response<RegisterResponseModel>
 }
 
 class RegisterRepositoryImpl @Inject constructor(private val loginService: LoginService): RegisterRepositoryInterface {
 
 
-        override suspend fun createUser(registerRequestModel: RegisterRequestModel): Response<RegisterErrorResponseModel>{
+        override suspend fun createUser(registerRequestModel: RegisterRequestModel): Response<RegisterResponseModel>{
 
 //            val response = loginService.register(registerRequestModel)
 //

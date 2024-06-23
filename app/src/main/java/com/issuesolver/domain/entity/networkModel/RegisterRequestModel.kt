@@ -6,9 +6,9 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class RegisterRequestModel(
     val email: String? = null,
-    val firstName: String? = null,
-    val lastName: String? = null,
+    val fullName: String? = null,
     val password: String? = null,
     val confirmPassword: String? = null
 ) :Parcelable
+
 

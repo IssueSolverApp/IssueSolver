@@ -1,5 +1,6 @@
 package com.issuesolver.presentation.login.qeydiyyat_page
 
+import androidx.activity.viewModels
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -64,15 +65,22 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.issuesolver.R
+import com.issuesolver.domain.entity.networkModel.RegisterRequestModel
 import com.issuesolver.presentation.common.AuthButton
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class,
+@OptIn(
+    ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class,
     ExperimentalLayoutApi::class
 )
 @Composable
-fun RegisterPage(cm: Modifier = Modifier, contentModifier: Modifier = Modifier) {
+fun RegisterPage(cm: Modifier = Modifier, viewModel: RegisterViewModel = hiltViewModel()) {
+
+
+    var name by remember { mutableStateOf("") }
+    var surname by remember { mutableStateOf("") }
 
 
     var email by remember { mutableStateOf("") }
@@ -162,12 +170,10 @@ fun RegisterPage(cm: Modifier = Modifier, contentModifier: Modifier = Modifier) 
                         )
                         TextField(
                             shape = RoundedCornerShape(12.dp),
-                            value = email,
+                            value = name,
                             onValueChange = {
-                                email = it
-                                emailError = false
+                                name = it
                             },
-                            isError = emailError,
                             placeholder = {
                                 Text(
                                     ("Ad"),
@@ -200,12 +206,10 @@ fun RegisterPage(cm: Modifier = Modifier, contentModifier: Modifier = Modifier) 
                         )
                         TextField(
                             shape = RoundedCornerShape(12.dp),
-                            value = email,
+                            value = surname,
                             onValueChange = {
-                                email = it
-                                emailError = false
+                                surname = it
                             },
-                            isError = emailError,
                             placeholder = {
                                 Text(
                                     ("Soyad"),
@@ -406,13 +410,6 @@ fun RegisterPage(cm: Modifier = Modifier, contentModifier: Modifier = Modifier) 
                 }
 
 
-
-
-
-
-
-
-
             }
             //----------------------------------------------------------------------------------
 
@@ -426,7 +423,17 @@ fun RegisterPage(cm: Modifier = Modifier, contentModifier: Modifier = Modifier) 
             ) {
                 AuthButton(
                     text = "Daxil ol",
-                    onClick = {},
+                    onClick = {
+                        val fullname = "$name $surname"
+                        viewModel.register(
+                            RegisterRequestModel(
+                                email = email,
+                                fullName = fullname,
+                                password = password,
+                                confirmPassword = confirmPassword
+                            )
+                        )
+                    },
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(bottom = 20.dp)
