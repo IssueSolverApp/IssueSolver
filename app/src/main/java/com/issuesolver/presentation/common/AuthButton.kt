@@ -35,8 +35,11 @@ fun AuthButton(
         shape = RoundedCornerShape(50.dp),
         enabled = enabled,
         colors = ButtonDefaults.buttonColors(
-            containerColor = buttonColor
-        )
+            containerColor = buttonColor,
+            disabledContainerColor = Color(0xFF9AC2FB)
+//                .copy(alpha = 0.36f),
+
+            )
     ) {
         Text(
             text = text,

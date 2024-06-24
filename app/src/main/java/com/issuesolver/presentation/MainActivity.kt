@@ -5,6 +5,7 @@ import android.view.WindowManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.core.view.WindowCompat
 import androidx.compose.foundation.gestures.scrollBy
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.WindowInsets
@@ -21,7 +22,7 @@ import androidx.core.view.WindowCompat
 import com.issuesolver.presentation.login.daxil_ol_page.LoginPage
 import com.issuesolver.presentation.login.daxil_ol_page_email.EmailVerificationPage
 import com.issuesolver.presentation.login.daxil_ol_verification_code.VerificationCodePage
-import com.issuesolver.presentation.login.qeydiyyat_page.RegisterPage
+import com.issuesolver.presentation.navigation.AppNavigation
 import com.issuesolver.ui.theme.IssueSolverTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -39,36 +40,11 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             IssueSolverTheme {
-
-//                val scrollState = rememberScrollState()
-//                val coroutineScope = rememberCoroutineScope()
-//                val keyboardHeight = WindowInsets.ime.getBottom(LocalDensity.current)
-//
-//                LaunchedEffect(key1 = keyboardHeight) {
-//                    coroutineScope.launch {
-//                        scrollState.scrollBy(keyboardHeight.toFloat())
-//                    }
-//                }
-
-
-                    RegisterPage()
-
-
+                AppNavigation()
             }
         }
     }
 }
-
-
-
-//@Composable
-//fun KeyboardAware(
-//    content: @Composable () -> Unit
-//) {
-//    Box(modifier = Modifier.imePadding()) {
-//        content()
-//    }
-//}
 
 
 

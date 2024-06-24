@@ -26,7 +26,7 @@ private val LightColorScheme = lightColorScheme(
     onSurfaceVariant = Color(0xFFF0F4F9),
     inverseSurface = Color(0xFF429A60),
     inverseOnSurface = Color(0xFF56B777),
-    inversePrimary = Color(0xFF0C5ED9)
+    inversePrimary = Color(0xFF0C5ED9),
 )
 
 @Composable
