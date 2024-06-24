@@ -27,13 +27,11 @@ import com.issuesolver.presentation.common.AuthButton
 import com.issuesolver.presentation.common.ErrorText
 import com.issuesolver.presentation.navigation.mockNavController
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun EmailVerificationPage(
     navController: NavController,
     viewModel: EmailVerificationPageViewModel = hiltViewModel()
 ) {
-    var email by remember { mutableStateOf("") }
     val uiState by viewModel.uiState.collectAsState()
     val isEmailError = uiState.emailError != null
 
@@ -41,15 +39,15 @@ fun EmailVerificationPage(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(top = 24.dp)
+                .padding(top = 4.dp)
                 .padding(20.dp)
+                .padding(padding)
                 .imePadding()
         ) {
             Column() {
                 Column() {
                     Box(
                         modifier = Modifier
-                            .padding(top = 20.dp)
                             .size(40.dp)
                             .clip(RoundedCornerShape(100.dp))
                             .background(Color.White)
@@ -84,16 +82,12 @@ fun EmailVerificationPage(
                             .padding(top = 10.dp, bottom = 20.dp),
                         )
                 }
-                Spacer(
-                    modifier = Modifier.height(8.dp)
-                )
                 Divider(
                     thickness = 0.5.dp,
                     color = Color(0xFF2981FF)
                 )
-                Spacer(modifier = Modifier.height(8.dp))
+                Spacer(modifier = Modifier.height(32.dp))
                 Column(
-                    Modifier.padding(top = 20.dp)
                 ) {
                     Text(
                         "E-poçt",
@@ -119,7 +113,7 @@ fun EmailVerificationPage(
                         singleLine = true,
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(top = 10.dp)
+                            .padding(top = 8.dp)
                             .then(
                                 if (isEmailError) Modifier.border(
                                     1.dp,
@@ -129,22 +123,22 @@ fun EmailVerificationPage(
                                 else Modifier.border(1.dp, Color.White, RoundedCornerShape(12.dp))
                             ),
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-                        colors = TextFieldDefaults.textFieldColors(
-                            containerColor = Color.White,
-                            errorContainerColor = Color.White,
+                        colors = TextFieldDefaults.colors(
                             disabledTextColor = Color(0xFF2981FF),
-                            focusedIndicatorColor = Color.Transparent,
+                            focusedContainerColor = Color.White,
+                            unfocusedContainerColor = Color.White,
+                            disabledContainerColor = Color.White,
+                            errorContainerColor = Color.White,
+                            cursorColor = Color(0xFF2981FF),
                             errorCursorColor = Color.Red,
-                            cursorColor = Color(0xFF2981FF)
+                            focusedIndicatorColor = Color.Transparent,
                         )
                         )
                     ErrorText(
                         errorMessage = uiState.emailError,
-//                        isVisible = isEmailError
                     )
                 }
             }
-            Spacer(modifier = Modifier.height(16.dp))
             Column(
                 modifier = Modifier.align(Alignment.BottomCenter)
             ) {
@@ -154,7 +148,6 @@ fun EmailVerificationPage(
                     enabled = uiState.isInputValid,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(bottom = 48.dp)
                 )
             }
         }
