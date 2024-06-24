@@ -97,24 +97,3 @@ class RegisterUseCase @Inject constructor(
 
 
 
-
-
-
-
-//TODO("Надо будет перевести его в основной di домаин уровня")
-@Module
-@InstallIn(SingletonComponent::class)
-class UseCaseModule {
-
-    @Provides
-    @Singleton
-    fun provideRegisterUseCase(registerRepository: RegisterRepositoryInterface) =
-        RegisterUseCase(registerRepository)
-
-
-    @Provides
-    @Singleton
-    fun provideResendOtpUseCase(resendOtpRepository: ResendOtpRepositoryInterface) =
-        ResendOtpUseCase(resendOtpRepository)
-
-}
