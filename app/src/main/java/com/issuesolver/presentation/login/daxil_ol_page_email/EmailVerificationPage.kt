@@ -52,18 +52,18 @@ fun EmailVerificationPage(navController: NavController,viewModel: EmailVerificat
 
                             .padding(top = 20.dp)
                             .size(40.dp)
-                            .clip(RoundedCornerShape(100.dp)) // Apply rounded corners to the background
-                            .background(Color.White) // Set the background color
+                            .clip(RoundedCornerShape(100.dp))
+                            .background(Color.White)
                             .clickable {
                                 navController.popBackStack()
                             },
-                                contentAlignment = Alignment.Center // Center the content inside the Box
+                                contentAlignment = Alignment.Center
 
                     ) {
                         Image(
                             painter = painterResource(R.drawable.backarray),
                             contentDescription = "Back",
-                            modifier = Modifier.size(24.dp) // Ensures the image fills the Box
+                            modifier = Modifier.size(24.dp)
                         )
                     }
                     Text(
@@ -146,14 +146,16 @@ fun EmailVerificationPage(navController: NavController,viewModel: EmailVerificat
             Spacer(modifier = Modifier.height(16.dp))
 
             Column(
-                modifier = Modifier
-                    .fillMaxSize(),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Bottom
+                modifier = Modifier.align(Alignment.BottomCenter)
+//                    .fillMaxSize(),
+//                horizontalAlignment = Alignment.CenterHorizontally,
+//                verticalArrangement = Arrangement.Bottom
             ) {
                 AuthButton(
                     text = "Təsdiq kodu göndər",
                     onClick = {navController.navigate("otp")},
+                    enabled = uiState.isInputValid,
+
                     modifier = Modifier.fillMaxWidth().padding(bottom = 48.dp)
                 )
             }

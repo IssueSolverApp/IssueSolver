@@ -31,8 +31,7 @@ class EmailVerificationPageViewModel @Inject constructor(
 
             is VerificationCodePageEvent.Submit -> {
                 if (uiState.value.isInputValid) {
-                    // Proceed with backend authentication
-                    // Handle backend response and update UI state accordingly
+
                 }
             }
 
