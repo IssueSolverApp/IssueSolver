@@ -12,6 +12,5 @@ fun HorizontalDivider(
     modifier: Modifier = Modifier,
     thickness: Dp = DividerDefaults.Thickness,
     color: androidx.compose.ui.graphics.Color = Color(0xFF2981FF)
-
 ): Unit {
 }

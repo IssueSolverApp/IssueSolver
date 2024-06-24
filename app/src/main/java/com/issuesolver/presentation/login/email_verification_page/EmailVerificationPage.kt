@@ -1,4 +1,4 @@
-package com.issuesolver.presentation.login.daxil_ol_page_email
+package com.issuesolver.presentation.login.email_verification_page
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -29,8 +29,10 @@ import com.issuesolver.presentation.navigation.mockNavController
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun EmailVerificationPage(navController: NavController,viewModel: EmailVerificationPageViewModel = hiltViewModel()) {
-
+fun EmailVerificationPage(
+    navController: NavController,
+    viewModel: EmailVerificationPageViewModel = hiltViewModel()
+) {
     var email by remember { mutableStateOf("") }
     val uiState by viewModel.uiState.collectAsState()
     val isEmailError = uiState.emailError != null
@@ -43,13 +45,10 @@ fun EmailVerificationPage(navController: NavController,viewModel: EmailVerificat
                 .padding(20.dp)
                 .imePadding()
         ) {
-
             Column() {
                 Column() {
-
                     Box(
                         modifier = Modifier
-
                             .padding(top = 20.dp)
                             .size(40.dp)
                             .clip(RoundedCornerShape(100.dp))
@@ -57,8 +56,7 @@ fun EmailVerificationPage(navController: NavController,viewModel: EmailVerificat
                             .clickable {
                                 navController.popBackStack()
                             },
-                                contentAlignment = Alignment.Center
-
+                        contentAlignment = Alignment.Center
                     ) {
                         Image(
                             painter = painterResource(R.drawable.backarray),
@@ -74,8 +72,7 @@ fun EmailVerificationPage(navController: NavController,viewModel: EmailVerificat
                         textAlign = TextAlign.Start,
                         color = Color.Black,
                         modifier = Modifier
-                                .padding(top = 24.dp),
-
+                            .padding(top = 24.dp),
                         )
                     Text(
                         "E-poçt hesabınıza təsdiq kod göndəriləcək.",
@@ -85,21 +82,16 @@ fun EmailVerificationPage(navController: NavController,viewModel: EmailVerificat
                         color = Color(0xFF9D9D9D),
                         modifier = Modifier
                             .padding(top = 10.dp, bottom = 20.dp),
-
-
                         )
                 }
-                Spacer(modifier = Modifier.height(8.dp)
-                    )
-
+                Spacer(
+                    modifier = Modifier.height(8.dp)
+                )
                 Divider(
                     thickness = 0.5.dp,
-                    color=Color(0xFF2981FF)
-
+                    color = Color(0xFF2981FF)
                 )
                 Spacer(modifier = Modifier.height(8.dp))
-
-
                 Column(
                     Modifier.padding(top = 20.dp)
                 ) {
@@ -107,63 +99,67 @@ fun EmailVerificationPage(navController: NavController,viewModel: EmailVerificat
                         "E-poçt",
                         style = MaterialTheme.typography.bodySmall,
                         fontSize = 15.sp,
-
                         )
                     TextField(
                         shape = RoundedCornerShape(12.dp),
                         value = uiState.email,
-                        onValueChange = { viewModel.handleEvent(VerificationCodePageEvent.EmailChanged(it)) },
-                        placeholder = { Text(
-                            ("E-poçtunuzu daxil edin"),
-                            color = if (isEmailError) Color.Red else Color.Gray
-                        )},
+                        onValueChange = {
+                            viewModel.handleEvent(
+                                VerificationCodePageEvent.EmailChanged(
+                                    it
+                                )
+                            )
+                        },
+                        placeholder = {
+                            Text(
+                                ("E-poçtunuzu daxil edin"),
+                                color = if (isEmailError) Color.Red else Color.Gray
+                            )
+                        },
                         singleLine = true,
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(top = 10.dp)
                             .then(
-                                if (isEmailError) Modifier.border(1.dp, Color.Red, RoundedCornerShape(12.dp))
+                                if (isEmailError) Modifier.border(
+                                    1.dp,
+                                    Color.Red,
+                                    RoundedCornerShape(12.dp)
+                                )
                                 else Modifier.border(1.dp, Color.White, RoundedCornerShape(12.dp))
                             ),
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
                         colors = TextFieldDefaults.textFieldColors(
                             containerColor = Color.White,
                             errorContainerColor = Color.White,
-                            disabledTextColor = Color(0xFF2981FF) ,
+                            disabledTextColor = Color(0xFF2981FF),
                             focusedIndicatorColor = Color.Transparent,
                             errorCursorColor = Color.Red,
                             cursorColor = Color(0xFF2981FF)
-                        ),
-
-                    )
+                        )
+                        )
                     ErrorText(
                         errorMessage = uiState.emailError,
 //                        isVisible = isEmailError
                     )
                 }
             }
-
             Spacer(modifier = Modifier.height(16.dp))
-
             Column(
                 modifier = Modifier.align(Alignment.BottomCenter)
-//                    .fillMaxSize(),
-//                horizontalAlignment = Alignment.CenterHorizontally,
-//                verticalArrangement = Arrangement.Bottom
             ) {
                 AuthButton(
                     text = "Təsdiq kodu göndər",
-                    onClick = {navController.navigate("otp")},
+                    onClick = { navController.navigate("otp") },
                     enabled = uiState.isInputValid,
-
-                    modifier = Modifier.fillMaxWidth().padding(bottom = 48.dp)
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 48.dp)
                 )
             }
         }
-
     }
 }
-
 @Preview(showBackground = true)
 @Composable
 fun EmailVerificationPagePreview() {

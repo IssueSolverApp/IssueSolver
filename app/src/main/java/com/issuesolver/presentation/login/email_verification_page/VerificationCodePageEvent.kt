@@ -1,4 +1,4 @@
-package com.issuesolver.presentation.login.daxil_ol_page_email
+package com.issuesolver.presentation.login.email_verification_page
 
 
 sealed class VerificationCodePageEvent {

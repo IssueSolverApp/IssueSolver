@@ -1,7 +1,6 @@
-package com.issuesolver.presentation.login.daxil_ol_page
+package com.issuesolver.presentation.login.login_page
 
 import android.annotation.SuppressLint
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -18,8 +17,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -28,7 +25,6 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.view.ViewCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.issuesolver.R
@@ -43,14 +39,10 @@ import kotlinx.coroutines.launch
 fun LoginPage(
     navController: NavController, viewModel: LoginPageViewModel = hiltViewModel(),
 ) {
-
-    var email by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
     var showPassword by remember { mutableStateOf(false) }
     val uiState by viewModel.uiState.collectAsState()
     val isEmailError = uiState.emailError != null
     val isPasswordError = uiState.passwordError != null
-
     val scrollState = rememberScrollState()
     val coroutineScope = rememberCoroutineScope()
     val keyboardHeight = WindowInsets.ime.getBottom(LocalDensity.current)
@@ -60,13 +52,6 @@ fun LoginPage(
             scrollState.scrollBy(keyboardHeight.toFloat())
         }
     }
-
-
-
-
-
-
-
     Scaffold(
         content = { padding ->
             Box(
@@ -75,27 +60,13 @@ fun LoginPage(
                     .padding(top = 24.dp)
                     .padding(20.dp)
                     .imePadding()
-//                    .background(Color.Black)
-
-
             ) {
-
-
                 Column(
                     Modifier.verticalScroll(scrollState)
-
-
                 ) {
-
                     Column(
-
                         Modifier.padding(bottom = 20.dp)
-//                            .background(Color.Yellow)
-
-
-                    ) {
-
-
+                       ) {
                         Text(
                             "Daxil olun",
                             style = MaterialTheme.typography.headlineMedium,
@@ -103,8 +74,7 @@ fun LoginPage(
                             fontWeight = FontWeight.SemiBold,
                             textAlign = TextAlign.Start,
                             color = Color.Black
-                            )
-
+                        )
                         Text(
                             "Zəhmət olmasa, giriş üçün məlumatlarınızı daxil edin.",
                             style = MaterialTheme.typography.bodySmall,
@@ -116,18 +86,13 @@ fun LoginPage(
                                 .padding(top = 10.dp)
                         )
                     }
-
                     Divider(
                         thickness = 0.5.dp,
                         color = Color(0xFF2981FF)
-
                     )
                     Spacer(modifier = Modifier.height(8.dp))
-
-
                     Column(
                         Modifier.padding(top = 20.dp)
-//                            .background(Color.Blue)
                     ) {
                         Text(
                             "E-poçt",
@@ -161,7 +126,6 @@ fun LoginPage(
                                         RoundedCornerShape(12.dp)
                                     )
                                 ),
-
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
                             colors = TextFieldDefaults.textFieldColors(
                                 containerColor = Color.White,
@@ -171,23 +135,18 @@ fun LoginPage(
                                 errorCursorColor = Color.Red,
                                 cursorColor = Color(0xFF2981FF)
                             ),
-
-
                             )
                         ErrorText(
                             errorMessage = uiState.emailError,
 //                        isVisible = isEmailError
                         )
-
                         Spacer(modifier = Modifier.height(20.dp))
-
                         Text(
                             "Şifrə",
                             color = if (isPasswordError) Color.Red else Color.Black,
                             style = MaterialTheme.typography.bodySmall,
                             fontSize = 15.sp,
                         )
-
                         TextField(
                             shape = RoundedCornerShape(12.dp),
                             value = uiState.password,
@@ -250,9 +209,6 @@ fun LoginPage(
                             errorMessage = uiState.passwordError,
 //                        isVisible = isPasswordError
                         )
-
-
-
                         Text(
                             modifier = Modifier
                                 .clickable(
@@ -267,49 +223,30 @@ fun LoginPage(
 //                                    bottom=100.dp
                                 ),
                             text = "Şifrənizi unutmusunuz?",
-
-
                             color = Color(0xFF4D96FF)
                         )
-
                         Spacer(modifier = Modifier.height(100.dp))
-
                     }
                 }
-
-
-
                 Column(
                     modifier = Modifier
                         .align(Alignment.BottomCenter)
-//                        .fillMaxSize()
                         .background(Color(0xFFF0F4F9)),
-//
-//                    horizontalAlignment = Alignment.CenterHorizontally,
-//                    verticalArrangement = Arrangement.Bottom
                 ) {
-
-
                     AuthButton(
                         text = "Daxil ol",
                         onClick = { viewModel.handleEvent(LoginPageEvent.Submit) },
                         enabled = uiState.isInputValid,
-
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(bottom = 16.dp)
-
-
                     )
-
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.Center,
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(bottom = 27.dp)
-
-
                     ) {
                         Row {
                             Text(
@@ -324,18 +261,12 @@ fun LoginPage(
                                         indication = null
                                     ),
                                 text = "Qeydiyyatdan keç",
-
                                 color = MaterialTheme.colorScheme.primary
                             )
                         }
                     }
-
-
                 }
-
-
             }
-
         }
     )
 }

@@ -1,4 +1,4 @@
-package com.issuesolver.presentation.login.daxil_ol_page
+package com.issuesolver.presentation.login.login_page
 
 sealed class LoginPageEvent {
     data class EmailChanged(val email: String) : LoginPageEvent()

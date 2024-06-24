@@ -2,9 +2,6 @@ package com.issuesolver.domain.useCase.login
 
 class ValidateRepeatedPasswordUseCase {
     fun execute(newpassword: String, repeatedPassword: String): ValidationResult {
-
-
-
         if(newpassword != repeatedPassword) {
             return ValidationResult(
                 successful = false,
@@ -15,9 +12,5 @@ class ValidateRepeatedPasswordUseCase {
             successful = true
         )
     }
-
-
-
-
 }
 

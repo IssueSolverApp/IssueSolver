@@ -10,15 +10,12 @@ class ValidateEmailUseCase() {
                 errorMessage = "Bu e-poçt ünvanı boş olmamalıdır"
             )
         }
-
         if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             return ValidationResult(
                 successful = false,
                 errorMessage = "E-poçt yanlışdır"
             )
         }
-
-
         return ValidationResult(
             successful = true
         )

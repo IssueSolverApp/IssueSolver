@@ -1,8 +1,8 @@
-package com.issuesolver.presentation.login.daxil_ol_page
+package com.issuesolver.presentation.login.login_page
 
 import androidx.lifecycle.ViewModel
-import com.issuesolver.domain.usecase.login.ValidateEmailUseCase
-import com.issuesolver.domain.usecase.login.ValidatePasswordUseCase
+import com.issuesolver.domain.useCase.login.ValidateEmailUseCase
+import com.issuesolver.domain.useCase.login.ValidatePasswordUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -15,7 +15,6 @@ class LoginPageViewModel @Inject constructor(
     private val validateEmailUseCase: ValidateEmailUseCase,
     private val validatePasswordUseCase: ValidatePasswordUseCase
 ) : ViewModel() {
-
     private val _uiState = MutableStateFlow(LoginPageState())
     val uiState: StateFlow<LoginPageState> = _uiState.asStateFlow()
 

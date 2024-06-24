@@ -4,9 +4,9 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.issuesolver.presentation.login.daxil_ol_page.LoginPage
-import com.issuesolver.presentation.login.daxil_ol_page_email.EmailVerificationPage
-import com.issuesolver.presentation.login.daxil_ol_verification_code.VerificationCodePage
+import com.issuesolver.presentation.login.login_page.LoginPage
+import com.issuesolver.presentation.login.email_verification_page.EmailVerificationPage
+import com.issuesolver.presentation.login.verification_code_page.VerificationCodePage
 import com.issuesolver.presentation.login.password_change_page.PasswordChangePage
 
 @Composable

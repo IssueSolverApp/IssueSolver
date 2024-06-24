@@ -24,7 +24,6 @@ fun AuthButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
-    isLoading: Boolean = false
 ) {
     val buttonColor=Color(0xFF2981FF)
     Button(
@@ -37,8 +36,6 @@ fun AuthButton(
         colors = ButtonDefaults.buttonColors(
             containerColor = buttonColor,
             disabledContainerColor = Color(0xFF9AC2FB)
-//                .copy(alpha = 0.36f),
-
             )
     ) {
         Text(
@@ -50,7 +47,6 @@ fun AuthButton(
         )
     }
 }
-
 
 @Preview(showBackground = true)
 @Composable
