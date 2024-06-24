@@ -28,7 +28,7 @@ class ApiModule {
     @Singleton
     fun provideApiClient(gson: Gson, client: OkHttpClient) : Retrofit {
         val retrofit = Retrofit.Builder()
-        retrofit.baseUrl("https://my-ms-8f074ae6a860.herokuapp.com/")
+        retrofit.baseUrl("https://govermentauthapi20240610022027.azurewebsites.net/")
             .addConverterFactory(GsonConverterFactory.create(gson))
             .client(client)
             .build()

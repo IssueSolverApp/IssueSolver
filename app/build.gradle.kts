@@ -63,6 +63,7 @@ dependencies {
 
     implementation("com.squareup.okhttp3:logging-interceptor:4.9.2")
 
+    implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
 
 
     implementation("com.google.dagger:hilt-android:2.46")

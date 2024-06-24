@@ -15,12 +15,11 @@
         android:theme="@style/Theme.IssueSolver"
         tools:targetApi="31">
         <activity
-
             android:name=".presentation.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
-
-            android:theme="@style/Theme.IssueSolver">
+            android:theme="@style/Theme.IssueSolver"
+            android:windowSoftInputMode="adjustResize|adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
