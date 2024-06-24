@@ -72,11 +72,10 @@ import com.issuesolver.presentation.common.AuthButton
 import kotlinx.coroutines.launch
 
 @OptIn(
-    ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class,
-    ExperimentalLayoutApi::class
+    ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class
 )
 @Composable
-fun RegisterPage(cm: Modifier = Modifier, viewModel: RegisterViewModel = hiltViewModel()) {
+fun RegisterPage( viewModel: RegisterViewModel = hiltViewModel()) {
 
 
     var name by remember { mutableStateOf("") }
@@ -87,7 +86,7 @@ fun RegisterPage(cm: Modifier = Modifier, viewModel: RegisterViewModel = hiltVie
     var emailError by remember { mutableStateOf(false) }
     var password by remember { mutableStateOf("") }
     var confirmPassword by remember { mutableStateOf("") }
-    var showPassword by remember { mutableStateOf(value = false) }
+//    var showPassword by remember { mutableStateOf(value = false) }
     var confirmShowPassword by remember { mutableStateOf(value = false) }
 
     var checked by remember { mutableStateOf(false) }
@@ -97,292 +96,282 @@ fun RegisterPage(cm: Modifier = Modifier, viewModel: RegisterViewModel = hiltVie
 
 
 
-
-
     Scaffold(content = { padding ->
-        Box(
-            modifier = cm
-                .fillMaxSize()
-                .statusBarsPadding()
-                .navigationBarsPadding()
-                .imePadding()
-                .background(Color.Yellow),
 
-
-            ) {
-            Column(
+            Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(top = 20.dp, start = 20.dp, end = 20.dp)
-                    .background(Color.Red)
-            ) {
-                Column {
-                    Text(
-                        "Qeydiyyat",
-                        style = MaterialTheme.typography.headlineMedium,
-                        fontSize = 28.sp,
-                        fontWeight = FontWeight.SemiBold,
-                        textAlign = TextAlign.Start,
-                        color = Color.Black,
+                    .statusBarsPadding()
+                    .navigationBarsPadding()
+                    .imePadding()
 
 
-                        )
 
-                    Text(
-                        "Zəhmət olmasa, şəxsi məlumatlarınızı daxil edin.",
-                        style = MaterialTheme.typography.bodySmall,
-                        fontSize = 15.sp,
-                        textAlign = TextAlign.Start,
-                        color = Color(0xFF9D9D9D),
-                        modifier = Modifier
-                            .padding(top = 10.dp),
-
-
-                        )
-                }
-
-
-                Divider(
-                    modifier = Modifier
-                        .padding(top = 20.dp),
-                    thickness = 0.5.dp,
-                    color = Color(0xFF2981FF)
-
-                )
-
-
+                ) {
                 Column(
                     modifier = Modifier
-                        .background(Color.Magenta)
-                        .padding(top = 28.dp)
+                        .fillMaxSize()
                         .imePadding()
+                        .padding(top = 20.dp, start = 20.dp, end = 20.dp)
+
+                ) {
+                    Column {
+                        Text(
+                            "Qeydiyyat",
+                            style = MaterialTheme.typography.headlineMedium,
+                            fontSize = 28.sp,
+                            fontWeight = FontWeight.SemiBold,
+                            textAlign = TextAlign.Start,
+                            color = Color.Black,
+
+
+                            )
+
+                        Text(
+                            "Zəhmət olmasa, şəxsi məlumatlarınızı daxil edin.",
+                            style = MaterialTheme.typography.bodySmall,
+                            fontSize = 15.sp,
+                            textAlign = TextAlign.Start,
+                            color = Color(0xFF9D9D9D),
+                            modifier = Modifier
+                                .padding(top = 10.dp),
+
+
+                            )
+                    }
+
+
+                    Divider(
+                        modifier = Modifier
+                            .padding(top = 20.dp),
+                        thickness = 0.5.dp,
+                        color = Color(0xFF2981FF)
+
+                    )
+
+
+                    Column(
+                        modifier = Modifier
+                            .verticalScroll(rememberScrollState())
+                        //.imePadding()
                         //.imeNestedScroll()
 
 
 //                        .bringIntoViewRequester(bringIntoViewRequester)
-                        .verticalScroll(rememberScrollState())
-                ) {
-                    Column {
-                        Text(
-                            "Ad",
-                            style = MaterialTheme.typography.bodySmall,
-                            fontSize = 15.sp,
-                        )
-                        TextField(
-                            shape = RoundedCornerShape(12.dp),
-                            value = name,
-                            onValueChange = {
-                                name = it
-                            },
-                            placeholder = {
-                                Text(
-                                    ("Ad"),
-                                    color = Color(0xFF9D9D9D)
-                                )
-                            },
-                            singleLine = true,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(top = 10.dp),
-
-                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-                            colors = TextFieldDefaults.textFieldColors(
-                                containerColor = Color.White, // Background color of the TextField
-                                focusedIndicatorColor = Color.White, // Underline color when focused
-                                unfocusedIndicatorColor = Color.White, // Underline color when unfocused
-                                disabledTextColor = Color.Gray, // Text color when TextField is disabled
-                                errorIndicatorColor = Color.Red, // Underline color when in error state
-                                errorCursorColor = Color.Red, // Cursor color when in error state
-                                cursorColor = Color.White // Cursor color
+                    ) {
+                        Column(modifier = Modifier.padding(top = 28.dp)) {
+                            Text(
+                                "Ad, soyad",
+                                style = MaterialTheme.typography.bodySmall,
+                                fontSize = 15.sp,
                             )
-
-                        )
-                    }
-                    Column(Modifier.padding(top = 20.dp)) {
-                        Text(
-                            "Soyad ",
-                            style = MaterialTheme.typography.bodySmall,
-                            fontSize = 15.sp,
-                        )
-                        TextField(
-                            shape = RoundedCornerShape(12.dp),
-                            value = surname,
-                            onValueChange = {
-                                surname = it
-                            },
-                            placeholder = {
-                                Text(
-                                    ("Soyad"),
-                                    color = Color(0xFF9D9D9D)
-                                )
-                            },
-                            singleLine = true,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(top = 10.dp),
-
-                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-                            colors = TextFieldDefaults.textFieldColors(
-                                containerColor = Color.White, // Background color of the TextField
-                                focusedIndicatorColor = Color.White, // Underline color when focused
-                                unfocusedIndicatorColor = Color.White, // Underline color when unfocused
-                                disabledTextColor = Color.Gray, // Text color when TextField is disabled
-                                errorIndicatorColor = Color.Red, // Underline color when in error state
-                                errorCursorColor = Color.Red, // Cursor color when in error state
-                                cursorColor = Color.White // Cursor color
-                            )
-
-                        )
-                    }
-
-
-                    Column(Modifier.padding(top = 20.dp)) {
-                        Text(
-                            "E-poçt",
-                            style = MaterialTheme.typography.bodySmall,
-                            fontSize = 15.sp,
-                        )
-                        TextField(
-                            shape = RoundedCornerShape(12.dp),
-                            value = email,
-                            onValueChange = {
-                                email = it
-                                emailError = false
-                            },
-                            isError = emailError,
-                            placeholder = {
-                                Text(
-                                    ("E-poçtunuzu daxil edin"),
-                                    color = Color(0xFF9D9D9D)
-                                )
-                            },
-                            singleLine = true,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(top = 10.dp),
-
-                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-                            colors = TextFieldDefaults.textFieldColors(
-                                containerColor = Color.White, // Background color of the TextField
-                                focusedIndicatorColor = Color.White, // Underline color when focused
-                                unfocusedIndicatorColor = Color.White, // Underline color when unfocused
-                                disabledTextColor = Color.Gray, // Text color when TextField is disabled
-                                errorIndicatorColor = Color.Red, // Underline color when in error state
-                                errorCursorColor = Color.Red, // Cursor color when in error state
-                                cursorColor = Color.White // Cursor color
-                            )
-
-                        )
-                    }
-
-
-                    Column(Modifier.padding(top = 20.dp)) {
-                        Text(
-                            "Şifrə",
-                            style = MaterialTheme.typography.bodySmall,
-                            fontSize = 15.sp,
-                        )
-                        TextField(
-                            shape = RoundedCornerShape(12.dp),
-                            value = password,
-                            onValueChange = { password = it },
-                            placeholder = {
-                                Text(
-                                    "Şifrənizi təyin edin",
-                                    color = Color(0xFF9D9D9D)
-                                )
-                            },
-                            singleLine = true,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(top = 10.dp),
-                            colors = TextFieldDefaults.textFieldColors(
-                                containerColor = Color.White, // Background color of the TextField
-                                focusedIndicatorColor = Color.White, // Underline color when focused
-                                unfocusedIndicatorColor = Color.White, // Underline color when unfocused
-                                disabledTextColor = Color.Gray, // Text color when TextField is disabled
-                                errorIndicatorColor = Color.Red, // Underline color when in error state
-                                errorCursorColor = Color.Red, // Cursor color when in error state
-                                cursorColor = Color.White // Cursor color
-                            ),
-                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-                            visualTransformation = if (showPassword) VisualTransformation.None else PasswordVisualTransformation(),
-                            trailingIcon = {
-                                val icon =
-                                    if (showPassword) painterResource(R.drawable.unhiddeneye) else painterResource(
-                                        R.drawable.hiddeneye
+                            TextField(
+                                shape = RoundedCornerShape(12.dp),
+                                value = name,
+                                onValueChange = {
+                                    name = it
+                                },
+                                placeholder = {
+                                    Text(
+                                        ("Ad, soyad"),
+                                        color = Color(0xFF9D9D9D)
                                     )
-                                val description =
-                                    if (showPassword) "Hide password" else "Show password"
-                                IconButton(onClick = { showPassword = !showPassword }) {
-                                    Icon(
-                                        painter = icon,
-                                        tint = Color(0xFF2981FF),
-                                        contentDescription = description
+                                },
+                                singleLine = true,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(top = 10.dp),
+
+                                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+                                colors = TextFieldDefaults.textFieldColors(
+                                    containerColor = Color.White, // Background color of the TextField
+                                    focusedIndicatorColor = Color.White, // Underline color when focused
+                                    disabledTextColor = Color.Gray, // Text color when TextField is disabled
+                                    errorCursorColor = Color.Red, // Cursor color when in error state
+                                    cursorColor = Color.White // Cursor color
+                                )
+
+                            )
+                        }
+//                        Column(Modifier.padding(top = 20.dp)) {
+//                            Text(
+//                                "Soyad ",
+//                                style = MaterialTheme.typography.bodySmall,
+//                                fontSize = 15.sp,
+//                            )
+//                            TextField(
+//                                shape = RoundedCornerShape(12.dp),
+//                                value = surname,
+//                                onValueChange = {
+//                                    surname = it
+//                                },
+//                                placeholder = {
+//                                    Text(
+//                                        ("Soyad"),
+//                                        color = Color(0xFF9D9D9D)
+//                                    )
+//                                },
+//                                singleLine = true,
+//                                modifier = Modifier
+//                                    .fillMaxWidth()
+//                                    .padding(top = 10.dp),
+//
+//                                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+//                                colors = TextFieldDefaults.textFieldColors(
+//                                    containerColor = Color.White, // Background color of the TextField
+//                                    focusedIndicatorColor = Color.White, // Underline color when focused
+//                                    unfocusedIndicatorColor = Color.White, // Underline color when unfocused
+//                                    disabledTextColor = Color.Gray, // Text color when TextField is disabled
+//                                    errorIndicatorColor = Color.Red, // Underline color when in error state
+//                                    errorCursorColor = Color.Red, // Cursor color when in error state
+//                                    cursorColor = Color.White // Cursor color
+//                                )
+//
+//                            )
+//                        }
+
+
+                        Column(Modifier.padding(top = 20.dp)) {
+                            Text(
+                                "E-poçt",
+                                style = MaterialTheme.typography.bodySmall,
+                                fontSize = 15.sp,
+                            )
+                            TextField(
+                                shape = RoundedCornerShape(12.dp),
+                                value = email,
+                                onValueChange = {
+                                    email = it
+                                    emailError = false
+                                },
+                                isError = emailError,
+                                placeholder = {
+                                    Text(
+                                        ("E-poçtunuzu daxil edin"),
+                                        color = Color(0xFF9D9D9D)
                                     )
+                                },
+                                singleLine = true,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(top = 10.dp),
+
+                                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+                                colors = TextFieldDefaults.textFieldColors(
+                                    containerColor = Color.White, // Background color of the TextField
+                                    focusedIndicatorColor = Color.White, // Underline color when focused
+                                    disabledTextColor = Color.Gray, // Text color when TextField is disabled
+                                    errorCursorColor = Color.Red, // Cursor color when in error state
+                                    cursorColor = Color.White
+                                )
+
+                            )
+                        }
+
+
+                        Column(Modifier.padding(top = 20.dp)) {
+                            Text(
+                                "Şifrə",
+                                style = MaterialTheme.typography.bodySmall,
+                                fontSize = 15.sp,
+                            )
+                            TextField(
+                                shape = RoundedCornerShape(12.dp),
+                                value = password,
+                                onValueChange = { password = it },
+                                placeholder = {
+                                    Text(
+                                        "Şifrənizi təyin edin",
+                                        color = Color(0xFF9D9D9D)
+                                    )
+                                },
+                                singleLine = true,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(top = 10.dp),
+                                colors = TextFieldDefaults.textFieldColors(
+                                    containerColor = Color.White, // Background color of the TextField
+                                    focusedIndicatorColor = Color.White, // Underline color when focused
+                                    disabledTextColor = Color.Gray, // Text color when TextField is disabled
+                                    errorCursorColor = Color.Red, // Cursor color when in error state
+                                    cursorColor = Color.White
+                                ),
+                                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                                //visualTransformation = if (showPassword) VisualTransformation.None else PasswordVisualTransformation(),
+//                                trailingIcon = {
+//                                    val icon =
+//                                        if (showPassword) painterResource(R.drawable.unhiddeneye) else painterResource(
+//                                            R.drawable.hiddeneye
+//                                        )
+//                                    val description =
+//                                        if (showPassword) "Hide password" else "Show password"
+////                                    IconButton(onClick = { showPassword = !showPassword }) {
+////                                        Icon(
+////                                            painter = icon,
+////                                            tint = Color(0xFF2981FF),
+////                                            contentDescription = description
+////                                        )
+////                                    }
+//                                }
+                            )
+                        }
+
+
+                        Column(Modifier.padding(top = 20.dp)) {
+                            Text(
+                                "Şifrənin təsdiqi",
+                                style = MaterialTheme.typography.bodySmall,
+                                fontSize = 15.sp,
+                            )
+                            TextField(
+                                shape = RoundedCornerShape(12.dp),
+                                value = confirmPassword,
+                                onValueChange = { confirmPassword = it },
+                                placeholder = {
+                                    Text(
+                                        "Şifrənizi təsdiq edin",
+                                        color = Color(0xFF9D9D9D)
+                                    )
+                                },
+                                singleLine = true,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(top = 10.dp),
+                                colors = TextFieldDefaults.textFieldColors(
+                                    containerColor = Color.White, // Background color of the TextField
+                                    focusedIndicatorColor = Color.White, // Underline color when focused
+                                    disabledTextColor = Color.Gray, // Text color when TextField is disabled
+                                    errorCursorColor = Color.Red, // Cursor color when in error state
+                                    cursorColor = Color.White // Cursor color
+                                ),
+                                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                                visualTransformation = if (confirmShowPassword) VisualTransformation.None else PasswordVisualTransformation(),
+                                trailingIcon = {
+                                    val icon =
+                                        if (confirmShowPassword) painterResource(R.drawable.unhiddeneye) else painterResource(
+                                            R.drawable.hiddeneye
+                                        )
+                                    val description =
+                                        if (confirmShowPassword) "Hide password" else "Show password"
+                                    IconButton(onClick = {
+                                        confirmShowPassword = !confirmShowPassword
+                                    }) {
+                                        Icon(
+                                            painter = icon,
+                                            tint = Color(0xFF2981FF),
+                                            contentDescription = description
+                                        )
+                                    }
                                 }
-                            }
-                        )
-                    }
-
-
-                    Column(Modifier.padding(top = 20.dp)) {
-                        Text(
-                            "Şifrənin təsdiqi",
-                            style = MaterialTheme.typography.bodySmall,
-                            fontSize = 15.sp,
-                        )
-                        TextField(
-                            shape = RoundedCornerShape(12.dp),
-                            value = confirmPassword,
-                            onValueChange = { confirmPassword = it },
-                            placeholder = {
-                                Text(
-                                    "Şifrənizi təsdiq edin",
-                                    color = Color(0xFF9D9D9D)
-                                )
-                            },
-                            singleLine = true,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(top = 10.dp),
-                            colors = TextFieldDefaults.textFieldColors(
-                                containerColor = Color.White, // Background color of the TextField
-                                focusedIndicatorColor = Color.White, // Underline color when focused
-                                unfocusedIndicatorColor = Color.White, // Underline color when unfocused
-                                disabledTextColor = Color.Gray, // Text color when TextField is disabled
-                                errorIndicatorColor = Color.Red, // Underline color when in error state
-                                errorCursorColor = Color.Red, // Cursor color when in error state
-                                cursorColor = Color.White // Cursor color
-                            ),
-                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-                            visualTransformation = if (confirmShowPassword) VisualTransformation.None else PasswordVisualTransformation(),
-                            trailingIcon = {
-                                val icon =
-                                    if (confirmShowPassword) painterResource(R.drawable.unhiddeneye) else painterResource(
-                                        R.drawable.hiddeneye
-                                    )
-                                val description =
-                                    if (confirmShowPassword) "Hide password" else "Show password"
-                                IconButton(onClick = {
-                                    confirmShowPassword = !confirmShowPassword
-                                }) {
-                                    Icon(
-                                        painter = icon,
-                                        tint = Color(0xFF2981FF),
-                                        contentDescription = description
-                                    )
-                                }
-                            }
-                        )
-                    }
+                            )
+                        }
 
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.Center,
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(top = 23.dp)
+                            .padding(top = 23.dp, bottom = 110.dp)
                     ) {
                         Checkbox(modifier = Modifier
                             .background(Color.White)
@@ -391,78 +380,86 @@ fun RegisterPage(cm: Modifier = Modifier, viewModel: RegisterViewModel = hiltVie
                             onCheckedChange = { checked = it }
                         )
 
+                            Text(
+                                modifier = Modifier.clickable {
+
+                                },
+                                text = "Istifadəçi şərtləri və Məxfilik siyasəti",
+                                color = MaterialTheme.colorScheme.primary,
+                                fontSize = 15.sp
+                            )
+                            Text(
+                                " qəbul edirəm.",
+                                color = Color(0xFF000B1B),
+                                fontSize = 15.sp
+
+                            )
+                        }
+
+                    }
+
+
+                }
+                //----------------------------------------------------------------------------------
+
+                Column(
+                    modifier = Modifier
+//                        .imePadding()
+                        .align(Alignment.BottomCenter)
+                        .background(Color(0xFFF0F4F9))
+                        .imePadding()
+
+                ) {
+                    AuthButton(
+                        text = "Daxil ol",
+                        onClick = {
+                            val fullname = "$name $surname"
+                            viewModel.register(
+                                RegisterRequestModel(
+                                    email = email,
+                                    fullName = fullname,
+                                    password = password,
+                                    confirmPassword = confirmPassword
+                                )
+                            )
+                        },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(bottom = 20.dp)
+                    )
+
+
+                    Row(
+                        horizontalArrangement = Arrangement.Center,
+                        modifier = Modifier
+                            .fillMaxWidth()
+
+                    ) {
+                        Text(
+                            "Hesabınız varmı?",
+                            color = Color(0xFF9D9D9D)
+                        )
                         Text(
                             modifier = Modifier.clickable {
 
                             },
-                            text = "Istifadəçi şərtləri və Məxfilik siyasəti",
-                            color = MaterialTheme.colorScheme.primary,
-                            fontSize = 15.sp
+                            text = "Daxil olun",
+                            color = MaterialTheme.colorScheme.primary
                         )
-                        Text(
-                            " qəbul edirəm.",
-                            color = Color(0xFF000B1B),
-                            fontSize = 15.sp
 
-                        )
                     }
-
                 }
 
 
-            }
-            //----------------------------------------------------------------------------------
-
-            Column(
-                modifier = Modifier
-                    .imePadding()
-                    .align(Alignment.BottomCenter)
-                    .background(Color.Green)
 
 
-            ) {
-                AuthButton(
-                    text = "Daxil ol",
-                    onClick = {
-                        val fullname = "$name $surname"
-                        viewModel.register(
-                            RegisterRequestModel(
-                                email = email,
-                                fullName = fullname,
-                                password = password,
-                                confirmPassword = confirmPassword
-                            )
-                        )
-                    },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(bottom = 20.dp)
-                )
 
-                Row(
-                    horizontalArrangement = Arrangement.Center,
-                    modifier = Modifier.fillMaxWidth()
-
-                ) {
-                    Text(
-                        "Hesabınız varmı?",
-                        color = Color(0xFF9D9D9D)
-                    )
-                    Text(
-                        modifier = Modifier.clickable {
-
-                        },
-                        text = "Daxil olun",
-                        color = MaterialTheme.colorScheme.primary
-                    )
-
-                }
+            } // here
 
 
-            }
 
 
-        }
+
 //---------------------------------------------------------------------------------------------------
 
 //            //Box(Modifier.background(Color.Black)) {

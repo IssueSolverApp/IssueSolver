@@ -37,10 +37,10 @@ class RegisterUseCase @Inject constructor(private val registerRepository: Regist
 class RegisterUseCase @Inject constructor(
     private val registerRepository: RegisterRepositoryInterface
 ) {
-    suspend operator fun invoke(request: RegisterRequestModel) = flow {
+    suspend operator fun invoke(register: RegisterRequestModel) = flow {
         emit(Resource.Loading())
         try {
-            val response = registerRepository.createUser(request)
+            val response = registerRepository.createUser(register)
             if (response.isSuccessful) {
                 emit(Resource.Success(response.body()?.Message))
             } else {

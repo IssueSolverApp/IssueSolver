@@ -1,5 +1,7 @@
 package com.issuesolver.data.repository.di
 
+import com.issuesolver.data.repository.ConfirmOtpRepositoryImpl
+import com.issuesolver.data.repository.ConfirmOtpRepositoryInterface
 import com.issuesolver.data.repository.LoginRepositoryImpl
 import com.issuesolver.data.repository.LoginRepositoryInterface
 import com.issuesolver.data.repository.RegisterRepositoryImpl
@@ -28,6 +30,11 @@ abstract class RepositoryModule {
     @Binds
     @Singleton
     abstract fun provideResendOtpRepository(repository: ResendOtpRepositoryImpl): ResendOtpRepositoryInterface
+
+    @Binds
+    @Singleton
+    abstract fun provideConfirmOtpRepository(repository: ConfirmOtpRepositoryImpl): ConfirmOtpRepositoryInterface
+
 
 
 }
