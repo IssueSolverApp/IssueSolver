@@ -52,8 +52,7 @@ fun LoginPage(
             scrollState.scrollBy(keyboardHeight.toFloat())
         }
     }
-    Scaffold(
-        content = { padding ->
+    Scaffold{ padding ->
             Box(
                 modifier = Modifier
                     .fillMaxSize()
@@ -261,6 +260,7 @@ fun LoginPage(
                                         indication = null
                                     ),
                                 text = "Qeydiyyatdan keç",
+
                                 color = MaterialTheme.colorScheme.primary
                             )
                         }

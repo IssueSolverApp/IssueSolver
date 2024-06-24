@@ -43,7 +43,6 @@ import com.issuesolver.presentation.navigation.mockNavController
 import kotlinx.coroutines.delay
 
 @SuppressLint("DefaultLocale")
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun VerificationCodePage(navController: NavController) {
     val context = LocalContext.current
@@ -73,8 +72,9 @@ fun VerificationCodePage(navController: NavController) {
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(top = 24.dp)
-                .padding(20.dp)
+                .padding(top = 4.dp)
+                .padding(top= 20.dp,start=20.dp, end = 20.dp)
+                .padding(padding)
                 .imePadding()
         ) {
             Column(
@@ -162,7 +162,6 @@ fun VerificationCodePage(navController: NavController) {
             Column(
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
-                    .padding(bottom = 27.dp)
             ) {
                 AuthButton(
                     text = "Təsdiqlə",
@@ -170,7 +169,6 @@ fun VerificationCodePage(navController: NavController) {
 
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(bottom = 16.dp)
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
@@ -265,7 +263,6 @@ fun CharacterBox(character: String, isFocused: Boolean, modifier: Modifier = Mod
     }
 }
 
-
 @Composable
 internal fun CharacterContainer(
     index: Int,
@@ -289,7 +286,6 @@ internal fun CharacterContainer(
             }
         }
     }
-
     Box(contentAlignment = Alignment.Center) {
         Text(
             modifier = Modifier
@@ -302,13 +298,11 @@ internal fun CharacterContainer(
                     color = Color.Transparent,
                     shape = RoundedCornerShape(6.dp)
                 )
-
                 .padding(2.dp),
             text = character,
             style = MaterialTheme.typography.headlineLarge,
             textAlign = TextAlign.Center
         )
-
         AnimatedVisibility(visible = isFocused && cursorVisible.value) {
             Box(
                 modifier = Modifier
@@ -319,7 +313,6 @@ internal fun CharacterContainer(
         }
     }
 }
-
 
 @Preview(showBackground = true)
 @Composable

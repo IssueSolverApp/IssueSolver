@@ -58,6 +58,7 @@ fun PasswordChangePage(
                 .fillMaxSize()
                 .padding(top = 24.dp)
                 .padding(20.dp)
+                .padding(padding)
                 .imePadding()
         ) {
             Column(
