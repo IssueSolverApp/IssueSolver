@@ -7,6 +7,7 @@ import com.issuesolver.domain.entity.networkModel.RegisterRequestModel
 import com.issuesolver.domain.useCase.RegisterUseCase
 import com.issuesolver.domain.useCase.login.ValidateEmailUseCase
 import com.issuesolver.domain.useCase.login.ValidatePasswordUseCase
+import com.issuesolver.domain.useCase.login.ValidateRepeatedPasswordUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -16,11 +17,26 @@ import javax.inject.Inject
 @HiltViewModel
 class RegisterViewModel @Inject constructor(
     private val registerUseCase: RegisterUseCase,
-): ViewModel() {
+    private val validateEmailUseCase: ValidateEmailUseCase,
+    private val validatePasswordUseCase: ValidatePasswordUseCase,
+    private val validateRepeatedPasswordUseCase: ValidateRepeatedPasswordUseCase
+    ): ViewModel() {
 
 
     private val _registerState = MutableStateFlow<Resource<String?>>(Resource.Loading())
     val registerState: StateFlow<Resource<String?>> = _registerState
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     fun register(request: RegisterRequestModel) {

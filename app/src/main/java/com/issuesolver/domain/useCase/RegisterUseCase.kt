@@ -42,12 +42,12 @@ class RegisterUseCase @Inject constructor(
         try {
             val response = registerRepository.createUser(register)
             if (response.isSuccessful) {
-                emit(Resource.Success(response.body()?.Message))
+                emit(Resource.Success(response.body()?.message))
             } else {
                 val errorResponse = response.errorBody()?.string()?.let {
                     parseErrorResponse(it)
                 }
-                emit(Resource.Error(errorResponse?.Message ?: "Unknown Error"))
+                emit(Resource.Error(errorResponse?.message ?: "Unknown Error"))
             }
         } catch (e: IOException) {
             emit(Resource.Error("Network Error: ${e.localizedMessage}"))
