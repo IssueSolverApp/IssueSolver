@@ -53,222 +53,220 @@ fun LoginPage(
         }
     }
     Scaffold{ padding ->
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(top = 24.dp)
-                    .padding(20.dp)
-                    .imePadding()
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(top = 24.dp)
+                .padding(20.dp)
+                .imePadding()
+        ) {
+            Column(
+                Modifier.verticalScroll(scrollState)
             ) {
                 Column(
-                    Modifier.verticalScroll(scrollState)
+                    Modifier.padding(bottom = 20.dp)
                 ) {
-                    Column(
-                        Modifier.padding(bottom = 20.dp)
-                       ) {
-                        Text(
-                            "Daxil olun",
-                            style = MaterialTheme.typography.headlineMedium,
-                            fontSize = 28.sp,
-                            fontWeight = FontWeight.SemiBold,
-                            textAlign = TextAlign.Start,
-                            color = Color.Black
-                        )
-                        Text(
-                            "Zəhmət olmasa, giriş üçün məlumatlarınızı daxil edin.",
-                            style = MaterialTheme.typography.bodySmall,
-                            fontSize = 14.sp,
-                            fontWeight = FontWeight.W400,
-                            textAlign = TextAlign.Start,
-                            color = Color(0xFF9D9D9D),
-                            modifier = Modifier
-                                .padding(top = 10.dp)
-                        )
-                    }
-                    Divider(
-                        thickness = 0.5.dp,
-                        color = Color(0xFF2981FF)
+                    Text(
+                        "Daxil olun",
+                        style = MaterialTheme.typography.headlineMedium,
+                        fontSize = 28.sp,
+                        fontWeight = FontWeight.SemiBold,
+                        textAlign = TextAlign.Start,
+                        color = Color.Black
                     )
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Column(
-                        Modifier.padding(top = 20.dp)
-                    ) {
-                        Text(
-                            "E-poçt",
-                            color = if (isEmailError) Color.Red else Color.Black,
-                            style = MaterialTheme.typography.bodySmall,
-                            fontSize = 15.sp,
-                        )
-                        TextField(
-                            shape = RoundedCornerShape(12.dp),
-                            value = uiState.email,
-                            onValueChange = { viewModel.handleEvent(LoginPageEvent.EmailChanged(it)) },
-                            placeholder = {
-                                Text(
-                                    ("E-poçtunuzu daxil edin"),
-                                    color = if (isEmailError) Color.Red else Color.Gray
-                                )
-                            },
-                            singleLine = true,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(top = 10.dp)
-                                .then(
-                                    if (isEmailError) Modifier.border(
-                                        1.dp,
-                                        Color.Red,
-                                        RoundedCornerShape(12.dp)
-                                    )
-                                    else Modifier.border(
-                                        1.dp,
-                                        Color.White,
-                                        RoundedCornerShape(12.dp)
-                                    )
-                                ),
-                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-                            colors = TextFieldDefaults.textFieldColors(
-                                containerColor = Color.White,
-                                errorContainerColor = Color.White,
-                                disabledTextColor = Color(0xFF2981FF),
-                                focusedIndicatorColor = Color.Transparent,
-                                errorCursorColor = Color.Red,
-                                cursorColor = Color(0xFF2981FF)
-                            ),
+                    Text(
+                        "Zəhmət olmasa, giriş üçün məlumatlarınızı daxil edin.",
+                        style = MaterialTheme.typography.bodySmall,
+                        fontSize = 14.sp,
+                        fontWeight = FontWeight.W400,
+                        textAlign = TextAlign.Start,
+                        color = Color(0xFF9D9D9D),
+                        modifier = Modifier
+                            .padding(top = 10.dp)
+                    )
+                }
+                Divider(
+                    thickness = 0.5.dp,
+                    color = Color(0xFF2981FF)
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                Column(
+                    Modifier.padding(top = 20.dp)
+                ) {
+                    Text(
+                        "E-poçt",
+                        color = if (isEmailError) Color.Red else Color.Black,
+                        style = MaterialTheme.typography.bodySmall,
+                        fontSize = 15.sp,
+                    )
+                    TextField(
+                        shape = RoundedCornerShape(12.dp),
+                        value = uiState.email,
+                        onValueChange = { viewModel.handleEvent(LoginPageEvent.EmailChanged(it)) },
+                        placeholder = {
+                            Text(
+                                ("E-poçtunuzu daxil edin"),
+                                color = if (isEmailError) Color.Red else Color.Gray
                             )
-                        ErrorText(
-                            errorMessage = uiState.emailError,
-//                        isVisible = isEmailError
-                        )
-                        Spacer(modifier = Modifier.height(20.dp))
-                        Text(
-                            "Şifrə",
-                            color = if (isPasswordError) Color.Red else Color.Black,
-                            style = MaterialTheme.typography.bodySmall,
-                            fontSize = 15.sp,
-                        )
-                        TextField(
-                            shape = RoundedCornerShape(12.dp),
-                            value = uiState.password,
-                            onValueChange = {
-                                viewModel.handleEvent(
-                                    LoginPageEvent.PasswordChanged(
-                                        it
-                                    )
+                        },
+                        singleLine = true,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 10.dp)
+                            .then(
+                                if (isEmailError) Modifier.border(
+                                    1.dp,
+                                    Color.Red,
+                                    RoundedCornerShape(12.dp)
                                 )
-                            },
-                            placeholder = {
-                                Text(
-                                    "Şifrənizi daxil edin",
-                                    color = if (isPasswordError) Color.Red else Color.Gray
+                                else Modifier.border(
+                                    1.dp,
+                                    Color.White,
+                                    RoundedCornerShape(12.dp)
                                 )
-                            },
-                            singleLine = true,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(top = 10.dp)
-                                .then(
-                                    if (isPasswordError) Modifier.border(
-                                        1.dp,
-                                        Color.Red,
-                                        RoundedCornerShape(12.dp)
-                                    )
-                                    else Modifier.border(
-                                        1.dp,
-                                        Color.White,
-                                        RoundedCornerShape(12.dp)
-                                    )
-                                ),
-                            colors = TextFieldDefaults.textFieldColors(
-                                containerColor = Color.White,
-                                errorContainerColor = Color.White,
-                                disabledTextColor = Color(0xFF2981FF),
-                                focusedIndicatorColor = Color.Transparent,
-                                errorCursorColor = Color.Red,
-                                cursorColor = Color(0xFF2981FF)
                             ),
-                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-                            visualTransformation = if (showPassword) VisualTransformation.None else PasswordVisualTransformation(),
-                            trailingIcon = {
-                                val icon =
-                                    if (showPassword) painterResource(R.drawable.unhiddeneye) else painterResource(
-                                        R.drawable.hiddeneye
-                                    )
-                                val description =
-                                    if (showPassword) "Hide password" else "Show password"
-                                IconButton(onClick = { showPassword = !showPassword }) {
-                                    Icon(
-                                        painter = icon,
-                                        tint = if (isPasswordError) Color.Red else Color(0xFF2981FF),
-                                        contentDescription = description
-                                    )
-                                }
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+                        colors = TextFieldDefaults.textFieldColors(
+                            containerColor = Color.White,
+                            errorContainerColor = Color.White,
+                            disabledTextColor = Color(0xFF2981FF),
+                            focusedIndicatorColor = Color.Transparent,
+                            errorCursorColor = Color.Red,
+                            cursorColor = Color(0xFF2981FF)
+                        ),
+                    )
+                    ErrorText(
+                        errorMessage = uiState.emailError,
+//                        isVisible = isEmailError
+                    )
+                    Spacer(modifier = Modifier.height(20.dp))
+                    Text(
+                        "Şifrə",
+                        color = if (isPasswordError) Color.Red else Color.Black,
+                        style = MaterialTheme.typography.bodySmall,
+                        fontSize = 15.sp,
+                    )
+                    TextField(
+                        shape = RoundedCornerShape(12.dp),
+                        value = uiState.password,
+                        onValueChange = {
+                            viewModel.handleEvent(
+                                LoginPageEvent.PasswordChanged(
+                                    it
+                                )
+                            )
+                        },
+                        placeholder = {
+                            Text(
+                                "Şifrənizi daxil edin",
+                                color = if (isPasswordError) Color.Red else Color.Gray
+                            )
+                        },
+                        singleLine = true,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 10.dp)
+                            .then(
+                                if (isPasswordError) Modifier.border(
+                                    1.dp,
+                                    Color.Red,
+                                    RoundedCornerShape(12.dp)
+                                )
+                                else Modifier.border(
+                                    1.dp,
+                                    Color.White,
+                                    RoundedCornerShape(12.dp)
+                                )
+                            ),
+                        colors = TextFieldDefaults.textFieldColors(
+                            containerColor = Color.White,
+                            errorContainerColor = Color.White,
+                            disabledTextColor = Color(0xFF2981FF),
+                            focusedIndicatorColor = Color.Transparent,
+                            errorCursorColor = Color.Red,
+                            cursorColor = Color(0xFF2981FF)
+                        ),
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                        visualTransformation = if (showPassword) VisualTransformation.None else PasswordVisualTransformation(),
+                        trailingIcon = {
+                            val icon =
+                                if (showPassword) painterResource(R.drawable.unhiddeneye) else painterResource(
+                                    R.drawable.hiddeneye
+                                )
+                            val description =
+                                if (showPassword) "Hide password" else "Show password"
+                            IconButton(onClick = { showPassword = !showPassword }) {
+                                Icon(
+                                    painter = icon,
+                                    tint = if (isPasswordError) Color.Red else Color(0xFF2981FF),
+                                    contentDescription = description
+                                )
                             }
-                        )
-                        ErrorText(
-                            errorMessage = uiState.passwordError,
+                        }
+                    )
+                    ErrorText(
+                        errorMessage = uiState.passwordError,
 //                        isVisible = isPasswordError
+                    )
+                    Text(
+                        modifier = Modifier
+                            .clickable(
+                                onClick = { navController.navigate("email verification") },
+                                interactionSource = remember { MutableInteractionSource() },
+                                indication = null
+                            )
+                            .fillMaxWidth()
+                            .wrapContentWidth(Alignment.End)
+                            .padding(
+                                top = 12.dp,
+//                                    bottom=100.dp
+                            ),
+                        text = "Şifrənizi unutmusunuz?",
+                        color = Color(0xFF4D96FF)
+                    )
+                    Spacer(modifier = Modifier.height(100.dp))
+                }
+            }
+            Column(
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .background(Color(0xFFF0F4F9)),
+            ) {
+                AuthButton(
+                    text = "Daxil ol",
+                    onClick = { viewModel.handleEvent(LoginPageEvent.Submit) },
+                    enabled = uiState.isInputValid,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 16.dp)
+                )
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 27.dp)
+                ) {
+                    Row {
+                        Text(
+                            "Hesabınız yoxdur?",
+                            color = Color(0xFF9D9D9D)
                         )
                         Text(
                             modifier = Modifier
                                 .clickable(
-                                    onClick = { navController.navigate("email verification") },
+                                    onClick = { },
                                     interactionSource = remember { MutableInteractionSource() },
                                     indication = null
-                                )
-                                .fillMaxWidth()
-                                .wrapContentWidth(Alignment.End)
-                                .padding(
-                                    top = 12.dp,
-//                                    bottom=100.dp
                                 ),
-                            text = "Şifrənizi unutmusunuz?",
-                            color = Color(0xFF4D96FF)
-                        )
-                        Spacer(modifier = Modifier.height(100.dp))
-                    }
-                }
-                Column(
-                    modifier = Modifier
-                        .align(Alignment.BottomCenter)
-                        .background(Color(0xFFF0F4F9)),
-                ) {
-                    AuthButton(
-                        text = "Daxil ol",
-                        onClick = { viewModel.handleEvent(LoginPageEvent.Submit) },
-                        enabled = uiState.isInputValid,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(bottom = 16.dp)
-                    )
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.Center,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(bottom = 27.dp)
-                    ) {
-                        Row {
-                            Text(
-                                "Hesabınız yoxdur?",
-                                color = Color(0xFF9D9D9D)
-                            )
-                            Text(
-                                modifier = Modifier
-                                    .clickable(
-                                        onClick = { },
-                                        interactionSource = remember { MutableInteractionSource() },
-                                        indication = null
-                                    ),
-                                text = "Qeydiyyatdan keç",
+                            text = "Qeydiyyatdan keç",
 
-                                color = MaterialTheme.colorScheme.primary
-                            )
-                        }
+                            color = MaterialTheme.colorScheme.primary
+                        )
                     }
                 }
             }
         }
-    )
+    }
+
 }
-
-

@@ -1,13 +1,13 @@
 package com.issuesolver.common
 
-class State(var status: StatusR, var message: String? = null) {
+class State<T>(var status: StatusR, var message: String? = null) {
 
     companion object {
-        fun success(): State = State(status = StatusR.SUCCESS)
+        fun success(): State<Any?> = State(status = StatusR.SUCCESS)
 
-        fun error(message: String?): State = State(status = StatusR.ERROR, message = message)
+        fun error(message: String?): State<Any?> = State(status = StatusR.ERROR, message = message)
 
-        fun loading(): State = State(status = StatusR.LOADING)
+        fun loading(): State<Any?> = State(status = StatusR.LOADING)
 
     }
 

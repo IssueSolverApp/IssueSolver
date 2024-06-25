@@ -1,8 +1,10 @@
 package com.issuesolver.presentation.login.password_change_page
 
 import androidx.lifecycle.ViewModel
+import com.issuesolver.domain.useCase.RegisterUseCase
 import com.issuesolver.domain.useCase.login.ValidatePasswordUseCase
 import com.issuesolver.domain.useCase.login.ValidateRepeatedPasswordUseCase
+import com.issuesolver.domain.usecase.login.ForgetPasswordUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -12,8 +14,10 @@ import javax.inject.Inject
 @HiltViewModel
 class PasswordChangePageViewModel @Inject constructor(
     private val validateRepeatedPasswordUseCase: ValidateRepeatedPasswordUseCase,
-    private val validatePasswordUseCase: ValidatePasswordUseCase
-) : ViewModel() {
+    private val validatePasswordUseCase: ValidatePasswordUseCase,
+    private val forgetPasswordUseCase: ForgetPasswordUseCase
+
+    ) : ViewModel() {
     private val _uiState = MutableStateFlow(PasswordChangePageState())
     val uiState: StateFlow<PasswordChangePageState> = _uiState.asStateFlow()
 
@@ -43,6 +47,9 @@ class PasswordChangePageViewModel @Inject constructor(
             }
             is PasswordChangePageEvent.Submit -> {
                 if (uiState.value.isInputValid) {
+
+
+
                 }
             }
         }

@@ -25,7 +25,11 @@ import androidx.navigation.NavController
 import com.issuesolver.R
 import com.issuesolver.presentation.common.AuthButton
 import com.issuesolver.presentation.common.ErrorText
+import com.issuesolver.presentation.navigation.NavigationEvent
 import com.issuesolver.presentation.navigation.mockNavController
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 
 @Composable
 fun EmailVerificationPage(
@@ -34,6 +38,8 @@ fun EmailVerificationPage(
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val isEmailError = uiState.emailError != null
+
+
 
     Scaffold { padding ->
         Box(
@@ -134,9 +140,9 @@ fun EmailVerificationPage(
                             focusedIndicatorColor = Color.Transparent,
                         )
                         )
-                    ErrorText(
-                        errorMessage = uiState.emailError,
-                    )
+                    uiState.emailError?.let {
+                        ErrorText(errorMessage = it)
+                    }
                 }
             }
             Column(
@@ -144,13 +150,21 @@ fun EmailVerificationPage(
             ) {
                 AuthButton(
                     text = "Təsdiq kodu göndər",
-                    onClick = { navController.navigate("otp") },
+                    onClick = {
+//                        viewModel.handleSubmit {
+//                            navController.navigate("otp")
+//                        }
+                        viewModel.handleSubmit()
+                              },
                     enabled = uiState.isInputValid,
                     modifier = Modifier
                         .fillMaxWidth()
                 )
             }
         }
+    }
+    if (viewModel.navigation) {
+        navController.navigate("otp")
     }
 }
 @Preview(showBackground = true)

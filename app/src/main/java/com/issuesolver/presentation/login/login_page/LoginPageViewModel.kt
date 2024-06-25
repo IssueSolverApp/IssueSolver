@@ -1,6 +1,7 @@
 package com.issuesolver.presentation.login.login_page
 
 import androidx.lifecycle.ViewModel
+import com.issuesolver.domain.useCase.RegisterUseCase
 import com.issuesolver.domain.useCase.login.ValidateEmailUseCase
 import com.issuesolver.domain.useCase.login.ValidatePasswordUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -13,8 +14,8 @@ import javax.inject.Inject
 class LoginPageViewModel @Inject constructor(
 
     private val validateEmailUseCase: ValidateEmailUseCase,
-    private val validatePasswordUseCase: ValidatePasswordUseCase
-) : ViewModel() {
+    private val validatePasswordUseCase: ValidatePasswordUseCase,
+    ) : ViewModel() {
     private val _uiState = MutableStateFlow(LoginPageState())
     val uiState: StateFlow<LoginPageState> = _uiState.asStateFlow()
 
