@@ -1,57 +1,40 @@
 package com.issuesolver.ui.theme
 
-import android.app.Activity
-import android.os.Build
-import androidx.compose.foundation.isSystemInDarkTheme
+
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.darkColorScheme
-import androidx.compose.material3.dynamicDarkColorScheme
-import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.graphics.Color
 
-private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
-    secondary = PurpleGrey80,
-    tertiary = Pink80
-)
 
 private val LightColorScheme = lightColorScheme(
-    primary = Purple40,
-    secondary = PurpleGrey40,
-    tertiary = Pink40
-
-    /* Other default colors to override
-    background = Color(0xFFFFFBFE),
-    surface = Color(0xFFFFFBFE),
+    primary = Color(0xFF2981FF),
     onPrimary = Color.White,
+    primaryContainer = Color(0xFF0169FE),
+    onPrimaryContainer = Color(0xFFE0EDFF),
+    secondary = Color(0xFFF09350),
     onSecondary = Color.White,
-    onTertiary = Color.White,
-    onBackground = Color(0xFF1C1B1F),
-    onSurface = Color(0xFF1C1B1F),
-    */
+    secondaryContainer = Color(0xFFEC7722),
+    onSecondaryContainer = Color(0xFFE67B2E),
+    error = Color(0xFFEF5648),
+    onError = Color.White,
+//    background = Color(0xFFF0F4F9),
+    onBackground = Color(0xFF000B1B),
+    surface = Color.White,
+    onSurface = Color(0xFF1A1A1A),
+//    surfaceVariant = Color(0xFFD4DBE6),
+    onSurfaceVariant = Color(0xFFF0F4F9),
+    inverseSurface = Color(0xFF429A60),
+    inverseOnSurface = Color(0xFF56B777),
+    inversePrimary = Color(0xFF0C5ED9),
 )
 
 @Composable
 fun IssueSolverTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
-    // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = true,
     content: @Composable () -> Unit
 ) {
-    val colorScheme = when {
-        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
-            val context = LocalContext.current
-            if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
-        }
-
-        darkTheme -> DarkColorScheme
-        else -> LightColorScheme
-    }
-
     MaterialTheme(
-        colorScheme = colorScheme,
+        colorScheme = LightColorScheme,
         typography = Typography,
         content = content
     )
