@@ -1,5 +1,4 @@
 package com.issuesolver.presentation.login.qeydiyyat_page
-
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.issuesolver.common.Resource
@@ -11,6 +10,7 @@ import com.issuesolver.domain.useCase.login.ValidateRepeatedPasswordUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -27,14 +27,8 @@ class RegisterViewModel @Inject constructor(
     val registerState: StateFlow<Resource<String?>> = _registerState
 
 
-
-
-
-
-
-
-
-
+    private val _uiState = MutableStateFlow(RegisterPageState())
+    val uiState: StateFlow<RegisterPageState> = _uiState.asStateFlow()
 
 
 
@@ -43,6 +37,46 @@ class RegisterViewModel @Inject constructor(
         viewModelScope.launch {
             registerUseCase(request).collect { resource ->
                 _registerState.value = resource
+            }
+        }
+    }
+
+
+
+
+
+    fun handleEvent(event: RegisterPageEvent) {
+        when (event) {
+            is RegisterPageEvent.EmailChanged -> {
+                val result = validateEmailUseCase.execute(event.email)
+                _uiState.value = uiState.value.copy(
+                    email = event.email,
+                    emailError = result.errorMessage,
+                    isInputValid = result.successful && validatePasswordUseCase.execute(uiState.value.password).successful
+                )
+            }
+            is RegisterPageEvent.PasswordChanged -> {
+                val result = validatePasswordUseCase.execute(event.password)
+                _uiState.value = uiState.value.copy(
+                    password = event.password,
+                    passwordError = result.errorMessage,
+                    isInputValid = result.successful && validateEmailUseCase.execute(uiState.value.email).successful
+                )
+            }
+            is RegisterPageEvent.RepeatedPasswordChanged -> {
+                val result = validateRepeatedPasswordUseCase.execute(_uiState.value.password, event.repeatedPassword)
+                _uiState.value = _uiState.value.copy(
+                    repeatedPassword = event.repeatedPassword,
+                    repeatedPasswordError = result.errorMessage,
+                    isInputValid = validatePasswordUseCase.execute(_uiState.value.password).successful && result.successful
+                )
+            }
+
+
+            is RegisterPageEvent.Submit -> {
+                if (uiState.value.isInputValid) {
+
+                }
             }
         }
     }
