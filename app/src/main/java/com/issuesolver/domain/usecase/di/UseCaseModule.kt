@@ -7,6 +7,7 @@ import com.issuesolver.domain.useCase.ConfirmOtpUseCase
 import com.issuesolver.domain.useCase.RegisterUseCase
 import com.issuesolver.domain.useCase.ResendOtpUseCase
 import com.issuesolver.domain.useCase.login.ValidateEmailUseCase
+import com.issuesolver.domain.useCase.login.ValidateFullNameUseCase
 import com.issuesolver.domain.useCase.login.ValidatePasswordUseCase
 import com.issuesolver.domain.useCase.login.ValidateRepeatedPasswordUseCase
 import dagger.Module
@@ -26,6 +27,10 @@ class UseCaseModule {
     @Provides
     @Singleton
     fun provideValidatePasswordUseCase() = ValidatePasswordUseCase()
+
+    @Provides
+    @Singleton
+    fun provideValidateFullNameUseCase() = ValidateFullNameUseCase()
 
     @Provides
     @Singleton
