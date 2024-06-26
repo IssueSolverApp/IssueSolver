@@ -1,6 +1,7 @@
 package com.issuesolver.presentation.login.qeydiyyat_page
 
 data class RegisterPageState (
+    var fullName: String = "",
     var email: String = "",
     var emailError: String? = null,
     var password: String = "",

@@ -69,6 +69,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.issuesolver.R
 import com.issuesolver.domain.entity.networkModel.RegisterRequestModel
 import com.issuesolver.presentation.common.AuthButton
@@ -81,7 +82,7 @@ import kotlinx.coroutines.launch
     ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class
 )
 @Composable
-fun RegisterPage(viewModel: RegisterViewModel = hiltViewModel()) {
+fun RegisterPage(navController: NavController, viewModel: RegisterViewModel = hiltViewModel()) {
 
     val uiState by viewModel.uiState.collectAsState()
     val isEmailError = uiState.emailError != null
@@ -498,6 +499,7 @@ fun RegisterPage(viewModel: RegisterViewModel = hiltViewModel()) {
                             isCheckBoxRed = true
                         } else {
                             isCheckBoxRed = false
+                            navController.navigate("register otp")
                         }
                         viewModel.handleEvent(RegisterPageEvent.Submit)
                         val fullname = "$name $surname"
@@ -528,10 +530,11 @@ fun RegisterPage(viewModel: RegisterViewModel = hiltViewModel()) {
                     )
                     Text(
                         modifier = Modifier.clickable {
-
+                            navController.navigate("login")
                         },
                         text = "Daxil olun",
-                        color = MaterialTheme.colorScheme.primary
+                        color = MaterialTheme.colorScheme.primary,
+
                     )
 
                 }

@@ -10,6 +10,8 @@ sealed class RegisterPageEvent {
 
     data class RepeatedPasswordChanged(val repeatedPassword: String) : RegisterPageEvent()
 
+    data class FullNameChanged(val fullName: String) : RegisterPageEvent()
+
     object Submit : RegisterPageEvent()
 
 }

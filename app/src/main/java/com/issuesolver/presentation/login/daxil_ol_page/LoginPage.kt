@@ -319,7 +319,7 @@ fun LoginPage(
                             Text(
                                 modifier = Modifier
                                     .clickable(
-                                        onClick = { },
+                                        onClick = { navController.navigate("register")},
                                         interactionSource = remember { MutableInteractionSource() },
                                         indication = null
                                     ),

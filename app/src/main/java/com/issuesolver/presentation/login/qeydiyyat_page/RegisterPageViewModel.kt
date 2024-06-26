@@ -72,6 +72,14 @@ class RegisterViewModel @Inject constructor(
                 )
             }
 
+            is RegisterPageEvent.FullNameChanged -> {
+                _uiState.value = _uiState.value.copy(
+                    fullName = event.fullName,
+                    isInputValid = true
+                )
+                
+            }
+
 
             is RegisterPageEvent.Submit -> {
                 if (uiState.value.isInputValid) {
