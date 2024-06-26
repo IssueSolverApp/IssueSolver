@@ -1,8 +1,8 @@
 package com.issuesolver.presentation.login.password_change_page
 
 import androidx.lifecycle.ViewModel
-import com.issuesolver.domain.usecase.login.ValidatePasswordUseCase
-import com.issuesolver.domain.usecase.login.ValidateRepeatedPasswordUseCase
+import com.issuesolver.domain.useCase.login.ValidatePasswordUseCase
+import com.issuesolver.domain.useCase.login.ValidateRepeatedPasswordUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

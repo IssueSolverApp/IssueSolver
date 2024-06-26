@@ -1,7 +1,7 @@
 package com.issuesolver.presentation.login.daxil_ol_page_email
 
 import androidx.lifecycle.ViewModel
-import com.issuesolver.domain.usecase.login.ValidateEmailUseCase
+import com.issuesolver.domain.useCase.login.ValidateEmailUseCase
 import com.issuesolver.presentation.login.daxil_ol_page.LoginPageState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

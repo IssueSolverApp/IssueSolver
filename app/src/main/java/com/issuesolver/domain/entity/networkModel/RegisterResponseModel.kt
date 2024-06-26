@@ -5,12 +5,12 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class RegisterResponseModel (
-    val TimeSpam: String? = null,
-    val Url: String? = null,
-    val Title: String? = null,
-    val Success: Boolean? = null,
-    val Status: Int? = null,
-    val Message: String? = null
+    val timespam: String? = null,
+    val url: String? = null,
+    val title: String? = null,
+    val success: Boolean? = null,
+    val status: Int? = null,
+    val message: String? = null
 ):Parcelable
 
 

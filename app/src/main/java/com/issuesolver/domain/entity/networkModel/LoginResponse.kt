@@ -5,6 +5,8 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class LoginResponse(
-    val access_token: String? = null,
-    val refresh_token: String? = null
+    var data: Data? = Data(),
+    var success: Boolean? = null,
+    var status: Int? = null,
+    var message: String? = null
 ) : Parcelable
