@@ -76,6 +76,7 @@ import com.issuesolver.presentation.common.AuthButton
 import com.issuesolver.presentation.common.ErrorText
 import com.issuesolver.presentation.login.daxil_ol_page.LoginPageEvent
 import com.issuesolver.presentation.login.password_change_page.PasswordChangePageEvent
+import com.issuesolver.presentation.navigation.Routes
 import kotlinx.coroutines.launch
 
 @OptIn(
@@ -90,7 +91,7 @@ fun RegisterPage(navController: NavController, viewModel: RegisterViewModel = hi
     val isPasswordRepeatedError = uiState.repeatedPasswordError != null
 
 
-    var name by remember { mutableStateOf("") }
+    var fullName by remember { mutableStateOf("") }
     var surname by remember { mutableStateOf("") }
 
 
@@ -106,7 +107,6 @@ fun RegisterPage(navController: NavController, viewModel: RegisterViewModel = hi
 
 //    val bringIntoViewRequester = remember { BringIntoViewRequester() }
 //    val coroutineScope = rememberCoroutineScope()
-
 
 
     Scaffold(content = { padding ->
@@ -179,9 +179,9 @@ fun RegisterPage(navController: NavController, viewModel: RegisterViewModel = hi
                         )
                         TextField(
                             shape = RoundedCornerShape(12.dp),
-                            value = name,
+                            value = uiState.fullName,
                             onValueChange = {
-                                name = it
+                                viewModel.handleEvent(RegisterPageEvent.FullNameChanged(it))
                             },
                             placeholder = {
                                 Text(
@@ -499,18 +499,18 @@ fun RegisterPage(navController: NavController, viewModel: RegisterViewModel = hi
                             isCheckBoxRed = true
                         } else {
                             isCheckBoxRed = false
-                            navController.navigate("register otp")
+                            viewModel.register(
+                                RegisterRequestModel(
+                                    email = uiState.email,
+                                    fullName = uiState.fullName,
+                                    password = uiState.password,
+                                    confirmPassword = uiState.repeatedPassword
+                                )
+                            )
+                            navController.navigate(Routes.REGISTER_OTP + "/${uiState.email}")
                         }
                         viewModel.handleEvent(RegisterPageEvent.Submit)
-                        val fullname = "$name $surname"
-                        viewModel.register(
-                            RegisterRequestModel(
-                                email = uiState.email,
-                                fullName = fullname,
-                                password = password,
-                                confirmPassword = confirmPassword
-                            )
-                        )
+
                     },
                     enabled = uiState.isInputValid,
                     modifier = Modifier
@@ -535,7 +535,7 @@ fun RegisterPage(navController: NavController, viewModel: RegisterViewModel = hi
                         text = "Daxil olun",
                         color = MaterialTheme.colorScheme.primary,
 
-                    )
+                        )
 
                 }
             }

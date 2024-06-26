@@ -1,9 +1,11 @@
 package com.issuesolver.presentation.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.issuesolver.presentation.login.daxil_ol_page.LoginPage
 import com.issuesolver.presentation.login.daxil_ol_page_email.EmailVerificationPage
 import com.issuesolver.presentation.login.daxil_ol_verification_code.VerificationCodePage
@@ -20,7 +22,10 @@ fun AppNavigation() {
         composable(Routes.OTP) { VerificationCodePage(navController) }
         composable(Routes.PASSWORD_CHANGE) { PasswordChangePage(navController) }
         composable(Routes.REGISTER) { RegisterPage(navController) }
-        composable(Routes.REGISTER_OTP) { RegisterOtpCodePage(navController = navController) }
+        composable(Routes.REGISTER_OTP  + "/{id}") {navBackStack ->
+            val email = navBackStack.arguments?.getString("id")
+            RegisterOtpCodePage(navController = navController, email = email)
+        }
 
     }
 }

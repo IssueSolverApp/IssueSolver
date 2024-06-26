@@ -5,8 +5,10 @@ import com.issuesolver.common.Resource
 import com.issuesolver.domain.entity.networkModel.RegisterRequestModel
 import com.issuesolver.domain.useCase.RegisterUseCase
 import com.issuesolver.domain.useCase.login.ValidateEmailUseCase
+import com.issuesolver.domain.useCase.login.ValidateFullNameUseCase
 import com.issuesolver.domain.useCase.login.ValidatePasswordUseCase
 import com.issuesolver.domain.useCase.login.ValidateRepeatedPasswordUseCase
+import com.issuesolver.presentation.login.password_change_page.PasswordChangePageEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -19,17 +21,15 @@ class RegisterViewModel @Inject constructor(
     private val registerUseCase: RegisterUseCase,
     private val validateEmailUseCase: ValidateEmailUseCase,
     private val validatePasswordUseCase: ValidatePasswordUseCase,
-    private val validateRepeatedPasswordUseCase: ValidateRepeatedPasswordUseCase
+    private val validateRepeatedPasswordUseCase: ValidateRepeatedPasswordUseCase,
+    private val validateFullNameUseCase: ValidateFullNameUseCase
     ): ViewModel() {
-
 
     private val _registerState = MutableStateFlow<Resource<String?>>(Resource.Loading())
     val registerState: StateFlow<Resource<String?>> = _registerState
 
-
     private val _uiState = MutableStateFlow(RegisterPageState())
     val uiState: StateFlow<RegisterPageState> = _uiState.asStateFlow()
-
 
 
 
@@ -60,9 +60,10 @@ class RegisterViewModel @Inject constructor(
                 _uiState.value = uiState.value.copy(
                     password = event.password,
                     passwordError = result.errorMessage,
-                    isInputValid = result.successful && validateEmailUseCase.execute(uiState.value.email).successful
+                    isInputValid = result.successful && validateRepeatedPasswordUseCase.execute(uiState.value.repeatedPassword, uiState.value.password).successful
                 )
             }
+
             is RegisterPageEvent.RepeatedPasswordChanged -> {
                 val result = validateRepeatedPasswordUseCase.execute(_uiState.value.password, event.repeatedPassword)
                 _uiState.value = _uiState.value.copy(
@@ -73,9 +74,11 @@ class RegisterViewModel @Inject constructor(
             }
 
             is RegisterPageEvent.FullNameChanged -> {
+                val result = validateFullNameUseCase.execute(_uiState.value.fullName)
+
                 _uiState.value = _uiState.value.copy(
                     fullName = event.fullName,
-                    isInputValid = true
+                    isInputValid = result.successful
                 )
                 
             }

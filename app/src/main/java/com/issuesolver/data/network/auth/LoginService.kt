@@ -25,10 +25,10 @@ interface LoginService {
     suspend fun register(@Body request: RegisterRequestModel): Response<RegisterResponseModel>
 
     @POST("api/Auths/resend-otp")
-    suspend fun resendOtp(@Query("email") email: ResendOtpModel?):Response<RegisterResponseModel>
+    suspend fun resendOtp(@Body email: ResendOtpModel?):Response<RegisterResponseModel>
 
     @POST("api/Auths/confirm-otp")
-    suspend fun confirmOtp(@Query("otp") otp: RequestOtp?):Response<RegisterResponseModel>
+    suspend fun confirmOtp(@Body otp: RequestOtp?):Response<RegisterResponseModel>
 
 }
 
