@@ -3,9 +3,11 @@ package com.issuesolver.domain.useCase.di
 import com.issuesolver.data.repository.ConfirmOtpRepositoryInterface
 import com.issuesolver.data.repository.RegisterRepositoryInterface
 import com.issuesolver.data.repository.ResendOtpRepositoryInterface
+import com.issuesolver.data.repository.SignInRepositoryInterface
 import com.issuesolver.domain.useCase.ConfirmOtpUseCase
 import com.issuesolver.domain.useCase.RegisterUseCase
 import com.issuesolver.domain.useCase.ResendOtpUseCase
+import com.issuesolver.domain.useCase.SignInUseCase
 import com.issuesolver.domain.useCase.login.ValidateEmailUseCase
 import com.issuesolver.domain.useCase.login.ValidateFullNameUseCase
 import com.issuesolver.domain.useCase.login.ValidatePasswordUseCase
@@ -52,6 +54,11 @@ class UseCaseModule {
     @Singleton
     fun provideResendOtpUseCase(resendOtpRepository: ResendOtpRepositoryInterface) =
         ResendOtpUseCase(resendOtpRepository)
+
+    @Provides
+    @Singleton
+    fun provideSignInUseCase(signInRepository: SignInRepositoryInterface) =
+        SignInUseCase(signInRepository)
 
 
 }

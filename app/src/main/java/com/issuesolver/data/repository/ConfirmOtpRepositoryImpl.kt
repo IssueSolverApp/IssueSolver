@@ -7,11 +7,13 @@ import com.issuesolver.domain.entity.networkModel.RequestOtp
 import retrofit2.Response
 import javax.inject.Inject
 
-interface ConfirmOtpRepositoryInterface{
+interface ConfirmOtpRepositoryInterface {
     suspend fun confirmOtp(requestOtp: RequestOtp): Response<RegisterResponseModel>
 }
 
-class ConfirmOtpRepositoryImpl@Inject constructor(private val loginService: LoginService):ConfirmOtpRepositoryInterface {
+class ConfirmOtpRepositoryImpl @Inject constructor(private val loginService: LoginService) :
+    ConfirmOtpRepositoryInterface {
     override suspend fun confirmOtp(requestOtp: RequestOtp): Response<RegisterResponseModel> {
-return loginService.confirmOtp(requestOtp)    }
+        return loginService.confirmOtp(requestOtp)
+    }
 }
