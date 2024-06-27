@@ -32,6 +32,7 @@ import androidx.core.view.ViewCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.issuesolver.R
+import com.issuesolver.domain.entity.networkModel.LoginRequest
 import com.issuesolver.presentation.common.AuthButton
 import com.issuesolver.presentation.common.ErrorText
 import kotlinx.coroutines.launch
@@ -292,7 +293,13 @@ fun LoginPage(
 
                     AuthButton(
                         text = "Daxil ol",
-                        onClick = { viewModel.handleEvent(LoginPageEvent.Submit) },
+                        onClick = {
+                            viewModel.handleEvent(LoginPageEvent.Submit)
+                                  viewModel.signIn(LoginRequest(
+                                      email = uiState.email,
+                                      password = uiState.password
+                                  ))
+                                  },
                         enabled = uiState.isInputValid,
 
                         modifier = Modifier

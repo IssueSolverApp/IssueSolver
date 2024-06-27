@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.issuesolver.R
+import com.issuesolver.domain.entity.networkModel.ResetPasswordModel
 import com.issuesolver.presentation.common.AuthButton
 import com.issuesolver.presentation.common.ErrorText
 import com.issuesolver.presentation.login.daxil_ol_page.LoginPageEvent
@@ -260,7 +261,13 @@ fun PasswordChangePage(navController: NavController,viewModel: PasswordChangePag
                 ) {
                     AuthButton(
                         text = "Yenilə",
-                        onClick = {viewModel.handleEvent(PasswordChangePageEvent.Submit)},
+                        onClick = {
+                            viewModel.handleEvent(PasswordChangePageEvent.Submit)
+                            viewModel.resetPassword(ResetPasswordModel(
+                                uiState.newpassword,
+                                uiState.repeatedPassword
+                            ))
+                                  },
                         enabled = uiState.isInputValid,
 
                         modifier = Modifier

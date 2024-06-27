@@ -44,8 +44,11 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.issuesolver.R
+import com.issuesolver.domain.entity.networkModel.RequestOtp
+import com.issuesolver.domain.entity.networkModel.ResendOtpModel
 import com.issuesolver.presentation.common.AuthButton
 import com.issuesolver.presentation.login.daxil_ol_verification_code.OtpInputField
 import kotlinx.coroutines.delay
@@ -53,7 +56,7 @@ import kotlinx.coroutines.delay
 
 @SuppressLint("DefaultLocale")
 @Composable
-fun RegisterOtpCodePage(navController: NavController) {
+fun RegisterOtpCodePage(navController: NavController, email: String?,  viewModel: ConfirmOtpViewModel = hiltViewModel()) {
 
     val context = LocalContext.current
     var otpValue by remember { mutableStateOf(TextFieldValue("")) }
@@ -197,7 +200,10 @@ fun RegisterOtpCodePage(navController: NavController) {
             ) {
                 AuthButton(
                     text = "Təsdiqlə",
-                    onClick = { navController.navigate("login")},
+                    onClick = {
+                        viewModel.register(RequestOtp(otpCode = otpValue.text))
+                        navController.navigate("login")
+                              },
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(bottom = 16.dp)
@@ -210,7 +216,8 @@ fun RegisterOtpCodePage(navController: NavController) {
                         .wrapContentWidth(Alignment.CenterHorizontally) // Center the text horizontally
 
                         .clickable (
-                            onClick = { },
+                            //email
+                            onClick = { viewModel.resendOtp(ResendOtpModel(email))},
                             interactionSource = remember { MutableInteractionSource() },
                             indication = null,
 

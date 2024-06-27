@@ -6,5 +6,8 @@ object Routes {
     const val OTP = "otp"
     const val PASSWORD_CHANGE = "password change"
     const val REGISTER = "register"
-    const val REGISTER_OTP = "register otp"
+    const val REGISTER_OTP = "register_otp"
+
+//    fun emailVerificationRoute(email: String) = "email_verification/$email"
+
 }
