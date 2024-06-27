@@ -8,7 +8,7 @@ import javax.inject.Inject
 
 
 interface OtpTrustRepositoryInterface{
-    suspend fun otpTrust(login: RequestOtp): Response<OtpTrustResponse>
+    suspend fun otpTrust(otpTrust: RequestOtp): Response<OtpTrustResponse>
 }
 
 class OtpTrustRepositoryImpl @Inject constructor(private val loginService: LoginService): OtpTrustRepositoryInterface {

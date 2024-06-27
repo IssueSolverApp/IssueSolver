@@ -57,6 +57,9 @@ fun VerificationCodePage(navController: NavController, viewModel: VerificationCo
     val focusRequester = remember { FocusRequester() }
     val keyboardController = LocalSoftwareKeyboardController.current
 
+    //var otpValue by remember { mutableStateOf(TextFieldValue("")) }
+
+
     LaunchedEffect(Unit) {
         focusRequester.requestFocus()
         keyboardController?.show()
@@ -195,7 +198,7 @@ fun VerificationCodePage(navController: NavController, viewModel: VerificationCo
                     text = "Təsdiqlə",
                     onClick = {
                         viewModel.otpTrust(RequestOtp(
-                            otpCode = otpValue.toString()
+                            otpCode = otpValue.text
                         ))
                         navController.navigate("password change")
                               },
