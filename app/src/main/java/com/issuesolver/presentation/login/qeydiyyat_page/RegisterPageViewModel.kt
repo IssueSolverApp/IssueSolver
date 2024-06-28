@@ -25,18 +25,20 @@ class RegisterViewModel @Inject constructor(
     private val validateFullNameUseCase: ValidateFullNameUseCase
     ): ViewModel() {
 
-    private val _registerState = MutableStateFlow<Resource<String?>>(Resource.Loading())
-    val registerState: StateFlow<Resource<String?>> = _registerState
+
 
     private val _uiState = MutableStateFlow(RegisterPageState())
     val uiState: StateFlow<RegisterPageState> = _uiState.asStateFlow()
 
-
+    private val _registerState = MutableStateFlow<Resource<String?>?>(null)
+    val registerState: StateFlow<Resource<String?>?> = _registerState
 
     fun register(request: RegisterRequestModel) {
+        //Loading
         viewModelScope.launch {
             registerUseCase(request).collect { resource ->
                 _registerState.value = resource
+                _uiState.value = uiState.value.copy(emailError = resource.message)
             }
         }
     }

@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.issuesolver.common.Resource
 import com.issuesolver.domain.entity.networkModel.RequestOtp
 import com.issuesolver.domain.entity.networkModel.ResetPasswordModel
+import com.issuesolver.domain.useCase.OtpTrustUseCase
 import com.issuesolver.domain.useCase.ResetPasswordUseCase
 import com.issuesolver.domain.useCase.login.ValidatePasswordUseCase
 import com.issuesolver.domain.useCase.login.ValidateRepeatedPasswordUseCase
@@ -22,11 +23,11 @@ class PasswordChangePageViewModel @Inject constructor(
     private val validateRepeatedPasswordUseCase: ValidateRepeatedPasswordUseCase,
     private val validatePasswordUseCase: ValidatePasswordUseCase,
     private val resetPasswordUseCase: ResetPasswordUseCase,
-    private val sharedPreferences: SharedPreferences
+    private val otpTrustUseCase: OtpTrustUseCase
 
 ) : ViewModel() {
 
-    private val token = sharedPreferences.getString("auth_token", null)
+    private val token = otpTrustUseCase.getToken()
 
 
     private val _uiState = MutableStateFlow(PasswordChangePageState())

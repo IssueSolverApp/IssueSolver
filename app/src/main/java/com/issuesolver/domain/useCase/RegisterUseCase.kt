@@ -38,7 +38,7 @@ class RegisterUseCase @Inject constructor(
     private val registerRepository: RegisterRepositoryInterface
 ) {
     suspend operator fun invoke(register: RegisterRequestModel) = flow {
-        emit(Resource.Loading())
+
         try {
             val response = registerRepository.createUser(register)
             if (response.isSuccessful) {
