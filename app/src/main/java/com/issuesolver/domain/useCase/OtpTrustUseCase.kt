@@ -1,25 +1,33 @@
 package com.issuesolver.domain.useCase
 
+import android.content.SharedPreferences
 import com.google.gson.Gson
 import com.issuesolver.common.Resource
-import com.issuesolver.data.repository.ResendOtpRepositoryImpl
-import com.issuesolver.data.repository.ResendOtpRepositoryInterface
+import com.issuesolver.data.repository.OtpTrustRepositoryInterface
 import com.issuesolver.domain.entity.networkModel.RegisterResponseModel
+import com.issuesolver.domain.entity.networkModel.RequestOtp
 import com.issuesolver.domain.entity.networkModel.ResendOtpModel
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
 
-class ResendOtpUseCase @Inject constructor(private val resendOtpRepository: ResendOtpRepositoryInterface) {
+class OtpTrustUseCase @Inject constructor(
+    private val otpTrustRepository: OtpTrustRepositoryInterface,
+    private val sharedPreferences: SharedPreferences
+) {
 
-    suspend operator fun invoke(otpModel: ResendOtpModel) = flow {
+    suspend operator fun invoke(otpModel: RequestOtp) = flow {
         emit(Resource.Loading())
 
         try {
-            val response = resendOtpRepository.resendOtp(otpModel)
+            val response = otpTrustRepository.otpTrust(otpModel)
             if (response.isSuccessful) {
                 emit(Resource.Success(response.body()?.message))
+                val token = response.body()?.data
+                token.let {
+                    saveToken(it.toString())
+                }
             } else {
                 val errorResponse = response.errorBody()?.string()?.let {
                     parseErrorResponse(it)
@@ -35,6 +43,10 @@ class ResendOtpUseCase @Inject constructor(private val resendOtpRepository: Rese
             emit(Resource.Error("Unexpected Error: ${e.localizedMessage}"))
         }
 
+    }
+
+    private fun saveToken(token: String) {
+        sharedPreferences.edit().putString("auth_token", token).apply()
     }
 
     private fun parseErrorResponse(json: String): RegisterResponseModel? {

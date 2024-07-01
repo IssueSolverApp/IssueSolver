@@ -39,8 +39,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.issuesolver.R
+import com.issuesolver.domain.entity.networkModel.RequestOtp
 import com.issuesolver.presentation.common.AuthButton
 import com.issuesolver.presentation.navigation.mockNavController
 import kotlinx.coroutines.delay
@@ -48,12 +50,15 @@ import kotlinx.coroutines.delay
 @SuppressLint("DefaultLocale")
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun VerificationCodePage(navController: NavController) {
+fun VerificationCodePage(navController: NavController, viewModel: VerificationCodePageViewModel = hiltViewModel()) {
     val context = LocalContext.current
     var otpValue by remember { mutableStateOf(TextFieldValue("")) }
     var isOtpFilled by remember { mutableStateOf(false) }
     val focusRequester = remember { FocusRequester() }
     val keyboardController = LocalSoftwareKeyboardController.current
+
+    //var otpValue by remember { mutableStateOf(TextFieldValue("")) }
+
 
     LaunchedEffect(Unit) {
         focusRequester.requestFocus()
@@ -181,7 +186,8 @@ fun VerificationCodePage(navController: NavController) {
             Spacer(modifier = Modifier.height(16.dp))
 
             Column(
-                modifier = Modifier.align(Alignment.BottomCenter)
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
                     .padding(bottom = 27.dp)
 
 //                    .fillMaxSize(),
@@ -190,7 +196,12 @@ fun VerificationCodePage(navController: NavController) {
             ) {
                 AuthButton(
                     text = "Təsdiqlə",
-                    onClick = { navController.navigate("password change")},
+                    onClick = {
+                        viewModel.otpTrust(RequestOtp(
+                            otpCode = otpValue.text
+                        ))
+                        navController.navigate("password change")
+                              },
 
                     modifier = Modifier
                         .fillMaxWidth()
@@ -203,12 +214,12 @@ fun VerificationCodePage(navController: NavController) {
                         .fillMaxWidth()
                         .wrapContentWidth(Alignment.CenterHorizontally) // Center the text horizontally
 
-                        .clickable (
-                    onClick = { },
-                    interactionSource = remember { MutableInteractionSource() },
-                    indication = null,
+                        .clickable(
+                            onClick = { },
+                            interactionSource = remember { MutableInteractionSource() },
+                            indication = null,
 
-                )
+                            )
                     , text = "Kodu yenidən göndər",
                     fontSize = 15.sp,
 
@@ -258,7 +269,9 @@ fun OtpInputField(
                     CharacterBox(
                         character = text.value.getOrNull(i)?.toString() ?: "",
                         isFocused = i == text.value.length,
-                        modifier = Modifier.weight(1f, fill = true).padding(horizontal = 4.dp)
+                        modifier = Modifier
+                            .weight(1f, fill = true)
+                            .padding(horizontal = 4.dp)
                     )
                     if (i == 2) {
                         Text("-", style = TextStyle(color = Color(0xFF2981FF), fontSize = 24.sp, textAlign = TextAlign.Center))
@@ -276,7 +289,11 @@ fun CharacterBox(character: String, isFocused: Boolean, modifier: Modifier = Mod
         modifier = modifier
             .defaultMinSize(minWidth = 52.dp, minHeight = 65.dp)
             .background(Color.White, RoundedCornerShape(12.dp))
-            .border(1.dp, if (isFocused) Color(0xFF2981FF) else Color.White, RoundedCornerShape(12.dp))
+            .border(
+                1.dp,
+                if (isFocused) Color(0xFF2981FF) else Color.White,
+                RoundedCornerShape(12.dp)
+            )
     ) {
         Text(
             text = character,

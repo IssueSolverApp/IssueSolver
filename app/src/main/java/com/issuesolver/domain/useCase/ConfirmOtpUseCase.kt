@@ -18,13 +18,13 @@ class ConfirmOtpUseCase @Inject constructor(private val otpRepository: ConfirmOt
         try {
             val response = otpRepository.confirmOtp(otp)
             if (response.isSuccessful){
-                emit(Resource.Success(response.body()?.Message))
+                emit(Resource.Success(response.body()?.message))
 
             }else {
                 val errorResponse = response.errorBody()?.string()?.let {
                     parseErrorResponse(it)
                 }
-                emit(Resource.Error(errorResponse?.Message ?: "Unknown Error"))
+                emit(Resource.Error(errorResponse?.message ?: "Unknown Error"))
             }
         }catch (e: IOException) {
             emit(Resource.Error("Network Error: ${e.localizedMessage}"))
