@@ -1,7 +1,6 @@
-package com.issuesolver.domain.usecase.login
+package com.issuesolver.domain.useCase.login
 
-import android.util.Patterns
-import com.issuesolver.domain.useCase.login.ValidationResult
+
 
 class LoginUseCase() {
     fun execute(email: String): ValidationResult {

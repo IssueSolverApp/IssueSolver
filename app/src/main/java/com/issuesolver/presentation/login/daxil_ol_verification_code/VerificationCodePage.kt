@@ -85,8 +85,8 @@ fun VerificationCodePage(navController: NavController, viewModel: VerificationCo
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(top = 24.dp)
-                .padding(20.dp)
+                .padding(top = 24.dp,start=20.dp, end=20.dp,bottom=16.dp)
+                .padding(padding)
                 .imePadding()
 
         ) {
@@ -188,7 +188,7 @@ fun VerificationCodePage(navController: NavController, viewModel: VerificationCo
             Column(
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
-                    .padding(bottom = 27.dp)
+//                    .padding(bottom = 27.dp)
 
 //                    .fillMaxSize(),
 //                horizontalAlignment = Alignment.CenterHorizontally,

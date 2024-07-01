@@ -9,7 +9,7 @@ import com.issuesolver.domain.entity.networkModel.RegisterRequestModel
 import com.issuesolver.domain.useCase.SignInUseCase
 import com.issuesolver.domain.useCase.login.ValidateEmailUseCase
 import com.issuesolver.domain.useCase.login.ValidatePasswordUseCase
-import com.issuesolver.domain.usecase.login.LoginUseCase
+import com.issuesolver.domain.useCase.login.LoginUseCase
 
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

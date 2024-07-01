@@ -43,8 +43,8 @@ fun EmailVerificationPage(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(top = 24.dp)
-                .padding(20.dp)
+                .padding(top = 24.dp,start=20.dp, end=20.dp,bottom=16.dp)
+                .padding(padding)
                 .imePadding()
         ) {
 
@@ -181,7 +181,7 @@ fun EmailVerificationPage(
 
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(bottom = 48.dp)
+//                        .padding(bottom = 48.dp)
                 )
             }
         }

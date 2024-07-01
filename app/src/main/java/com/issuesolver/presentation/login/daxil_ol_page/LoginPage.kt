@@ -68,13 +68,12 @@ fun LoginPage(
 
 
 
-    Scaffold(
-        content = { padding ->
+    Scaffold { padding ->
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(top = 24.dp)
-                    .padding(20.dp)
+                    .padding(top = 24.dp,start=20.dp, end=20.dp,bottom=16.dp)
+                    .padding(padding)
                     .imePadding()
 //                    .background(Color.Black)
 
@@ -314,7 +313,7 @@ fun LoginPage(
                         horizontalArrangement = Arrangement.Center,
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(bottom = 27.dp)
+//                            .padding(bottom = 27.dp)
 
 
                     ) {
@@ -344,7 +343,7 @@ fun LoginPage(
             }
 
         }
-    )
+
 }
 
 

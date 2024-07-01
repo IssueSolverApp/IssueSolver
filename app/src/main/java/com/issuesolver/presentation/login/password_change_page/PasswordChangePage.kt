@@ -62,8 +62,8 @@ fun PasswordChangePage(navController: NavController,viewModel: PasswordChangePag
     Scaffold { padding ->
         Box(modifier = Modifier
             .fillMaxSize()
-            .padding(top = 24.dp)
-            .padding(20.dp)
+            .padding(top = 24.dp,start=20.dp, end=20.dp,bottom=16.dp)
+            .padding(padding)
             .imePadding()
         ) {
 
@@ -272,7 +272,7 @@ fun PasswordChangePage(navController: NavController,viewModel: PasswordChangePag
 
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(bottom = 16.dp)
+//                            .padding(bottom = 16.dp)
                     )
 
                 }
