@@ -123,18 +123,46 @@ fun VerificationCodePage(
                             modifier = Modifier.size(24.dp)
                         )
                     }
-                    Text(
-                        "Təsdiq Kodu",
-                        style = MaterialTheme.typography.headlineMedium,
-                        fontSize = 28.sp,
-                        fontWeight = FontWeight.SemiBold,
-                        textAlign = TextAlign.Start,
-                        color = Color.Black,
-                        modifier = Modifier
-                            .padding(top = 24.dp),
 
+                    Row(
+                        modifier = Modifier.fillMaxWidth()
+                        .padding(top = 24.dp),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            "Təsdiq Kodu",
+                            style = MaterialTheme.typography.headlineMedium,
+                            fontSize = 28.sp,
+                            fontWeight = FontWeight.SemiBold,
+                            textAlign = TextAlign.Start,
+                            color = Color.Black,
+//                            modifier = Modifier
+//                                .padding(top = 24.dp),
+
+
+                            )
+                        Row{
+                            Image(
+                            painter = painterResource(R.drawable.timer),
+                            contentDescription = "timer",
+                                modifier = Modifier.align(Alignment.CenterVertically)
+
+                            )
+                    Text(
+                    " $formattedTime",
+                    fontSize = 18.sp,
+                    color = Color(0xFF4D96FF), 
+                        style = MaterialTheme.typography.headlineMedium,
 
                         )
+
+                        }
+
+                    }
+
+
+
                     Text(
                         "E-poçtunuza gələn təsdiq kodunu daxil edin.",
                         style = MaterialTheme.typography.bodySmall,
@@ -186,11 +214,11 @@ fun VerificationCodePage(
 
 
                 Spacer(modifier = Modifier.height(16.dp))
-                Text(
-                    "Qalan vaxt: $formattedTime", style = MaterialTheme.typography.bodyMedium,
-                    fontSize = 17.sp,
-                    color = Color(0xFF2981FF)
-                )
+//                Text(
+//                    "Qalan vaxt: $formattedTime", style = MaterialTheme.typography.bodyMedium,
+//                    fontSize = 17.sp,
+//                    color = Color(0xFF2981FF)
+//                )
             }
 
 
