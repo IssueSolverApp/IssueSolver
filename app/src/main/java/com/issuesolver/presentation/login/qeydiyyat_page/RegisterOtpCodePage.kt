@@ -2,6 +2,7 @@ package com.issuesolver.presentation.login.qeydiyyat_page
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -17,6 +18,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -24,6 +26,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -47,6 +50,8 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.issuesolver.R
+import com.issuesolver.common.Resource
+import com.issuesolver.common.StatusR
 import com.issuesolver.domain.entity.networkModel.RequestOtp
 import com.issuesolver.domain.entity.networkModel.ResendOtpModel
 import com.issuesolver.presentation.common.AuthButton
@@ -80,10 +85,26 @@ fun RegisterOtpCodePage(navController: NavController, email: String?,  viewModel
         }
     }
 
+
     val minutes = remainingTime / 60
     val seconds = remainingTime % 60
 
     val formattedTime = String.format("%02d:%02d", minutes, seconds)
+
+    val confirmOtpState by viewModel.confirmOtpState.collectAsState()
+
+    when (confirmOtpState.status) {
+        StatusR.LOADING -> {
+            CircularProgressIndicator()
+        }
+        StatusR.SUCCESS -> {
+            navController.navigate("login")
+        }
+        StatusR.ERROR -> {
+            Log.e("ERRORTAG", confirmOtpState.message.toString())
+        }
+    }
+
 
     Scaffold { padding ->
         Box(
@@ -201,8 +222,8 @@ fun RegisterOtpCodePage(navController: NavController, email: String?,  viewModel
                 AuthButton(
                     text = "Təsdiqlə",
                     onClick = {
-                        viewModel.register(RequestOtp(otpCode = otpValue.text))
-                        navController.navigate("login")
+                        viewModel.confirmRegister(RequestOtp(otpCode = otpValue.text))
+
                               },
                     modifier = Modifier
                         .fillMaxWidth()

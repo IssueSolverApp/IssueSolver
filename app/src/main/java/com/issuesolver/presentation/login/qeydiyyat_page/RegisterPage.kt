@@ -1,5 +1,7 @@
 package com.issuesolver.presentation.login.qeydiyyat_page
 
+import android.util.Log
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -81,6 +83,12 @@ import com.issuesolver.presentation.login.password_change_page.PasswordChangePag
 import com.issuesolver.presentation.navigation.Routes
 import kotlinx.coroutines.launch
 
+import androidx.compose.runtime.getValue
+
+import androidx.compose.runtime.livedata.observeAsState
+import com.issuesolver.common.StatusR
+
+
 @OptIn(
     ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class
 )
@@ -107,10 +115,24 @@ fun RegisterPage(navController: NavController, viewModel: RegisterViewModel = hi
     var isChecked by remember { mutableStateOf(false) }
     var isCheckBoxRed by remember { mutableStateOf(false) }
 
-//    val bringIntoViewRequester = remember { BringIntoViewRequester() }
-//    val coroutineScope = rememberCoroutineScope()
-
     val registerState by viewModel.registerState.collectAsState()
+
+    when (registerState?.status) {
+        StatusR.LOADING -> {
+            CircularProgressIndicator()
+        }
+        StatusR.SUCCESS -> {
+            navController.navigate(Routes.REGISTER_OTP + "/${uiState.email}")
+        }
+        StatusR.ERROR -> {
+            Log.e("ERRORTAG", registerState?.message.toString())
+        }
+        else -> {
+
+        }
+    }
+
+
 
     errorEmail = uiState.emailError.toString()
 
@@ -516,23 +538,23 @@ fun RegisterPage(navController: NavController, viewModel: RegisterViewModel = hi
                                 )
                             )
                             //navController.navigate(Routes.REGISTER_OTP + "/${uiState.email}")
-                            when (registerState) {
-                                is Resource.Loading -> {
-                                    //CircularProgressIndicator()
-                                }
-
-                                is Resource.Success -> {
-                                    navController.navigate(Routes.REGISTER_OTP + "/${uiState.email}")
-                                }
-
-                                is Resource.Error -> {
-
-
-                                }
-
-                                null -> TODO()
-                                else -> {}
-                            }
+//                            when (registerState) {
+//                                is Resource.Loading<*> -> {
+//                                    //CircularProgressIndicator()
+//                                }
+//
+//                                is Resource.Success<*> -> {
+//                                    navController.navigate(Routes.REGISTER_OTP + "/${uiState.email}")
+//                                }
+//
+//                                is Resource.Error<*> -> {
+//
+//
+//                                }
+//
+//                                null -> TODO()
+//                                else -> {}
+//                            }
 
                         }
 //                        viewModel.handleEvent(RegisterPageEvent.Submit)

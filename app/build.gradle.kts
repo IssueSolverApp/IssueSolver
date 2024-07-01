@@ -57,6 +57,7 @@ dependencies {
 
 
 
+
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation("com.squareup.okhttp3:okhttp:3.10.0")
@@ -71,6 +72,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.1")
     implementation(libs.androidx.lifecycle.runtime.compose.android)
     implementation(libs.androidx.constraintlayout.compose)
+    implementation(libs.androidx.runtime.livedata)
     kapt("com.google.dagger:hilt-android-compiler:2.46")
 
 
