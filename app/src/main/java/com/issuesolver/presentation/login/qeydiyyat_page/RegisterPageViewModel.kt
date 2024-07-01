@@ -4,12 +4,11 @@ import androidx.lifecycle.viewModelScope
 import com.issuesolver.common.Resource
 import com.issuesolver.common.State
 import com.issuesolver.domain.entity.networkModel.RegisterRequestModel
+import com.issuesolver.domain.useCase.RegisterUseCase
+import com.issuesolver.domain.useCase.login.ValidateFullNameUseCase
 import com.issuesolver.domain.useCase.login.ValidatePasswordUseCase
-import com.issuesolver.domain.usecase.RegisterUseCase
 import com.issuesolver.domain.usecase.login.ValidateEmailUseCase
-import com.issuesolver.domain.usecase.login.ValidateFullNameUseCase
 import com.issuesolver.domain.usecase.login.ValidateRepeatedPasswordUseCase
-
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
