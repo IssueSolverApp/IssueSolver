@@ -56,15 +56,10 @@ fun VerificationCodePage(
     var isOtpFilled by remember { mutableStateOf(false) }
     val focusRequester = remember { FocusRequester() }
     val keyboardController = LocalSoftwareKeyboardController.current
-
-    //var otpValue by remember { mutableStateOf(TextFieldValue("")) }
-
-
     LaunchedEffect(Unit) {
         focusRequester.requestFocus()
         keyboardController?.show()
     }
-
     (LocalView.current.context as Activity)
 
     var remainingTime by remember { mutableLongStateOf(180) }
@@ -75,14 +70,11 @@ fun VerificationCodePage(
             remainingTime--
         }
     }
-
     val minutes = remainingTime / 60
     val seconds = remainingTime % 60
-
     val formattedTime = String.format("%02d:%02d", minutes, seconds)
 
     Scaffold(content = { padding ->
-
         Box(
             modifier = Modifier
                 .fillMaxSize()
@@ -90,23 +82,17 @@ fun VerificationCodePage(
                 .navigationBarsPadding()
                 .imePadding()
                 .padding(top = 24.dp, start = 20.dp, end = 20.dp, bottom = 16.dp)
-
-
         ) {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
                     .imePadding()
-
             ) {
-
                 Column(
                     Modifier.padding(bottom = 20.dp)
-
                 ) {
                     Box(
                         modifier = Modifier
-
                             .padding(top = 20.dp)
                             .size(40.dp)
                             .clip(RoundedCornerShape(100.dp))
@@ -115,7 +101,6 @@ fun VerificationCodePage(
                                 navController.popBackStack()
                             },
                         contentAlignment = Alignment.Center
-
                     ) {
                         Image(
                             painter = painterResource(R.drawable.backarray),
@@ -123,7 +108,6 @@ fun VerificationCodePage(
                             modifier = Modifier.size(24.dp)
                         )
                     }
-
                     Row(
                         modifier = Modifier.fillMaxWidth()
                         .padding(top = 24.dp),
@@ -137,32 +121,21 @@ fun VerificationCodePage(
                             fontWeight = FontWeight.SemiBold,
                             textAlign = TextAlign.Start,
                             color = Color.Black,
-//                            modifier = Modifier
-//                                .padding(top = 24.dp),
-
-
                             )
                         Row{
                             Image(
                             painter = painterResource(R.drawable.timer),
                             contentDescription = "timer",
                                 modifier = Modifier.align(Alignment.CenterVertically)
-
                             )
                     Text(
                     " $formattedTime",
                     fontSize = 18.sp,
                     color = Color(0xFF4D96FF), 
                         style = MaterialTheme.typography.headlineMedium,
-
                         )
-
                         }
-
                     }
-
-
-
                     Text(
                         "E-poçtunuza gələn təsdiq kodunu daxil edin.",
                         style = MaterialTheme.typography.bodySmall,
@@ -171,23 +144,15 @@ fun VerificationCodePage(
                         color = Color(0xFF9D9D9D),
                         modifier = Modifier
                             .padding(top = 10.dp, bottom = 20.dp),
-
                         )
                     Spacer(modifier = Modifier.height(8.dp))
                     Divider(
                         thickness = 0.5.dp,
                         color = Color(0xFF2981FF)
-
                     )
                     Spacer(modifier = Modifier.height(8.dp))
-
-
-
-
-
                     Column(
                         Modifier.padding(top = 20.dp)
-
                     ) {
                         Surface(
                             modifier = Modifier
@@ -211,27 +176,13 @@ fun VerificationCodePage(
                         }
                     }
                 }
-
-
                 Spacer(modifier = Modifier.height(16.dp))
-//                Text(
-//                    "Qalan vaxt: $formattedTime", style = MaterialTheme.typography.bodyMedium,
-//                    fontSize = 17.sp,
-//                    color = Color(0xFF2981FF)
-//                )
             }
-
-
             Spacer(modifier = Modifier.height(16.dp))
-
             Column(
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
                     .padding(bottom = 27.dp)
-
-//                    .fillMaxSize(),
-//                horizontalAlignment = Alignment.CenterHorizontally,
-//                verticalArrangement = Arrangement.Bottom
             ) {
                 AuthButton(
                     text = "Təsdiqlə",
@@ -243,18 +194,15 @@ fun VerificationCodePage(
                         )
                         navController.navigate("password change")
                     },
-
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(bottom = 16.dp)
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
-
                     modifier = Modifier
                         .fillMaxWidth()
                         .wrapContentWidth(Alignment.CenterHorizontally) // Center the text horizontally
-
                         .clickable(
                             onClick = { },
                             interactionSource = remember { MutableInteractionSource() },
@@ -262,13 +210,9 @@ fun VerificationCodePage(
 
                             ), text = "Kodu yenidən göndər",
                     fontSize = 15.sp,
-
-
                     color = MaterialTheme.colorScheme.primary
                 )
             }
-
-
         }
     }
     )

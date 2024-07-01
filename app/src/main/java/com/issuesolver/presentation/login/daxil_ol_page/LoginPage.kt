@@ -61,15 +61,7 @@ fun LoginPage(
             scrollState.scrollBy(keyboardHeight.toFloat())
         }
     }
-
-
-
-
-
-
-
     Scaffold (content = { padding ->
-
         Box(
             modifier = Modifier
                 .fillMaxSize()
@@ -77,26 +69,15 @@ fun LoginPage(
                 .navigationBarsPadding()
                 .imePadding()
                 .padding(top = 24.dp, start = 20.dp, end = 20.dp,bottom=16.dp)
-
-
-
         ) {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
                     .imePadding()
-
             ) {
-
                 Column(
-
                     Modifier.padding(bottom = 20.dp)
-//                            .background(Color.Yellow)
-
-
                 ) {
-
-
                     Text(
                         "Daxil olun",
                         style = MaterialTheme.typography.headlineMedium,
@@ -105,11 +86,10 @@ fun LoginPage(
                         textAlign = TextAlign.Start,
                         color = Color.Black
                     )
-
                     Text(
                         "Zəhmət olmasa, giriş üçün məlumatlarınızı daxil edin.",
                         style = MaterialTheme.typography.bodySmall,
-                        fontSize = 14.sp,
+                        fontSize = 15.sp,
                         fontWeight = FontWeight.W400,
                         textAlign = TextAlign.Start,
                         color = Color(0xFF9D9D9D),
@@ -117,18 +97,12 @@ fun LoginPage(
                             .padding(top = 10.dp)
                     )
                 }
-
                 Divider(
                     thickness = 0.5.dp,
                     color = Color(0xFF2981FF)
-
                 )
-                Spacer(modifier = Modifier.height(8.dp))
-
-
                 Column(
-                    Modifier.padding(top = 20.dp)
-//                            .background(Color.Blue)
+                    Modifier.padding(top = 28.dp)
                 ) {
                     Text(
                         "E-poçt",
@@ -149,7 +123,7 @@ fun LoginPage(
                         singleLine = true,
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(top = 10.dp)
+                            .padding(top = 8.dp)
                             .then(
                                 if (isEmailError) Modifier.border(
                                     1.dp,
@@ -162,7 +136,6 @@ fun LoginPage(
                                     RoundedCornerShape(12.dp)
                                 )
                             ),
-
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
                         colors = TextFieldDefaults.textFieldColors(
                             containerColor = Color.White,
@@ -172,23 +145,18 @@ fun LoginPage(
                             errorCursorColor = Color.Red,
                             cursorColor = Color(0xFF2981FF)
                         ),
-
-
                         )
                     ErrorText(
                         errorMessage = uiState.emailError,
 //                        isVisible = isEmailError
                     )
-
                     Spacer(modifier = Modifier.height(20.dp))
-
                     Text(
                         "Şifrə",
                         color = if (isPasswordError) Color.Red else Color.Black,
                         style = MaterialTheme.typography.bodySmall,
                         fontSize = 15.sp,
                     )
-
                     TextField(
                         shape = RoundedCornerShape(12.dp),
                         value = uiState.password,
@@ -251,9 +219,6 @@ fun LoginPage(
                         errorMessage = uiState.passwordError,
 //                        isVisible = isPasswordError
                     )
-
-
-
                     Text(
                         modifier = Modifier
                             .clickable(
@@ -265,32 +230,20 @@ fun LoginPage(
                             .wrapContentWidth(Alignment.End)
                             .padding(
                                 top = 12.dp,
-//                                    bottom=100.dp
                             ),
                         text = "Şifrənizi unutmusunuz?",
-
-
+                        fontSize = 15.sp,
+                        style = MaterialTheme.typography.bodyMedium,
                         color = Color(0xFF4D96FF)
                     )
-
-                    Spacer(modifier = Modifier.height(100.dp))
-
+                    Spacer(modifier = Modifier.height(150.dp))
                 }
             }
-
-
-
             Column(
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
-//                        .fillMaxSize()
                     .background(Color(0xFFF0F4F9)),
-//
-//                    horizontalAlignment = Alignment.CenterHorizontally,
-//                    verticalArrangement = Arrangement.Bottom
             ) {
-
-
                 AuthButton(
                     text = "Daxil ol",
                     onClick = {
@@ -303,26 +256,20 @@ fun LoginPage(
                         )
                     },
                     enabled = uiState.isInputValid,
-
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(bottom = 16.dp)
-
-
+                        .padding(bottom = 12.dp)
                 )
-
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center,
                     modifier = Modifier
                         .fillMaxWidth()
-//                            .padding(bottom = 27.dp)
-
-
                 ) {
                     Row {
                         Text(
                             "Hesabınız yoxdur?",
+                            fontSize = 15.sp,
                             color = Color(0xFF9D9D9D)
                         )
                         Text(
@@ -333,22 +280,15 @@ fun LoginPage(
                                     indication = null
                                 ),
                             text = "Qeydiyyatdan keç",
-
+                            fontSize = 15.sp,
                             color = MaterialTheme.colorScheme.primary
                         )
                     }
                 }
-
-
             }
-
-
         }
     }
-
-
     )
-
 }
 
 

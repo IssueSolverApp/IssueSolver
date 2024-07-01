@@ -34,13 +34,11 @@ fun EmailVerificationPage(
     navController: NavController,
     viewModel: EmailVerificationPageViewModel = hiltViewModel()
 ) {
-
     var email by remember { mutableStateOf("") }
     val uiState by viewModel.uiState.collectAsState()
     val isEmailError = uiState.emailError != null
 
     Scaffold (content = { padding ->
-
         Box(
             modifier = Modifier
                 .fillMaxSize()
@@ -48,23 +46,16 @@ fun EmailVerificationPage(
                 .navigationBarsPadding()
                 .imePadding()
                 .padding(top = 24.dp, start = 20.dp, end = 20.dp,bottom=16.dp)
-
-
-
         ) {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
                     .imePadding()
-
             ) {
-
             Column() {
-
                     Box(
                         modifier = Modifier
-
-                            .padding(top = 20.dp)
+//                            .padding(top = 20.dp)
                             .size(40.dp)
                             .clip(RoundedCornerShape(100.dp))
                             .background(Color.White)
@@ -72,7 +63,6 @@ fun EmailVerificationPage(
                                 navController.popBackStack()
                             },
                         contentAlignment = Alignment.Center
-
                     ) {
                         Image(
                             painter = painterResource(R.drawable.backarray),
@@ -89,7 +79,6 @@ fun EmailVerificationPage(
                         color = Color.Black,
                         modifier = Modifier
                             .padding(top = 24.dp),
-
                         )
                     Text(
                         "E-poçt hesabınıza təsdiq kod göndəriləcək.",
@@ -99,30 +88,23 @@ fun EmailVerificationPage(
                         color = Color(0xFF9D9D9D),
                         modifier = Modifier
                             .padding(top = 10.dp, bottom = 20.dp),
-
-
                         )
                 }
-                Spacer(
-                    modifier = Modifier.height(8.dp)
-                )
-
+//                Spacer(
+//                    modifier = Modifier.height(8.dp)
+//                )
                 Divider(
                     thickness = 0.5.dp,
                     color = Color(0xFF2981FF)
-
                 )
-                Spacer(modifier = Modifier.height(8.dp))
-
-
+//                Spacer(modifier = Modifier.height(8.dp))
                 Column(
-                    Modifier.padding(top = 20.dp)
+                    Modifier.padding(top = 32.dp)
                 ) {
                     Text(
                         "E-poçt",
                         style = MaterialTheme.typography.bodySmall,
                         fontSize = 15.sp,
-
                         )
                     TextField(
                         shape = RoundedCornerShape(12.dp),
@@ -138,8 +120,6 @@ fun EmailVerificationPage(
                             Text(
                                 ("E-poçtunuzu daxil edin"),
                                 color = Color.Gray
-
-//                                color = if (isEmailError) Color.Red else Color.Gray
                             )
                         },
                         singleLine = true,
@@ -147,24 +127,14 @@ fun EmailVerificationPage(
                             .fillMaxWidth()
                             .padding(top = 10.dp)
                             .border(1.dp, Color.White, RoundedCornerShape(12.dp)),
-//                            .then(
-//                                if (isEmailError) Modifier.border(
-//                                    1.dp,
-//                                    Color.Red,
-//                                    RoundedCornerShape(12.dp)
-//                                )
-//                                else Modifier.border(1.dp, Color.White, RoundedCornerShape(12.dp))
-//                            ),
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
                         colors = TextFieldDefaults.textFieldColors(
                             containerColor = Color.White,
                             errorContainerColor = Color.White,
                             disabledTextColor = Color(0xFF2981FF),
                             focusedIndicatorColor = Color.Transparent,
-//                            errorCursorColor = Color.Red,
                             cursorColor = Color(0xFF2981FF)
                         ),
-
                         )
                     ErrorText(
                         errorMessage = uiState.emailError,
@@ -172,14 +142,9 @@ fun EmailVerificationPage(
                     )
                 }
             }
-
             Spacer(modifier = Modifier.height(16.dp))
-
             Column(
                 modifier = Modifier.align(Alignment.BottomCenter)
-//                    .fillMaxSize(),
-//                horizontalAlignment = Alignment.CenterHorizontally,
-//                verticalArrangement = Arrangement.Bottom
             ) {
                 AuthButton(
                     text = "Təsdiq kodu göndər",
@@ -188,14 +153,11 @@ fun EmailVerificationPage(
                         navController.navigate("otp")
                     },
                     enabled = uiState.isInputValid,
-
                     modifier = Modifier
                         .fillMaxWidth()
-//                        .padding(bottom = 48.dp)
                 )
             }
         }
-
     }
     )
 }
