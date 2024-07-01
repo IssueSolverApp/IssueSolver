@@ -29,7 +29,18 @@ class ConfirmOtpViewModel@Inject constructor(
     fun confirmRegister(request: RequestOtp) {
         viewModelScope.launch {
             confirmOtpUseCase(request).collect{
-                _confirmOtpState.value = it
+//                _confirmOtpState.value = it
+                when(it){
+                    is Resource.Loading -> {
+
+                    }
+                    is Resource.Error -> {
+                        _confirmOtpState.emit(State.error(it.message))
+                    }
+                    is Resource.Success -> {
+                        _confirmOtpState.emit(State.success())
+                    }
+                }
             }
         }
     }

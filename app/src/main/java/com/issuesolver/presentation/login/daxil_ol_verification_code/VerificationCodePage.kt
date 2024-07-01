@@ -1,9 +1,6 @@
 package com.issuesolver.presentation.login.daxil_ol_verification_code
 
 
-
-
-
 import android.annotation.SuppressLint
 import android.app.Activity
 import androidx.compose.animation.AnimatedVisibility
@@ -50,7 +47,10 @@ import kotlinx.coroutines.delay
 @SuppressLint("DefaultLocale")
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun VerificationCodePage(navController: NavController, viewModel: VerificationCodePageViewModel = hiltViewModel()) {
+fun VerificationCodePage(
+    navController: NavController,
+    viewModel: VerificationCodePageViewModel = hiltViewModel()
+) {
     val context = LocalContext.current
     var otpValue by remember { mutableStateOf(TextFieldValue("")) }
     var isOtpFilled by remember { mutableStateOf(false) }
@@ -67,7 +67,7 @@ fun VerificationCodePage(navController: NavController, viewModel: VerificationCo
 
     (LocalView.current.context as Activity)
 
-    var remainingTime by remember { mutableStateOf(180) }
+    var remainingTime by remember { mutableLongStateOf(180) }
 
     LaunchedEffect(Unit) {
         while (remainingTime > 0) {
@@ -81,7 +81,7 @@ fun VerificationCodePage(navController: NavController, viewModel: VerificationCo
 
     val formattedTime = String.format("%02d:%02d", minutes, seconds)
 
-    Scaffold (content = { padding ->
+    Scaffold(content = { padding ->
 
         Box(
             modifier = Modifier
@@ -89,8 +89,7 @@ fun VerificationCodePage(navController: NavController, viewModel: VerificationCo
                 .statusBarsPadding()
                 .navigationBarsPadding()
                 .imePadding()
-                .padding(top = 24.dp, start = 20.dp, end = 20.dp,bottom=16.dp)
-
+                .padding(top = 24.dp, start = 20.dp, end = 20.dp, bottom = 16.dp)
 
 
         ) {
@@ -101,7 +100,7 @@ fun VerificationCodePage(navController: NavController, viewModel: VerificationCo
 
             ) {
 
-            Column(
+                Column(
                     Modifier.padding(bottom = 20.dp)
 
                 ) {
@@ -124,32 +123,34 @@ fun VerificationCodePage(navController: NavController, viewModel: VerificationCo
                             modifier = Modifier.size(24.dp)
                         )
                     }
-            Text("Təsdiq Kodu",
-                style = MaterialTheme.typography.headlineMedium,
-                fontSize = 28.sp,
-                fontWeight = FontWeight.SemiBold,
-                textAlign = TextAlign.Start,
-                color = Color.Black,
-                modifier = Modifier
-                    .padding(top = 24.dp),
+                    Text(
+                        "Təsdiq Kodu",
+                        style = MaterialTheme.typography.headlineMedium,
+                        fontSize = 28.sp,
+                        fontWeight = FontWeight.SemiBold,
+                        textAlign = TextAlign.Start,
+                        color = Color.Black,
+                        modifier = Modifier
+                            .padding(top = 24.dp),
 
 
-            )
-            Text("E-poçtunuza gələn təsdiq kodunu daxil edin.",
-                style = MaterialTheme.typography.bodySmall,
-                fontSize = 15.sp,
-                textAlign = TextAlign.Start,
-                color = Color(0xFF9D9D9D),
-                modifier = Modifier
-                    .padding(top = 10.dp,bottom = 20.dp),
+                        )
+                    Text(
+                        "E-poçtunuza gələn təsdiq kodunu daxil edin.",
+                        style = MaterialTheme.typography.bodySmall,
+                        fontSize = 15.sp,
+                        textAlign = TextAlign.Start,
+                        color = Color(0xFF9D9D9D),
+                        modifier = Modifier
+                            .padding(top = 10.dp, bottom = 20.dp),
 
-                )
+                        )
                     Spacer(modifier = Modifier.height(8.dp))
                     Divider(
                         thickness = 0.5.dp,
-                        color=Color(0xFF2981FF)
+                        color = Color(0xFF2981FF)
 
-                        )
+                    )
                     Spacer(modifier = Modifier.height(8.dp))
 
 
@@ -163,7 +164,7 @@ fun VerificationCodePage(navController: NavController, viewModel: VerificationCo
                         Surface(
                             modifier = Modifier
                                 .fillMaxWidth(),
-                        color = Color.Transparent,
+                            color = Color.Transparent,
                         ) {
                             OtpInputField(
                                 modifier = Modifier
@@ -171,7 +172,8 @@ fun VerificationCodePage(navController: NavController, viewModel: VerificationCo
                                 otpText = otpValue.text,
                                 shouldCursorBlink = false,
                                 onOtpModified = { value, otpFilled ->
-                                    otpValue = TextFieldValue(value, selection = TextRange(value.length))
+                                    otpValue =
+                                        TextFieldValue(value, selection = TextRange(value.length))
                                     isOtpFilled = otpFilled
                                     if (otpFilled) {
                                         keyboardController?.hide()
@@ -183,11 +185,13 @@ fun VerificationCodePage(navController: NavController, viewModel: VerificationCo
                 }
 
 
-            Spacer(modifier = Modifier.height(16.dp))
-            Text("Qalan vaxt: $formattedTime", style = MaterialTheme.typography.bodyMedium,
-                fontSize = 17.sp,
-                color=Color(0xFF2981FF))
-                    }
+                Spacer(modifier = Modifier.height(16.dp))
+                Text(
+                    "Qalan vaxt: $formattedTime", style = MaterialTheme.typography.bodyMedium,
+                    fontSize = 17.sp,
+                    color = Color(0xFF2981FF)
+                )
+            }
 
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -204,11 +208,13 @@ fun VerificationCodePage(navController: NavController, viewModel: VerificationCo
                 AuthButton(
                     text = "Təsdiqlə",
                     onClick = {
-                        viewModel.otpTrust(RequestOtp(
-                            otpCode = otpValue.text
-                        ))
+                        viewModel.otpTrust(
+                            RequestOtp(
+                                otpCode = otpValue.text
+                            )
+                        )
                         navController.navigate("password change")
-                              },
+                    },
 
                     modifier = Modifier
                         .fillMaxWidth()
@@ -226,20 +232,19 @@ fun VerificationCodePage(navController: NavController, viewModel: VerificationCo
                             interactionSource = remember { MutableInteractionSource() },
                             indication = null,
 
-                            )
-                    , text = "Kodu yenidən göndər",
+                            ), text = "Kodu yenidən göndər",
                     fontSize = 15.sp,
 
 
-                color = MaterialTheme.colorScheme.primary)
+                    color = MaterialTheme.colorScheme.primary
+                )
             }
 
 
-
-            }
+        }
     }
     )
-    }
+}
 
 
 @Composable
@@ -282,7 +287,14 @@ fun OtpInputField(
                             .padding(horizontal = 4.dp)
                     )
                     if (i == 2) {
-                        Text("-", style = TextStyle(color = Color(0xFF2981FF), fontSize = 24.sp, textAlign = TextAlign.Center))
+                        Text(
+                            "-",
+                            style = TextStyle(
+                                color = Color(0xFF2981FF),
+                                fontSize = 24.sp,
+                                textAlign = TextAlign.Center
+                            )
+                        )
                     }
                 }
             }
@@ -309,8 +321,6 @@ fun CharacterBox(character: String, isFocused: Boolean, modifier: Modifier = Mod
         )
     }
 }
-
-
 
 
 @Composable
@@ -371,8 +381,8 @@ internal fun CharacterContainer(
 @Preview(showBackground = true)
 @Composable
 fun VerificationCodePagePreview() {
-   MaterialTheme {
-       VerificationCodePage(navController = mockNavController())
+    MaterialTheme {
+        VerificationCodePage(navController = mockNavController())
     }
 }
 

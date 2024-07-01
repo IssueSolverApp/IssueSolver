@@ -8,6 +8,7 @@ import com.issuesolver.domain.entity.networkModel.ResetPasswordModel
 import com.issuesolver.domain.useCase.OtpTrustUseCase
 import com.issuesolver.domain.useCase.ResetPasswordUseCase
 import com.issuesolver.domain.useCase.login.ValidatePasswordUseCase
+import com.issuesolver.domain.usecase.login.ValidateNewPasswordUseCase
 import com.issuesolver.domain.usecase.login.ValidateRepeatedPasswordUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,7 +21,7 @@ import javax.inject.Inject
 class PasswordChangePageViewModel @Inject constructor(
 
     private val validateRepeatedPasswordUseCase: ValidateRepeatedPasswordUseCase,
-    private val validatePasswordUseCase: ValidatePasswordUseCase,
+    private val validateNewPasswordUseCase: ValidateNewPasswordUseCase,
     private val resetPasswordUseCase: ResetPasswordUseCase,
     private val otpTrustUseCase: OtpTrustUseCase
 
@@ -49,7 +50,7 @@ class PasswordChangePageViewModel @Inject constructor(
         when (event) {
 
             is PasswordChangePageEvent.PasswordChanged -> {
-                val result = validatePasswordUseCase.execute(event.newpassword)
+                val result = validateNewPasswordUseCase.execute(event.newpassword,_uiState.value.repeatedPassword)
                 _uiState.value = uiState.value.copy(
                     newpassword = event.newpassword,
                     newpasswordError = result.errorMessage,
@@ -62,7 +63,7 @@ class PasswordChangePageViewModel @Inject constructor(
                 _uiState.value = _uiState.value.copy(
                     repeatedPassword = event.repeatedPassword,
                     repeatedPasswordError = result.errorMessage,
-                    isInputValid = validatePasswordUseCase.execute(_uiState.value.newpassword).successful && result.successful
+                    isInputValid = validateNewPasswordUseCase.execute(_uiState.value.repeatedPassword, _uiState.value.newpassword).successful && result.successful
                 )
             }
 

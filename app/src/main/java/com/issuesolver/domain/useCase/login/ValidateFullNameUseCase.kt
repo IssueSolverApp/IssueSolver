@@ -1,6 +1,7 @@
 package com.issuesolver.domain.useCase.login
 
 import android.util.Patterns
+import com.issuesolver.domain.usecase.login.ValidationResult
 
 class ValidateFullNameUseCase {
     fun execute(fullName: String): ValidationResult {
@@ -13,7 +14,7 @@ class ValidateFullNameUseCase {
 
 
         return ValidationResult(
-            successful = false
+            successful = true
         )
     }
 }

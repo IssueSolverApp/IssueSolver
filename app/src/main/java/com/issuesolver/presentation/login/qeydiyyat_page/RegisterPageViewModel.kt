@@ -8,6 +8,7 @@ import com.issuesolver.domain.useCase.RegisterUseCase
 import com.issuesolver.domain.useCase.login.ValidateFullNameUseCase
 import com.issuesolver.domain.useCase.login.ValidatePasswordUseCase
 import com.issuesolver.domain.usecase.login.ValidateEmailUseCase
+import com.issuesolver.domain.usecase.login.ValidateNewPasswordUseCase
 import com.issuesolver.domain.usecase.login.ValidateRepeatedPasswordUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,7 +21,7 @@ import javax.inject.Inject
 class RegisterViewModel @Inject constructor(
     private val registerUseCase: RegisterUseCase,
     private val validateEmailUseCase: ValidateEmailUseCase,
-    private val validatePasswordUseCase: ValidatePasswordUseCase,
+    private val validateNewPasswordUseCase: ValidateNewPasswordUseCase,
     private val validateRepeatedPasswordUseCase: ValidateRepeatedPasswordUseCase,
     private val validateFullNameUseCase: ValidateFullNameUseCase
 ) : ViewModel() {
@@ -71,14 +72,14 @@ class RegisterViewModel @Inject constructor(
                     email = event.email,
                     emailError = result.errorMessage,
                     isInputValid = result.successful &&
-                            validatePasswordUseCase.execute(uiState.value.password).successful&&
+                            validateNewPasswordUseCase.execute(uiState.value.repeatedPassword, uiState.value.password).successful&&
                             validateFullNameUseCase.execute(uiState.value.fullName).successful &&
                             validateRepeatedPasswordUseCase.execute(uiState.value.repeatedPassword, uiState.value.password).successful
                 )
             }
 
             is RegisterPageEvent.PasswordChanged -> {
-                val result = validatePasswordUseCase.execute(event.password)
+                val result = validateNewPasswordUseCase.execute(_uiState.value.repeatedPassword,event.password)
                 _uiState.value = uiState.value.copy(
                     password = event.password,
                     passwordError = result.errorMessage,
@@ -94,21 +95,20 @@ class RegisterViewModel @Inject constructor(
                 _uiState.value = _uiState.value.copy(
                     repeatedPassword = event.repeatedPassword,
                     repeatedPasswordError = result.errorMessage,
-                    isInputValid = validatePasswordUseCase.execute(_uiState.value.password).successful &&
+                    isInputValid = validateNewPasswordUseCase.execute(_uiState.value.repeatedPassword, _uiState.value.password).successful &&
                             result.successful &&
-                            validateFullNameUseCase.execute(uiState.value.fullName).successful &&
-                            validateRepeatedPasswordUseCase.execute(uiState.value.repeatedPassword, uiState.value.password).successful &&
-                            validateEmailUseCase.execute(uiState.value.email).successful
+                            validateFullNameUseCase.execute(_uiState.value.fullName).successful &&
+                            validateEmailUseCase.execute(_uiState.value.email).successful
                 )
             }
 
             is RegisterPageEvent.FullNameChanged -> {
-                val result = validateFullNameUseCase.execute(_uiState.value.fullName)
-                _uiState.value = _uiState.value.copy(
+                val result = validateFullNameUseCase.execute(event.fullName)
+                _uiState.value = uiState.value.copy(
                     fullName = event.fullName,
                     fullNameError = result.errorMessage,
                     isInputValid = result.successful &&
-                            validatePasswordUseCase.execute(uiState.value.password).successful &&
+                            validateNewPasswordUseCase.execute(uiState.value.repeatedPassword, uiState.value.password).successful &&
                             validateRepeatedPasswordUseCase.execute(uiState.value.repeatedPassword, uiState.value.password).successful &&
                             validateEmailUseCase.execute(uiState.value.email).successful
 
