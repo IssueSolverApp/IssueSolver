@@ -33,16 +33,16 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PasswordChangePage(navController: NavController,viewModel: PasswordChangePageViewModel = hiltViewModel()) {
+fun PasswordChangePage(
+    navController: NavController,
+    viewModel: PasswordChangePageViewModel = hiltViewModel()
+) {
 
     var showPassword by remember { mutableStateOf(value = false) }
     var showPassword1 by remember { mutableStateOf(value = false) }
     val uiState by viewModel.uiState.collectAsState()
-
     val isPasswordError = uiState.newpasswordError != null
     val isRepeatedPasswordError = uiState.repeatedPasswordError != null
-
-
     val scrollState = rememberScrollState()
     val coroutineScope = rememberCoroutineScope()
     val keyboardHeight = WindowInsets.ime.getBottom(LocalDensity.current)
@@ -53,27 +53,20 @@ fun PasswordChangePage(navController: NavController,viewModel: PasswordChangePag
         }
     }
 
-
-
-
-
-
     Scaffold { padding ->
-        Box(modifier = Modifier
-            .fillMaxSize()
-            .padding(top = 24.dp)
-            .padding(20.dp)
-            .imePadding()
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(top = 24.dp)
+                .padding(20.dp)
+                .padding(padding)
+                .imePadding()
         ) {
-
             Column(
                 Modifier.verticalScroll(scrollState)
-
-
             ) {
                 Column(
                     Modifier.padding(bottom = 20.dp)
-
                 ) {
                     Text(
                         "Yeni şifrə",
@@ -82,7 +75,6 @@ fun PasswordChangePage(navController: NavController,viewModel: PasswordChangePag
                         fontWeight = FontWeight.SemiBold,
                         textAlign = TextAlign.Start,
                         color = Color.Black,
-
                         )
                     Text(
                         "Daxil olmaq üçün yeni şifrə təyin edin.",
@@ -92,22 +84,16 @@ fun PasswordChangePage(navController: NavController,viewModel: PasswordChangePag
                         color = Color(0xFF9D9D9D),
                         modifier = Modifier
                             .padding(top = 10.dp),
-
-
                         )
                 }
                 Spacer(modifier = Modifier.height(8.dp))
-
                 Divider(
                     thickness = 0.5.dp,
                     color = Color(0xFF2981FF)
-
                 )
                 Spacer(modifier = Modifier.height(8.dp))
-
                 Column(
                     Modifier.padding(top = 20.dp)
-
                 ) {
                     Text(
                         "Şifrə",
@@ -142,7 +128,6 @@ fun PasswordChangePage(navController: NavController,viewModel: PasswordChangePag
                                 )
                                 else Modifier.border(1.dp, Color.White, RoundedCornerShape(12.dp))
                             ),
-
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                         colors = TextFieldDefaults.textFieldColors(
                             containerColor = Color.White,
@@ -168,14 +153,11 @@ fun PasswordChangePage(navController: NavController,viewModel: PasswordChangePag
                             }
                         }
                     )
-
                     ErrorText(
                         errorMessage = uiState.newpasswordError,
 //                        isVisible = isPasswordError
                     )
-
                     Spacer(modifier = Modifier.height(8.dp))
-
                     Text(
                         "Şifrənin təsdiqi",
                         style = MaterialTheme.typography.bodySmall,
@@ -195,7 +177,6 @@ fun PasswordChangePage(navController: NavController,viewModel: PasswordChangePag
                             Text(
                                 "Şifrənizi təsdiq edin",
                                 color = if (isRepeatedPasswordError) Color.Red else Color.Gray
-
                             )
                         },
                         singleLine = true,
@@ -238,44 +219,28 @@ fun PasswordChangePage(navController: NavController,viewModel: PasswordChangePag
                             }
                         }
                     )
-
                     ErrorText(
                         errorMessage = uiState.repeatedPasswordError,
 //                        isVisible = isPasswordError
                     )
                 }
-//                Spacer(modifier = Modifier.height(16.dp))
-
                 Spacer(modifier = Modifier.height(100.dp))
-
-
-
             }
-
-                Column(
-                    modifier = Modifier.align(Alignment.BottomCenter)
-//                        .fillMaxSize(),
-//                    horizontalAlignment = Alignment.CenterHorizontally,
-//                    verticalArrangement = Arrangement.Bottom
-                ) {
-                    AuthButton(
-                        text = "Yenilə",
-                        onClick = {viewModel.handleEvent(PasswordChangePageEvent.Submit)},
-                        enabled = uiState.isInputValid,
-
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(bottom = 16.dp)
-                    )
-
-                }
-
-
+            Column(
+                modifier = Modifier.align(Alignment.BottomCenter)
+            ) {
+                AuthButton(
+                    text = "Yenilə",
+                    onClick = { viewModel.handleEvent(PasswordChangePageEvent.Submit) },
+                    enabled = uiState.isInputValid,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 16.dp)
+                )
             }
         }
-
     }
-
+}
 
 @Preview(showBackground = true)
 @Composable
