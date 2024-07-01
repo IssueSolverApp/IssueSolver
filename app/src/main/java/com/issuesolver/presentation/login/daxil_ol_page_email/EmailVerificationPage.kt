@@ -127,28 +127,31 @@ fun EmailVerificationPage(
                         placeholder = {
                             Text(
                                 ("E-poçtunuzu daxil edin"),
-                                color = if (isEmailError) Color.Red else Color.Gray
+                                color =  Color.Gray
+
+//                                color = if (isEmailError) Color.Red else Color.Gray
                             )
                         },
                         singleLine = true,
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(top = 10.dp)
-                            .then(
-                                if (isEmailError) Modifier.border(
-                                    1.dp,
-                                    Color.Red,
-                                    RoundedCornerShape(12.dp)
-                                )
-                                else Modifier.border(1.dp, Color.White, RoundedCornerShape(12.dp))
-                            ),
+                            .border(1.dp, Color.White, RoundedCornerShape(12.dp)),
+//                            .then(
+//                                if (isEmailError) Modifier.border(
+//                                    1.dp,
+//                                    Color.Red,
+//                                    RoundedCornerShape(12.dp)
+//                                )
+//                                else Modifier.border(1.dp, Color.White, RoundedCornerShape(12.dp))
+//                            ),
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
                         colors = TextFieldDefaults.textFieldColors(
                             containerColor = Color.White,
                             errorContainerColor = Color.White,
                             disabledTextColor = Color(0xFF2981FF),
                             focusedIndicatorColor = Color.Transparent,
-                            errorCursorColor = Color.Red,
+//                            errorCursorColor = Color.Red,
                             cursorColor = Color(0xFF2981FF)
                         ),
 

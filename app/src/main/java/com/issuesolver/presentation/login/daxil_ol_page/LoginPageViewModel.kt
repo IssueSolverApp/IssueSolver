@@ -9,6 +9,7 @@ import com.issuesolver.domain.entity.networkModel.RegisterRequestModel
 import com.issuesolver.domain.useCase.SignInUseCase
 import com.issuesolver.domain.useCase.login.ValidateEmailUseCase
 import com.issuesolver.domain.useCase.login.ValidatePasswordUseCase
+import com.issuesolver.domain.usecase.login.LoginUseCase
 
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,8 +21,9 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginPageViewModel @Inject constructor(
 
-    private val validateEmailUseCase: ValidateEmailUseCase,
+//    private val validateEmailUseCase: ValidateEmailUseCase,
     private val validatePasswordUseCase: ValidatePasswordUseCase,
+    private val loginUseCase: LoginUseCase,
     private val signInUseCase: SignInUseCase
 ) : ViewModel() {
 
@@ -42,7 +44,7 @@ class LoginPageViewModel @Inject constructor(
     fun handleEvent(event: LoginPageEvent) {
         when (event) {
             is LoginPageEvent.EmailChanged -> {
-                val result = validateEmailUseCase.execute(event.email)
+                val result = loginUseCase.execute(event.email)
                 _uiState.value = uiState.value.copy(
                     email = event.email,
                     emailError = result.errorMessage,
@@ -54,7 +56,7 @@ class LoginPageViewModel @Inject constructor(
                 _uiState.value = uiState.value.copy(
                     password = event.password,
                     passwordError = result.errorMessage,
-                    isInputValid = result.successful && validateEmailUseCase.execute(uiState.value.email).successful
+                    isInputValid = result.successful && loginUseCase.execute(uiState.value.email).successful
                 )
             }
             is LoginPageEvent.Submit -> {
