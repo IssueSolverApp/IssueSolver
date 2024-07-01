@@ -4,10 +4,21 @@
     <selectionStates>
       <SelectionState runConfigName="app">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2024-06-26T15:21:12.613204900Z">
+        <DropdownSelection timestamp="2024-07-01T05:53:46.509600Z">
           <Target type="DEFAULT_BOOT">
             <handle>
-              <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\qukun\.android\avd\Pixel_8_API_30.avd" />
+              <DeviceId pluginId="LocalEmulator" identifier="path=/Users/aminamehdiyeva/.android/avd/Pixel_7_API_30.avd" />
+            </handle>
+          </Target>
+        </DropdownSelection>
+        <DialogSelection />
+      </SelectionState>
+      <SelectionState runConfigName="Issue Solver.Issue_Solver.app">
+        <option name="selectionMode" value="DROPDOWN" />
+        <DropdownSelection timestamp="2024-07-01T05:43:48.562522Z">
+          <Target type="DEFAULT_BOOT">
+            <handle>
+              <DeviceId pluginId="LocalEmulator" identifier="path=/Users/aminamehdiyeva/.android/avd/Pixel_8_API_30.avd" />
             </handle>
           </Target>
         </DropdownSelection>

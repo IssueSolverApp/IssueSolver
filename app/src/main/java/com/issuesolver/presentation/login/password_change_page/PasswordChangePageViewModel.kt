@@ -43,8 +43,6 @@ class PasswordChangePageViewModel @Inject constructor(
                 _resetPassword.value = it
             }
         }
-
-
     }
 
     fun handleEvent(event: PasswordChangePageEvent) {
