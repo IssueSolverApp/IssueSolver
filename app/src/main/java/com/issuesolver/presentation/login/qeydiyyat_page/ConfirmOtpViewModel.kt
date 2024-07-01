@@ -3,16 +3,10 @@ package com.issuesolver.presentation.login.qeydiyyat_page
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.issuesolver.common.Resource
-import com.issuesolver.domain.entity.networkModel.RegisterRequestModel
 import com.issuesolver.domain.entity.networkModel.RequestOtp
 import com.issuesolver.domain.entity.networkModel.ResendOtpModel
 import com.issuesolver.domain.useCase.ConfirmOtpUseCase
-import com.issuesolver.domain.useCase.RegisterUseCase
 import com.issuesolver.domain.useCase.ResendOtpUseCase
-import com.issuesolver.domain.useCase.login.ValidateEmailUseCase
-import com.issuesolver.domain.useCase.login.ValidateFullNameUseCase
-import com.issuesolver.domain.useCase.login.ValidatePasswordUseCase
-import com.issuesolver.domain.useCase.login.ValidateRepeatedPasswordUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

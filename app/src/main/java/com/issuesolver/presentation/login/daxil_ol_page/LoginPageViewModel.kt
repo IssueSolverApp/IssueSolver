@@ -5,11 +5,9 @@ import androidx.lifecycle.viewModelScope
 import com.issuesolver.common.Resource
 import com.issuesolver.domain.entity.networkModel.LoginRequest
 import com.issuesolver.domain.entity.networkModel.LoginResponse
-import com.issuesolver.domain.entity.networkModel.RegisterRequestModel
 import com.issuesolver.domain.useCase.SignInUseCase
-import com.issuesolver.domain.useCase.login.ValidateEmailUseCase
 import com.issuesolver.domain.useCase.login.ValidatePasswordUseCase
-import com.issuesolver.domain.useCase.login.LoginUseCase
+import com.issuesolver.domain.usecase.login.LoginUseCase
 
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -48,7 +46,8 @@ class LoginPageViewModel @Inject constructor(
                 _uiState.value = uiState.value.copy(
                     email = event.email,
                     emailError = result.errorMessage,
-                    isInputValid = result.successful && validatePasswordUseCase.execute(uiState.value.password).successful
+                    isInputValid = result.successful &&
+                            validatePasswordUseCase.execute(uiState.value.password).successful
                 )
             }
             is LoginPageEvent.PasswordChanged -> {

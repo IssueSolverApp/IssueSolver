@@ -81,20 +81,27 @@ fun VerificationCodePage(navController: NavController, viewModel: VerificationCo
 
     val formattedTime = String.format("%02d:%02d", minutes, seconds)
 
-    Scaffold { padding ->
+    Scaffold (content = { padding ->
+
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(top = 24.dp,start=20.dp, end=20.dp,bottom=16.dp)
-                .padding(padding)
+                .statusBarsPadding()
+                .navigationBarsPadding()
                 .imePadding()
+                .padding(top = 24.dp, start = 20.dp, end = 20.dp,bottom=16.dp)
+
+
 
         ) {
-
             Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .imePadding()
 
             ) {
-                Column(
+
+            Column(
                     Modifier.padding(bottom = 20.dp)
 
                 ) {
@@ -188,7 +195,7 @@ fun VerificationCodePage(navController: NavController, viewModel: VerificationCo
             Column(
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
-//                    .padding(bottom = 27.dp)
+                    .padding(bottom = 27.dp)
 
 //                    .fillMaxSize(),
 //                horizontalAlignment = Alignment.CenterHorizontally,
@@ -230,7 +237,8 @@ fun VerificationCodePage(navController: NavController, viewModel: VerificationCo
 
 
             }
-        }
+    }
+    )
     }
 
 

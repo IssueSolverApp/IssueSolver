@@ -1,6 +1,5 @@
 package com.issuesolver.presentation.login.qeydiyyat_page
 
-import androidx.activity.viewModels
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -8,7 +7,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
@@ -16,30 +14,14 @@ import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.ime
-import androidx.compose.foundation.layout.imeNestedScroll
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBarsPadding
-import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.safeDrawing
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.foundation.layout.systemBars
-import androidx.compose.foundation.layout.windowInsetsBottomHeight
-import androidx.compose.foundation.layout.windowInsetsEndWidth
-import androidx.compose.foundation.layout.windowInsetsPadding
-import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.layout.wrapContentWidth
-import androidx.compose.foundation.relocation.BringIntoViewRequester
-import androidx.compose.foundation.relocation.bringIntoViewRequester
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Checkbox
-import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -54,11 +36,9 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.onFocusEvent
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -74,18 +54,16 @@ import com.issuesolver.R
 import com.issuesolver.domain.entity.networkModel.RegisterRequestModel
 import com.issuesolver.presentation.common.AuthButton
 import com.issuesolver.presentation.common.ErrorText
-import com.issuesolver.presentation.login.daxil_ol_page.LoginPageEvent
-import com.issuesolver.presentation.login.password_change_page.PasswordChangePageEvent
 import com.issuesolver.presentation.navigation.Routes
-import kotlinx.coroutines.launch
 
 @OptIn(
-    ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class
+    ExperimentalMaterial3Api::class
 )
 @Composable
 fun RegisterPage(navController: NavController, viewModel: RegisterViewModel = hiltViewModel()) {
 
     val uiState by viewModel.uiState.collectAsState()
+    val isFullNameError = uiState.fullNameError != null
     val isEmailError = uiState.emailError != null
     val isPasswordError = uiState.passwordError != null
     val isPasswordRepeatedError = uiState.repeatedPasswordError != null
@@ -186,15 +164,24 @@ fun RegisterPage(navController: NavController, viewModel: RegisterViewModel = hi
                             placeholder = {
                                 Text(
                                     ("Ad, soyad"),
-                                    color = Color(0xFF9D9D9D)
+                                    color = if (isFullNameError) Color.Red else Color.Gray
                                 )
                             },
                             singleLine = true,
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(top = 8.dp),
+                                .padding(top = 8.dp)
+                                .then(
+                                    if (isFullNameError) Modifier.border(
+                                        1.dp,
+                                        Color.Red,
+                                        RoundedCornerShape(12.dp)
+                                    )
+                                    else Modifier.border(1.dp, Color.White, RoundedCornerShape(12.dp))
+                                )
+                            ,
 
-                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
                             colors = TextFieldDefaults.textFieldColors(
                                 containerColor = Color.White, // Background color of the TextField
                                 focusedIndicatorColor = Color.White, // Underline color when focused
@@ -205,6 +192,11 @@ fun RegisterPage(navController: NavController, viewModel: RegisterViewModel = hi
 
                         )
                     }
+
+                    ErrorText(
+                        errorMessage = uiState.fullNameError,
+//                        isVisible = isPasswordError
+                    )
 //                        Column(Modifier.padding(top = 20.dp)) {
 //                            Text(
 //                                "Soyad ",
@@ -499,6 +491,8 @@ fun RegisterPage(navController: NavController, viewModel: RegisterViewModel = hi
                             isCheckBoxRed = true
                         } else {
                             isCheckBoxRed = false
+
+                            viewModel.handleEvent(RegisterPageEvent.Submit)
                             viewModel.register(
                                 RegisterRequestModel(
                                     email = uiState.email,
@@ -509,8 +503,6 @@ fun RegisterPage(navController: NavController, viewModel: RegisterViewModel = hi
                             )
                             navController.navigate(Routes.REGISTER_OTP + "/${uiState.email}")
                         }
-                        viewModel.handleEvent(RegisterPageEvent.Submit)
-
                     },
                     enabled = uiState.isInputValid,
                     modifier = Modifier

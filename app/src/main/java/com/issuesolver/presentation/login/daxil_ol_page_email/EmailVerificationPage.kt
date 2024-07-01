@@ -39,17 +39,27 @@ fun EmailVerificationPage(
     val uiState by viewModel.uiState.collectAsState()
     val isEmailError = uiState.emailError != null
 
-    Scaffold { padding ->
+    Scaffold (content = { padding ->
+
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(top = 24.dp,start=20.dp, end=20.dp,bottom=16.dp)
-                .padding(padding)
+                .statusBarsPadding()
+                .navigationBarsPadding()
                 .imePadding()
+                .padding(top = 24.dp, start = 20.dp, end = 20.dp,bottom=16.dp)
+
+
+
         ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .imePadding()
+
+            ) {
 
             Column() {
-                Column() {
 
                     Box(
                         modifier = Modifier
@@ -127,7 +137,7 @@ fun EmailVerificationPage(
                         placeholder = {
                             Text(
                                 ("E-poçtunuzu daxil edin"),
-                                color =  Color.Gray
+                                color = Color.Gray
 
 //                                color = if (isEmailError) Color.Red else Color.Gray
                             )
@@ -187,6 +197,7 @@ fun EmailVerificationPage(
         }
 
     }
+    )
 }
 
 @Preview(showBackground = true)

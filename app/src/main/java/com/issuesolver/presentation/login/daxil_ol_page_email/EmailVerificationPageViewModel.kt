@@ -3,12 +3,9 @@ package com.issuesolver.presentation.login.daxil_ol_page_email
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.issuesolver.common.Resource
-import com.issuesolver.domain.entity.networkModel.LoginRequest
-import com.issuesolver.domain.entity.networkModel.LoginResponse
 import com.issuesolver.domain.entity.networkModel.ResendOtpModel
 import com.issuesolver.domain.useCase.ForgetPasswordUseCase
-import com.issuesolver.domain.useCase.login.ValidateEmailUseCase
-import com.issuesolver.presentation.login.daxil_ol_page.LoginPageState
+import com.issuesolver.domain.usecase.login.ValidateEmailUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

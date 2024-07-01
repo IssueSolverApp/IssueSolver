@@ -1,13 +1,13 @@
 package com.issuesolver.presentation.login.qeydiyyat_page
 
-data class RegisterPageState (
-    var fullName: String = "",
-    var email: String = "",
-    var emailError: String? = null,
-    var password: String = "",
-    var passwordError: String? = null,
-    var repeatedPassword: String = "",
-    var repeatedPasswordError: String? = null,
-    var isInputValid:Boolean=false,
-    var errorMessageInput:String?=null
-    )
+data class RegisterPageState(
+    val email: String = "",
+    val emailError: String? = null,
+    val password: String = "",
+    val passwordError: String? = null,
+    val repeatedPassword: String = "",
+    val repeatedPasswordError: String? = null,
+    val fullName: String = "",
+    val fullNameError: String? = null,
+    val isInputValid: Boolean = false
+)

@@ -1,4 +1,4 @@
-package com.issuesolver.domain.useCase.di
+package com.issuesolver.domain.usecase.di
 
 import android.app.Application
 import android.content.SharedPreferences
@@ -11,15 +11,16 @@ import com.issuesolver.data.repository.ResetPasswordRepositoryInterface
 import com.issuesolver.data.repository.SignInRepositoryInterface
 import com.issuesolver.domain.useCase.ConfirmOtpUseCase
 import com.issuesolver.domain.useCase.OtpTrustUseCase
-import com.issuesolver.domain.useCase.RegisterUseCase
+import com.issuesolver.domain.usecase.RegisterUseCase
 import com.issuesolver.domain.useCase.ResendOtpUseCase
 import com.issuesolver.domain.useCase.ResetPasswordUseCase
 import com.issuesolver.domain.useCase.SignInUseCase
-import com.issuesolver.domain.useCase.login.ValidateEmailUseCase
-import com.issuesolver.domain.useCase.login.ValidateFullNameUseCase
 import com.issuesolver.domain.useCase.login.ValidatePasswordUseCase
-import com.issuesolver.domain.useCase.login.ValidateRepeatedPasswordUseCase
-import com.issuesolver.domain.useCase.login.LoginUseCase
+import com.issuesolver.domain.usecase.login.LoginUseCase
+import com.issuesolver.domain.usecase.login.ValidateEmailUseCase
+import com.issuesolver.domain.usecase.login.ValidateFullNameUseCase
+import com.issuesolver.domain.usecase.login.ValidateRepeatedPasswordUseCase
+
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -35,7 +36,7 @@ class UseCaseModule {
     fun provideValidateEmailUseCase() = ValidateEmailUseCase()
     @Provides
     @Singleton
-    fun provideLoginUseCase()=LoginUseCase()
+    fun provideLoginUseCase()= LoginUseCase()
 
     @Provides
     @Singleton

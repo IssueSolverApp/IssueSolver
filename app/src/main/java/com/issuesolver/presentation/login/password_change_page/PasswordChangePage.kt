@@ -59,17 +59,24 @@ fun PasswordChangePage(navController: NavController,viewModel: PasswordChangePag
 
 
 
-    Scaffold { padding ->
-        Box(modifier = Modifier
-            .fillMaxSize()
-            .padding(top = 24.dp,start=20.dp, end=20.dp,bottom=16.dp)
-            .padding(padding)
-            .imePadding()
+    Scaffold (content = { padding ->
+
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .statusBarsPadding()
+                .navigationBarsPadding()
+                .imePadding()
+                .padding(top = 24.dp, start = 20.dp, end = 20.dp,bottom=16.dp)
+
+
+
         ) {
-
             Column(
-                Modifier.verticalScroll(scrollState)
-
+                modifier = Modifier
+                    .fillMaxSize()
+                    .imePadding()
+                    .verticalScroll(scrollState)
 
             ) {
                 Column(
@@ -279,7 +286,8 @@ fun PasswordChangePage(navController: NavController,viewModel: PasswordChangePag
 
 
             }
-        }
+    }
+    )
 
     }
 
