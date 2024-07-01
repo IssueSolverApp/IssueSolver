@@ -1,5 +1,8 @@
 package com.issuesolver.presentation.login.qeydiyyat_page
 
+import android.util.Log
+import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -7,6 +10,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
@@ -14,14 +18,31 @@ import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.ime
+import androidx.compose.foundation.layout.imeNestedScroll
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawing
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.systemBars
+import androidx.compose.foundation.layout.windowInsetsBottomHeight
+import androidx.compose.foundation.layout.windowInsetsEndWidth
+import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.relocation.BringIntoViewRequester
+import androidx.compose.foundation.relocation.bringIntoViewRequester
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.CheckboxDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -51,19 +72,28 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.issuesolver.R
+import com.issuesolver.common.Resource
 import com.issuesolver.domain.entity.networkModel.RegisterRequestModel
 import com.issuesolver.presentation.common.AuthButton
 import com.issuesolver.presentation.common.ErrorText
+import com.issuesolver.presentation.login.daxil_ol_page.LoginPageEvent
+import com.issuesolver.presentation.login.password_change_page.PasswordChangePageEvent
 import com.issuesolver.presentation.navigation.Routes
+import kotlinx.coroutines.launch
+
+import androidx.compose.runtime.getValue
+
+import androidx.compose.runtime.livedata.observeAsState
+import com.issuesolver.common.StatusR
+
 
 @OptIn(
-    ExperimentalMaterial3Api::class
+    ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class
 )
 @Composable
 fun RegisterPage(navController: NavController, viewModel: RegisterViewModel = hiltViewModel()) {
 
     val uiState by viewModel.uiState.collectAsState()
-    val isFullNameError = uiState.fullNameError != null
     val isEmailError = uiState.emailError != null
     val isPasswordError = uiState.passwordError != null
     val isPasswordRepeatedError = uiState.repeatedPasswordError != null
@@ -73,7 +103,7 @@ fun RegisterPage(navController: NavController, viewModel: RegisterViewModel = hi
     var surname by remember { mutableStateOf("") }
 
 
-    var email by remember { mutableStateOf("") }
+    var errorEmail by remember { mutableStateOf("") }
     var emailError by remember { mutableStateOf(false) }
     var password by remember { mutableStateOf("") }
     var confirmPassword by remember { mutableStateOf("") }
@@ -83,8 +113,27 @@ fun RegisterPage(navController: NavController, viewModel: RegisterViewModel = hi
     var isChecked by remember { mutableStateOf(false) }
     var isCheckBoxRed by remember { mutableStateOf(false) }
 
-//    val bringIntoViewRequester = remember { BringIntoViewRequester() }
-//    val coroutineScope = rememberCoroutineScope()
+    val registerState by viewModel.registerState.collectAsState()
+
+    when (registerState?.status) {
+        StatusR.LOADING -> {
+            CircularProgressIndicator()
+        }
+        StatusR.SUCCESS -> {
+            navController.navigate(Routes.REGISTER_OTP + "/${uiState.email}")
+        }
+        StatusR.ERROR -> {
+            Log.e("ERRORTAG", registerState?.message.toString())
+        }
+        else -> {
+
+        }
+    }
+
+
+
+    errorEmail = uiState.emailError.toString()
+
 
 
     Scaffold(content = { padding ->
@@ -164,24 +213,15 @@ fun RegisterPage(navController: NavController, viewModel: RegisterViewModel = hi
                             placeholder = {
                                 Text(
                                     ("Ad, soyad"),
-                                    color = if (isFullNameError) Color.Red else Color.Gray
+                                    color = Color(0xFF9D9D9D)
                                 )
                             },
                             singleLine = true,
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(top = 8.dp)
-                                .then(
-                                    if (isFullNameError) Modifier.border(
-                                        1.dp,
-                                        Color.Red,
-                                        RoundedCornerShape(12.dp)
-                                    )
-                                    else Modifier.border(1.dp, Color.White, RoundedCornerShape(12.dp))
-                                )
-                            ,
+                                .padding(top = 8.dp),
 
-                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
                             colors = TextFieldDefaults.textFieldColors(
                                 containerColor = Color.White, // Background color of the TextField
                                 focusedIndicatorColor = Color.White, // Underline color when focused
@@ -192,11 +232,6 @@ fun RegisterPage(navController: NavController, viewModel: RegisterViewModel = hi
 
                         )
                     }
-
-                    ErrorText(
-                        errorMessage = uiState.fullNameError,
-//                        isVisible = isPasswordError
-                    )
 //                        Column(Modifier.padding(top = 20.dp)) {
 //                            Text(
 //                                "Soyad ",
@@ -283,10 +318,10 @@ fun RegisterPage(navController: NavController, viewModel: RegisterViewModel = hi
                             )
 
                         )
+                        if(errorEmail!="null"){
                         ErrorText(
-                            errorMessage = uiState.emailError,
-//                        isVisible = isEmailError
-                        )
+                            errorMessage = errorEmail,
+                        )}
                     }
 
 
@@ -487,12 +522,11 @@ fun RegisterPage(navController: NavController, viewModel: RegisterViewModel = hi
                 AuthButton(
                     text = "Daxil ol",
                     onClick = {
+                        viewModel.handleEvent(RegisterPageEvent.Submit)
                         if (!isChecked) {
                             isCheckBoxRed = true
                         } else {
                             isCheckBoxRed = false
-
-                            viewModel.handleEvent(RegisterPageEvent.Submit)
                             viewModel.register(
                                 RegisterRequestModel(
                                     email = uiState.email,
@@ -503,6 +537,9 @@ fun RegisterPage(navController: NavController, viewModel: RegisterViewModel = hi
                             )
                             navController.navigate(Routes.REGISTER_OTP + "/${uiState.email}")
                         }
+//                        viewModel.handleEvent(RegisterPageEvent.Submit)
+
+
                     },
                     enabled = uiState.isInputValid,
                     modifier = Modifier

@@ -2,6 +2,7 @@ package com.issuesolver.presentation.login.qeydiyyat_page
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.issuesolver.common.Resource
+import com.issuesolver.common.State
 import com.issuesolver.domain.entity.networkModel.RegisterRequestModel
 import com.issuesolver.domain.useCase.login.ValidatePasswordUseCase
 import com.issuesolver.domain.usecase.RegisterUseCase
@@ -23,26 +24,44 @@ class RegisterViewModel @Inject constructor(
     private val validatePasswordUseCase: ValidatePasswordUseCase,
     private val validateRepeatedPasswordUseCase: ValidateRepeatedPasswordUseCase,
     private val validateFullNameUseCase: ValidateFullNameUseCase
-    ): ViewModel() {
+) : ViewModel() {
 
-    private val _registerState = MutableStateFlow<Resource<String?>>(Resource.Loading())
-    val registerState: StateFlow<Resource<String?>> = _registerState
 
     private val _uiState = MutableStateFlow(RegisterPageState())
     val uiState: StateFlow<RegisterPageState> = _uiState.asStateFlow()
 
-
+    private var _registerState: MutableStateFlow<State> = MutableStateFlow(State.loading())
+    val registerState: StateFlow<State> = _registerState.asStateFlow()
 
     fun register(request: RegisterRequestModel) {
+        //Loading
         viewModelScope.launch {
             registerUseCase(request).collect { resource ->
-                _registerState.value = resource
+//                _registerState.value = resource
+//                _uiState.value = uiState.value.copy(emailError = resource.message)
+
+                when (resource) {
+                    is Resource.Error -> {
+                        _registerState.emit(State.error(resource.message))
+                        _uiState.value = uiState.value.copy(emailError = resource.message)
+                    }
+
+                    is Resource.Success -> {
+                        _registerState.emit(State.success())
+//                        _uiState.emit(State.success())
+//                        burger.data.let {
+//                            //val result = it?.let { it1 -> mapper.map(it1) }
+//                            burgers.emit(it)
+//                        }
+                    }
+
+                    else -> {
+
+                    }
+                }
             }
         }
     }
-
-
-
 
 
     fun handleEvent(event: RegisterPageEvent) {
@@ -58,6 +77,7 @@ class RegisterViewModel @Inject constructor(
                             validateRepeatedPasswordUseCase.execute(uiState.value.repeatedPassword, uiState.value.password).successful
                 )
             }
+
             is RegisterPageEvent.PasswordChanged -> {
                 val result = validatePasswordUseCase.execute(event.password)
                 _uiState.value = uiState.value.copy(
@@ -96,7 +116,7 @@ class RegisterViewModel @Inject constructor(
 
 
                 )
-
+                
             }
 
 
@@ -107,8 +127,6 @@ class RegisterViewModel @Inject constructor(
             }
         }
     }
-
-
 
 
 

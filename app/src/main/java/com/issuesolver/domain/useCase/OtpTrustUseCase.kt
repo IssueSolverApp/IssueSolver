@@ -1,6 +1,7 @@
 package com.issuesolver.domain.useCase
 
 import android.content.SharedPreferences
+import android.util.Log
 import com.google.gson.Gson
 import com.issuesolver.common.Resource
 import com.issuesolver.data.repository.OtpTrustRepositoryInterface
@@ -23,11 +24,14 @@ class OtpTrustUseCase @Inject constructor(
         try {
             val response = otpTrustRepository.otpTrust(otpModel)
             if (response.isSuccessful) {
-                emit(Resource.Success(response.body()?.message))
                 val token = response.body()?.data
-                token.let {
+//                saveToken(token.toString())
+//                emit(Resource.Success(response.body()?.message))
+                token?.let {
                     saveToken(it.toString())
-                }
+                    emit(Resource.Success(response.body()?.message))
+                } ?: emit(Resource.Error("Token is null"))
+
             } else {
                 val errorResponse = response.errorBody()?.string()?.let {
                     parseErrorResponse(it)
@@ -47,6 +51,12 @@ class OtpTrustUseCase @Inject constructor(
 
     private fun saveToken(token: String) {
         sharedPreferences.edit().putString("auth_token", token).apply()
+    }
+
+    fun getToken(): String? {
+        val token = sharedPreferences.getString("auth_token", null)
+        Log.d("OtpTrustUseCase", "Token retrieved: $token")  // Добавьте логирование для отладки
+        return token
     }
 
     private fun parseErrorResponse(json: String): RegisterResponseModel? {
