@@ -1,7 +1,9 @@
 package com.issuesolver.presentation.login.qeydiyyat_page
+
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.issuesolver.common.Resource
+import com.issuesolver.common.State
 import com.issuesolver.domain.entity.networkModel.RegisterRequestModel
 import com.issuesolver.domain.useCase.RegisterUseCase
 import com.issuesolver.domain.useCase.login.ValidateEmailUseCase
@@ -23,26 +25,44 @@ class RegisterViewModel @Inject constructor(
     private val validatePasswordUseCase: ValidatePasswordUseCase,
     private val validateRepeatedPasswordUseCase: ValidateRepeatedPasswordUseCase,
     private val validateFullNameUseCase: ValidateFullNameUseCase
-    ): ViewModel() {
+) : ViewModel() {
 
-    private val _registerState = MutableStateFlow<Resource<String?>>(Resource.Loading())
-    val registerState: StateFlow<Resource<String?>> = _registerState
 
     private val _uiState = MutableStateFlow(RegisterPageState())
     val uiState: StateFlow<RegisterPageState> = _uiState.asStateFlow()
 
-
+    private var _registerState: MutableStateFlow<State> = MutableStateFlow(State.loading())
+    val registerState: StateFlow<State> = _registerState.asStateFlow()
 
     fun register(request: RegisterRequestModel) {
+        //Loading
         viewModelScope.launch {
             registerUseCase(request).collect { resource ->
-                _registerState.value = resource
+//                _registerState.value = resource
+//                _uiState.value = uiState.value.copy(emailError = resource.message)
+
+                when (resource) {
+                    is Resource.Error -> {
+                        _registerState.emit(State.error(resource.message))
+                        _uiState.value = uiState.value.copy(emailError = resource.message)
+                    }
+
+                    is Resource.Success -> {
+                        _registerState.emit(State.success())
+//                        _uiState.emit(State.success())
+//                        burger.data.let {
+//                            //val result = it?.let { it1 -> mapper.map(it1) }
+//                            burgers.emit(it)
+//                        }
+                    }
+
+                    else -> {
+
+                    }
+                }
             }
         }
     }
-
-
-
 
 
     fun handleEvent(event: RegisterPageEvent) {
@@ -55,17 +75,24 @@ class RegisterViewModel @Inject constructor(
                     isInputValid = result.successful && validatePasswordUseCase.execute(uiState.value.password).successful
                 )
             }
+
             is RegisterPageEvent.PasswordChanged -> {
                 val result = validatePasswordUseCase.execute(event.password)
                 _uiState.value = uiState.value.copy(
                     password = event.password,
                     passwordError = result.errorMessage,
-                    isInputValid = result.successful && validateRepeatedPasswordUseCase.execute(uiState.value.repeatedPassword, uiState.value.password).successful
+                    isInputValid = result.successful && validateRepeatedPasswordUseCase.execute(
+                        uiState.value.repeatedPassword,
+                        uiState.value.password
+                    ).successful
                 )
             }
 
             is RegisterPageEvent.RepeatedPasswordChanged -> {
-                val result = validateRepeatedPasswordUseCase.execute(_uiState.value.password, event.repeatedPassword)
+                val result = validateRepeatedPasswordUseCase.execute(
+                    _uiState.value.password,
+                    event.repeatedPassword
+                )
                 _uiState.value = _uiState.value.copy(
                     repeatedPassword = event.repeatedPassword,
                     repeatedPasswordError = result.errorMessage,
@@ -80,7 +107,7 @@ class RegisterViewModel @Inject constructor(
                     fullName = event.fullName,
                     isInputValid = result.successful
                 )
-                
+
             }
 
 
@@ -91,7 +118,6 @@ class RegisterViewModel @Inject constructor(
             }
         }
     }
-
 
 
 }

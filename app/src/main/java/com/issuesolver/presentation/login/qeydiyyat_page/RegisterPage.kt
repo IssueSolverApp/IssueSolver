@@ -1,5 +1,7 @@
 package com.issuesolver.presentation.login.qeydiyyat_page
 
+import android.util.Log
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -40,6 +42,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -71,6 +74,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.issuesolver.R
+import com.issuesolver.common.Resource
 import com.issuesolver.domain.entity.networkModel.RegisterRequestModel
 import com.issuesolver.presentation.common.AuthButton
 import com.issuesolver.presentation.common.ErrorText
@@ -78,6 +82,12 @@ import com.issuesolver.presentation.login.daxil_ol_page.LoginPageEvent
 import com.issuesolver.presentation.login.password_change_page.PasswordChangePageEvent
 import com.issuesolver.presentation.navigation.Routes
 import kotlinx.coroutines.launch
+
+import androidx.compose.runtime.getValue
+
+import androidx.compose.runtime.livedata.observeAsState
+import com.issuesolver.common.StatusR
+
 
 @OptIn(
     ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class
@@ -95,7 +105,7 @@ fun RegisterPage(navController: NavController, viewModel: RegisterViewModel = hi
     var surname by remember { mutableStateOf("") }
 
 
-    var email by remember { mutableStateOf("") }
+    var errorEmail by remember { mutableStateOf("") }
     var emailError by remember { mutableStateOf(false) }
     var password by remember { mutableStateOf("") }
     var confirmPassword by remember { mutableStateOf("") }
@@ -105,8 +115,27 @@ fun RegisterPage(navController: NavController, viewModel: RegisterViewModel = hi
     var isChecked by remember { mutableStateOf(false) }
     var isCheckBoxRed by remember { mutableStateOf(false) }
 
-//    val bringIntoViewRequester = remember { BringIntoViewRequester() }
-//    val coroutineScope = rememberCoroutineScope()
+    val registerState by viewModel.registerState.collectAsState()
+
+    when (registerState?.status) {
+        StatusR.LOADING -> {
+            CircularProgressIndicator()
+        }
+        StatusR.SUCCESS -> {
+            navController.navigate(Routes.REGISTER_OTP + "/${uiState.email}")
+        }
+        StatusR.ERROR -> {
+            Log.e("ERRORTAG", registerState?.message.toString())
+        }
+        else -> {
+
+        }
+    }
+
+
+
+    errorEmail = uiState.emailError.toString()
+
 
 
     Scaffold(content = { padding ->
@@ -291,10 +320,10 @@ fun RegisterPage(navController: NavController, viewModel: RegisterViewModel = hi
                             )
 
                         )
+                        if(errorEmail!="null"){
                         ErrorText(
-                            errorMessage = uiState.emailError,
-//                        isVisible = isEmailError
-                        )
+                            errorMessage = errorEmail,
+                        )}
                     }
 
 
@@ -495,6 +524,7 @@ fun RegisterPage(navController: NavController, viewModel: RegisterViewModel = hi
                 AuthButton(
                     text = "Daxil ol",
                     onClick = {
+                        viewModel.handleEvent(RegisterPageEvent.Submit)
                         if (!isChecked) {
                             isCheckBoxRed = true
                         } else {
@@ -507,9 +537,28 @@ fun RegisterPage(navController: NavController, viewModel: RegisterViewModel = hi
                                     confirmPassword = uiState.repeatedPassword
                                 )
                             )
-                            navController.navigate(Routes.REGISTER_OTP + "/${uiState.email}")
+                            //navController.navigate(Routes.REGISTER_OTP + "/${uiState.email}")
+//                            when (registerState) {
+//                                is Resource.Loading<*> -> {
+//                                    //CircularProgressIndicator()
+//                                }
+//
+//                                is Resource.Success<*> -> {
+//                                    navController.navigate(Routes.REGISTER_OTP + "/${uiState.email}")
+//                                }
+//
+//                                is Resource.Error<*> -> {
+//
+//
+//                                }
+//
+//                                null -> TODO()
+//                                else -> {}
+//                            }
+
                         }
-                        viewModel.handleEvent(RegisterPageEvent.Submit)
+//                        viewModel.handleEvent(RegisterPageEvent.Submit)
+
 
                     },
                     enabled = uiState.isInputValid,

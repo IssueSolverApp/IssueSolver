@@ -14,8 +14,6 @@ import javax.inject.Inject
 class ResendOtpUseCase @Inject constructor(private val resendOtpRepository: ResendOtpRepositoryInterface) {
 
     suspend operator fun invoke(otpModel: ResendOtpModel) = flow {
-        emit(Resource.Loading())
-
         try {
             val response = resendOtpRepository.resendOtp(otpModel)
             if (response.isSuccessful) {
