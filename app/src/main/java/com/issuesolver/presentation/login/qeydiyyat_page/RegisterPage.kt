@@ -177,7 +177,7 @@ fun RegisterPage(navController: NavController, viewModel: RegisterViewModel = hi
                                 disabledContainerColor = Color.White,
                                 cursorColor = Color(0xFF2981FF),
                                 errorCursorColor = Color.Red,
-                                focusedIndicatorColor = Color.White,
+                                focusedIndicatorColor = Color.Transparent,
                             )
                         )
                     }
@@ -224,7 +224,7 @@ fun RegisterPage(navController: NavController, viewModel: RegisterViewModel = hi
                                 disabledContainerColor = Color.White,
                                 cursorColor = Color(0xFF2981FF),
                                 errorCursorColor = Color.Red,
-                                focusedIndicatorColor = Color.White,
+                                focusedIndicatorColor = Color.Transparent,
                             )
                         )
                         if (errorEmail != "null") {
@@ -279,7 +279,7 @@ fun RegisterPage(navController: NavController, viewModel: RegisterViewModel = hi
                                 disabledContainerColor = Color.White,
                                 cursorColor = Color(0xFF2981FF),
                                 errorCursorColor = Color.Red,
-                                focusedIndicatorColor = Color.White,
+                                focusedIndicatorColor = Color.Transparent,
                             ),
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                             visualTransformation = if (showPassword) VisualTransformation.None else PasswordVisualTransformation(),
@@ -350,7 +350,7 @@ fun RegisterPage(navController: NavController, viewModel: RegisterViewModel = hi
                                 disabledContainerColor = Color.White,
                                 cursorColor = Color(0xFF2981FF),
                                 errorCursorColor = Color.Red,
-                                focusedIndicatorColor = Color.White,
+                                focusedIndicatorColor = Color.Transparent,
                             ),
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                             visualTransformation = if (confirmShowPassword) VisualTransformation.None else PasswordVisualTransformation(),
