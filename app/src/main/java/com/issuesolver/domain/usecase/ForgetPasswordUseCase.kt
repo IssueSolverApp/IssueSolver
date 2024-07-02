@@ -1,23 +1,23 @@
-package com.issuesolver.domain.useCase
+package com.issuesolver.domain.usecase
 
 import com.google.gson.Gson
 import com.issuesolver.common.Resource
-import com.issuesolver.data.repository.SignInRepositoryInterface
-import com.issuesolver.domain.entity.networkModel.LoginRequest
-import com.issuesolver.domain.entity.networkModel.LoginResponse
+import com.issuesolver.data.repository.ForgetPasswordRepositoryInterface
+import com.issuesolver.domain.entity.networkModel.RegisterResponseModel
+import com.issuesolver.domain.entity.networkModel.ResendOtpModel
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
 
-class SignInUseCase @Inject constructor(private val signInRepositoryInterface: SignInRepositoryInterface) {
+class ForgetPasswordUseCase @Inject constructor(private val forgetPasswordRepository: ForgetPasswordRepositoryInterface) {
 
-    suspend operator fun invoke(signIn: LoginRequest) = flow {
+    suspend operator fun invoke(signIn: ResendOtpModel) = flow {
         emit(Resource.Loading())
         try {
-            val response = signInRepositoryInterface.signIn(signIn)
+            val response = forgetPasswordRepository.forgetPassword(signIn)
             if (response.isSuccessful) {
-                emit(Resource.Success(response.body()))
+                emit(Resource.Success(response.body()?.message))
             } else {
                 val errorResponse = response.errorBody()?.string()?.let {
                     parseErrorResponse(it)
@@ -32,13 +32,12 @@ class SignInUseCase @Inject constructor(private val signInRepositoryInterface: S
             emit(Resource.Error("Unexpected Error: ${e.localizedMessage}"))
         }
     }
-
-    private fun parseErrorResponse(json: String): LoginResponse? {
+    private fun parseErrorResponse(json: String): RegisterResponseModel? {
         // Use your preferred JSON library here (e.g., Gson)
         // Assuming you're using Gson:
         return try {
             val gson = Gson()
-            gson.fromJson(json, LoginResponse::class.java)
+            gson.fromJson(json, RegisterResponseModel::class.java)
         } catch (e: Exception) {
             null
         }

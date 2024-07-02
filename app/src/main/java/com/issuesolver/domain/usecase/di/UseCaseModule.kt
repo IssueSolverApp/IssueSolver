@@ -9,15 +9,15 @@ import com.issuesolver.data.repository.RegisterRepositoryInterface
 import com.issuesolver.data.repository.ResendOtpRepositoryInterface
 import com.issuesolver.data.repository.ResetPasswordRepositoryInterface
 import com.issuesolver.data.repository.SignInRepositoryInterface
-import com.issuesolver.domain.useCase.ConfirmOtpUseCase
-import com.issuesolver.domain.useCase.OtpTrustUseCase
-import com.issuesolver.domain.useCase.RegisterUseCase
+import com.issuesolver.domain.usecase.ConfirmOtpUseCase
+import com.issuesolver.domain.usecase.OtpTrustUseCase
+import com.issuesolver.domain.usecase.RegisterUseCase
 
-import com.issuesolver.domain.useCase.ResendOtpUseCase
-import com.issuesolver.domain.useCase.ResetPasswordUseCase
-import com.issuesolver.domain.useCase.SignInUseCase
-import com.issuesolver.domain.useCase.login.ValidateFullNameUseCase
-import com.issuesolver.domain.useCase.login.ValidatePasswordUseCase
+import com.issuesolver.domain.usecase.ResendOtpUseCase
+import com.issuesolver.domain.usecase.ResetPasswordUseCase
+import com.issuesolver.domain.usecase.SignInUseCase
+import com.issuesolver.domain.usecase.login.ValidateFullNameUseCase
+import com.issuesolver.domain.usecase.login.ValidatePasswordUseCase
 import com.issuesolver.domain.usecase.login.LoginUseCase
 import com.issuesolver.domain.usecase.login.ValidateEmailUseCase
 import com.issuesolver.domain.usecase.login.ValidateNewPasswordUseCase

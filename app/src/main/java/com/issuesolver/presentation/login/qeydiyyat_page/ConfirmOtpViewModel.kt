@@ -6,10 +6,9 @@ import com.issuesolver.common.Resource
 import com.issuesolver.common.State
 import com.issuesolver.domain.entity.networkModel.RequestOtp
 import com.issuesolver.domain.entity.networkModel.ResendOtpModel
-import com.issuesolver.domain.useCase.ConfirmOtpUseCase
-import com.issuesolver.domain.useCase.ResendOtpUseCase
+import com.issuesolver.domain.usecase.ConfirmOtpUseCase
+import com.issuesolver.domain.usecase.ResendOtpUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import hilt_aggregated_deps._dagger_hilt_android_internal_managers_HiltWrapper_SavedStateHandleModule
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch

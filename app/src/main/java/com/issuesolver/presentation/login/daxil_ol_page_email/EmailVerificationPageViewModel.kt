@@ -4,10 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.issuesolver.common.Resource
 import com.issuesolver.common.State
-import com.issuesolver.domain.entity.networkModel.LoginRequest
-import com.issuesolver.domain.entity.networkModel.LoginResponse
 import com.issuesolver.domain.entity.networkModel.ResendOtpModel
-import com.issuesolver.domain.useCase.ForgetPasswordUseCase
+import com.issuesolver.domain.usecase.ForgetPasswordUseCase
 import com.issuesolver.domain.usecase.login.ValidateEmailUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

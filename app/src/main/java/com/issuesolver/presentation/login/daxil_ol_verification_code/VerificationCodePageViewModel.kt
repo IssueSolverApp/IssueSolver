@@ -6,14 +6,11 @@ import com.issuesolver.common.Resource
 import com.issuesolver.common.State
 import com.issuesolver.domain.entity.networkModel.RequestOtp
 import com.issuesolver.domain.entity.networkModel.ResendOtpModel
-import com.issuesolver.domain.useCase.OtpTrustUseCase
-import com.issuesolver.domain.useCase.ResendOtpUseCase
-import com.issuesolver.presentation.login.daxil_ol_page_email.EmailVerificationPageState
+import com.issuesolver.domain.usecase.OtpTrustUseCase
+import com.issuesolver.domain.usecase.ResendOtpUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

@@ -1,20 +1,14 @@
-package com.issuesolver.domain.useCase
+package com.issuesolver.domain.usecase
 
 import com.google.gson.Gson
 import com.issuesolver.common.Resource
 import com.issuesolver.data.repository.RegisterRepositoryInterface
-import com.issuesolver.data.repository.ResendOtpRepositoryInterface
 import com.issuesolver.domain.entity.networkModel.RegisterResponseModel
 import com.issuesolver.domain.entity.networkModel.RegisterRequestModel
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
-import javax.inject.Singleton
 
 
 /*

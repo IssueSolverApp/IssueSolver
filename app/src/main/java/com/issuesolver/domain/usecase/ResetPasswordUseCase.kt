@@ -1,21 +1,20 @@
-package com.issuesolver.domain.useCase
+package com.issuesolver.domain.usecase
 
 import com.google.gson.Gson
 import com.issuesolver.common.Resource
-import com.issuesolver.data.repository.ResendOtpRepositoryImpl
-import com.issuesolver.data.repository.ResendOtpRepositoryInterface
+import com.issuesolver.data.repository.ResetPasswordRepositoryInterface
 import com.issuesolver.domain.entity.networkModel.RegisterResponseModel
-import com.issuesolver.domain.entity.networkModel.ResendOtpModel
+import com.issuesolver.domain.entity.networkModel.ResetPasswordModel
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
 
-class ResendOtpUseCase @Inject constructor(private val resendOtpRepository: ResendOtpRepositoryInterface) {
-
-    suspend operator fun invoke(otpModel: ResendOtpModel) = flow {
+class ResetPasswordUseCase @Inject constructor(private val resetPassword: ResetPasswordRepositoryInterface) {
+    suspend operator fun invoke(token: String, resetPasswordModel: ResetPasswordModel) = flow {
+        emit(Resource.Loading())
         try {
-            val response = resendOtpRepository.resendOtp(otpModel)
+            val response = resetPassword.resetPassword(token, resetPasswordModel)
             if (response.isSuccessful) {
                 emit(Resource.Success(response.body()?.message))
             } else {
