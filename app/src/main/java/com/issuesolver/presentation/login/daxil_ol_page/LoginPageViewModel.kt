@@ -44,6 +44,7 @@ class LoginPageViewModel @Inject constructor(
                     }
                     is Resource.Error -> {
                         _signInState.emit(State.error(resource.message))
+                        _uiState.value = uiState.value.copy(emailError = resource.message)
                     }
                 }
             }
