@@ -55,6 +55,9 @@ fun VerificationCodePage(
     var otpValue by remember { mutableStateOf(TextFieldValue("")) }
     var isOtpFilled by remember { mutableStateOf(false) }
     val focusRequester = remember { FocusRequester() }
+    val uiState by viewModel.uiState.collectAsState()
+    val isOtpValueError = uiState.emailError != null
+
     val keyboardController = LocalSoftwareKeyboardController.current
     LaunchedEffect(Unit) {
         focusRequester.requestFocus()
@@ -161,7 +164,7 @@ fun VerificationCodePage(
                                 modifier = Modifier
                                     .focusRequester(focusRequester),
                                 otpText = otpValue.text,
-                                shouldCursorBlink = false,
+//                                shouldCursorBlink = false,
                                 onOtpModified = { value, otpFilled ->
                                     otpValue =
                                         TextFieldValue(value, selection = TextRange(value.length))
@@ -213,17 +216,16 @@ fun VerificationCodePage(
     )
 }
 
-
 @Composable
 fun OtpInputField(
     modifier: Modifier = Modifier,
     otpText: String,
     otpLength: Int = 6,
-    shouldShowCursor: Boolean = false,
-    shouldCursorBlink: Boolean = false,
+    isError: Boolean = false,
     onOtpModified: (String, Boolean) -> Unit
 ) {
     val text = remember { mutableStateOf(otpText) }
+    val errorColor = if (isError) Color.Red else Color.Transparent
 
     BasicTextField(
         value = text.value,
@@ -234,7 +236,7 @@ fun OtpInputField(
             }
         },
         modifier = modifier,
-        textStyle = TextStyle(textAlign = TextAlign.Center, fontSize = 17.sp),
+        textStyle = TextStyle(textAlign = TextAlign.Center, fontSize = 17.sp, color = if (isError) Color.Red else Color.Black),
         keyboardOptions = KeyboardOptions.Default.copy(
             keyboardType = KeyboardType.Number,
             imeAction = ImeAction.Done
@@ -249,6 +251,7 @@ fun OtpInputField(
                     CharacterBox(
                         character = text.value.getOrNull(i)?.toString() ?: "",
                         isFocused = i == text.value.length,
+                        isError = isError,
                         modifier = Modifier
                             .weight(1f, fill = true)
                             .padding(horizontal = 4.dp)
@@ -257,37 +260,117 @@ fun OtpInputField(
                         Text(
                             "-",
                             style = TextStyle(
-                                color = Color(0xFF2981FF),
+                                color = if (isError) Color.Red else Color.Black,
                                 fontSize = 24.sp,
                                 textAlign = TextAlign.Center
                             )
                         )
                     }
                 }
+                innerTextField()
             }
         }
     )
 }
 
 @Composable
-fun CharacterBox(character: String, isFocused: Boolean, modifier: Modifier = Modifier) {
+fun CharacterBox(character: String, isFocused: Boolean, isError: Boolean, modifier: Modifier = Modifier) {
+    val backgroundColor = if (isError) Color.Red else Color.White
+    val borderColor = if (isError) Color.Red else if (isFocused) Color.Blue else Color.Gray
+
     Box(
         contentAlignment = Alignment.Center,
         modifier = modifier
             .defaultMinSize(minWidth = 52.dp, minHeight = 65.dp)
-            .background(Color.White, RoundedCornerShape(12.dp))
+            .background(backgroundColor, RoundedCornerShape(12.dp))
             .border(
                 1.dp,
-                if (isFocused) Color(0xFF2981FF) else Color.White,
+                borderColor,
                 RoundedCornerShape(12.dp)
             )
     ) {
         Text(
             text = character,
-            style = TextStyle(fontSize = 17.sp, textAlign = TextAlign.Center)
+            style = TextStyle(fontSize = 17.sp, textAlign = TextAlign.Center, color = if (isError) Color.White else Color.Black)
         )
     }
 }
+
+
+//@Composable
+//fun OtpInputField(
+//    modifier: Modifier = Modifier,
+//    otpText: String,
+//    otpLength: Int = 6,
+//    shouldShowCursor: Boolean = false,
+//    shouldCursorBlink: Boolean = false,
+//    onOtpModified: (String, Boolean) -> Unit
+//) {
+//    val text = remember { mutableStateOf(otpText) }
+//
+//    BasicTextField(
+//        value = text.value,
+//        onValueChange = {
+//            if (it.length <= otpLength && it.all { char -> char.isDigit() }) {
+//                text.value = it
+//                onOtpModified(it, it.length == otpLength)
+//            }
+//        },
+//        modifier = modifier,
+//        textStyle = TextStyle(textAlign = TextAlign.Center, fontSize = 17.sp),
+//        keyboardOptions = KeyboardOptions.Default.copy(
+//            keyboardType = KeyboardType.Number,
+//            imeAction = ImeAction.Done
+//        ),
+//        decorationBox = { innerTextField ->
+//            Row(
+//                modifier = Modifier.fillMaxWidth(),
+//                horizontalArrangement = Arrangement.SpaceBetween,
+//                verticalAlignment = Alignment.CenterVertically
+//            ) {
+//                for (i in 0 until otpLength) {
+//                    CharacterBox(
+//                        character = text.value.getOrNull(i)?.toString() ?: "",
+//                        isFocused = i == text.value.length,
+//                        modifier = Modifier
+//                            .weight(1f, fill = true)
+//                            .padding(horizontal = 4.dp)
+//                    )
+//                    if (i == 2) {
+//                        Text(
+//                            "-",
+//                            style = TextStyle(
+//                                color = Color(0xFF2981FF),
+//                                fontSize = 24.sp,
+//                                textAlign = TextAlign.Center
+//                            )
+//                        )
+//                    }
+//                }
+//            }
+//        }
+//    )
+//}
+//
+//@Composable
+//fun CharacterBox(character: String, isFocused: Boolean, modifier: Modifier = Modifier) {
+//    Box(
+//        contentAlignment = Alignment.Center,
+//        modifier = modifier
+//            .defaultMinSize(minWidth = 52.dp, minHeight = 65.dp)
+//            .background(Color.White, RoundedCornerShape(12.dp))
+//            .border(
+//                1.dp,
+//                if (isFocused) Color(0xFF2981FF) else Color.White,
+//                RoundedCornerShape(12.dp)
+//            )
+//    ) {
+//        Text(
+//            text = character,
+//            style = TextStyle(fontSize = 17.sp, textAlign = TextAlign.Center)
+//        )
+//    }
+//}
 
 
 @Composable

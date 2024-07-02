@@ -5,9 +5,11 @@ import androidx.lifecycle.viewModelScope
 import com.issuesolver.common.Resource
 import com.issuesolver.domain.entity.networkModel.RequestOtp
 import com.issuesolver.domain.useCase.OtpTrustUseCase
+import com.issuesolver.presentation.login.daxil_ol_page_email.EmailVerificationPageState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -15,6 +17,9 @@ import javax.inject.Inject
 @HiltViewModel
 class VerificationCodePageViewModel @Inject constructor(private val otpTrustUseCase: OtpTrustUseCase) :
     ViewModel() {
+
+    private val _uiState = MutableStateFlow(EmailVerificationPageState())
+    val uiState: StateFlow<EmailVerificationPageState> = _uiState.asStateFlow()
 
     private val _otpTrustState = MutableStateFlow<Resource<String?>>(Resource.Loading())
     val otpTrustState: StateFlow<Resource<String?>> = _otpTrustState

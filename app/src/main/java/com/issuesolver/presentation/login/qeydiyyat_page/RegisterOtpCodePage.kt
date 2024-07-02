@@ -198,7 +198,7 @@ fun RegisterOtpCodePage(
                                 modifier = Modifier
                                     .focusRequester(focusRequester),
                                 otpText = otpValue.text,
-                                shouldCursorBlink = false,
+//                                shouldCursorBlink = false,
                                 onOtpModified = { value, otpFilled ->
                                     otpValue =
                                         TextFieldValue(value, selection = TextRange(value.length))
