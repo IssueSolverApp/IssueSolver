@@ -103,6 +103,8 @@ fun LoginPage(
                 )
                 Column(
                     Modifier.padding(top = 28.dp)
+                        .verticalScroll(rememberScrollState())
+
                 ) {
                     Text(
                         "E-poçt",

@@ -2,7 +2,7 @@ package com.issuesolver.presentation.login.daxil_ol_verification_code
 
 data class VerificationCodePageState(
     var otpValue: String = "",
-    var otpValueError: String? = null,
+    var isOtpValueError: String? = null,
     val isInputValid: Boolean = false,
     var isOtpFilled: Boolean = false,
     var remainingTime: Int = 30,

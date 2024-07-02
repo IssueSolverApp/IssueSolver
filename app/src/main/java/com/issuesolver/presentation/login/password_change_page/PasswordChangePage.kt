@@ -71,7 +71,7 @@ fun PasswordChangePage(
                 modifier = Modifier
                     .fillMaxSize()
                     .imePadding()
-                    .verticalScroll(scrollState)
+//                    .verticalScroll(scrollState)
             ) {
                 Column(
                 ) {
@@ -99,6 +99,8 @@ fun PasswordChangePage(
                 )
                 Column(
                     Modifier.padding(top = 24.dp)
+                        .verticalScroll(rememberScrollState())
+
                 ) {
                     Text(
                         "Şifrə",

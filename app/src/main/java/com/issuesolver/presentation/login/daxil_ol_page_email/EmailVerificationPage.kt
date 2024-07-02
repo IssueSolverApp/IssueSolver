@@ -5,8 +5,10 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -100,6 +102,8 @@ fun EmailVerificationPage(
 //                Spacer(modifier = Modifier.height(8.dp))
                 Column(
                     Modifier.padding(top = 32.dp)
+                        .verticalScroll(rememberScrollState())
+
                 ) {
                     Text(
                         "E-poçt",
