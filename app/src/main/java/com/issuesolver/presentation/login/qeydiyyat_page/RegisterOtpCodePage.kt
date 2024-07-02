@@ -61,7 +61,11 @@ import kotlinx.coroutines.delay
 
 @SuppressLint("DefaultLocale")
 @Composable
-fun RegisterOtpCodePage(navController: NavController, email: String?,  viewModel: ConfirmOtpViewModel = hiltViewModel()) {
+fun RegisterOtpCodePage(
+    navController: NavController,
+    email: String?,
+    viewModel: ConfirmOtpViewModel = hiltViewModel()
+) {
 
     val context = LocalContext.current
     var otpValue by remember { mutableStateOf(TextFieldValue("")) }
@@ -85,26 +89,24 @@ fun RegisterOtpCodePage(navController: NavController, email: String?,  viewModel
         }
     }
 
-
     val minutes = remainingTime / 60
     val seconds = remainingTime % 60
-
     val formattedTime = String.format("%02d:%02d", minutes, seconds)
-
     val confirmOtpState by viewModel.confirmOtpState.collectAsState()
 
     when (confirmOtpState.status) {
         StatusR.LOADING -> {
             CircularProgressIndicator()
         }
+
         StatusR.SUCCESS -> {
             navController.navigate("login")
         }
+
         StatusR.ERROR -> {
             Log.e("ERRORTAG", confirmOtpState.message.toString())
         }
     }
-
 
     Scaffold { padding ->
         Box(
@@ -113,19 +115,14 @@ fun RegisterOtpCodePage(navController: NavController, email: String?,  viewModel
                 .padding(top = 24.dp)
                 .padding(20.dp)
                 .imePadding()
-
         ) {
-
             Column(
-
             ) {
                 Column(
                     Modifier.padding(bottom = 20.dp)
-
                 ) {
                     Box(
                         modifier = Modifier
-
                             .padding(top = 20.dp)
                             .size(40.dp)
                             .clip(RoundedCornerShape(100.dp))
@@ -134,7 +131,6 @@ fun RegisterOtpCodePage(navController: NavController, email: String?,  viewModel
                                 navController.popBackStack()
                             },
                         contentAlignment = Alignment.Center
-
                     ) {
                         Image(
                             painter = painterResource(R.drawable.backarray),
@@ -142,7 +138,8 @@ fun RegisterOtpCodePage(navController: NavController, email: String?,  viewModel
                             modifier = Modifier.size(24.dp)
                         )
                     }
-                    Text("Təsdiq Kodu",
+                    Text(
+                        "Təsdiq Kodu",
                         style = MaterialTheme.typography.headlineMedium,
                         fontSize = 28.sp,
                         fontWeight = FontWeight.SemiBold,
@@ -150,33 +147,24 @@ fun RegisterOtpCodePage(navController: NavController, email: String?,  viewModel
                         color = Color.Black,
                         modifier = Modifier
                             .padding(top = 24.dp),
-
-
-                        )
-                    Text("E-poçtunuza gələn təsdiq kodunu daxil edin.",
+                    )
+                    Text(
+                        "E-poçtunuza gələn təsdiq kodunu daxil edin.",
                         style = MaterialTheme.typography.bodySmall,
                         fontSize = 15.sp,
                         textAlign = TextAlign.Start,
                         color = Color(0xFF9D9D9D),
                         modifier = Modifier
-                            .padding(top = 10.dp,bottom = 20.dp),
-
-                        )
+                            .padding(top = 10.dp, bottom = 20.dp),
+                    )
                     Spacer(modifier = Modifier.height(8.dp))
                     Divider(
                         thickness = 0.5.dp,
-                        color= Color(0xFF2981FF)
-
+                        color = Color(0xFF2981FF)
                     )
                     Spacer(modifier = Modifier.height(8.dp))
-
-
-
-
-
                     Column(
                         Modifier.padding(top = 20.dp)
-
                     ) {
                         Surface(
                             modifier = Modifier
@@ -189,7 +177,8 @@ fun RegisterOtpCodePage(navController: NavController, email: String?,  viewModel
                                 otpText = otpValue.text,
                                 shouldCursorBlink = false,
                                 onOtpModified = { value, otpFilled ->
-                                    otpValue = TextFieldValue(value, selection = TextRange(value.length))
+                                    otpValue =
+                                        TextFieldValue(value, selection = TextRange(value.length))
                                     isOtpFilled = otpFilled
                                     if (otpFilled) {
                                         keyboardController?.hide()
@@ -199,59 +188,42 @@ fun RegisterOtpCodePage(navController: NavController, email: String?,  viewModel
                         }
                     }
                 }
-
-
                 Spacer(modifier = Modifier.height(16.dp))
-                Text("Qalan vaxt: $formattedTime", style = MaterialTheme.typography.bodyMedium,
+                Text(
+                    "Qalan vaxt: $formattedTime", style = MaterialTheme.typography.bodyMedium,
                     fontSize = 17.sp,
-                    color= Color(0xFF2981FF)
+                    color = Color(0xFF2981FF)
                 )
             }
-
-
             Spacer(modifier = Modifier.height(16.dp))
-
             Column(
-                modifier = Modifier.align(Alignment.BottomCenter)
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
                     .padding(bottom = 27.dp)
-
-//                    .fillMaxSize(),
-//                horizontalAlignment = Alignment.CenterHorizontally,
-//                verticalArrangement = Arrangement.Bottom
             ) {
                 AuthButton(
                     text = "Təsdiqlə",
                     onClick = {
                         viewModel.confirmRegister(RequestOtp(otpCode = otpValue.text))
-
-                              },
+                    },
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(bottom = 16.dp)
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
-
                     modifier = Modifier
                         .fillMaxWidth()
                         .wrapContentWidth(Alignment.CenterHorizontally) // Center the text horizontally
-
-                        .clickable (
-                            //email
-                            onClick = { viewModel.resendOtp(ResendOtpModel(email))},
+                        .clickable(
+                            onClick = { viewModel.resendOtp(ResendOtpModel(email)) },
                             interactionSource = remember { MutableInteractionSource() },
                             indication = null,
-
-                            )
-                    , text = "Kodu yenidən göndər",
+                            ), text = "Kodu yenidən göndər",
                     fontSize = 15.sp,
-
-
-                    color = MaterialTheme.colorScheme.primary)
+                    color = MaterialTheme.colorScheme.primary
+                )
             }
-
-
-
         }
     }
 }

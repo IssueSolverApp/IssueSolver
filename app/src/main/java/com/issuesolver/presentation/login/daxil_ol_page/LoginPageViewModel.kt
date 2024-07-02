@@ -51,6 +51,7 @@ class LoginPageViewModel @Inject constructor(
                             validatePasswordUseCase.execute(uiState.value.password).successful
                 )
             }
+
             is LoginPageEvent.PasswordChanged -> {
                 val result = validatePasswordUseCase.execute(event.password)
                 _uiState.value = uiState.value.copy(
@@ -59,6 +60,7 @@ class LoginPageViewModel @Inject constructor(
                     isInputValid = result.successful && loginUseCase.execute(uiState.value.email).successful
                 )
             }
+
             is LoginPageEvent.Submit -> {
                 if (uiState.value.isInputValid) {
 

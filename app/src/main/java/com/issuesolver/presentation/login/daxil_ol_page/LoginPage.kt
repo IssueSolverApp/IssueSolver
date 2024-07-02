@@ -61,14 +61,14 @@ fun LoginPage(
             scrollState.scrollBy(keyboardHeight.toFloat())
         }
     }
-    Scaffold (content = { padding ->
+    Scaffold(content = { padding ->
         Box(
             modifier = Modifier
                 .fillMaxSize()
                 .statusBarsPadding()
                 .navigationBarsPadding()
                 .imePadding()
-                .padding(top = 24.dp, start = 20.dp, end = 20.dp,bottom=16.dp)
+                .padding(top = 24.dp, start = 20.dp, end = 20.dp, bottom = 16.dp)
         ) {
             Column(
                 modifier = Modifier
@@ -145,7 +145,7 @@ fun LoginPage(
                             errorCursorColor = Color.Red,
                             cursorColor = Color(0xFF2981FF)
                         ),
-                        )
+                    )
                     ErrorText(
                         errorMessage = uiState.emailError,
 //                        isVisible = isEmailError

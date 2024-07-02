@@ -23,15 +23,14 @@ class EmailVerificationPageViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(EmailVerificationPageState())
     val uiState: StateFlow<EmailVerificationPageState> = _uiState.asStateFlow()
 
-
     private val _forgetPasswordState = MutableStateFlow<Resource<String?>>(Resource.Loading())
     val forgetPasswordState: StateFlow<Resource<String?>> = _forgetPasswordState
 
 
-    fun forgetPassword(request: ResendOtpModel){
+    fun forgetPassword(request: ResendOtpModel) {
         viewModelScope.launch {
-            forgetPasswordUseCase(request).collect{resource->
-                _forgetPasswordState.value=resource
+            forgetPasswordUseCase(request).collect { resource ->
+                _forgetPasswordState.value = resource
             }
         }
     }

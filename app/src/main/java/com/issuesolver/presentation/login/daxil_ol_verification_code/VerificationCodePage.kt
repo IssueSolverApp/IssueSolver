@@ -109,8 +109,9 @@ fun VerificationCodePage(
                         )
                     }
                     Row(
-                        modifier = Modifier.fillMaxWidth()
-                        .padding(top = 24.dp),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 24.dp),
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
@@ -121,19 +122,19 @@ fun VerificationCodePage(
                             fontWeight = FontWeight.SemiBold,
                             textAlign = TextAlign.Start,
                             color = Color.Black,
-                            )
-                        Row{
+                        )
+                        Row {
                             Image(
-                            painter = painterResource(R.drawable.timer),
-                            contentDescription = "timer",
+                                painter = painterResource(R.drawable.timer),
+                                contentDescription = "timer",
                                 modifier = Modifier.align(Alignment.CenterVertically)
                             )
-                    Text(
-                    " $formattedTime",
-                    fontSize = 18.sp,
-                    color = Color(0xFF4D96FF), 
-                        style = MaterialTheme.typography.headlineMedium,
-                        )
+                            Text(
+                                " $formattedTime",
+                                fontSize = 18.sp,
+                                color = Color(0xFF4D96FF),
+                                style = MaterialTheme.typography.headlineMedium,
+                            )
                         }
                     }
                     Text(
@@ -144,7 +145,7 @@ fun VerificationCodePage(
                         color = Color(0xFF9D9D9D),
                         modifier = Modifier
                             .padding(top = 10.dp, bottom = 20.dp),
-                        )
+                    )
                     Spacer(modifier = Modifier.height(8.dp))
                     Divider(
                         thickness = 0.5.dp,
@@ -331,13 +332,11 @@ internal fun CharacterContainer(
                     color = Color.Transparent,
                     shape = RoundedCornerShape(6.dp)
                 )
-
                 .padding(2.dp),
             text = character,
             style = MaterialTheme.typography.headlineLarge,
             textAlign = TextAlign.Center
         )
-
         AnimatedVisibility(visible = isFocused && cursorVisible.value) {
             Box(
                 modifier = Modifier

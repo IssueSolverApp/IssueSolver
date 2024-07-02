@@ -28,19 +28,15 @@ class PasswordChangePageViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val token = otpTrustUseCase.getToken()
-
-
     private val _uiState = MutableStateFlow(PasswordChangePageState())
     val uiState: StateFlow<PasswordChangePageState> = _uiState.asStateFlow()
 
     private val _resetPassword = MutableStateFlow<Resource<String?>>(Resource.Loading())
     val resetPassword: StateFlow<Resource<String?>> = _resetPassword
 
-
-
-    fun resetPassword(request: ResetPasswordModel){
+    fun resetPassword(request: ResetPasswordModel) {
         viewModelScope.launch {
-            resetPasswordUseCase(token!!, request).collect{
+            resetPasswordUseCase(token!!, request).collect {
                 _resetPassword.value = it
             }
         }
@@ -48,28 +44,36 @@ class PasswordChangePageViewModel @Inject constructor(
 
     fun handleEvent(event: PasswordChangePageEvent) {
         when (event) {
-
             is PasswordChangePageEvent.PasswordChanged -> {
-                val result = validateNewPasswordUseCase.execute(event.newpassword,_uiState.value.repeatedPassword)
+                val result = validateNewPasswordUseCase.execute(
+                    event.newpassword,
+                    _uiState.value.repeatedPassword
+                )
                 _uiState.value = uiState.value.copy(
                     newpassword = event.newpassword,
                     newpasswordError = result.errorMessage,
-                    isInputValid = result.successful && validateRepeatedPasswordUseCase.execute(uiState.value.repeatedPassword, uiState.value.newpassword).successful
+                    isInputValid = result.successful && validateRepeatedPasswordUseCase.execute(
+                        uiState.value.repeatedPassword,
+                        uiState.value.newpassword
+                    ).successful
                 )
             }
-
             is PasswordChangePageEvent.RepeatedPasswordChanged -> {
-                val result = validateRepeatedPasswordUseCase.execute(_uiState.value.newpassword, event.repeatedPassword)
+                val result = validateRepeatedPasswordUseCase.execute(
+                    _uiState.value.newpassword,
+                    event.repeatedPassword
+                )
                 _uiState.value = _uiState.value.copy(
                     repeatedPassword = event.repeatedPassword,
                     repeatedPasswordError = result.errorMessage,
-                    isInputValid = validateNewPasswordUseCase.execute(_uiState.value.repeatedPassword, _uiState.value.newpassword).successful && result.successful
+                    isInputValid = validateNewPasswordUseCase.execute(
+                        _uiState.value.repeatedPassword,
+                        _uiState.value.newpassword
+                    ).successful && result.successful
                 )
             }
-
             is PasswordChangePageEvent.Submit -> {
                 if (uiState.value.isInputValid) {
-
                 }
             }
         }

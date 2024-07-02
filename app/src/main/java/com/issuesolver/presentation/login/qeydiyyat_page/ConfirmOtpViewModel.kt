@@ -15,24 +15,22 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ConfirmOtpViewModel@Inject constructor(
+class ConfirmOtpViewModel @Inject constructor(
     private val confirmOtpUseCase: ConfirmOtpUseCase,
     private val resendOtpUseCase: ResendOtpUseCase
-): ViewModel() {
+) : ViewModel() {
 
-    private val _confirmOtpState : MutableStateFlow<State> = MutableStateFlow(State.loading())
+    private val _confirmOtpState: MutableStateFlow<State> = MutableStateFlow(State.loading())
     val confirmOtpState: StateFlow<State> = _confirmOtpState
-
     private val _resendOtpState = MutableStateFlow<Resource<String?>>(Resource.Loading())
     val resendOtpState: StateFlow<Resource<String?>> = _resendOtpState
 
     fun confirmRegister(request: RequestOtp) {
         viewModelScope.launch {
-            confirmOtpUseCase(request).collect{
+            confirmOtpUseCase(request).collect {
 //                _confirmOtpState.value = it
-                when(it){
+                when (it) {
                     is Resource.Loading -> {
-
                     }
                     is Resource.Error -> {
                         _confirmOtpState.emit(State.error(it.message))
@@ -47,8 +45,7 @@ class ConfirmOtpViewModel@Inject constructor(
 
     fun resendOtp(request: ResendOtpModel) {
         viewModelScope.launch {
-            resendOtpUseCase(request).collect{
-
+            resendOtpUseCase(request).collect {
             }
         }
     }

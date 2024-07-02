@@ -67,10 +67,8 @@ fun RegisterPage(navController: NavController, viewModel: RegisterViewModel = hi
     val isPasswordError = uiState.passwordError != null
     val isPasswordRepeatedError = uiState.repeatedPasswordError != null
 
-
     var fullName by remember { mutableStateOf("") }
     var surname by remember { mutableStateOf("") }
-
 
     var errorEmail by remember { mutableStateOf("") }
     var emailError by remember { mutableStateOf(false) }
@@ -88,25 +86,22 @@ fun RegisterPage(navController: NavController, viewModel: RegisterViewModel = hi
         StatusR.LOADING -> {
             CircularProgressIndicator()
         }
+
         StatusR.SUCCESS -> {
             navController.navigate(Routes.REGISTER_OTP + "/${uiState.email}")
         }
+
         StatusR.ERROR -> {
             Log.e("ERRORTAG", registerState?.message.toString())
         }
+
         else -> {
 
         }
     }
-
-
-
     errorEmail = uiState.emailError.toString()
 
-
-
     Scaffold(content = { padding ->
-
         Box(
             modifier = Modifier
                 .fillMaxSize()
@@ -121,7 +116,6 @@ fun RegisterPage(navController: NavController, viewModel: RegisterViewModel = hi
                     .fillMaxSize()
                     .imePadding()
                     .padding(top = 24.dp, start = 20.dp, end = 20.dp)
-
             ) {
                 Column {
                     Text(
@@ -131,10 +125,7 @@ fun RegisterPage(navController: NavController, viewModel: RegisterViewModel = hi
                         fontWeight = FontWeight.SemiBold,
                         textAlign = TextAlign.Start,
                         color = Color.Black,
-
-
-                        )
-
+                    )
                     Text(
                         "Zəhmət olmasa, şəxsi məlumatlarınızı daxil edin.",
                         style = MaterialTheme.typography.bodySmall,
@@ -143,29 +134,17 @@ fun RegisterPage(navController: NavController, viewModel: RegisterViewModel = hi
                         color = Color(0xFF9D9D9D),
                         modifier = Modifier
                             .padding(top = 10.dp),
-
-
-                        )
+                    )
                 }
-
-
                 Divider(
                     modifier = Modifier
                         .padding(top = 20.dp),
                     thickness = 0.5.dp,
                     color = Color(0xFF2981FF)
-
                 )
-
-
                 Column(
                     modifier = Modifier
                         .verticalScroll(rememberScrollState())
-                    //.imePadding()
-                    //.imeNestedScroll()
-
-
-//                        .bringIntoViewRequester(bringIntoViewRequester)
                 ) {
                     Column(modifier = Modifier.padding(top = 28.dp)) {
                         Text(
@@ -189,7 +168,6 @@ fun RegisterPage(navController: NavController, viewModel: RegisterViewModel = hi
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(top = 8.dp),
-
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
                             colors = TextFieldDefaults.textFieldColors(
                                 containerColor = Color.White, // Background color of the TextField
@@ -198,47 +176,8 @@ fun RegisterPage(navController: NavController, viewModel: RegisterViewModel = hi
                                 errorCursorColor = Color.Red, // Cursor color when in error state
                                 cursorColor = Color(0xFF2981FF) // Cursor color
                             )
-
                         )
                     }
-//                        Column(Modifier.padding(top = 20.dp)) {
-//                            Text(
-//                                "Soyad ",
-//                                style = MaterialTheme.typography.bodySmall,
-//                                fontSize = 15.sp,
-//                            )
-//                            TextField(
-//                                shape = RoundedCornerShape(12.dp),
-//                                value = surname,
-//                                onValueChange = {
-//                                    surname = it
-//                                },
-//                                placeholder = {
-//                                    Text(
-//                                        ("Soyad"),
-//                                        color = Color(0xFF9D9D9D)
-//                                    )
-//                                },
-//                                singleLine = true,
-//                                modifier = Modifier
-//                                    .fillMaxWidth()
-//                                    .padding(top = 10.dp),
-//
-//                                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-//                                colors = TextFieldDefaults.textFieldColors(
-//                                    containerColor = Color.White, // Background color of the TextField
-//                                    focusedIndicatorColor = Color.White, // Underline color when focused
-//                                    unfocusedIndicatorColor = Color.White, // Underline color when unfocused
-//                                    disabledTextColor = Color.Gray, // Text color when TextField is disabled
-//                                    errorIndicatorColor = Color.Red, // Underline color when in error state
-//                                    errorCursorColor = Color.Red, // Cursor color when in error state
-//                                    cursorColor = Color.White // Cursor color
-//                                )
-//
-//                            )
-//                        }
-
-
                     Column(Modifier.padding(top = 20.dp)) {
                         Text(
                             "E-poçt",
@@ -256,8 +195,6 @@ fun RegisterPage(navController: NavController, viewModel: RegisterViewModel = hi
                                 Text(
                                     ("E-poçtunuzu daxil edin"),
                                     color = if (isEmailError) Color.Red else Color.Gray
-
-
                                 )
                             },
                             singleLine = true,
@@ -276,7 +213,6 @@ fun RegisterPage(navController: NavController, viewModel: RegisterViewModel = hi
                                         RoundedCornerShape(12.dp)
                                     )
                                 ),
-
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
                             colors = TextFieldDefaults.textFieldColors(
                                 containerColor = Color.White, // Background color of the TextField
@@ -285,15 +221,13 @@ fun RegisterPage(navController: NavController, viewModel: RegisterViewModel = hi
                                 errorCursorColor = Color.Red, // Cursor color when in error state
                                 cursorColor = Color(0xFF2981FF)
                             )
-
                         )
-                        if(errorEmail!="null"){
-                        ErrorText(
-                            errorMessage = errorEmail,
-                        )}
+                        if (errorEmail != "null") {
+                            ErrorText(
+                                errorMessage = errorEmail,
+                            )
+                        }
                     }
-
-
                     Column(Modifier.padding(top = 20.dp)) {
                         Text(
                             "Şifrə",
@@ -315,7 +249,6 @@ fun RegisterPage(navController: NavController, viewModel: RegisterViewModel = hi
                                 Text(
                                     "Şifrənizi təyin edin",
                                     color = if (isPasswordError) Color.Red else Color.Gray
-
                                 )
                             },
                             singleLine = true,
@@ -359,22 +292,17 @@ fun RegisterPage(navController: NavController, viewModel: RegisterViewModel = hi
                                 }
                             }
                         )
-
                         ErrorText(
                             errorMessage = uiState.passwordError,
 //                        isVisible = isPasswordError
                         )
-
                     }
-
-
                     Column(Modifier.padding(top = 20.dp)) {
                         Text(
                             "Şifrənin təsdiqi",
                             style = MaterialTheme.typography.bodySmall,
                             fontSize = 15.sp,
                             color = if (isPasswordRepeatedError) Color.Red else Color.Gray
-
                         )
                         TextField(
                             shape = RoundedCornerShape(12.dp),
@@ -390,7 +318,6 @@ fun RegisterPage(navController: NavController, viewModel: RegisterViewModel = hi
                                 Text(
                                     "Şifrənizi təsdiq edin",
                                     color = if (isPasswordRepeatedError) Color.Red else Color.Gray
-
                                 )
                             },
                             singleLine = true,
@@ -443,24 +370,19 @@ fun RegisterPage(navController: NavController, viewModel: RegisterViewModel = hi
 //                        isVisible = isPasswordError
                         )
                     }
-
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.Start,
                         modifier = Modifier
-//                            .fillMaxWidth()
                             .padding(top = 23.dp, bottom = 110.dp)
                     ) {
-//
                         CheckBoxWithLabel(
                             isChecked = isChecked,
                             onCheckedChange = { isChecked = it },
                             isCheckBoxRed = isCheckBoxRed
                         )
-
                         Text(
                             modifier = Modifier.clickable {
-
                             },
                             text = "Şərtlər və qaydaları",
                             color = MaterialTheme.colorScheme.primary,
@@ -470,23 +392,16 @@ fun RegisterPage(navController: NavController, viewModel: RegisterViewModel = hi
                             " qəbul edirəm.",
                             color = Color(0xFF000B1B),
                             fontSize = 15.sp
-
                         )
                     }
-
                 }
-
-
             }
-            //----------------------------------------------------------------------------------
-
             Column(
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
                     .background(Color(0xFFF0F4F9))
                     .imePadding()
                     .padding(start = 20.dp, end = 20.dp, bottom = 16.dp)
-
             ) {
                 AuthButton(
                     text = "Daxil ol",
@@ -506,21 +421,15 @@ fun RegisterPage(navController: NavController, viewModel: RegisterViewModel = hi
                             )
                             navController.navigate(Routes.REGISTER_OTP + "/${uiState.email}")
                         }
-//                        viewModel.handleEvent(RegisterPageEvent.Submit)
-
-
                     },
                     enabled = uiState.isInputValid,
                     modifier = Modifier
                         .fillMaxWidth()
                 )
-
-
                 Row(
                     horizontalArrangement = Arrangement.Center,
                     modifier = Modifier
                         .fillMaxWidth()
-
                 ) {
                     Text(
                         "Hesabınız varmı?",
@@ -532,325 +441,9 @@ fun RegisterPage(navController: NavController, viewModel: RegisterViewModel = hi
                         },
                         text = "Daxil olun",
                         color = MaterialTheme.colorScheme.primary,
-
-                        )
-
+                    )
                 }
             }
-
-
-        } // here
-
-
-//---------------------------------------------------------------------------------------------------
-
-//            //Box(Modifier.background(Color.Black)) {
-//            Column(
-//                modifier = Modifier
-//                    .background(Color.Green)
-//                    .imePadding()
-//                    .fillMaxSize()
-//                    .padding(top = 24.dp)
-//                    .padding(20.dp)
-//
-//
-//            ) {
-//
-//                Column(
-//                    Modifier
-//                        .background(Color.Yellow)
-//                        .verticalScroll(rememberScrollState())
-//                        .consumeWindowInsets(
-//                            WindowInsets.systemBars.only(WindowInsetsSides.Vertical)
-//                        )
-//
-//                ) {
-//                    Column(
-//                        Modifier.padding(bottom = 20.dp)
-//
-//                    ) {
-//                        Text(
-//                            "Daxil olun",
-//                            style = MaterialTheme.typography.headlineMedium,
-//                            fontSize = 28.sp,
-//                            fontWeight = FontWeight.SemiBold,
-//                            textAlign = TextAlign.Start,
-//                            color = Color.Black,
-//
-//
-//                            )
-//
-//                        Text(
-//                            "Zəhmət olmasa, giriş üçün məlumatlarınızı daxil edin.",
-//                            style = MaterialTheme.typography.bodySmall,
-//                            fontSize = 15.sp,
-//                            textAlign = TextAlign.Start,
-//                            color = Color(0xFF9D9D9D),
-//                            modifier = Modifier
-//                                .padding(top = 10.dp),
-//
-//
-//                            )
-//                    }
-//
-//
-//                    Spacer(modifier = Modifier.height(8.dp))
-//
-//                    Divider(
-//                        thickness = 0.5.dp,
-//                        color = Color(0xFF2981FF)
-//
-//                    )
-//                    Spacer(modifier = Modifier.height(8.dp))
-//
-//
-//
-//
-//
-//                    Column(
-//                        Modifier.padding(top = 20.dp)
-//
-//                    ) {
-//                        Text(
-//                            "Ad, Soyad ",
-//                            style = MaterialTheme.typography.bodySmall,
-//                            fontSize = 15.sp,
-//                        )
-//                        TextField(
-//                            shape = RoundedCornerShape(12.dp),
-//                            value = email,
-//                            onValueChange = {
-//                                email = it
-//                                emailError = false
-//                            },
-//                            isError = emailError,
-//                            placeholder = {
-//                                Text(
-//                                    ("Ad, Soyad"),
-//                                    color = Color(0xFF9D9D9D)
-//                                )
-//                            },
-//                            singleLine = true,
-//                            modifier = Modifier
-//                                .fillMaxWidth()
-//                                .padding(top = 10.dp),
-//
-//                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-//                            colors = TextFieldDefaults.textFieldColors(
-//                                containerColor = Color.White, // Background color of the TextField
-//                                focusedIndicatorColor = Color.White, // Underline color when focused
-//                                unfocusedIndicatorColor = Color.White, // Underline color when unfocused
-//                                disabledTextColor = Color.Gray, // Text color when TextField is disabled
-//                                errorIndicatorColor = Color.Red, // Underline color when in error state
-//                                errorCursorColor = Color.Red, // Cursor color when in error state
-//                                cursorColor = Color.White // Cursor color
-//                            )
-//
-//                        )
-//
-//                        Spacer(modifier = Modifier.height(8.dp))
-//
-//                        Text(
-//                            "E-poçt",
-//                            style = MaterialTheme.typography.bodySmall,
-//                            fontSize = 15.sp,
-//                        )
-//                        TextField(
-//                            shape = RoundedCornerShape(12.dp),
-//                            value = email,
-//                            onValueChange = {
-//                                email = it
-//                                emailError = false
-//                            },
-//                            isError = emailError,
-//                            placeholder = {
-//                                Text(
-//                                    ("E-poçtunuzu daxil edin"),
-//                                    color = Color(0xFF9D9D9D)
-//                                )
-//                            },
-//                            singleLine = true,
-//                            modifier = Modifier
-//                                .fillMaxWidth()
-//                                .padding(top = 10.dp),
-//
-//                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-//                            colors = TextFieldDefaults.textFieldColors(
-//                                containerColor = Color.White, // Background color of the TextField
-//                                focusedIndicatorColor = Color.White, // Underline color when focused
-//                                unfocusedIndicatorColor = Color.White, // Underline color when unfocused
-//                                disabledTextColor = Color.Gray, // Text color when TextField is disabled
-//                                errorIndicatorColor = Color.Red, // Underline color when in error state
-//                                errorCursorColor = Color.Red, // Cursor color when in error state
-//                                cursorColor = Color.White // Cursor color
-//                            )
-//
-//                        )
-//                        Spacer(modifier = Modifier.height(8.dp))
-//
-//                        Text(
-//                            "Şifrə",
-//                            style = MaterialTheme.typography.bodySmall,
-//                            fontSize = 15.sp,
-//                        )
-//                        TextField(
-//                            shape = RoundedCornerShape(12.dp),
-//                            value = password,
-//                            onValueChange = { password = it },
-//                            placeholder = {
-//                                Text(
-//                                    "Şifrənizi təyin edin",
-//                                    color = Color(0xFF9D9D9D)
-//                                )
-//                            },
-//                            singleLine = true,
-//                            modifier = Modifier
-//                                .fillMaxWidth()
-//                                .padding(top = 10.dp),
-//                            colors = TextFieldDefaults.textFieldColors(
-//                                containerColor = Color.White, // Background color of the TextField
-//                                focusedIndicatorColor = Color.White, // Underline color when focused
-//                                unfocusedIndicatorColor = Color.White, // Underline color when unfocused
-//                                disabledTextColor = Color.Gray, // Text color when TextField is disabled
-//                                errorIndicatorColor = Color.Red, // Underline color when in error state
-//                                errorCursorColor = Color.Red, // Cursor color when in error state
-//                                cursorColor = Color.White // Cursor color
-//                            ),
-//                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-//                            visualTransformation = if (showPassword) VisualTransformation.None else PasswordVisualTransformation(),
-//                            trailingIcon = {
-//                                val icon =
-//                                    if (showPassword) painterResource(R.drawable.unhiddeneye) else painterResource(
-//                                        R.drawable.hiddeneye
-//                                    )
-//                                val description =
-//                                    if (showPassword) "Hide password" else "Show password"
-//                                IconButton(onClick = { showPassword = !showPassword }) {
-//                                    Icon(
-//                                        painter = icon,
-//                                        tint = Color(0xFF2981FF),
-//                                        contentDescription = description
-//                                    )
-//                                }
-//                            }
-//                        )
-//
-//                        Spacer(modifier = Modifier.height(8.dp))
-//
-//                        Text(
-//                            "Şifrə",
-//                            style = MaterialTheme.typography.bodySmall,
-//                            fontSize = 15.sp,
-//                        )
-//                        TextField(
-//                            shape = RoundedCornerShape(12.dp),
-//                            value = password,
-//                            onValueChange = { password = it },
-//                            placeholder = {
-//                                Text(
-//                                    "Şifrənizi təyin edin",
-//                                    color = Color(0xFF9D9D9D)
-//                                )
-//                            },
-//                            singleLine = true,
-//                            modifier = Modifier
-//                                .fillMaxWidth()
-//                                .padding(top = 10.dp),
-//                            colors = TextFieldDefaults.textFieldColors(
-//                                containerColor = Color.White, // Background color of the TextField
-//                                focusedIndicatorColor = Color.White, // Underline color when focused
-//                                unfocusedIndicatorColor = Color.White, // Underline color when unfocused
-//                                disabledTextColor = Color.Gray, // Text color when TextField is disabled
-//                                errorIndicatorColor = Color.Red, // Underline color when in error state
-//                                errorCursorColor = Color.Red, // Cursor color when in error state
-//                                cursorColor = Color.White // Cursor color
-//                            ),
-//                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-//                            visualTransformation = if (showPassword) VisualTransformation.None else PasswordVisualTransformation(),
-//                            trailingIcon = {
-//                                val icon =
-//                                    if (showPassword) painterResource(R.drawable.unhiddeneye) else painterResource(
-//                                        R.drawable.hiddeneye
-//                                    )
-//                                val description =
-//                                    if (showPassword) "Hide password" else "Show password"
-//                                IconButton(onClick = { showPassword = !showPassword }) {
-//                                    Icon(
-//                                        painter = icon,
-//                                        tint = Color(0xFF2981FF),
-//                                        contentDescription = description
-//                                    )
-//                                }
-//                            }
-//                        )
-//
-//
-//
-//                        Text(
-//                            modifier = Modifier
-//                                .clickable {}
-//                                .fillMaxWidth()
-//                                .wrapContentWidth(Alignment.End)
-//                                .padding(top = 10.dp), text = "Şifrənizi unutmusunuz?",
-//
-//                            color = MaterialTheme.colorScheme.primary
-//                        )
-//
-//
-//                    }
-//
-//
-//                }
-//
-//                Spacer(modifier = Modifier.height(16.dp))
-//
-//
-//                Box {
-//                    Column(
-//                        modifier = Modifier
-//                            .align(Alignment.BottomCenter)
-//                            .wrapContentHeight()
-//                            .fillMaxWidth()
-//                            .background(Color.Red),
-//                        horizontalAlignment = Alignment.CenterHorizontally
-//                    ) {
-//                        AuthButton(
-//                            text = "Daxil ol",
-//                            onClick = {},
-//                            modifier = Modifier
-//                                .fillMaxWidth()
-//                                .padding(bottom = 16.dp)
-//                        )
-//
-//                        Row(
-//                            verticalAlignment = Alignment.CenterVertically,
-//                            horizontalArrangement = Arrangement.Center,
-//                            modifier = Modifier.fillMaxWidth()
-//                        ) {
-//                            Text(
-//                                "Hesabınız varmı?",
-//                                color = Color(0xFF9D9D9D)
-//                            )
-//                            Text(
-//                                modifier = Modifier.clickable {
-//
-//                                },
-//                                text = "Daxil olun",
-//                                color = MaterialTheme.colorScheme.primary
-//                            )
-//
-//                        }
-//
-//
-//                    }
-//                }
-//
-//            }
-//
-//
-//            //}
-
-
+        }
     })
-
 }

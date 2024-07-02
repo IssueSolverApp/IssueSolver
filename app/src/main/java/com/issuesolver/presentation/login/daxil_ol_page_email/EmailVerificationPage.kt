@@ -38,21 +38,21 @@ fun EmailVerificationPage(
     val uiState by viewModel.uiState.collectAsState()
     val isEmailError = uiState.emailError != null
 
-    Scaffold (content = { padding ->
+    Scaffold(content = { padding ->
         Box(
             modifier = Modifier
                 .fillMaxSize()
                 .statusBarsPadding()
                 .navigationBarsPadding()
                 .imePadding()
-                .padding(top = 24.dp, start = 20.dp, end = 20.dp,bottom=16.dp)
+                .padding(top = 24.dp, start = 20.dp, end = 20.dp, bottom = 16.dp)
         ) {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
                     .imePadding()
             ) {
-            Column() {
+                Column() {
                     Box(
                         modifier = Modifier
 //                            .padding(top = 20.dp)
@@ -79,7 +79,7 @@ fun EmailVerificationPage(
                         color = Color.Black,
                         modifier = Modifier
                             .padding(top = 24.dp),
-                        )
+                    )
                     Text(
                         "E-poçt hesabınıza təsdiq kod göndəriləcək.",
                         style = MaterialTheme.typography.bodySmall,
@@ -88,7 +88,7 @@ fun EmailVerificationPage(
                         color = Color(0xFF9D9D9D),
                         modifier = Modifier
                             .padding(top = 10.dp, bottom = 20.dp),
-                        )
+                    )
                 }
 //                Spacer(
 //                    modifier = Modifier.height(8.dp)
@@ -105,7 +105,7 @@ fun EmailVerificationPage(
                         "E-poçt",
                         style = MaterialTheme.typography.bodySmall,
                         fontSize = 15.sp,
-                        )
+                    )
                     TextField(
                         shape = RoundedCornerShape(12.dp),
                         value = uiState.email,
@@ -135,7 +135,7 @@ fun EmailVerificationPage(
                             focusedIndicatorColor = Color.Transparent,
                             cursorColor = Color(0xFF2981FF)
                         ),
-                        )
+                    )
                     ErrorText(
                         errorMessage = uiState.emailError,
 //                        isVisible = isEmailError

@@ -13,20 +13,17 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class VerificationCodePageViewModel @Inject constructor(private val otpTrustUseCase: OtpTrustUseCase):ViewModel() {
+class VerificationCodePageViewModel @Inject constructor(private val otpTrustUseCase: OtpTrustUseCase) :
+    ViewModel() {
 
     private val _otpTrustState = MutableStateFlow<Resource<String?>>(Resource.Loading())
     val otpTrustState: StateFlow<Resource<String?>> = _otpTrustState
 
-
-    fun otpTrust(request: RequestOtp){
+    fun otpTrust(request: RequestOtp) {
         viewModelScope.launch {
-            otpTrustUseCase(request).collect{
+            otpTrustUseCase(request).collect {
                 _otpTrustState.value = it
             }
         }
-
-
     }
-
 }

@@ -20,24 +20,21 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun AlertDialogExample(
     onConfirmation: () -> Unit,
-
-) {
+    ) {
     AlertDialog(
         modifier = Modifier
             .width(249.dp)
             .height(176.dp)
             .padding(16.dp)
-            .clip(RoundedCornerShape(8.dp))
-                ,
-
+            .clip(RoundedCornerShape(8.dp)),
         title = {
-            Text("Həddən artıq uğursuz cəhd, bir müddət sonra yenidən yoxlayın",
-                color= Color(0xFF4D96FF),
+            Text(
+                "Həddən artıq uğursuz cəhd, bir müddət sonra yenidən yoxlayın",
+                color = Color(0xFF4D96FF),
                 fontSize = 20.sp,
                 textAlign = TextAlign.Center,
             )
         },
-
         onDismissRequest = {},
         confirmButton = {
             TextButton(
@@ -45,16 +42,13 @@ fun AlertDialogExample(
                     onConfirmation()
                 }
             ) {
-                Text("Oldu",
-                    color= Color.Black,
+                Text(
+                    "Oldu",
+                    color = Color.Black,
                     fontSize = 20.sp,
                     textAlign = TextAlign.Center,
-
-
-                    )
+                )
             }
-
-
         }
     )
 }

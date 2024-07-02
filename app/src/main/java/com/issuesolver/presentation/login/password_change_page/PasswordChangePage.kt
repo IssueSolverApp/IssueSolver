@@ -34,7 +34,10 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PasswordChangePage(navController: NavController,viewModel: PasswordChangePageViewModel = hiltViewModel()) {
+fun PasswordChangePage(
+    navController: NavController,
+    viewModel: PasswordChangePageViewModel = hiltViewModel()
+) {
 
     var showPassword by remember { mutableStateOf(value = false) }
     var showPassword1 by remember { mutableStateOf(value = false) }
@@ -54,12 +57,7 @@ fun PasswordChangePage(navController: NavController,viewModel: PasswordChangePag
         }
     }
 
-
-
-
-
-
-    Scaffold (content = { padding ->
+    Scaffold(content = { padding ->
 
         Box(
             modifier = Modifier
@@ -67,10 +65,7 @@ fun PasswordChangePage(navController: NavController,viewModel: PasswordChangePag
                 .statusBarsPadding()
                 .navigationBarsPadding()
                 .imePadding()
-                .padding(top = 24.dp, start = 20.dp, end = 20.dp,bottom=16.dp)
-
-
-
+                .padding(top = 24.dp, start = 20.dp, end = 20.dp, bottom = 16.dp)
         ) {
             Column(
                 modifier = Modifier
@@ -100,22 +95,17 @@ fun PasswordChangePage(navController: NavController,viewModel: PasswordChangePag
                         color = Color(0xFF9D9D9D),
                         modifier = Modifier
                             .padding(top = 10.dp),
-
-
-                        )
+                    )
                 }
                 Spacer(modifier = Modifier.height(8.dp))
 
                 Divider(
                     thickness = 0.5.dp,
                     color = Color(0xFF2981FF)
-
                 )
                 Spacer(modifier = Modifier.height(8.dp))
-
                 Column(
                     Modifier.padding(top = 20.dp)
-
                 ) {
                     Text(
                         "Şifrə",
@@ -150,7 +140,6 @@ fun PasswordChangePage(navController: NavController,viewModel: PasswordChangePag
                                 )
                                 else Modifier.border(1.dp, Color.White, RoundedCornerShape(12.dp))
                             ),
-
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                         colors = TextFieldDefaults.textFieldColors(
                             containerColor = Color.White,
@@ -176,14 +165,11 @@ fun PasswordChangePage(navController: NavController,viewModel: PasswordChangePag
                             }
                         }
                     )
-
                     ErrorText(
                         errorMessage = uiState.newpasswordError,
 //                        isVisible = isPasswordError
                     )
-
                     Spacer(modifier = Modifier.height(8.dp))
-
                     Text(
                         "Şifrənin təsdiqi",
                         style = MaterialTheme.typography.bodySmall,
@@ -246,50 +232,36 @@ fun PasswordChangePage(navController: NavController,viewModel: PasswordChangePag
                             }
                         }
                     )
-
                     ErrorText(
                         errorMessage = uiState.repeatedPasswordError,
 //                        isVisible = isPasswordError
                     )
                 }
-//                Spacer(modifier = Modifier.height(16.dp))
-
                 Spacer(modifier = Modifier.height(100.dp))
-
-
-
             }
-
-                Column(
-                    modifier = Modifier.align(Alignment.BottomCenter)
-//                        .fillMaxSize(),
-//                    horizontalAlignment = Alignment.CenterHorizontally,
-//                    verticalArrangement = Arrangement.Bottom
-                ) {
-                    AuthButton(
-                        text = "Yenilə",
-                        onClick = {
-                            viewModel.handleEvent(PasswordChangePageEvent.Submit)
-                            viewModel.resetPassword(ResetPasswordModel(
+            Column(
+                modifier = Modifier.align(Alignment.BottomCenter)
+            ) {
+                AuthButton(
+                    text = "Yenilə",
+                    onClick = {
+                        viewModel.handleEvent(PasswordChangePageEvent.Submit)
+                        viewModel.resetPassword(
+                            ResetPasswordModel(
                                 uiState.newpassword,
                                 uiState.repeatedPassword
-                            ))
-                                  },
-                        enabled = uiState.isInputValid,
-
-                        modifier = Modifier
-                            .fillMaxWidth()
-//                            .padding(bottom = 16.dp)
-                    )
-
-                }
-
-
+                            )
+                        )
+                    },
+                    enabled = uiState.isInputValid,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                )
             }
+        }
     }
     )
-
-    }
+}
 
 
 @Preview(showBackground = true)
