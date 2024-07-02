@@ -1,4 +1,5 @@
 package com.issuesolver.domain.useCase
+
 import com.google.gson.Gson
 import com.issuesolver.common.Resource
 import com.issuesolver.data.repository.SignInRepositoryInterface

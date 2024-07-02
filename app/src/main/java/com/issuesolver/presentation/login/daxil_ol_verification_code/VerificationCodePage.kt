@@ -89,7 +89,6 @@ fun VerificationCodePage(
                     .imePadding()
             ) {
                 Column(
-                    Modifier.padding(bottom = 20.dp)
                 ) {
                     Box(
                         modifier = Modifier
@@ -146,14 +145,12 @@ fun VerificationCodePage(
                         modifier = Modifier
                             .padding(top = 10.dp, bottom = 20.dp),
                     )
-                    Spacer(modifier = Modifier.height(8.dp))
                     Divider(
                         thickness = 0.5.dp,
                         color = Color(0xFF2981FF)
                     )
-                    Spacer(modifier = Modifier.height(8.dp))
                     Column(
-                        Modifier.padding(top = 20.dp)
+                        Modifier.padding(top = 28.dp)
                     ) {
                         Surface(
                             modifier = Modifier
@@ -177,13 +174,11 @@ fun VerificationCodePage(
                         }
                     }
                 }
-                Spacer(modifier = Modifier.height(16.dp))
             }
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(150.dp))
             Column(
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
-                    .padding(bottom = 27.dp)
             ) {
                 AuthButton(
                     text = "Təsdiqlə",
@@ -197,13 +192,12 @@ fun VerificationCodePage(
                     },
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(bottom = 16.dp)
+                        .padding(bottom = 26.dp)
                 )
-                Spacer(modifier = Modifier.height(8.dp))
                 Text(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .wrapContentWidth(Alignment.CenterHorizontally) // Center the text horizontally
+                        .wrapContentWidth(Alignment.CenterHorizontally)
                         .clickable(
                             onClick = { },
                             interactionSource = remember { MutableInteractionSource() },

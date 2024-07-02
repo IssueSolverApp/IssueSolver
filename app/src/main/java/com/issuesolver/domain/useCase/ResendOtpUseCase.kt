@@ -32,7 +32,6 @@ class ResendOtpUseCase @Inject constructor(private val resendOtpRepository: Rese
         } catch (e: Exception) {
             emit(Resource.Error("Unexpected Error: ${e.localizedMessage}"))
         }
-
     }
 
     private fun parseErrorResponse(json: String): RegisterResponseModel? {
@@ -45,5 +44,4 @@ class ResendOtpUseCase @Inject constructor(private val resendOtpRepository: Rese
             null
         }
     }
-
 }

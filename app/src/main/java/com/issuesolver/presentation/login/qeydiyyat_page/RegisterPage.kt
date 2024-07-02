@@ -146,7 +146,7 @@ fun RegisterPage(navController: NavController, viewModel: RegisterViewModel = hi
                     modifier = Modifier
                         .verticalScroll(rememberScrollState())
                 ) {
-                    Column(modifier = Modifier.padding(top = 28.dp)) {
+                    Column(modifier = Modifier.padding(top = 20.dp)) {
                         Text(
                             "Ad, soyad",
                             style = MaterialTheme.typography.bodySmall,
@@ -169,12 +169,14 @@ fun RegisterPage(navController: NavController, viewModel: RegisterViewModel = hi
                                 .fillMaxWidth()
                                 .padding(top = 8.dp),
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-                            colors = TextFieldDefaults.textFieldColors(
-                                containerColor = Color.White, // Background color of the TextField
-                                focusedIndicatorColor = Color.White, // Underline color when focused
-                                disabledTextColor = Color.Gray, // Text color when TextField is disabled
-                                errorCursorColor = Color.Red, // Cursor color when in error state
-                                cursorColor = Color(0xFF2981FF) // Cursor color
+                            colors = TextFieldDefaults.colors(
+                                disabledTextColor = Color.Gray,
+                                focusedContainerColor = Color.White,
+                                unfocusedContainerColor = Color.White,
+                                disabledContainerColor = Color.White,
+                                cursorColor = Color(0xFF2981FF),
+                                errorCursorColor = Color.Red,
+                                focusedIndicatorColor = Color.White,
                             )
                         )
                     }
@@ -214,12 +216,14 @@ fun RegisterPage(navController: NavController, viewModel: RegisterViewModel = hi
                                     )
                                 ),
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-                            colors = TextFieldDefaults.textFieldColors(
-                                containerColor = Color.White, // Background color of the TextField
-                                focusedIndicatorColor = Color.White, // Underline color when focused
-                                disabledTextColor = Color.Gray, // Text color when TextField is disabled
-                                errorCursorColor = Color.Red, // Cursor color when in error state
-                                cursorColor = Color(0xFF2981FF)
+                            colors = TextFieldDefaults.colors(
+                                disabledTextColor = Color.Gray,
+                                focusedContainerColor = Color.White,
+                                unfocusedContainerColor = Color.White,
+                                disabledContainerColor = Color.White,
+                                cursorColor = Color(0xFF2981FF),
+                                errorCursorColor = Color.Red,
+                                focusedIndicatorColor = Color.White,
                             )
                         )
                         if (errorEmail != "null") {
@@ -267,12 +271,14 @@ fun RegisterPage(navController: NavController, viewModel: RegisterViewModel = hi
                                         RoundedCornerShape(12.dp)
                                     )
                                 ),
-                            colors = TextFieldDefaults.textFieldColors(
-                                containerColor = Color.White, // Background color of the TextField
-                                focusedIndicatorColor = Color.White, // Underline color when focused
-                                disabledTextColor = Color.Gray, // Text color when TextField is disabled
-                                errorCursorColor = Color.Red, // Cursor color when in error state
-                                cursorColor = Color(0xFF2981FF)
+                            colors = TextFieldDefaults.colors(
+                                disabledTextColor = Color.Gray,
+                                focusedContainerColor = Color.White,
+                                unfocusedContainerColor = Color.White,
+                                disabledContainerColor = Color.White,
+                                cursorColor = Color(0xFF2981FF),
+                                errorCursorColor = Color.Red,
+                                focusedIndicatorColor = Color.White,
                             ),
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                             visualTransformation = if (showPassword) VisualTransformation.None else PasswordVisualTransformation(),
@@ -336,12 +342,14 @@ fun RegisterPage(navController: NavController, viewModel: RegisterViewModel = hi
                                         RoundedCornerShape(12.dp)
                                     )
                                 ),
-                            colors = TextFieldDefaults.textFieldColors(
-                                containerColor = Color.White, // Background color of the TextField
-                                focusedIndicatorColor = Color.White, // Underline color when focused
-                                disabledTextColor = Color.Gray, // Text color when TextField is disabled
-                                errorCursorColor = Color.Red, // Cursor color when in error state
-                                cursorColor = Color(0xFF2981FF) // Cursor color
+                            colors = TextFieldDefaults.colors(
+                                disabledTextColor = Color.Gray,
+                                focusedContainerColor = Color.White,
+                                unfocusedContainerColor = Color.White,
+                                disabledContainerColor = Color.White,
+                                cursorColor = Color(0xFF2981FF),
+                                errorCursorColor = Color.Red,
+                                focusedIndicatorColor = Color.White,
                             ),
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                             visualTransformation = if (confirmShowPassword) VisualTransformation.None else PasswordVisualTransformation(),

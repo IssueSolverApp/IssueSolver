@@ -11,8 +11,6 @@ class ValidateFullNameUseCase {
                 errorMessage = "Ad ve Soyadinizi daxil edin"
             )
         }
-
-
         return ValidationResult(
             successful = true
         )

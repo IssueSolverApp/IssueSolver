@@ -11,7 +11,7 @@ import java.io.IOException
 import javax.inject.Inject
 
 class ResetPasswordUseCase @Inject constructor(private val resetPassword: ResetPasswordRepositoryInterface) {
-    suspend operator fun invoke(token: String,resetPasswordModel: ResetPasswordModel) = flow {
+    suspend operator fun invoke(token: String, resetPasswordModel: ResetPasswordModel) = flow {
         emit(Resource.Loading())
         try {
             val response = resetPassword.resetPassword(token, resetPasswordModel)
@@ -31,7 +31,6 @@ class ResetPasswordUseCase @Inject constructor(private val resetPassword: ResetP
         } catch (e: Exception) {
             emit(Resource.Error("Unexpected Error: ${e.localizedMessage}"))
         }
-
     }
 
     private fun parseErrorResponse(json: String): RegisterResponseModel? {

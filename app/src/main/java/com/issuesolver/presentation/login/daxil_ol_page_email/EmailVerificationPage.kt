@@ -128,12 +128,14 @@ fun EmailVerificationPage(
                             .padding(top = 10.dp)
                             .border(1.dp, Color.White, RoundedCornerShape(12.dp)),
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-                        colors = TextFieldDefaults.textFieldColors(
-                            containerColor = Color.White,
-                            errorContainerColor = Color.White,
+                        colors = TextFieldDefaults.colors(
                             disabledTextColor = Color(0xFF2981FF),
+                            focusedContainerColor = Color.White,
+                            unfocusedContainerColor = Color.White,
+                            disabledContainerColor = Color.White,
+                            errorContainerColor = Color.White,
+                            cursorColor = Color(0xFF2981FF),
                             focusedIndicatorColor = Color.Transparent,
-                            cursorColor = Color(0xFF2981FF)
                         ),
                     )
                     ErrorText(

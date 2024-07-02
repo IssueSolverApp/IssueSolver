@@ -72,11 +72,8 @@ fun PasswordChangePage(
                     .fillMaxSize()
                     .imePadding()
                     .verticalScroll(scrollState)
-
             ) {
                 Column(
-                    Modifier.padding(bottom = 20.dp)
-
                 ) {
                     Text(
                         "Yeni şifrə",
@@ -85,7 +82,6 @@ fun PasswordChangePage(
                         fontWeight = FontWeight.SemiBold,
                         textAlign = TextAlign.Start,
                         color = Color.Black,
-
                         )
                     Text(
                         "Daxil olmaq üçün yeni şifrə təyin edin.",
@@ -97,15 +93,12 @@ fun PasswordChangePage(
                             .padding(top = 10.dp),
                     )
                 }
-                Spacer(modifier = Modifier.height(8.dp))
-
                 Divider(
                     thickness = 0.5.dp,
                     color = Color(0xFF2981FF)
                 )
-                Spacer(modifier = Modifier.height(8.dp))
                 Column(
-                    Modifier.padding(top = 20.dp)
+                    Modifier.padding(top = 24.dp)
                 ) {
                     Text(
                         "Şifrə",
@@ -131,7 +124,7 @@ fun PasswordChangePage(
                         singleLine = true,
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(top = 10.dp)
+                            .padding(top = 8.dp)
                             .then(
                                 if (isPasswordError) Modifier.border(
                                     1.dp,
@@ -141,13 +134,15 @@ fun PasswordChangePage(
                                 else Modifier.border(1.dp, Color.White, RoundedCornerShape(12.dp))
                             ),
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-                        colors = TextFieldDefaults.textFieldColors(
-                            containerColor = Color.White,
-                            errorContainerColor = Color.White,
+                        colors = TextFieldDefaults.colors(
                             disabledTextColor = Color(0xFF2981FF),
-                            focusedIndicatorColor = Color.Transparent,
+                            focusedContainerColor = Color.White,
+                            unfocusedContainerColor = Color.White,
+                            disabledContainerColor = Color.White,
+                            errorContainerColor = Color.White,
+                            cursorColor = Color(0xFF2981FF),
                             errorCursorColor = Color.Red,
-                            cursorColor = Color(0xFF2981FF)
+                            focusedIndicatorColor = Color.Transparent,
                         ),
                         visualTransformation = if (showPassword) VisualTransformation.None else PasswordVisualTransformation(),
                         trailingIcon = {
@@ -169,7 +164,7 @@ fun PasswordChangePage(
                         errorMessage = uiState.newpasswordError,
 //                        isVisible = isPasswordError
                     )
-                    Spacer(modifier = Modifier.height(8.dp))
+                    Spacer(modifier = Modifier.height(20.dp))
                     Text(
                         "Şifrənin təsdiqi",
                         style = MaterialTheme.typography.bodySmall,
@@ -195,7 +190,7 @@ fun PasswordChangePage(
                         singleLine = true,
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(top = 10.dp)
+                            .padding(top = 8.dp)
                             .then(
                                 if (isRepeatedPasswordError) Modifier.border(
                                     1.dp,
@@ -237,7 +232,7 @@ fun PasswordChangePage(
 //                        isVisible = isPasswordError
                     )
                 }
-                Spacer(modifier = Modifier.height(100.dp))
+                Spacer(modifier = Modifier.height(150.dp))
             }
             Column(
                 modifier = Modifier.align(Alignment.BottomCenter)

@@ -12,21 +12,20 @@ import javax.inject.Inject
 
 class ConfirmOtpUseCase @Inject constructor(private val otpRepository: ConfirmOtpRepositoryInterface) {
 
-    suspend operator fun invoke(otp:RequestOtp) = flow {
+    suspend operator fun invoke(otp: RequestOtp) = flow {
 
         emit(Resource.Loading())
         try {
             val response = otpRepository.confirmOtp(otp)
-            if (response.isSuccessful){
+            if (response.isSuccessful) {
                 emit(Resource.Success(response.body()?.message))
-
-            }else {
+            } else {
                 val errorResponse = response.errorBody()?.string()?.let {
                     parseErrorResponse(it)
                 }
                 emit(Resource.Error(errorResponse?.message ?: "Unknown Error"))
             }
-        }catch (e: IOException) {
+        } catch (e: IOException) {
             emit(Resource.Error("Network Error: ${e.localizedMessage}"))
         } catch (e: HttpException) {
             emit(Resource.Error("HTTP Error: ${e.localizedMessage}"))
@@ -34,9 +33,6 @@ class ConfirmOtpUseCase @Inject constructor(private val otpRepository: ConfirmOt
             emit(Resource.Error("Unexpected Error: ${e.localizedMessage}"))
         }
     }
-
-
-
     private fun parseErrorResponse(json: String): RegisterResponseModel? {
         // Use your preferred JSON library here (e.g., Gson)
         // Assuming you're using Gson:
@@ -47,6 +43,4 @@ class ConfirmOtpUseCase @Inject constructor(private val otpRepository: ConfirmOt
             null
         }
     }
-
-
 }

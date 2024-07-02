@@ -32,7 +32,6 @@ class ForgetPasswordUseCase @Inject constructor(private val forgetPasswordReposi
             emit(Resource.Error("Unexpected Error: ${e.localizedMessage}"))
         }
     }
-
     private fun parseErrorResponse(json: String): RegisterResponseModel? {
         // Use your preferred JSON library here (e.g., Gson)
         // Assuming you're using Gson:

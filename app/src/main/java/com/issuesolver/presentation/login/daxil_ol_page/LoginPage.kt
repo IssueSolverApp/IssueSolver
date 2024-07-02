@@ -137,13 +137,15 @@ fun LoginPage(
                                 )
                             ),
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-                        colors = TextFieldDefaults.textFieldColors(
-                            containerColor = Color.White,
-                            errorContainerColor = Color.White,
+                        colors = TextFieldDefaults.colors(
                             disabledTextColor = Color(0xFF2981FF),
-                            focusedIndicatorColor = Color.Transparent,
+                            focusedContainerColor = Color.White,
+                            unfocusedContainerColor = Color.White,
+                            disabledContainerColor = Color.White,
+                            errorContainerColor = Color.White,
+                            cursorColor = Color(0xFF2981FF),
                             errorCursorColor = Color.Red,
-                            cursorColor = Color(0xFF2981FF)
+                            focusedIndicatorColor = Color.Transparent,
                         ),
                     )
                     ErrorText(
@@ -189,13 +191,15 @@ fun LoginPage(
                                     RoundedCornerShape(12.dp)
                                 )
                             ),
-                        colors = TextFieldDefaults.textFieldColors(
-                            containerColor = Color.White,
-                            errorContainerColor = Color.White,
+                        colors = TextFieldDefaults.colors(
                             disabledTextColor = Color(0xFF2981FF),
-                            focusedIndicatorColor = Color.Transparent,
+                            focusedContainerColor = Color.White,
+                            unfocusedContainerColor = Color.White,
+                            disabledContainerColor = Color.White,
+                            errorContainerColor = Color.White,
+                            cursorColor = Color(0xFF2981FF),
                             errorCursorColor = Color.Red,
-                            cursorColor = Color(0xFF2981FF)
+                            focusedIndicatorColor = Color.Transparent,
                         ),
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                         visualTransformation = if (showPassword) VisualTransformation.None else PasswordVisualTransformation(),

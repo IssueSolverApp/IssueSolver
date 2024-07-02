@@ -7,15 +7,19 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
@@ -66,7 +70,6 @@ fun RegisterOtpCodePage(
     email: String?,
     viewModel: ConfirmOtpViewModel = hiltViewModel()
 ) {
-
     val context = LocalContext.current
     var otpValue by remember { mutableStateOf(TextFieldValue("")) }
     var isOtpFilled by remember { mutableStateOf(false) }
@@ -112,14 +115,17 @@ fun RegisterOtpCodePage(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(top = 24.dp)
-                .padding(20.dp)
+                .statusBarsPadding()
+                .navigationBarsPadding()
                 .imePadding()
+                .padding(top = 24.dp, start = 20.dp, end = 20.dp, bottom = 16.dp)
         ) {
             Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .imePadding()
             ) {
                 Column(
-                    Modifier.padding(bottom = 20.dp)
                 ) {
                     Box(
                         modifier = Modifier
@@ -138,16 +144,35 @@ fun RegisterOtpCodePage(
                             modifier = Modifier.size(24.dp)
                         )
                     }
-                    Text(
-                        "Təsdiq Kodu",
-                        style = MaterialTheme.typography.headlineMedium,
-                        fontSize = 28.sp,
-                        fontWeight = FontWeight.SemiBold,
-                        textAlign = TextAlign.Start,
-                        color = Color.Black,
+                    Row(
                         modifier = Modifier
+                            .fillMaxWidth()
                             .padding(top = 24.dp),
-                    )
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            "Təsdiq Kodu",
+                            style = MaterialTheme.typography.headlineMedium,
+                            fontSize = 28.sp,
+                            fontWeight = FontWeight.SemiBold,
+                            textAlign = TextAlign.Start,
+                            color = Color.Black,
+                        )
+                        Row {
+                            Image(
+                                painter = painterResource(R.drawable.timer),
+                                contentDescription = "timer",
+                                modifier = Modifier.align(Alignment.CenterVertically)
+                            )
+                            Text(
+                                " $formattedTime",
+                                fontSize = 18.sp,
+                                color = Color(0xFF4D96FF),
+                                style = MaterialTheme.typography.headlineMedium,
+                            )
+                        }
+                    }
                     Text(
                         "E-poçtunuza gələn təsdiq kodunu daxil edin.",
                         style = MaterialTheme.typography.bodySmall,
@@ -157,14 +182,12 @@ fun RegisterOtpCodePage(
                         modifier = Modifier
                             .padding(top = 10.dp, bottom = 20.dp),
                     )
-                    Spacer(modifier = Modifier.height(8.dp))
                     Divider(
                         thickness = 0.5.dp,
                         color = Color(0xFF2981FF)
                     )
-                    Spacer(modifier = Modifier.height(8.dp))
                     Column(
-                        Modifier.padding(top = 20.dp)
+                        Modifier.padding(top = 28.dp)
                     ) {
                         Surface(
                             modifier = Modifier
@@ -188,18 +211,11 @@ fun RegisterOtpCodePage(
                         }
                     }
                 }
-                Spacer(modifier = Modifier.height(16.dp))
-                Text(
-                    "Qalan vaxt: $formattedTime", style = MaterialTheme.typography.bodyMedium,
-                    fontSize = 17.sp,
-                    color = Color(0xFF2981FF)
-                )
             }
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(150.dp))
             Column(
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
-                    .padding(bottom = 27.dp)
             ) {
                 AuthButton(
                     text = "Təsdiqlə",
@@ -208,18 +224,17 @@ fun RegisterOtpCodePage(
                     },
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(bottom = 16.dp)
+                        .padding(bottom = 26.dp)
                 )
-                Spacer(modifier = Modifier.height(8.dp))
                 Text(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .wrapContentWidth(Alignment.CenterHorizontally) // Center the text horizontally
+                        .wrapContentWidth(Alignment.CenterHorizontally)
                         .clickable(
                             onClick = { viewModel.resendOtp(ResendOtpModel(email)) },
                             interactionSource = remember { MutableInteractionSource() },
                             indication = null,
-                            ), text = "Kodu yenidən göndər",
+                        ), text = "Kodu yenidən göndər",
                     fontSize = 15.sp,
                     color = MaterialTheme.colorScheme.primary
                 )
