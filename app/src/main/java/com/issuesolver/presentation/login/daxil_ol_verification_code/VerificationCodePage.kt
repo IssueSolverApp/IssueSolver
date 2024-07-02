@@ -43,6 +43,7 @@ import androidx.navigation.NavController
 import com.issuesolver.R
 import com.issuesolver.domain.entity.networkModel.RequestOtp
 import com.issuesolver.presentation.common.AuthButton
+import com.issuesolver.presentation.common.ErrorText
 import com.issuesolver.presentation.navigation.mockNavController
 import kotlinx.coroutines.delay
 
@@ -178,6 +179,10 @@ fun VerificationCodePage(
                                         keyboardController?.hide()
                                     }
                                 }
+                            )
+                            ErrorText(
+                                errorMessage = uiState.emailError,
+//                        isVisible = isEmailError
                             )
                         }
                     }
