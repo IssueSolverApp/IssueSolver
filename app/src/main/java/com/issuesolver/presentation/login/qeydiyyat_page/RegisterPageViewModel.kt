@@ -30,8 +30,8 @@ class RegisterViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(RegisterPageState())
     val uiState: StateFlow<RegisterPageState> = _uiState.asStateFlow()
 
-    private var _registerState: MutableStateFlow<State> = MutableStateFlow(State.loading())
-    val registerState: StateFlow<State> = _registerState.asStateFlow()
+    private var _registerState: MutableStateFlow<State?> = MutableStateFlow(null)
+    val registerState: StateFlow<State?> = _registerState.asStateFlow()
 
     fun register(request: RegisterRequestModel) {
         //Loading
@@ -41,6 +41,10 @@ class RegisterViewModel @Inject constructor(
 //                _uiState.value = uiState.value.copy(emailError = resource.message)
 
                 when (resource) {
+                    is Resource.Loading -> {
+                        _registerState.emit(State.loading())
+                    }
+
                     is Resource.Error -> {
                         _registerState.emit(State.error(resource.message))
                         _uiState.value = uiState.value.copy(emailError = resource.message)
@@ -55,12 +59,14 @@ class RegisterViewModel @Inject constructor(
 //                        }
                     }
 
-                    else -> {
 
-                    }
                 }
             }
         }
+    }
+
+    fun clearRegisterState() {
+        _registerState.value = null
     }
 
     fun handleEvent(event: RegisterPageEvent) {

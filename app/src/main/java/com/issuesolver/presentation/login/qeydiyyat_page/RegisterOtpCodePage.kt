@@ -54,6 +54,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.issuesolver.R
+import com.issuesolver.common.AlertDialogExample
 import com.issuesolver.common.Resource
 import com.issuesolver.common.StatusR
 import com.issuesolver.domain.entity.networkModel.RequestOtp
@@ -71,6 +72,7 @@ fun RegisterOtpCodePage(
     email: String?,
     viewModel: ConfirmOtpViewModel = hiltViewModel()
 ) {
+
     val context = LocalContext.current
     var otpValue by remember { mutableStateOf(TextFieldValue("")) }
     var isOtpFilled by remember { mutableStateOf(false) }
@@ -111,6 +113,39 @@ fun RegisterOtpCodePage(
             Log.e("ERRORTAG", confirmOtpState.message.toString())
         }
     }
+
+    val resendOtpState by viewModel.resendOtpState.collectAsState()
+    var showDialog by remember { mutableStateOf(false) }
+
+    LaunchedEffect(resendOtpState) {
+        if (resendOtpState.status == StatusR.ERROR) {
+            showDialog = true
+        }
+    }
+
+    when (resendOtpState.status) {
+        StatusR.LOADING -> {
+            CircularProgressIndicator()
+        }
+
+        StatusR.SUCCESS -> {
+
+        }
+
+        StatusR.ERROR -> {
+            //Dialog
+            resendOtpState.message?.let {
+                if (showDialog) {
+                    AlertDialogExample(
+                        message = it,
+                        onDismiss = { showDialog = false },
+                        onConfirmation = { showDialog = false }
+                    )
+                }
+            }
+        }
+    }
+
 
     Scaffold { padding ->
         Box(

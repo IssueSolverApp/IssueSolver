@@ -3,6 +3,7 @@ package com.issuesolver.presentation.login.daxil_ol_page
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.issuesolver.common.Resource
+import com.issuesolver.common.State
 import com.issuesolver.domain.entity.networkModel.LoginRequest
 import com.issuesolver.domain.entity.networkModel.LoginResponse
 import com.issuesolver.domain.useCase.SignInUseCase
@@ -29,15 +30,30 @@ class LoginPageViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(LoginPageState())
     val uiState: StateFlow<LoginPageState> = _uiState.asStateFlow()
 
-    private val _signInState = MutableStateFlow<Resource<LoginResponse?>>(Resource.Loading())
-    val signInState: StateFlow<Resource<LoginResponse?>> = _signInState
+    private val _signInState: MutableStateFlow<State?> =  MutableStateFlow(null)
+    val signInState: StateFlow<State?> = _signInState
 
     fun signIn(request: LoginRequest) {
         viewModelScope.launch {
             signInUseCase(request).collect { resource ->
-                _signInState.value = resource
+                when(resource){
+                    is Resource.Loading -> {
+                        _signInState.emit(State.loading())
+                    }
+                    is Resource.Success -> {
+                        _signInState.emit(State.success())
+                    }
+                    is Resource.Error -> {
+                        _signInState.emit(State.error(resource.message))
+                        _uiState.value = uiState.value.copy(emailError = resource.message)
+                    }
+                }
             }
         }
+    }
+
+    fun clearLoginState() {
+        _signInState.value = null
     }
 
     fun handleEvent(event: LoginPageEvent) {

@@ -1,5 +1,6 @@
 package com.issuesolver.presentation.login.daxil_ol_page_email
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -25,9 +26,11 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.issuesolver.R
+import com.issuesolver.common.StatusR
 import com.issuesolver.domain.entity.networkModel.ResendOtpModel
 import com.issuesolver.presentation.common.AuthButton
 import com.issuesolver.presentation.common.ErrorText
+import com.issuesolver.presentation.navigation.Routes
 import com.issuesolver.presentation.navigation.mockNavController
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -40,6 +43,25 @@ fun EmailVerificationPage(
     val uiState by viewModel.uiState.collectAsState()
     val isEmailError = uiState.emailError != null
 
+    val forgetPasswordState by viewModel.forgetPasswordState.collectAsState()
+
+    when (forgetPasswordState?.status) {
+        StatusR.LOADING -> {
+            CircularProgressIndicator()
+        }
+        StatusR.SUCCESS -> {
+            navController.navigate("otp")
+            viewModel.clearForgetPasswordState()
+        }
+        StatusR.ERROR -> {
+
+        }
+        else -> {
+
+        }
+    }
+
+    Scaffold { padding ->
     Scaffold(content = { padding ->
         Box(
             modifier = Modifier
@@ -156,7 +178,6 @@ fun EmailVerificationPage(
                     text = "Təsdiq kodu göndər",
                     onClick = {
                         viewModel.forgetPassword(ResendOtpModel(uiState.email))
-                        navController.navigate("otp")
                     },
                     enabled = uiState.isInputValid,
                     modifier = Modifier

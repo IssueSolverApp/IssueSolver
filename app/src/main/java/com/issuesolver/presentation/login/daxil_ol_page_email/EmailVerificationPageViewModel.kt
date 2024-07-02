@@ -3,6 +3,9 @@ package com.issuesolver.presentation.login.daxil_ol_page_email
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.issuesolver.common.Resource
+import com.issuesolver.common.State
+import com.issuesolver.domain.entity.networkModel.LoginRequest
+import com.issuesolver.domain.entity.networkModel.LoginResponse
 import com.issuesolver.domain.entity.networkModel.ResendOtpModel
 import com.issuesolver.domain.useCase.ForgetPasswordUseCase
 import com.issuesolver.domain.usecase.login.ValidateEmailUseCase
@@ -23,16 +26,33 @@ class EmailVerificationPageViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(EmailVerificationPageState())
     val uiState: StateFlow<EmailVerificationPageState> = _uiState.asStateFlow()
 
-    private val _forgetPasswordState = MutableStateFlow<Resource<String?>>(Resource.Loading())
-    val forgetPasswordState: StateFlow<Resource<String?>> = _forgetPasswordState
+
+    private val _forgetPasswordState: MutableStateFlow<State?> = MutableStateFlow(null)
+    val forgetPasswordState: StateFlow<State?> = _forgetPasswordState
 
 
     fun forgetPassword(request: ResendOtpModel) {
         viewModelScope.launch {
-            forgetPasswordUseCase(request).collect { resource ->
-                _forgetPasswordState.value = resource
+            forgetPasswordUseCase(request).collect{resource->
+                //_forgetPasswordState.value=resource
+
+                when(resource){
+                    is Resource.Loading->{
+                        _forgetPasswordState.emit(State.loading())
+                    }
+                    is Resource.Error->{
+                        _forgetPasswordState.emit(State.error(resource.message))
+                    }
+                    is Resource.Success ->{
+                        _forgetPasswordState.emit(State.success())
+                    }
+                }
+
             }
         }
+    }
+    fun clearForgetPasswordState() {
+        _forgetPasswordState.value = null
     }
 
     fun handleEvent(event: VerificationCodePageEvent) {
