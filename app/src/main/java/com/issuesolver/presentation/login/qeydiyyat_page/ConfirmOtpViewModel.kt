@@ -9,6 +9,7 @@ import com.issuesolver.domain.entity.networkModel.ResendOtpModel
 import com.issuesolver.domain.useCase.ConfirmOtpUseCase
 import com.issuesolver.domain.useCase.ResendOtpUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import hilt_aggregated_deps._dagger_hilt_android_internal_managers_HiltWrapper_SavedStateHandleModule
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -23,8 +24,8 @@ class ConfirmOtpViewModel@Inject constructor(
     private val _confirmOtpState : MutableStateFlow<State> = MutableStateFlow(State.loading())
     val confirmOtpState: StateFlow<State> = _confirmOtpState
 
-    private val _resendOtpState = MutableStateFlow<Resource<String?>>(Resource.Loading())
-    val resendOtpState: StateFlow<Resource<String?>> = _resendOtpState
+    private val _resendOtpState: MutableStateFlow<State> = MutableStateFlow(State.loading())
+    val resendOtpState: StateFlow<State> = _resendOtpState
 
     fun confirmRegister(request: RequestOtp) {
         viewModelScope.launch {
@@ -48,7 +49,17 @@ class ConfirmOtpViewModel@Inject constructor(
     fun resendOtp(request: ResendOtpModel) {
         viewModelScope.launch {
             resendOtpUseCase(request).collect{
+                when(it){
+                    is Resource.Loading -> {
 
+                    }
+                    is Resource.Error -> {
+                        _resendOtpState.emit(State.error(it.message))
+                    }
+                    is Resource.Success -> {
+                        _resendOtpState.emit(State.success())
+                    }
+                }
             }
         }
     }

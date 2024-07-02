@@ -123,6 +123,7 @@ fun RegisterPage(navController: NavController, viewModel: RegisterViewModel = hi
         }
         StatusR.SUCCESS -> {
             navController.navigate(Routes.REGISTER_OTP + "/${uiState.email}")
+            viewModel.clearRegisterState()
         }
         StatusR.ERROR -> {
             Log.e("ERRORTAG", registerState?.message.toString())

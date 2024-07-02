@@ -4,6 +4,7 @@ import android.content.SharedPreferences
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.issuesolver.common.Resource
+import com.issuesolver.common.State
 import com.issuesolver.domain.entity.networkModel.RequestOtp
 import com.issuesolver.domain.entity.networkModel.ResetPasswordModel
 import com.issuesolver.domain.useCase.OtpTrustUseCase
@@ -33,15 +34,26 @@ class PasswordChangePageViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(PasswordChangePageState())
     val uiState: StateFlow<PasswordChangePageState> = _uiState.asStateFlow()
 
-    private val _resetPassword = MutableStateFlow<Resource<String?>>(Resource.Loading())
-    val resetPassword: StateFlow<Resource<String?>> = _resetPassword
+    private val _resetPassword: MutableStateFlow<State> = MutableStateFlow(State.loading())
+    val resetPassword: StateFlow<State> = _resetPassword
 
 
 
     fun resetPassword(request: ResetPasswordModel){
         viewModelScope.launch {
             resetPasswordUseCase(token!!, request).collect{
-                _resetPassword.value = it
+                //_resetPassword.value = it
+                when(it){
+                    is Resource.Success -> {
+                        _resetPassword.emit(State.error(it.message))
+                    }
+                    is Resource.Error -> {
+                        _resetPassword.emit(State.success())
+                    }
+                    is Resource.Loading -> {
+
+                    }
+                }
             }
         }
     }

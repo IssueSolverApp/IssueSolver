@@ -1,6 +1,7 @@
 package com.issuesolver.presentation.login.daxil_ol_page
 
 import android.annotation.SuppressLint
+import android.widget.Toast
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -32,6 +33,7 @@ import androidx.core.view.ViewCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.issuesolver.R
+import com.issuesolver.common.StatusR
 import com.issuesolver.domain.entity.networkModel.LoginRequest
 import com.issuesolver.presentation.common.AuthButton
 import com.issuesolver.presentation.common.ErrorText
@@ -45,6 +47,7 @@ fun LoginPage(
     navController: NavController, viewModel: LoginPageViewModel = hiltViewModel(),
 ) {
 
+
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var showPassword by remember { mutableStateOf(false) }
@@ -55,6 +58,31 @@ fun LoginPage(
     val scrollState = rememberScrollState()
     val coroutineScope = rememberCoroutineScope()
     val keyboardHeight = WindowInsets.ime.getBottom(LocalDensity.current)
+
+    val loginState by viewModel.signInState.collectAsState()
+
+    when(loginState?.status){
+
+        StatusR.LOADING -> {
+
+        }
+
+        StatusR.ERROR -> {
+
+
+        }
+        StatusR.SUCCESS -> {
+            //navController.navigate("")
+            Toast.makeText(LocalView.current.context, "Login Success", Toast.LENGTH_SHORT).show()
+            viewModel.clearLoginState()
+        }
+        else-> {
+
+        }
+
+
+    }
+
 
     LaunchedEffect(key1 = keyboardHeight) {
         coroutineScope.launch {

@@ -50,6 +50,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.issuesolver.R
+import com.issuesolver.common.AlertDialogExample
 import com.issuesolver.common.Resource
 import com.issuesolver.common.StatusR
 import com.issuesolver.domain.entity.networkModel.RequestOtp
@@ -61,7 +62,11 @@ import kotlinx.coroutines.delay
 
 @SuppressLint("DefaultLocale")
 @Composable
-fun RegisterOtpCodePage(navController: NavController, email: String?,  viewModel: ConfirmOtpViewModel = hiltViewModel()) {
+fun RegisterOtpCodePage(
+    navController: NavController,
+    email: String?,
+    viewModel: ConfirmOtpViewModel = hiltViewModel()
+) {
 
     val context = LocalContext.current
     var otpValue by remember { mutableStateOf(TextFieldValue("")) }
@@ -97,11 +102,45 @@ fun RegisterOtpCodePage(navController: NavController, email: String?,  viewModel
         StatusR.LOADING -> {
             CircularProgressIndicator()
         }
+
         StatusR.SUCCESS -> {
             navController.navigate("login")
         }
+
         StatusR.ERROR -> {
             Log.e("ERRORTAG", confirmOtpState.message.toString())
+        }
+    }
+
+    val resendOtpState by viewModel.resendOtpState.collectAsState()
+    var showDialog by remember { mutableStateOf(false) }
+
+    LaunchedEffect(resendOtpState) {
+        if (resendOtpState.status == StatusR.ERROR) {
+            showDialog = true
+        }
+    }
+
+    when (resendOtpState.status) {
+        StatusR.LOADING -> {
+            CircularProgressIndicator()
+        }
+
+        StatusR.SUCCESS -> {
+
+        }
+
+        StatusR.ERROR -> {
+            //Dialog
+            resendOtpState.message?.let {
+                if (showDialog) {
+                    AlertDialogExample(
+                        message = it,
+                        onDismiss = { showDialog = false },
+                        onConfirmation = { showDialog = false }
+                    )
+                }
+            }
         }
     }
 
@@ -142,7 +181,8 @@ fun RegisterOtpCodePage(navController: NavController, email: String?,  viewModel
                             modifier = Modifier.size(24.dp)
                         )
                     }
-                    Text("Təsdiq Kodu",
+                    Text(
+                        "Təsdiq Kodu",
                         style = MaterialTheme.typography.headlineMedium,
                         fontSize = 28.sp,
                         fontWeight = FontWeight.SemiBold,
@@ -153,19 +193,20 @@ fun RegisterOtpCodePage(navController: NavController, email: String?,  viewModel
 
 
                         )
-                    Text("E-poçtunuza gələn təsdiq kodunu daxil edin.",
+                    Text(
+                        "E-poçtunuza gələn təsdiq kodunu daxil edin.",
                         style = MaterialTheme.typography.bodySmall,
                         fontSize = 15.sp,
                         textAlign = TextAlign.Start,
                         color = Color(0xFF9D9D9D),
                         modifier = Modifier
-                            .padding(top = 10.dp,bottom = 20.dp),
+                            .padding(top = 10.dp, bottom = 20.dp),
 
                         )
                     Spacer(modifier = Modifier.height(8.dp))
                     Divider(
                         thickness = 0.5.dp,
-                        color= Color(0xFF2981FF)
+                        color = Color(0xFF2981FF)
 
                     )
                     Spacer(modifier = Modifier.height(8.dp))
@@ -189,7 +230,8 @@ fun RegisterOtpCodePage(navController: NavController, email: String?,  viewModel
                                 otpText = otpValue.text,
                                 shouldCursorBlink = false,
                                 onOtpModified = { value, otpFilled ->
-                                    otpValue = TextFieldValue(value, selection = TextRange(value.length))
+                                    otpValue =
+                                        TextFieldValue(value, selection = TextRange(value.length))
                                     isOtpFilled = otpFilled
                                     if (otpFilled) {
                                         keyboardController?.hide()
@@ -202,9 +244,10 @@ fun RegisterOtpCodePage(navController: NavController, email: String?,  viewModel
 
 
                 Spacer(modifier = Modifier.height(16.dp))
-                Text("Qalan vaxt: $formattedTime", style = MaterialTheme.typography.bodyMedium,
+                Text(
+                    "Qalan vaxt: $formattedTime", style = MaterialTheme.typography.bodyMedium,
                     fontSize = 17.sp,
-                    color= Color(0xFF2981FF)
+                    color = Color(0xFF2981FF)
                 )
             }
 
@@ -212,7 +255,8 @@ fun RegisterOtpCodePage(navController: NavController, email: String?,  viewModel
             Spacer(modifier = Modifier.height(16.dp))
 
             Column(
-                modifier = Modifier.align(Alignment.BottomCenter)
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
                     .padding(bottom = 27.dp)
 
 //                    .fillMaxSize(),
@@ -224,7 +268,7 @@ fun RegisterOtpCodePage(navController: NavController, email: String?,  viewModel
                     onClick = {
                         viewModel.confirmRegister(RequestOtp(otpCode = otpValue.text))
 
-                              },
+                    },
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(bottom = 16.dp)
@@ -236,20 +280,19 @@ fun RegisterOtpCodePage(navController: NavController, email: String?,  viewModel
                         .fillMaxWidth()
                         .wrapContentWidth(Alignment.CenterHorizontally) // Center the text horizontally
 
-                        .clickable (
+                        .clickable(
                             //email
-                            onClick = { viewModel.resendOtp(ResendOtpModel(email))},
+                            onClick = { viewModel.resendOtp(ResendOtpModel(email)) },
                             interactionSource = remember { MutableInteractionSource() },
                             indication = null,
 
-                            )
-                    , text = "Kodu yenidən göndər",
+                            ), text = "Kodu yenidən göndər",
                     fontSize = 15.sp,
 
 
-                    color = MaterialTheme.colorScheme.primary)
+                    color = MaterialTheme.colorScheme.primary
+                )
             }
-
 
 
         }

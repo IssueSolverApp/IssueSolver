@@ -42,6 +42,8 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.issuesolver.R
+import com.issuesolver.common.AlertDialogExample
+import com.issuesolver.common.StatusR
 import com.issuesolver.domain.entity.networkModel.RequestOtp
 import com.issuesolver.presentation.common.AuthButton
 import com.issuesolver.presentation.navigation.mockNavController
@@ -58,6 +60,58 @@ fun VerificationCodePage(navController: NavController, viewModel: VerificationCo
     val keyboardController = LocalSoftwareKeyboardController.current
 
     //var otpValue by remember { mutableStateOf(TextFieldValue("")) }
+
+    val otpTrustState by viewModel.otpTrustState.collectAsState()
+
+    when(otpTrustState?.status){
+        StatusR.LOADING -> {
+            CircularProgressIndicator()
+        }
+        StatusR.SUCCESS -> {
+            navController.navigate("password change")
+            viewModel.clearOtpTrustState()
+        }
+        StatusR.ERROR -> {
+
+        }
+        else -> {
+
+        }
+    }
+    val resendOtpState by viewModel.resendOtpState.collectAsState()
+    var showDialog by remember { mutableStateOf(false) }
+
+    LaunchedEffect(resendOtpState) {
+        if (resendOtpState?.status == StatusR.ERROR) {
+            showDialog = true
+        }
+    }
+
+    when(resendOtpState?.status){
+        StatusR.LOADING -> {
+            CircularProgressIndicator()
+        }
+        StatusR.SUCCESS -> {
+
+        }
+        StatusR.ERROR -> {
+            //Dialog view
+            resendOtpState?.message?.let {
+                if (showDialog) {
+                    AlertDialogExample(
+                        message = it,
+                        onDismiss = { showDialog = false },
+                        onConfirmation = { showDialog = false }
+                    )
+                }
+            }
+        }
+        else -> {
+
+        }
+    }
+
+
 
 
     LaunchedEffect(Unit) {
@@ -200,7 +254,6 @@ fun VerificationCodePage(navController: NavController, viewModel: VerificationCo
                         viewModel.otpTrust(RequestOtp(
                             otpCode = otpValue.text
                         ))
-                        navController.navigate("password change")
                               },
 
                     modifier = Modifier

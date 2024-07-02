@@ -1,5 +1,6 @@
 package com.issuesolver.presentation.login.password_change_page
 
+import android.util.Log
 import androidx.compose.foundation.border
 import androidx.compose.foundation.gestures.scrollBy
 import androidx.compose.foundation.layout.*
@@ -25,10 +26,12 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.issuesolver.R
+import com.issuesolver.common.StatusR
 import com.issuesolver.domain.entity.networkModel.ResetPasswordModel
 import com.issuesolver.presentation.common.AuthButton
 import com.issuesolver.presentation.common.ErrorText
 import com.issuesolver.presentation.login.daxil_ol_page.LoginPageEvent
+import com.issuesolver.presentation.navigation.Routes
 import com.issuesolver.presentation.navigation.mockNavController
 import kotlinx.coroutines.launch
 
@@ -47,6 +50,24 @@ fun PasswordChangePage(navController: NavController,viewModel: PasswordChangePag
     val scrollState = rememberScrollState()
     val coroutineScope = rememberCoroutineScope()
     val keyboardHeight = WindowInsets.ime.getBottom(LocalDensity.current)
+
+
+    val resetPassword by viewModel.resetPassword.collectAsState()
+
+    when (resetPassword?.status) {
+        StatusR.LOADING -> {
+            CircularProgressIndicator()
+        }
+        StatusR.SUCCESS -> {
+            navController.navigate("login")
+        }
+        StatusR.ERROR -> {
+
+        }
+        else -> {
+
+        }
+    }
 
     LaunchedEffect(key1 = keyboardHeight) {
         coroutineScope.launch {
