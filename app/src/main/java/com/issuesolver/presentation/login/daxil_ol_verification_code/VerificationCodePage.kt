@@ -60,8 +60,8 @@ fun VerificationCodePage(
     var otpValue by remember { mutableStateOf(TextFieldValue("")) }
     var isOtpFilled by remember { mutableStateOf(false) }
     val focusRequester = remember { FocusRequester() }
-    val uiState by viewModel.uiState.collectAsState()
-    val isOtpValueError = uiState.emailError != null
+//    val uiState by viewModel.uiState.collectAsState()
+//    val isOtpValueError = uiState.emailError != null
 
     val keyboardController = LocalSoftwareKeyboardController.current
 
@@ -238,10 +238,10 @@ fun VerificationCodePage(
                                     }
                                 }
                             )
-                            ErrorText(
-                                errorMessage = uiState.emailError,
-//                        isVisible = isEmailError
-                            )
+//                            ErrorText(
+////                                errorMessage = uiState.emailError,
+////                        isVisible = isEmailError
+//                            )
                         }
                     }
                 }

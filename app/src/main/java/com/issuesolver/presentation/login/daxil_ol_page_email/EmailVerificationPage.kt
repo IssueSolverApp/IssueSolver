@@ -195,4 +195,4 @@ fun EmailVerificationPagePreview() {
     MaterialTheme {
         EmailVerificationPage(navController = mockNavController())
     }
-}
+}}
