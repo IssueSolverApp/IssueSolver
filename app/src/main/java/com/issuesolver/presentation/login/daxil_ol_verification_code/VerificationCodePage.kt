@@ -50,7 +50,6 @@ import com.issuesolver.presentation.navigation.mockNavController
 import kotlinx.coroutines.delay
 
 @SuppressLint("DefaultLocale")
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun VerificationCodePage(
     navController: NavController,
@@ -60,13 +59,10 @@ fun VerificationCodePage(
     var otpValue by remember { mutableStateOf(TextFieldValue("")) }
     var isOtpFilled by remember { mutableStateOf(false) }
     val focusRequester = remember { FocusRequester() }
-//    val uiState by viewModel.uiState.collectAsState()
-//    val isOtpValueError = uiState.emailError != null
+    val uiState by viewModel.uiState.collectAsState()
+    val isOtpValueError = uiState.otpValueError != null
 
     val keyboardController = LocalSoftwareKeyboardController.current
-
-    //var otpValue by remember { mutableStateOf(TextFieldValue("")) }
-
     val otpTrustState by viewModel.otpTrustState.collectAsState()
 
     when(otpTrustState?.status){
@@ -106,7 +102,7 @@ fun VerificationCodePage(
                 if (showDialog) {
                     AlertDialogExample(
                         message = it,
-                        onDismiss = { showDialog = false },
+//                        onDismiss = { showDialog = false },
                         onConfirmation = { showDialog = false }
                     )
                 }
@@ -229,6 +225,7 @@ fun VerificationCodePage(
                                     .focusRequester(focusRequester),
                                 otpText = otpValue.text,
                                 shouldCursorBlink = false,
+                                isOtpValueError=isOtpValueError,
                                 onOtpModified = { value, otpFilled ->
                                     otpValue =
                                         TextFieldValue(value, selection = TextRange(value.length))
@@ -238,10 +235,10 @@ fun VerificationCodePage(
                                     }
                                 }
                             )
-//                            ErrorText(
-////                                errorMessage = uiState.emailError,
-////                        isVisible = isEmailError
-//                            )
+                            ErrorText(
+                                errorMessage = uiState.otpValueError,
+//                        isVisible = isEmailError
+                            )
                         }
                     }
                 }
@@ -291,13 +288,13 @@ fun OtpInputField(
     modifier: Modifier = Modifier,
     otpText: String,
     otpLength: Int = 6,
-//    isOtpValueError: Boolean,
+    isOtpValueError: Boolean,
     shouldShowCursor: Boolean = false,
     shouldCursorBlink: Boolean = false,
     onOtpModified: (String, Boolean) -> Unit
 ) {
     val text = remember { mutableStateOf(otpText) }
-//    val errorColor = if (isOtpValueError) Color.Red else Color(0xFF2981FF)
+    val errorColor = if (isOtpValueError) Color.Red else Color(0xFF2981FF)
 
 
     BasicTextField(
@@ -324,6 +321,7 @@ fun OtpInputField(
                     CharacterBox(
                         character = text.value.getOrNull(i)?.toString() ?: "",
                         isFocused = i == text.value.length,
+                        isError= isOtpValueError,
                         modifier = Modifier
                             .weight(1f, fill = true)
                             .padding(horizontal = 4.dp)
@@ -333,8 +331,8 @@ fun OtpInputField(
                             "-",
                             style = TextStyle(
                                 color =
-                                Color(0xFF2981FF)
-//                                errorColor
+//                                Color(0xFF2981FF)
+                                errorColor
                                 ,
                                 fontSize = 24.sp,
                                 textAlign = TextAlign.Center
@@ -351,10 +349,10 @@ fun OtpInputField(
 fun CharacterBox(
     character: String,
     isFocused: Boolean,
-//    isError: Boolean,
+    isError: Boolean,
     modifier: Modifier = Modifier
 ) {
-//    val borderColor = if (isError) Color.Red else if (isFocused) Color(0xFF2981FF) else Color.Gray
+    val borderColor = if (isError) Color.Red else if (isFocused) Color(0xFF2981FF) else Color.Gray
 
     Box(
         contentAlignment = Alignment.Center,
@@ -364,8 +362,8 @@ fun CharacterBox(
             .border(
                 1.dp,
                 if (isFocused)
-                    Color(0xFF2981FF)
-//                    borderColor
+//                    Color(0xFF2981FF)
+                    borderColor
                 else Color.White,
                 RoundedCornerShape(12.dp)
             )

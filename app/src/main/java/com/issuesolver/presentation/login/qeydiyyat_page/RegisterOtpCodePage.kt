@@ -100,6 +100,10 @@ fun RegisterOtpCodePage(
     val formattedTime = String.format("%02d:%02d", minutes, seconds)
     val confirmOtpState by viewModel.confirmOtpState.collectAsState()
 
+    val uiState by viewModel.uiState.collectAsState()
+    val isOtpValueError = uiState.otpValueError != null
+
+
     when (confirmOtpState.status) {
         StatusR.LOADING -> {
             CircularProgressIndicator()
@@ -138,7 +142,7 @@ fun RegisterOtpCodePage(
                 if (showDialog) {
                     AlertDialogExample(
                         message = it,
-                        onDismiss = { showDialog = false },
+//                        onDismiss = { showDialog = false },
                         onConfirmation = { showDialog = false }
                     )
                 }
@@ -235,6 +239,7 @@ fun RegisterOtpCodePage(
                                     .focusRequester(focusRequester),
                                 otpText = otpValue.text,
                                 shouldCursorBlink = false,
+                                isOtpValueError = isOtpValueError,
                                 onOtpModified = { value, otpFilled ->
                                     otpValue =
                                         TextFieldValue(value, selection = TextRange(value.length))

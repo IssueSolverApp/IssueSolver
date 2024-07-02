@@ -8,10 +8,12 @@ import com.issuesolver.domain.entity.networkModel.RequestOtp
 import com.issuesolver.domain.entity.networkModel.ResendOtpModel
 import com.issuesolver.domain.useCase.ConfirmOtpUseCase
 import com.issuesolver.domain.useCase.ResendOtpUseCase
+import com.issuesolver.presentation.login.daxil_ol_verification_code.VerificationCodePageState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import hilt_aggregated_deps._dagger_hilt_android_internal_managers_HiltWrapper_SavedStateHandleModule
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -27,6 +29,11 @@ class ConfirmOtpViewModel @Inject constructor(
     private val _resendOtpState: MutableStateFlow<State> = MutableStateFlow(State.loading())
     val resendOtpState: StateFlow<State> = _resendOtpState
 
+
+    private val _uiState = MutableStateFlow(VerificationCodePageState())
+    val uiState: StateFlow<VerificationCodePageState> = _uiState.asStateFlow()
+
+
     fun confirmRegister(request: RequestOtp) {
         viewModelScope.launch {
             confirmOtpUseCase(request).collect {
@@ -36,6 +43,8 @@ class ConfirmOtpViewModel @Inject constructor(
                     }
                     is Resource.Error -> {
                         _confirmOtpState.emit(State.error(it.message))
+                        _uiState.value = uiState.value.copy(otpValueError = it.message)
+
                     }
                     is Resource.Success -> {
                         _confirmOtpState.emit(State.success())

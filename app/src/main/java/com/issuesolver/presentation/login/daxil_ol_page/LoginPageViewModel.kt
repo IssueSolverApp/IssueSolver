@@ -20,8 +20,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginPageViewModel @Inject constructor(
-
-    private val validateEmailUseCase: ValidateEmailUseCase,
     private val validatePasswordUseCase: ValidatePasswordUseCase,
     private val loginUseCase: LoginUseCase,
     private val signInUseCase: SignInUseCase
