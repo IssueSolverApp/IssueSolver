@@ -6,8 +6,8 @@ import com.issuesolver.common.Resource
 import com.issuesolver.common.State
 import com.issuesolver.domain.entity.networkModel.LoginRequest
 import com.issuesolver.domain.entity.networkModel.LoginResponse
-import com.issuesolver.domain.useCase.SignInUseCase
-import com.issuesolver.domain.useCase.login.ValidatePasswordUseCase
+import com.issuesolver.domain.usecase.SignInUseCase
+import com.issuesolver.domain.usecase.login.ValidatePasswordUseCase
 import com.issuesolver.domain.usecase.login.LoginUseCase
 import com.issuesolver.domain.usecase.login.ValidateEmailUseCase
 
