@@ -59,15 +59,16 @@ class PasswordChangePageViewModel @Inject constructor(
                     event.newpassword,
                     _uiState.value.repeatedPassword
                 )
-                _uiState.value = uiState.value.copy(
+                _uiState.value = _uiState.value.copy(
                     newpassword = event.newpassword,
                     newpasswordError = result.errorMessage,
                     isInputValid = result.successful && validateRepeatedPasswordUseCase.execute(
-                        uiState.value.repeatedPassword,
-                        uiState.value.newpassword
+                        event.newpassword,
+                        _uiState.value.repeatedPassword
                     ).successful
                 )
             }
+
             is PasswordChangePageEvent.RepeatedPasswordChanged -> {
                 val result = validateRepeatedPasswordUseCase.execute(
                     _uiState.value.newpassword,
@@ -77,11 +78,12 @@ class PasswordChangePageViewModel @Inject constructor(
                     repeatedPassword = event.repeatedPassword,
                     repeatedPasswordError = result.errorMessage,
                     isInputValid = validateNewPasswordUseCase.execute(
-                        _uiState.value.repeatedPassword,
-                        _uiState.value.newpassword
+                        _uiState.value.newpassword,
+                        event.repeatedPassword
                     ).successful && result.successful
                 )
             }
+
             is PasswordChangePageEvent.Submit -> {
                 if (uiState.value.isInputValid) {
                 }
