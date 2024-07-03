@@ -70,6 +70,25 @@ class RegisterViewModel @Inject constructor(
 
     fun handleEvent(event: RegisterPageEvent) {
         when (event) {
+            is RegisterPageEvent.FullNameChanged -> {
+
+                val result = validateFullNameUseCase.execute(event.fullName)
+                _uiState.value = uiState.value.copy(
+                    fullName = event.fullName,
+                    fullNameError = result.errorMessage,
+                    isInputValid = result.successful &&
+                            validateNewPasswordUseCase.execute(
+                                uiState.value.repeatedPassword,
+                                uiState.value.password
+                            ).successful &&
+                            validateRepeatedPasswordUseCase.execute(
+                                uiState.value.repeatedPassword,
+                                uiState.value.password
+                            ).successful &&
+                            validateEmailUseCase.execute(uiState.value.email).successful
+                )
+            }
+
             is RegisterPageEvent.EmailChanged -> {
                 val result = validateEmailUseCase.execute(event.email)
                 _uiState.value = uiState.value.copy(
@@ -77,12 +96,12 @@ class RegisterViewModel @Inject constructor(
                     emailError = result.errorMessage,
                     isInputValid = result.successful &&
                             validateNewPasswordUseCase.execute(
-                                uiState.value.repeatedPassword ,
+                                uiState.value.repeatedPassword,
                                 uiState.value.password
                             ).successful &&
                             validateFullNameUseCase.execute(uiState.value.fullName).successful &&
                             validateRepeatedPasswordUseCase.execute(
-                                uiState.value.repeatedPassword ,
+                                uiState.value.repeatedPassword,
                                 uiState.value.password
                             ).successful
                 )
@@ -90,56 +109,36 @@ class RegisterViewModel @Inject constructor(
 
             is RegisterPageEvent.PasswordChanged -> {
                 val result = validateNewPasswordUseCase.execute(
-
-                    event.password,  _uiState.value.repeatedPassword
+                    event.password,
+                    _uiState.value.repeatedPassword
                 )
-                _uiState.value = uiState.value.copy(
+                _uiState.value = _uiState.value.copy(
                     password = event.password,
                     passwordError = result.errorMessage,
                     isInputValid = result.successful &&
                             validateRepeatedPasswordUseCase.execute(
-                                uiState.value.repeatedPassword ,
-                                uiState.value.password
-
+                                event.password, _uiState.value.repeatedPassword
                             ).successful &&
-                            validateFullNameUseCase.execute(uiState.value.fullName).successful &&
-                            validateEmailUseCase.execute(uiState.value.email).successful
-                )
-            }
-
-            is RegisterPageEvent.RepeatedPasswordChanged -> {
-                val result = validateRepeatedPasswordUseCase.execute(
-                    event.repeatedPassword
-                            ,_uiState.value.password
-                )
-                _uiState.value = _uiState.value.copy(
-                    repeatedPassword = event.repeatedPassword,
-                    repeatedPasswordError = result.errorMessage,
-                    isInputValid = validateNewPasswordUseCase.execute(
-                        _uiState.value.repeatedPassword ,
-                        _uiState.value.password
-                    ).successful &&
-                            result.successful &&
                             validateFullNameUseCase.execute(_uiState.value.fullName).successful &&
                             validateEmailUseCase.execute(_uiState.value.email).successful
                 )
             }
 
-            is RegisterPageEvent.FullNameChanged -> {
-                val result = validateFullNameUseCase.execute(event.fullName)
-                _uiState.value = uiState.value.copy(
-                    fullName = event.fullName,
-                    fullNameError = result.errorMessage,
-                    isInputValid = result.successful &&
-                            validateNewPasswordUseCase.execute(
-                                uiState.value.repeatedPassword ,
-                                uiState.value.password
-                            ).successful &&
-                            validateRepeatedPasswordUseCase.execute(
-                                uiState.value.repeatedPassword ,
-                                uiState.value.password
-                            ).successful &&
-                            validateEmailUseCase.execute(uiState.value.email).successful
+            is RegisterPageEvent.RepeatedPasswordChanged -> {
+                val result = validateRepeatedPasswordUseCase.execute(
+                    _uiState.value.password,
+                    event.repeatedPassword
+                )
+                _uiState.value = _uiState.value.copy(
+                    repeatedPassword = event.repeatedPassword,
+                    repeatedPasswordError = result.errorMessage,
+                    isInputValid = validateNewPasswordUseCase.execute(
+                        _uiState.value.password,
+                        event.repeatedPassword
+                    ).successful &&
+                            result.successful &&
+                            validateFullNameUseCase.execute(_uiState.value.fullName).successful &&
+                            validateEmailUseCase.execute(_uiState.value.email).successful
                 )
             }
 
@@ -150,4 +149,6 @@ class RegisterViewModel @Inject constructor(
             }
         }
     }
+
+
 }
