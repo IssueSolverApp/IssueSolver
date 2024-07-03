@@ -1,7 +1,4 @@
-package com.issuesolver.domain.useCase.login
-
-import android.util.Patterns
-import com.issuesolver.domain.usecase.login.ValidationResult
+package com.issuesolver.domain.usecase.login
 
 class ValidateFullNameUseCase {
     fun execute(fullName: String): ValidationResult {

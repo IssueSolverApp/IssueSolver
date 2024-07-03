@@ -56,13 +56,12 @@ import com.issuesolver.presentation.navigation.Routes
 import com.issuesolver.common.StatusR
 
 
-@OptIn(
-    ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class
-)
+
 @Composable
 fun RegisterPage(navController: NavController, viewModel: RegisterViewModel = hiltViewModel()) {
 
     val uiState by viewModel.uiState.collectAsState()
+    val isFullNameError = uiState.fullNameError != null
     val isEmailError = uiState.emailError != null
     val isPasswordError = uiState.passwordError != null
     val isPasswordRepeatedError = uiState.repeatedPasswordError != null
@@ -152,7 +151,9 @@ fun RegisterPage(navController: NavController, viewModel: RegisterViewModel = hi
                             "Ad, soyad",
                             style = MaterialTheme.typography.bodySmall,
                             fontSize = 15.sp,
-                        )
+                            color = if (isFullNameError) Color.Red else Color.Black,
+
+                            )
                         TextField(
                             shape = RoundedCornerShape(12.dp),
                             value = uiState.fullName,
@@ -162,23 +163,38 @@ fun RegisterPage(navController: NavController, viewModel: RegisterViewModel = hi
                             placeholder = {
                                 Text(
                                     ("Ad, soyad"),
-                                    color = Color(0xFF9D9D9D)
+                                    color = if (isFullNameError) Color.Red else Color.Gray
                                 )
                             },
                             singleLine = true,
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(top = 8.dp),
-                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+                                .padding(top = 8.dp)
+                                .then(
+                                    if (isFullNameError) Modifier.border(
+                                        1.dp,
+                                        Color.Red,
+                                        RoundedCornerShape(12.dp)
+                                    )
+                                    else Modifier.border(
+                                        1.dp,
+                                        Color.White,
+                                        RoundedCornerShape(12.dp)
+                                    )),
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
                             colors = TextFieldDefaults.colors(
-                                disabledTextColor = Color.Gray,
+                                disabledTextColor = Color(0xFF2981FF),
                                 focusedContainerColor = Color.White,
                                 unfocusedContainerColor = Color.White,
                                 disabledContainerColor = Color.White,
+                                errorContainerColor = Color.White,
                                 cursorColor = Color(0xFF2981FF),
                                 errorCursorColor = Color.Red,
                                 focusedIndicatorColor = Color.Transparent,
                             )
+                        )
+                        ErrorText(
+                            errorMessage = uiState.fullNameError,
                         )
                     }
                     Column(Modifier.padding(top = 20.dp)) {

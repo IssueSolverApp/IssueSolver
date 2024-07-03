@@ -235,12 +235,12 @@ fun VerificationCodePage(
                                     }
                                 }
                             )
-                            ErrorText(
-                                errorMessage = uiState.otpValueError,
-//                        isVisible = isEmailError
-                            )
                         }
                     }
+                    ErrorText(
+                        errorMessage = uiState.otpValueError,
+//                        isVisible = isEmailError
+                    )
                 }
             }
             Spacer(modifier = Modifier.height(150.dp))
@@ -321,7 +321,7 @@ fun OtpInputField(
                     CharacterBox(
                         character = text.value.getOrNull(i)?.toString() ?: "",
                         isFocused = i == text.value.length,
-                        isError= isOtpValueError,
+                        isOtpValueError= isOtpValueError,
                         modifier = Modifier
                             .weight(1f, fill = true)
                             .padding(horizontal = 4.dp)
@@ -331,8 +331,9 @@ fun OtpInputField(
                             "-",
                             style = TextStyle(
                                 color =
-//                                Color(0xFF2981FF)
-                                errorColor
+                                Color(0xFF2981FF)
+//                                        errorColor
+
                                 ,
                                 fontSize = 24.sp,
                                 textAlign = TextAlign.Center
@@ -349,10 +350,10 @@ fun OtpInputField(
 fun CharacterBox(
     character: String,
     isFocused: Boolean,
-    isError: Boolean,
+    isOtpValueError: Boolean,
     modifier: Modifier = Modifier
 ) {
-    val borderColor = if (isError) Color.Red else if (isFocused) Color(0xFF2981FF) else Color.Gray
+    val borderColor = if (isOtpValueError) Color.Red else if (isFocused) Color(0xFF2981FF) else Color.Gray
 
     Box(
         contentAlignment = Alignment.Center,
