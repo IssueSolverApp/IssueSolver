@@ -224,7 +224,7 @@ fun VerificationCodePage(
                                 modifier = Modifier
                                     .focusRequester(focusRequester),
                                 otpText = otpValue.text,
-                                shouldCursorBlink = false,
+//                                shouldCursorBlink = false,
                                 isOtpValueError=isOtpValueError,
                                 onOtpModified = { value, otpFilled ->
                                     otpValue =
@@ -289,12 +289,9 @@ fun OtpInputField(
     otpText: String,
     otpLength: Int = 6,
     isOtpValueError: Boolean,
-    shouldShowCursor: Boolean = false,
-    shouldCursorBlink: Boolean = false,
     onOtpModified: (String, Boolean) -> Unit
 ) {
     val text = remember { mutableStateOf(otpText) }
-    val errorColor = if (isOtpValueError) Color.Red else Color(0xFF2981FF)
 
 
     BasicTextField(
@@ -306,7 +303,8 @@ fun OtpInputField(
             }
         },
         modifier = modifier,
-        textStyle = TextStyle(textAlign = TextAlign.Center, fontSize = 17.sp),
+        textStyle = TextStyle(textAlign = TextAlign.Center,
+            fontSize = 17.sp),
         keyboardOptions = KeyboardOptions.Default.copy(
             keyboardType = KeyboardType.Number,
             imeAction = ImeAction.Done
@@ -331,10 +329,7 @@ fun OtpInputField(
                             "-",
                             style = TextStyle(
                                 color =
-                                Color(0xFF2981FF)
-//                                        errorColor
-
-                                ,
+                                Color(0xFF2981FF),
                                 fontSize = 24.sp,
                                 textAlign = TextAlign.Center
                             )
@@ -353,25 +348,30 @@ fun CharacterBox(
     isOtpValueError: Boolean,
     modifier: Modifier = Modifier
 ) {
-    val borderColor = if (isOtpValueError) Color.Red else if (isFocused) Color(0xFF2981FF) else Color.Gray
+    val borderColor = if (isOtpValueError) Color.Red else if (isFocused) Color(0xFF2981FF) else Color.White
+    val errorColor = if (isOtpValueError) Color.Red else Color.Black
+    val backgroundColor = if (isOtpValueError) Color(0xFFf8ecec) else Color.White
+
+
 
     Box(
         contentAlignment = Alignment.Center,
         modifier = modifier
             .defaultMinSize(minWidth = 52.dp, minHeight = 65.dp)
-            .background(Color.White, RoundedCornerShape(12.dp))
+            .background(backgroundColor, RoundedCornerShape(12.dp))
             .border(
                 1.dp,
-                if (isFocused)
+//                if (isFocused)
 //                    Color(0xFF2981FF)
-                    borderColor
-                else Color.White,
+                    borderColor,
+//                else Color.White,
                 RoundedCornerShape(12.dp)
             )
     ) {
         Text(
             text = character,
-            style = TextStyle(fontSize = 17.sp, textAlign = TextAlign.Center)
+            style = TextStyle(fontSize = 17.sp, textAlign = TextAlign.Center, color = errorColor
+            )
         )
     }
 }
