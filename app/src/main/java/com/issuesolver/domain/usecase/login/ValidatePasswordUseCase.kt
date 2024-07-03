@@ -1,6 +1,4 @@
-package com.issuesolver.domain.useCase.login
-
-import com.issuesolver.domain.usecase.login.ValidationResult
+package com.issuesolver.domain.usecase.login
 
 class ValidatePasswordUseCase {
     fun execute(password: String): ValidationResult {

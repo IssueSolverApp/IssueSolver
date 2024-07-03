@@ -1,6 +1,7 @@
 package com.issuesolver.presentation.login.password_change_page
 
 import android.util.Log
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.border
 import androidx.compose.foundation.gestures.scrollBy
 import androidx.compose.foundation.layout.*
@@ -279,6 +280,10 @@ fun PasswordChangePage(
         }
     }
     )
+
+    BackHandler {
+        navController.popBackStack(Routes.EMAIL_VERIFICATION, inclusive = false)
+    }
 }
 
 

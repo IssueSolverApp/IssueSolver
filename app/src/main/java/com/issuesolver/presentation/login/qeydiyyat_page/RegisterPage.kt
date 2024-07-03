@@ -446,7 +446,7 @@ fun RegisterPage(navController: NavController, viewModel: RegisterViewModel = hi
                     )
                     Text(
                         modifier = Modifier.clickable {
-                            navController.navigate("login")
+                            navController.popBackStack()
                         },
                         text = "Daxil olun",
                         color = MaterialTheme.colorScheme.primary,

@@ -61,7 +61,6 @@ fun EmailVerificationPage(
         }
     }
 
-    Scaffold { padding ->
     Scaffold(content = { padding ->
         Box(
             modifier = Modifier
@@ -189,10 +188,3 @@ fun EmailVerificationPage(
     )
 }
 
-@Preview(showBackground = true)
-@Composable
-fun EmailVerificationPagePreview() {
-    MaterialTheme {
-        EmailVerificationPage(navController = mockNavController())
-    }
-}}

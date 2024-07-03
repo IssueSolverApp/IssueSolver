@@ -42,6 +42,8 @@ class EmailVerificationPageViewModel @Inject constructor(
                     }
                     is Resource.Error->{
                         _forgetPasswordState.emit(State.error(resource.message))
+                        _uiState.value = uiState.value.copy(emailError = resource.message)
+
                     }
                     is Resource.Success ->{
                         _forgetPasswordState.emit(State.success())

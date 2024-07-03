@@ -13,7 +13,7 @@ class ValidateEmailUseCase() {
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             return ValidationResult(
                 successful = false,
-                errorMessage = "E-poçt yanlışdır"
+                errorMessage = "E-poçt formatı yanlışdır"
             )
         }
         return ValidationResult(
