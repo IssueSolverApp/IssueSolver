@@ -46,6 +46,7 @@ import com.issuesolver.common.StatusR
 import com.issuesolver.domain.entity.networkModel.RequestOtp
 import com.issuesolver.presentation.common.AuthButton
 import com.issuesolver.presentation.common.ErrorText
+import com.issuesolver.presentation.common.LoadingOverlay
 import com.issuesolver.presentation.navigation.mockNavController
 import kotlinx.coroutines.delay
 
@@ -91,8 +92,7 @@ fun VerificationCodePage(
 
     when(resendOtpState?.status){
         StatusR.LOADING -> {
-            CircularProgressIndicator()
-        }
+            LoadingOverlay()        }
         StatusR.SUCCESS -> {
 
         }

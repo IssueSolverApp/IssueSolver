@@ -54,7 +54,7 @@ import com.issuesolver.presentation.common.AuthButton
 import com.issuesolver.presentation.common.ErrorText
 import com.issuesolver.presentation.navigation.Routes
 import com.issuesolver.common.StatusR
-
+import com.issuesolver.presentation.common.LoadingOverlay
 
 
 @Composable
@@ -83,8 +83,7 @@ fun RegisterPage(navController: NavController, viewModel: RegisterViewModel = hi
 
     when (registerState?.status) {
         StatusR.LOADING -> {
-            CircularProgressIndicator()
-        }
+            LoadingOverlay()        }
 
         StatusR.SUCCESS -> {
             navController.navigate(Routes.REGISTER_OTP + "/${uiState.email}")

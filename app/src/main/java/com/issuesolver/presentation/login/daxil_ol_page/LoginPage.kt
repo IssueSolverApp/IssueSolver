@@ -37,6 +37,7 @@ import com.issuesolver.common.StatusR
 import com.issuesolver.domain.entity.networkModel.LoginRequest
 import com.issuesolver.presentation.common.AuthButton
 import com.issuesolver.presentation.common.ErrorText
+import com.issuesolver.presentation.common.LoadingOverlay
 import kotlinx.coroutines.launch
 
 
@@ -65,6 +66,7 @@ fun LoginPage(
 
         StatusR.LOADING -> {
 
+            LoadingOverlay()
 
         }
 

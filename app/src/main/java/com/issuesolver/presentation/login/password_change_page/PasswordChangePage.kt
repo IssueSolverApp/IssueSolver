@@ -31,6 +31,7 @@ import com.issuesolver.common.StatusR
 import com.issuesolver.domain.entity.networkModel.ResetPasswordModel
 import com.issuesolver.presentation.common.AuthButton
 import com.issuesolver.presentation.common.ErrorText
+import com.issuesolver.presentation.common.LoadingOverlay
 import com.issuesolver.presentation.login.daxil_ol_page.LoginPageEvent
 import com.issuesolver.presentation.navigation.Routes
 import com.issuesolver.presentation.navigation.mockNavController
@@ -60,8 +61,7 @@ fun PasswordChangePage(
 
     when (resetPassword?.status) {
         StatusR.LOADING -> {
-            CircularProgressIndicator()
-        }
+            LoadingOverlay()        }
         StatusR.SUCCESS -> {
             navController.navigate("login")
         }

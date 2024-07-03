@@ -61,6 +61,7 @@ import com.issuesolver.domain.entity.networkModel.RequestOtp
 import com.issuesolver.domain.entity.networkModel.ResendOtpModel
 import com.issuesolver.presentation.common.AuthButton
 import com.issuesolver.presentation.common.ErrorText
+import com.issuesolver.presentation.common.LoadingOverlay
 import com.issuesolver.presentation.login.daxil_ol_verification_code.OtpInputField
 import kotlinx.coroutines.delay
 
@@ -106,8 +107,7 @@ fun RegisterOtpCodePage(
 
     when (confirmOtpState.status) {
         StatusR.LOADING -> {
-            CircularProgressIndicator()
-        }
+            LoadingOverlay()        }
 
         StatusR.SUCCESS -> {
             navController.navigate("login")
