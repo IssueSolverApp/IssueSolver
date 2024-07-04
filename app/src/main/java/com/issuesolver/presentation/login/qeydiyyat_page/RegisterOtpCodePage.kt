@@ -249,12 +249,13 @@ fun RegisterOtpCodePage(
                                     }
                                 }
                             )
-//                            ErrorText(
-//                                errorMessage = uiState.emailError,
-//                        isVisible = isEmailError
-//                            )
+
                         }
                     }
+                    ErrorText(
+                        errorMessage = uiState.otpValueError,
+//                        isVisible = isEmailError
+                    )
                 }
             }
             Spacer(modifier = Modifier.height(150.dp))
