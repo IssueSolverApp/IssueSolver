@@ -1,4 +1,4 @@
-package com.issuesolver.domain.useCase
+package com.issuesolver.domain.usecase
 
 import com.google.gson.Gson
 import com.issuesolver.common.Resource

@@ -1,4 +1,4 @@
-package com.issuesolver.domain.useCase
+package com.issuesolver.domain.usecase
 
 import android.content.SharedPreferences
 import android.util.Log
