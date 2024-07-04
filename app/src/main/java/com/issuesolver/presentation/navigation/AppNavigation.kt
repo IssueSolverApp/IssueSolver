@@ -26,6 +26,7 @@ fun AppNavigation() {
     NavHost(navController = navController, startDestination = Routes.LOGIN) {
         composable(Routes.LOGIN,enterTransition = {
             scaleIntoContainer()
+
         },
             exitTransition = {
                 scaleOutOfContainer(direction = ScaleTransitionDirection.INWARDS)

@@ -61,6 +61,7 @@ import com.issuesolver.domain.entity.networkModel.RequestOtp
 import com.issuesolver.domain.entity.networkModel.ResendOtpModel
 import com.issuesolver.presentation.common.AuthButton
 import com.issuesolver.presentation.common.ErrorText
+import com.issuesolver.presentation.common.LoadingOverlay
 import com.issuesolver.presentation.login.daxil_ol_verification_code.OtpInputField
 import kotlinx.coroutines.delay
 
@@ -100,10 +101,13 @@ fun RegisterOtpCodePage(
     val formattedTime = String.format("%02d:%02d", minutes, seconds)
     val confirmOtpState by viewModel.confirmOtpState.collectAsState()
 
+    val uiState by viewModel.uiState.collectAsState()
+    val isOtpValueError = uiState.otpValueError != null
+
+
     when (confirmOtpState.status) {
         StatusR.LOADING -> {
-            CircularProgressIndicator()
-        }
+            LoadingOverlay()        }
 
         StatusR.SUCCESS -> {
             navController.navigate("login")
@@ -138,7 +142,7 @@ fun RegisterOtpCodePage(
                 if (showDialog) {
                     AlertDialogExample(
                         message = it,
-                        onDismiss = { showDialog = false },
+//                        onDismiss = { showDialog = false },
                         onConfirmation = { showDialog = false }
                     )
                 }
@@ -234,7 +238,8 @@ fun RegisterOtpCodePage(
                                 modifier = Modifier
                                     .focusRequester(focusRequester),
                                 otpText = otpValue.text,
-                                shouldCursorBlink = false,
+//                                shouldCursorBlink = false,
+                                isOtpValueError = isOtpValueError,
                                 onOtpModified = { value, otpFilled ->
                                     otpValue =
                                         TextFieldValue(value, selection = TextRange(value.length))
@@ -244,12 +249,13 @@ fun RegisterOtpCodePage(
                                     }
                                 }
                             )
-//                            ErrorText(
-//                                errorMessage = uiState.emailError,
-//                        isVisible = isEmailError
-//                            )
+
                         }
                     }
+                    ErrorText(
+                        errorMessage = uiState.otpValueError,
+//                        isVisible = isEmailError
+                    )
                 }
             }
             Spacer(modifier = Modifier.height(150.dp))

@@ -1,6 +1,7 @@
 package com.issuesolver.presentation.login.password_change_page
 
 import android.util.Log
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.border
 import androidx.compose.foundation.gestures.scrollBy
 import androidx.compose.foundation.layout.*
@@ -30,6 +31,7 @@ import com.issuesolver.common.StatusR
 import com.issuesolver.domain.entity.networkModel.ResetPasswordModel
 import com.issuesolver.presentation.common.AuthButton
 import com.issuesolver.presentation.common.ErrorText
+import com.issuesolver.presentation.common.LoadingOverlay
 import com.issuesolver.presentation.login.daxil_ol_page.LoginPageEvent
 import com.issuesolver.presentation.navigation.Routes
 import com.issuesolver.presentation.navigation.mockNavController
@@ -59,8 +61,7 @@ fun PasswordChangePage(
 
     when (resetPassword?.status) {
         StatusR.LOADING -> {
-            CircularProgressIndicator()
-        }
+            LoadingOverlay()        }
         StatusR.SUCCESS -> {
             navController.navigate("login")
         }
@@ -279,6 +280,10 @@ fun PasswordChangePage(
         }
     }
     )
+
+    BackHandler {
+        navController.popBackStack(Routes.EMAIL_VERIFICATION, inclusive = false)
+    }
 }
 
 

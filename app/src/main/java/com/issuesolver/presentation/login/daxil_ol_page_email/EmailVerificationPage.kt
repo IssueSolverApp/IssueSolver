@@ -30,6 +30,7 @@ import com.issuesolver.common.StatusR
 import com.issuesolver.domain.entity.networkModel.ResendOtpModel
 import com.issuesolver.presentation.common.AuthButton
 import com.issuesolver.presentation.common.ErrorText
+import com.issuesolver.presentation.common.LoadingOverlay
 import com.issuesolver.presentation.navigation.Routes
 import com.issuesolver.presentation.navigation.mockNavController
 
@@ -47,8 +48,7 @@ fun EmailVerificationPage(
 
     when (forgetPasswordState?.status) {
         StatusR.LOADING -> {
-            CircularProgressIndicator()
-        }
+            LoadingOverlay()        }
         StatusR.SUCCESS -> {
             navController.navigate("otp")
             viewModel.clearForgetPasswordState()
@@ -61,7 +61,6 @@ fun EmailVerificationPage(
         }
     }
 
-    Scaffold { padding ->
     Scaffold(content = { padding ->
         Box(
             modifier = Modifier
@@ -189,10 +188,3 @@ fun EmailVerificationPage(
     )
 }
 
-@Preview(showBackground = true)
-@Composable
-fun EmailVerificationPagePreview() {
-    MaterialTheme {
-        EmailVerificationPage(navController = mockNavController())
-    }
-}}

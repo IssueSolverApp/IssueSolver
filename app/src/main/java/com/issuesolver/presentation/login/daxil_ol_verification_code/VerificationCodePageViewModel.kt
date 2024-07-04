@@ -24,6 +24,10 @@ class VerificationCodePageViewModel @Inject constructor(
     val otpTrustState: StateFlow<State?> = _otpTrustState
 
 
+    private val _uiState = MutableStateFlow(VerificationCodePageState())
+    val uiState: StateFlow<VerificationCodePageState> = _uiState.asStateFlow()
+
+
     private val _resendOtpState: MutableStateFlow<State?> = MutableStateFlow(null)
     val resendOtpState: StateFlow<State?> = _resendOtpState
 
@@ -39,6 +43,8 @@ class VerificationCodePageViewModel @Inject constructor(
 
                     is Resource.Error -> {
                         _otpTrustState.emit(State.error(message = it.message))
+                        _uiState.value = uiState.value.copy(otpValueError = it.message)
+
                     }
 
                     is Resource.Success -> {

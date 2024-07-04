@@ -8,7 +8,6 @@ import com.issuesolver.domain.entity.networkModel.LoginRequest
 import com.issuesolver.domain.usecase.SignInUseCase
 import com.issuesolver.domain.usecase.login.ValidatePasswordUseCase
 import com.issuesolver.domain.usecase.login.LoginUseCase
-import com.issuesolver.domain.usecase.login.ValidateEmailUseCase
 
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,8 +18,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginPageViewModel @Inject constructor(
-
-    private val validateEmailUseCase: ValidateEmailUseCase,
     private val validatePasswordUseCase: ValidatePasswordUseCase,
     private val loginUseCase: LoginUseCase,
     private val signInUseCase: SignInUseCase

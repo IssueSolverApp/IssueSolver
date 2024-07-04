@@ -1,9 +1,9 @@
 package com.issuesolver.domain.usecase.login
 
 class ValidateRepeatedPasswordUseCase {
-    fun execute(newpassword: String, repeatedPassword: String): ValidationResult {
+    fun execute(password: String, repeatedPassword: String): ValidationResult {
 
-        if (newpassword != repeatedPassword) {
+        if (password != repeatedPassword) {
             return ValidationResult(
                 successful = false,
                 errorMessage = "Hər iki şifrə dəqiq eyni olmalıdır"

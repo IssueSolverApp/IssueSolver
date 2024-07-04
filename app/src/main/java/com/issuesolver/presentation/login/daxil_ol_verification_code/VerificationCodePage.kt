@@ -46,11 +46,11 @@ import com.issuesolver.common.StatusR
 import com.issuesolver.domain.entity.networkModel.RequestOtp
 import com.issuesolver.presentation.common.AuthButton
 import com.issuesolver.presentation.common.ErrorText
+import com.issuesolver.presentation.common.LoadingOverlay
 import com.issuesolver.presentation.navigation.mockNavController
 import kotlinx.coroutines.delay
 
 @SuppressLint("DefaultLocale")
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun VerificationCodePage(
     navController: NavController,
@@ -60,13 +60,10 @@ fun VerificationCodePage(
     var otpValue by remember { mutableStateOf(TextFieldValue("")) }
     var isOtpFilled by remember { mutableStateOf(false) }
     val focusRequester = remember { FocusRequester() }
-//    val uiState by viewModel.uiState.collectAsState()
-//    val isOtpValueError = uiState.emailError != null
+    val uiState by viewModel.uiState.collectAsState()
+    val isOtpValueError = uiState.otpValueError != null
 
     val keyboardController = LocalSoftwareKeyboardController.current
-
-    //var otpValue by remember { mutableStateOf(TextFieldValue("")) }
-
     val otpTrustState by viewModel.otpTrustState.collectAsState()
 
     when(otpTrustState?.status){
@@ -95,8 +92,7 @@ fun VerificationCodePage(
 
     when(resendOtpState?.status){
         StatusR.LOADING -> {
-            CircularProgressIndicator()
-        }
+            LoadingOverlay()        }
         StatusR.SUCCESS -> {
 
         }
@@ -106,7 +102,7 @@ fun VerificationCodePage(
                 if (showDialog) {
                     AlertDialogExample(
                         message = it,
-                        onDismiss = { showDialog = false },
+//                        onDismiss = { showDialog = false },
                         onConfirmation = { showDialog = false }
                     )
                 }
@@ -228,7 +224,8 @@ fun VerificationCodePage(
                                 modifier = Modifier
                                     .focusRequester(focusRequester),
                                 otpText = otpValue.text,
-                                shouldCursorBlink = false,
+//                                shouldCursorBlink = false,
+                                isOtpValueError=isOtpValueError,
                                 onOtpModified = { value, otpFilled ->
                                     otpValue =
                                         TextFieldValue(value, selection = TextRange(value.length))
@@ -238,12 +235,12 @@ fun VerificationCodePage(
                                     }
                                 }
                             )
-//                            ErrorText(
-////                                errorMessage = uiState.emailError,
-////                        isVisible = isEmailError
-//                            )
                         }
                     }
+                    ErrorText(
+                        errorMessage = uiState.otpValueError,
+//                        isVisible = isEmailError
+                    )
                 }
             }
             Spacer(modifier = Modifier.height(150.dp))
@@ -291,13 +288,10 @@ fun OtpInputField(
     modifier: Modifier = Modifier,
     otpText: String,
     otpLength: Int = 6,
-//    isOtpValueError: Boolean,
-    shouldShowCursor: Boolean = false,
-    shouldCursorBlink: Boolean = false,
+    isOtpValueError: Boolean,
     onOtpModified: (String, Boolean) -> Unit
 ) {
     val text = remember { mutableStateOf(otpText) }
-//    val errorColor = if (isOtpValueError) Color.Red else Color(0xFF2981FF)
 
 
     BasicTextField(
@@ -309,7 +303,8 @@ fun OtpInputField(
             }
         },
         modifier = modifier,
-        textStyle = TextStyle(textAlign = TextAlign.Center, fontSize = 17.sp),
+        textStyle = TextStyle(textAlign = TextAlign.Center,
+            fontSize = 17.sp),
         keyboardOptions = KeyboardOptions.Default.copy(
             keyboardType = KeyboardType.Number,
             imeAction = ImeAction.Done
@@ -324,6 +319,7 @@ fun OtpInputField(
                     CharacterBox(
                         character = text.value.getOrNull(i)?.toString() ?: "",
                         isFocused = i == text.value.length,
+                        isOtpValueError= isOtpValueError,
                         modifier = Modifier
                             .weight(1f, fill = true)
                             .padding(horizontal = 4.dp)
@@ -333,9 +329,7 @@ fun OtpInputField(
                             "-",
                             style = TextStyle(
                                 color =
-                                Color(0xFF2981FF)
-//                                errorColor
-                                ,
+                                Color(0xFF2981FF),
                                 fontSize = 24.sp,
                                 textAlign = TextAlign.Center
                             )
@@ -351,28 +345,33 @@ fun OtpInputField(
 fun CharacterBox(
     character: String,
     isFocused: Boolean,
-//    isError: Boolean,
+    isOtpValueError: Boolean,
     modifier: Modifier = Modifier
 ) {
-//    val borderColor = if (isError) Color.Red else if (isFocused) Color(0xFF2981FF) else Color.Gray
+    val borderColor = if (isOtpValueError) Color.Red else if (isFocused) Color(0xFF2981FF) else Color.White
+    val errorColor = if (isOtpValueError) Color.Red else Color.Black
+    val backgroundColor = if (isOtpValueError) Color(0xFFf8ecec) else Color.White
+
+
 
     Box(
         contentAlignment = Alignment.Center,
         modifier = modifier
             .defaultMinSize(minWidth = 52.dp, minHeight = 65.dp)
-            .background(Color.White, RoundedCornerShape(12.dp))
+            .background(backgroundColor, RoundedCornerShape(12.dp))
             .border(
                 1.dp,
-                if (isFocused)
-                    Color(0xFF2981FF)
-//                    borderColor
-                else Color.White,
+//                if (isFocused)
+//                    Color(0xFF2981FF)
+                    borderColor,
+//                else Color.White,
                 RoundedCornerShape(12.dp)
             )
     ) {
         Text(
             text = character,
-            style = TextStyle(fontSize = 17.sp, textAlign = TextAlign.Center)
+            style = TextStyle(fontSize = 17.sp, textAlign = TextAlign.Center, color = errorColor
+            )
         )
     }
 }
