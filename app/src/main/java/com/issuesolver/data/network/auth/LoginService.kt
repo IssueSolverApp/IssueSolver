@@ -42,7 +42,7 @@ interface LoginService {
     suspend fun resetPassword(@Query("token") token: String, @Body resetPassword: ResetPasswordModel): Response<RegisterResponseModel>
 
     @POST("api/Auths/login-refreshtoken")
-    suspend fun refreshToken(@Body token: String): Response<LoginResponse>
+    suspend fun refreshToken(@Body token: String?): Response<LoginResponse>
 
 }
 

@@ -78,8 +78,9 @@ class UseCaseModule {
 
     @Provides
     @Singleton
-    fun provideSignInUseCase(signInRepository: SignInRepositoryInterface) =
-        SignInUseCase(signInRepository)
+    fun provideSignInUseCase(signInRepository: SignInRepositoryInterface,
+                             sharedPreferences: SharedPreferences) =
+        SignInUseCase(signInRepository, sharedPreferences)
 
 
     @Provides

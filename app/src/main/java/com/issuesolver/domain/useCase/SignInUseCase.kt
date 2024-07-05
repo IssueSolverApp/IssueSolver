@@ -1,5 +1,6 @@
 package com.issuesolver.domain.usecase
 
+import android.content.SharedPreferences
 import com.google.gson.Gson
 import com.issuesolver.common.Resource
 import com.issuesolver.data.repository.SignInRepositoryInterface
@@ -10,7 +11,9 @@ import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
 
-class SignInUseCase @Inject constructor(private val signInRepositoryInterface: SignInRepositoryInterface) {
+class SignInUseCase @Inject constructor(private val signInRepositoryInterface: SignInRepositoryInterface,
+                                        private val sharedPreferences: SharedPreferences
+) {
 
     suspend operator fun invoke(signIn: LoginRequest) = flow {
         emit(Resource.Loading())
