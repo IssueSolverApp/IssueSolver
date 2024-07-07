@@ -97,11 +97,11 @@ class UseCaseModule {
         ResetPasswordUseCase(resetPassword)
 
 
-    @Provides
-    @Singleton
-    fun provideSharedPreferences(app: Application): SharedPreferences {
-        return PreferenceManager.getDefaultSharedPreferences(app)
-    }
+//    @Provides
+//    @Singleton
+//    fun provideSharedPreferences(app: Application): SharedPreferences {
+//        return PreferenceManager.getDefaultSharedPreferences(app)
+//    }
 
 
 }
