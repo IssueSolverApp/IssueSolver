@@ -11,8 +11,9 @@ import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
 
-class SignInUseCase @Inject constructor(private val signInRepositoryInterface: SignInRepositoryInterface,
-                                        private val sharedPreferences: SharedPreferences
+class SignInUseCase @Inject constructor(
+    private val signInRepositoryInterface: SignInRepositoryInterface,
+    private val sharedPreferences: SharedPreferences
 ) {
 
     suspend operator fun invoke(signIn: LoginRequest) = flow {
@@ -20,7 +21,10 @@ class SignInUseCase @Inject constructor(private val signInRepositoryInterface: S
         try {
             val response = signInRepositoryInterface.signIn(signIn)
             if (response.isSuccessful) {
-                emit(Resource.Success(response.body()))
+                response.body()?.let {
+                    saveTokens(it.data?.accessToken, it.data?.refreshToken)
+                    emit(Resource.Success(response.body()))
+                } ?: emit(Resource.Error("Response body is null"))
             } else {
                 val errorResponse = response.errorBody()?.string()?.let {
                     parseErrorResponse(it)
@@ -33,6 +37,14 @@ class SignInUseCase @Inject constructor(private val signInRepositoryInterface: S
             emit(Resource.Error("HTTP Error: ${e.localizedMessage}"))
         } catch (e: Exception) {
             emit(Resource.Error("Unexpected Error: ${e.localizedMessage}"))
+        }
+    }
+
+    private fun saveTokens(accessToken: String?, refreshToken: String?) {
+        sharedPreferences.edit().apply {
+            putString("access_token", accessToken)
+            putString("refresh_token", refreshToken)
+            apply()
         }
     }
 
