@@ -5,6 +5,7 @@ import android.view.WindowManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import com.issuesolver.presentation.bottombar.MainScreen
 import com.issuesolver.presentation.login.qeydiyyat_page.RegisterPage
 import com.issuesolver.presentation.navigation.AppNavigation
 import com.issuesolver.presentation.navigation.mockNavController
@@ -26,7 +27,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             IssueSolverTheme {
 //                AppNavigation()
-                RemoveAccountScreen(mockNavController())
+                MainScreen()
             }
         }
     }
