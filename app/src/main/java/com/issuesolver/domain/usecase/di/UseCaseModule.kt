@@ -78,8 +78,9 @@ class UseCaseModule {
 
     @Provides
     @Singleton
-    fun provideSignInUseCase(signInRepository: SignInRepositoryInterface) =
-        SignInUseCase(signInRepository)
+    fun provideSignInUseCase(signInRepository: SignInRepositoryInterface,
+                             sharedPreferences: SharedPreferences) =
+        SignInUseCase(signInRepository, sharedPreferences)
 
 
     @Provides
@@ -96,11 +97,11 @@ class UseCaseModule {
         ResetPasswordUseCase(resetPassword)
 
 
-    @Provides
-    @Singleton
-    fun provideSharedPreferences(app: Application): SharedPreferences {
-        return PreferenceManager.getDefaultSharedPreferences(app)
-    }
+//    @Provides
+//    @Singleton
+//    fun provideSharedPreferences(app: Application): SharedPreferences {
+//        return PreferenceManager.getDefaultSharedPreferences(app)
+//    }
 
 
 }
