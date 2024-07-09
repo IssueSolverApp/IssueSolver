@@ -45,7 +45,8 @@ fun ProfileScreen(
 //    viewModel:  = hiltViewModel(),
 ) {
 
-    Scaffold(modifier = Modifier
+    Scaffold(
+        modifier = Modifier
         .navigationBarsPadding(),
         bottomBar = {
             AnimatedNavigationBar()

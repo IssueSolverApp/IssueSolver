@@ -49,6 +49,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.issuesolver.R
 import com.issuesolver.domain.entity.networkModel.ResendOtpModel
+import com.issuesolver.presentation.bottombar.AnimatedNavigationBar
 import com.issuesolver.presentation.common.AuthButton
 import com.issuesolver.presentation.common.ErrorText
 import com.issuesolver.presentation.login.daxil_ol_page_email.VerificationCodePageEvent
@@ -65,12 +66,18 @@ fun NewPasswordScreen(
     var showPassword2 by remember { mutableStateOf(value = false) }
     var showPassword3 by remember { mutableStateOf(value = false) }
 
-    Scaffold(content = { padding ->
+    Scaffold(
+        modifier = Modifier
+            .navigationBarsPadding(),
+        bottomBar = {
+            AnimatedNavigationBar()
+        },
+
+        content = { padding ->
     Box(
         modifier = Modifier
+            .padding(padding)
             .fillMaxSize()
-            .statusBarsPadding()
-            .navigationBarsPadding()
             .imePadding()
             .padding(top = 13.dp, start = 20.dp, end = 20.dp, bottom = 34.dp)
     ) {
