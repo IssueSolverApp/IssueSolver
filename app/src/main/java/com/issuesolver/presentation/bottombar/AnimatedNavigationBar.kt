@@ -34,26 +34,35 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.onPlaced
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
+import com.issuesolver.R
 
 
 @Composable
 fun AnimatedNavigationBar(
-    buttons: List<ButtonData>,
-    barColor: Color,
-    circleColor: Color,
-    selectedColor: Color,
-    unselectedColor: Color,
-) {
-    val circleRadius = 28.dp
 
+) {
+    val barColor: Color=Color.White
+    val circleColor: Color=Color(0xFF2981FF)
+    val selectedColor: Color=Color.White
+    val unselectedColor: Color=Color.White
+    val circleRadius = 28.dp
+    val buttons = listOf(
+        ButtonData("Home", painterResource(id = R.drawable.home_ic)),
+        ButtonData("History", painterResource(id = R.drawable.group)),
+        ButtonData("Calendar", painterResource(id = R.drawable.ph_plus)),
+        ButtonData("Profile", painterResource(id = R.drawable.message)),
+        ButtonData("Settings", painterResource(id = R.drawable.profile))
+    )
     var selectedItem by rememberSaveable { mutableIntStateOf(0) }
     var barSize by remember { mutableStateOf(IntSize(0, 0)) }
     val offsetStep = remember(barSize) {

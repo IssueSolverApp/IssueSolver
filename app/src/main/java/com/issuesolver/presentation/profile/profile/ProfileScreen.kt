@@ -33,6 +33,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.issuesolver.R
+import com.issuesolver.presentation.bottombar.AnimatedNavigationBar
+import com.issuesolver.presentation.bottombar.ButtonData
 
 
 @Composable
@@ -42,12 +44,18 @@ fun ProfileScreen(
 ) {
 
 
-    Scaffold(content = { padding ->
+    Scaffold(modifier = Modifier
+//        .statusBarsPadding()
+        .navigationBarsPadding(),
+        bottomBar = {
+            AnimatedNavigationBar()
+        },
+    content = { padding ->
         Box(
             modifier = Modifier
                 .fillMaxSize()
                 .statusBarsPadding()
-                .navigationBarsPadding()
+//                .navigationBarsPadding()
                 .imePadding()
                 .padding(top = 24.dp, start = 20.dp, end = 20.dp)
         ) {
