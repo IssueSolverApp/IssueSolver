@@ -28,6 +28,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.semantics.SemanticsActions.OnClick
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -37,11 +38,12 @@ import androidx.navigation.NavController
 import com.issuesolver.R
 import com.issuesolver.presentation.bottombar.AnimatedNavigationBar
 import com.issuesolver.presentation.bottombar.ButtonData
+import com.issuesolver.presentation.navigation.Routes
 
 
 @Composable
 fun ProfileScreen(
-//    navController: NavController,
+    navController: NavController,
 //    viewModel:  = hiltViewModel(),
 ) {
 
@@ -105,6 +107,7 @@ fun ProfileScreen(
                     Image(
                         painter = painterResource(R.drawable.settings_ic),
                         contentDescription = "settings_ic",
+                        modifier = Modifier.clickable(onClick = { navController.navigate(Routes.PROFILE_MY_ACCOUNT)})
                     )
                 }
                 Row(
@@ -113,7 +116,7 @@ fun ProfileScreen(
                         .background(color = Color.White)
                         .padding(top = 24.dp, start = 16.dp, end = 16.dp, bottom = 24.dp)
                         .fillMaxWidth()
-                        .clickable(onClick = { }),
+                        .clickable(onClick = { navController.navigate("profile_new_password") }),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ){
@@ -235,7 +238,7 @@ fun ProfileScreen(
                         .background(color = Color.White)
                         .padding(top = 24.dp, start = 16.dp, end = 16.dp, bottom = 24.dp)
                         .fillMaxWidth()
-                        .clickable(onClick = { }),
+                        .clickable(onClick = { navController.navigate("profile_delete_account") }),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ){
@@ -255,10 +258,10 @@ fun ProfileScreen(
     })
 }
 
-@Preview(showBackground = true)
-@Composable
-fun PreviewProfileScreen() {
-    ProfileScreen()
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun PreviewProfileScreen() {
+//    ProfileScreen()
+//}
 
 

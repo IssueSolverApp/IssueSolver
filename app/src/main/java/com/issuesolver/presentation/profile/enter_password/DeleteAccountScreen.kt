@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -49,11 +48,10 @@ import androidx.navigation.NavController
 import com.issuesolver.R
 import com.issuesolver.presentation.bottombar.AnimatedNavigationBar
 import com.issuesolver.presentation.common.AuthButton
-import com.issuesolver.presentation.navigation.mockNavController
 
 @Composable
-fun RemoveAccountScreen(
-//    navController: NavController,
+fun DeleteAccountScreen(
+    navController: NavController,
 //    viewModel:  = hiltViewModel()
 
 ){
@@ -86,7 +84,7 @@ fun RemoveAccountScreen(
                             .clip(RoundedCornerShape(100.dp))
                             .background(Color.White)
                             .clickable {
-//                                navController.popBackStack()
+                                navController.popBackStack()
                             },
                         contentAlignment = Alignment.Center
                     ) {
@@ -200,9 +198,9 @@ fun RemoveAccountScreen(
     }
     )
 }
-
-@Preview(showBackground = true)
-@Composable
-fun PreviewNewPasswordScreen() {
-    RemoveAccountScreen()
-}
+//
+//@Preview(showBackground = true)
+//@Composable
+//fun PreviewNewPasswordScreen() {
+//    DeleteAccountScreen()
+//}
