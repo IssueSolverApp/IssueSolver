@@ -90,8 +90,8 @@ fun AnimatedNavigationBar(
     val barShape = remember(cutoutOffset) {
         BarShape(
             offset = cutoutOffset,
-            circleRadius = 40.dp,
-            cornerRadius = 25.dp,
+            circleRadius = 45.dp,
+            cornerRadius = 25.dp
         )
     }
 
@@ -101,7 +101,7 @@ fun AnimatedNavigationBar(
 
         Circle(
             modifier = Modifier
-                .offset { IntOffset(circleOffset.x, circleOffset.y - 10.dp.roundToPx()) } // Manually move up
+                .offset { IntOffset(circleOffset.x, circleOffset.y - 5.dp.roundToPx()) } // Manually move up
                 .zIndex(1f)
 //                .padding(bottom = 10.dp)  // Add padding to push it upward from the navbar
 
@@ -135,7 +135,7 @@ fun AnimatedNavigationBar(
                         Image(
                             painter = button.icon,
                             contentDescription = button.text,
-                            modifier = Modifier.alpha(iconAlpha).padding(bottom = 8.dp)
+                            modifier = Modifier.alpha(iconAlpha)
                         )
                     },
 //                    label = { Text(button.text) },

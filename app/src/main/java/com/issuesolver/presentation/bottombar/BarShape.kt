@@ -31,7 +31,7 @@ class BarShape(
         val cornerRadiusPx = density.run { (cornerRadius).toPx() }
         val cornerDiameter = cornerRadiusPx * 2
         return Path().apply {
-            val cutoutEdgeOffset = cutoutRadius * 1.5f
+            val cutoutEdgeOffset = cutoutRadius * 1.3f //add corner here
             val cutoutLeftX = cutoutCenterX - cutoutEdgeOffset
             val cutoutRightX = cutoutCenterX + cutoutEdgeOffset
 
@@ -61,7 +61,7 @@ class BarShape(
             lineTo(cutoutLeftX, 0f)
             // cutout
             cubicTo(
-                x1 = cutoutCenterX - cutoutRadius,
+                x1 = cutoutCenterX - cutoutRadius/2,
                 y1 = 0f,
                 x2 = cutoutCenterX - cutoutRadius,
                 y2 = cutoutRadius,
@@ -71,7 +71,7 @@ class BarShape(
             cubicTo(
                 x1 = cutoutCenterX + cutoutRadius,
                 y1 = cutoutRadius,
-                x2 = cutoutCenterX + cutoutRadius,
+                x2 = cutoutCenterX + cutoutRadius/2,
                 y2 = 0f,
                 x3 = cutoutRightX,
                 y3 = 0f,
