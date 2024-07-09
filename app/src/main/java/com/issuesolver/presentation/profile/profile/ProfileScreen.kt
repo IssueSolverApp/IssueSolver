@@ -16,7 +16,9 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CardDefaults.shape
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -43,9 +45,7 @@ fun ProfileScreen(
 //    viewModel:  = hiltViewModel(),
 ) {
 
-
     Scaffold(modifier = Modifier
-//        .statusBarsPadding()
         .navigationBarsPadding(),
         bottomBar = {
             AnimatedNavigationBar()
@@ -53,67 +53,54 @@ fun ProfileScreen(
     content = { padding ->
         Box(
             modifier = Modifier
+                .padding(padding)
                 .fillMaxSize()
-                .statusBarsPadding()
-//                .navigationBarsPadding()
                 .imePadding()
-                .padding(top = 24.dp, start = 20.dp, end = 20.dp)
+                .padding(top = 24.dp, start = 20.dp, end = 20.dp, bottom = 16.dp)
         ) {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .imePadding(),
+                    .imePadding()
+                    .verticalScroll(rememberScrollState())
+                ,
                 verticalArrangement = Arrangement.spacedBy(12.dp)
-
             ) {
-
                 Row(
                     modifier = Modifier
                         .clip(shape = RoundedCornerShape(8.dp))
                         .background(color = Color.White)
                         .padding(top = 24.dp, start = 16.dp, end = 16.dp, bottom = 24.dp)
                         .fillMaxWidth()
-                        .clickable(onClick = {  })
-
-                    ,
-
+                        .clickable(onClick = { }),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ){
                     Row (    verticalAlignment = Alignment.CenterVertically
                     ){
-
                         Image(
                             painter = painterResource(R.drawable.et_profile_male),
                             contentDescription = "et_profile_male",
                             modifier = Modifier.padding(end=12.dp)
-
                         )
                         Column {
-
                             Text(
-
                                 "AYNUR QƏMBƏROVA",
                                 fontWeight = FontWeight.W600,
                                 fontSize = 20.sp,
                                 color = Color(0xFF2981FF),
-
                                 textAlign = TextAlign.Start,
                                 modifier = Modifier.padding()
-
                             )
                             Text(
-
                                 "aynurgambarova.06@gmail.com",
                                 fontSize = 15.sp,
                                 color = Color(0xFF9D9D9D),
                                 textAlign = TextAlign.Start,
                                 modifier = Modifier.padding()
-
                             )
                         }
                     }
-
                     Image(
                         painter = painterResource(R.drawable.settings_ic),
                         contentDescription = "settings_ic",
@@ -125,11 +112,9 @@ fun ProfileScreen(
                         .background(color = Color.White)
                         .padding(top = 24.dp, start = 16.dp, end = 16.dp, bottom = 24.dp)
                         .fillMaxWidth()
-                        .clickable(onClick = {  })
-                    ,
+                        .clickable(onClick = { }),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
-
                 ){
                     Row ( verticalAlignment = Alignment.CenterVertically){
                         Image(
@@ -137,7 +122,6 @@ fun ProfileScreen(
                             contentDescription = "settings_ic",
                         )
                         Text(
-
                             "Şifrəni dəyiş",
                             fontWeight = FontWeight.SemiBold,
                             fontSize = 15.sp,
@@ -146,29 +130,23 @@ fun ProfileScreen(
                         modifier = Modifier.padding(start=12.dp)
                         )
                     }
-
                     Image(
                         painter = painterResource(R.drawable.profile_nav_array),
                         contentDescription = "profile_nav_array",
                     )
                 }
                 Spacer(modifier = Modifier.height(36.dp))
-
                 Row(
                     modifier = Modifier
                         .clip(shape = RoundedCornerShape(8.dp))
                         .background(color = Color.White)
                         .padding(top = 24.dp, start = 16.dp, end = 16.dp, bottom = 24.dp)
                         .fillMaxWidth()
-                        .clickable(onClick = {  })
-                    ,
+                        .clickable(onClick = { }),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
-
                 ){
-
                     Text(
-
                         "Məxfilik siyasəti",
                         fontWeight = FontWeight.SemiBold,
                         fontSize = 15.sp,
@@ -185,14 +163,11 @@ fun ProfileScreen(
                         .background(color = Color.White)
                         .padding(top = 24.dp, start = 16.dp, end = 16.dp, bottom = 24.dp)
                         .fillMaxWidth()
-                        .clickable(onClick = {  })
-                    ,
+                        .clickable(onClick = { }),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
-
                 ){
                     Text(
-
                         "Tez-tez verilən suallar",
                         fontWeight = FontWeight.SemiBold,
                         fontSize = 15.sp,
@@ -209,14 +184,11 @@ fun ProfileScreen(
                         .background(color = Color.White)
                         .padding(top = 24.dp, start = 16.dp, end = 16.dp, bottom = 24.dp)
                         .fillMaxWidth()
-                        .clickable(onClick = {  })
-                    ,
+                        .clickable(onClick = { }),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
-
                 ){
                     Text(
-
                         "Tətbiq haqqında",
                         fontWeight = FontWeight.SemiBold,
                         fontSize = 15.sp,
@@ -227,7 +199,6 @@ fun ProfileScreen(
                         contentDescription = "profile_nav_array",
                     )
                 }
-
                 Spacer(modifier = Modifier.height(36.dp))
                 Row(
                     modifier = Modifier
@@ -235,11 +206,9 @@ fun ProfileScreen(
                         .background(color = Color.White)
                         .padding(top = 24.dp, start = 16.dp, end = 16.dp, bottom = 24.dp)
                         .fillMaxWidth()
-                        .clickable(onClick = {  })
-                    ,
+                        .clickable(onClick = { }),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
-
                 ){
                     Row( verticalAlignment = Alignment.CenterVertically) {
                         Image(
@@ -247,17 +216,13 @@ fun ProfileScreen(
                             contentDescription = "exit_ic",
                         )
                         Text(
-
                             "Hesabdan çıxış",
                             fontWeight = FontWeight.SemiBold,
                             fontSize = 15.sp,
                             color = Color.Black,
                             modifier = Modifier.padding(start=12.dp)
-
                         )
                     }
-
-
                     Image(
                         painter = painterResource(R.drawable.profile_nav_array),
                         contentDescription = "profile_nav_array",
@@ -269,14 +234,11 @@ fun ProfileScreen(
                         .background(color = Color.White)
                         .padding(top = 24.dp, start = 16.dp, end = 16.dp, bottom = 24.dp)
                         .fillMaxWidth()
-                        .clickable(onClick = {  })
-                    ,
+                        .clickable(onClick = { }),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
-
                 ){
                     Text(
-
                         "Hesabı sil",
                         fontWeight = FontWeight.SemiBold,
                         fontSize = 15.sp,
@@ -287,7 +249,6 @@ fun ProfileScreen(
                         contentDescription = "profile_nav_array",
                     )
                 }
-
             }
         }
     })
