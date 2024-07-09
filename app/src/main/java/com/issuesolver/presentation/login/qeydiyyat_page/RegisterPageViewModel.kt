@@ -6,7 +6,6 @@ import com.issuesolver.common.Resource
 import com.issuesolver.common.State
 import com.issuesolver.domain.entity.networkModel.RegisterRequestModel
 import com.issuesolver.domain.usecase.RegisterUseCase
-import com.issuesolver.domain.usecase.login.ValidateFullNameUseCase
 import com.issuesolver.domain.usecase.login.ValidateEmailUseCase
 import com.issuesolver.domain.usecase.login.ValidateFullNameUseCase
 import com.issuesolver.domain.usecase.login.ValidateNewPasswordUseCase

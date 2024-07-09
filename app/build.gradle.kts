@@ -71,6 +71,7 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime.compose.android)
     implementation(libs.androidx.constraintlayout.compose)
     implementation(libs.androidx.runtime.livedata)
+    implementation(libs.androidx.room.runtime.android)
     kapt("com.google.dagger:hilt-android-compiler:2.46")
 
     implementation ("androidx.compose.ui:ui-text-google-fonts:1.6.7")

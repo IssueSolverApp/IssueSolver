@@ -19,11 +19,15 @@ import com.issuesolver.presentation.login.daxil_ol_verification_code.Verificatio
 import com.issuesolver.presentation.login.password_change_page.PasswordChangePage
 import com.issuesolver.presentation.login.qeydiyyat_page.RegisterOtpCodePage
 import com.issuesolver.presentation.login.qeydiyyat_page.RegisterPage
+import com.issuesolver.presentation.profile.enter_password.DeleteAccountScreen
+import com.issuesolver.presentation.profile.my_account.MyAccountScreen
+import com.issuesolver.presentation.profile.new_password.NewPasswordScreen
+import com.issuesolver.presentation.profile.profile.ProfileScreen
 
 @Composable
 fun AppNavigation() {
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = Routes.LOGIN) {
+    NavHost(navController = navController, startDestination = Routes.PROFILE_PAGE) {
         composable(Routes.LOGIN,enterTransition = {
             scaleIntoContainer()
 
@@ -100,6 +104,51 @@ fun AppNavigation() {
             val email = navBackStack.arguments?.getString("id")
             RegisterOtpCodePage(navController = navController, email = email)
         }
+
+
+        composable(Routes.PROFILE_PAGE,enterTransition = {
+            scaleIntoContainer()
+
+        },
+            exitTransition = {
+                scaleOutOfContainer(direction = ScaleTransitionDirection.INWARDS)
+            },
+            popEnterTransition = {
+                scaleIntoContainer(direction = ScaleTransitionDirection.OUTWARDS)
+            },
+            popExitTransition = {
+                scaleOutOfContainer()
+            }) { ProfileScreen(navController) }
+        composable(Routes.PROFILE_NEW_PASSWORD,enterTransition = {
+            scaleIntoContainer()
+
+        },
+            exitTransition = {
+                scaleOutOfContainer(direction = ScaleTransitionDirection.INWARDS)
+            },
+            popEnterTransition = {
+                scaleIntoContainer(direction = ScaleTransitionDirection.OUTWARDS)
+            },
+            popExitTransition = {
+                scaleOutOfContainer()
+            }) { NewPasswordScreen(navController) }
+        composable(Routes.PROFILE_MY_ACCOUNT) { MyAccountScreen(navController) }
+
+        composable(Routes.PROFILE_DELETE_ACCOUNT,enterTransition = {
+            scaleIntoContainer()
+
+        },
+            exitTransition = {
+                scaleOutOfContainer(direction = ScaleTransitionDirection.INWARDS)
+            },
+            popEnterTransition = {
+                scaleIntoContainer(direction = ScaleTransitionDirection.OUTWARDS)
+            },
+            popExitTransition = {
+                scaleOutOfContainer()
+            }) { DeleteAccountScreen(navController)
+        }
+
 
     }
 }
