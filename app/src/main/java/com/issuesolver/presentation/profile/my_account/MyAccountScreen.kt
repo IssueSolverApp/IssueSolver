@@ -48,7 +48,6 @@ fun MyAccountScreen(
 //    viewModel:  = hiltViewModel()
 
 ){
-
     Scaffold(content = { padding ->
         Box(
             modifier = Modifier
@@ -66,13 +65,10 @@ fun MyAccountScreen(
                 Column() {
                     Box(
                         modifier = Modifier
-//                            .padding(top = 20.dp)
                             .size(40.dp)
                             .clip(RoundedCornerShape(100.dp))
                             .background(Color.White)
-                            .clickable {
-                                navController.popBackStack()
-                            },
+                            .clickable { navController.popBackStack() },
                         contentAlignment = Alignment.Center
                     ) {
                         Image(
@@ -88,8 +84,7 @@ fun MyAccountScreen(
                         fontWeight = FontWeight.SemiBold,
                         textAlign = TextAlign.Start,
                         color = Color(0xFF2981FF),
-                        modifier = Modifier
-                            .padding(top = 24.dp),
+                        modifier = Modifier.padding(top = 24.dp),
                     )
                     Text(
                         "Hesabın məlumatlarını dəyişə bilərsiniz",
@@ -97,25 +92,18 @@ fun MyAccountScreen(
                         fontSize = 15.sp,
                         textAlign = TextAlign.Start,
                         color = Color(0xFF9D9D9D),
-                        modifier = Modifier
-                            .padding(top = 8.dp, bottom = 16.dp),
+                        modifier = Modifier.padding(top = 8.dp, bottom = 16.dp),
                     )
                 }
-//                Spacer(
-//                    modifier = Modifier.height(8.dp)
-//                )
                 Divider(
                     thickness = 0.5.dp,
                     color = Color(0xFF2981FF)
                 )
-//                Spacer(modifier = Modifier.height(8.dp))
                 Column(
                     Modifier
                         .padding(top = 24.dp)
                         .verticalScroll(rememberScrollState())
-
                 ) {
-
                     Text(
                         "Ad, soyad",
                         style = MaterialTheme.typography.bodySmall,
@@ -124,7 +112,6 @@ fun MyAccountScreen(
                             false
 //                            isFullNameError
                             ) Color.Red else Color.Black,
-
                         )
                     val fullName=""
                     TextField(
@@ -209,11 +196,7 @@ fun MyAccountScreen(
                         enabled = false,
 
                         )
-
                 }
-
-
-
             }
             Spacer(modifier = Modifier.height(16.dp))
             Column(
@@ -222,8 +205,7 @@ fun MyAccountScreen(
                 AuthButton(
                     text = "Dəyişiklikləri yadda saxla",
                     onClick = {},
-                    modifier = Modifier
-                        .fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth()
                 )
             }
         }

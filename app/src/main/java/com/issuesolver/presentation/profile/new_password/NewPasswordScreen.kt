@@ -61,11 +61,9 @@ fun NewPasswordScreen(
 //    viewModel:  = hiltViewModel()
 
 ){
-
     var showPassword1 by remember { mutableStateOf(value = false) }
     var showPassword2 by remember { mutableStateOf(value = false) }
     var showPassword3 by remember { mutableStateOf(value = false) }
-
 
     Scaffold(content = { padding ->
     Box(
@@ -105,8 +103,7 @@ fun NewPasswordScreen(
                     fontWeight = FontWeight.SemiBold,
                     textAlign = TextAlign.Start,
                     color = Color(0xFF2981FF),
-                    modifier = Modifier
-                        .padding(top = 24.dp),
+                    modifier = Modifier.padding(top = 24.dp),
                 )
                 Text(
                     "Yeni şifrə təyin edə bilərsiz.",
@@ -114,8 +111,7 @@ fun NewPasswordScreen(
                     fontSize = 15.sp,
                     textAlign = TextAlign.Start,
                     color = Color(0xFF9D9D9D),
-                    modifier = Modifier
-                        .padding(top = 8.dp, bottom = 16.dp),
+                    modifier = Modifier.padding(top = 8.dp, bottom = 16.dp),
                 )
             }
 //                Spacer(
@@ -125,12 +121,10 @@ fun NewPasswordScreen(
                 thickness = 0.5.dp,
                 color = Color(0xFF2981FF)
             )
-//                Spacer(modifier = Modifier.height(8.dp))
             Column(
                 Modifier
                     .padding(top = 24.dp)
                     .verticalScroll(rememberScrollState())
-
             ) {
                 Text(
                     "Cari şifrə",
@@ -138,7 +132,6 @@ fun NewPasswordScreen(
                     fontSize = 15.sp,
                 )
                 val email2=""
-
                 TextField(
                     shape = RoundedCornerShape(12.dp),
                     value = email2,
@@ -161,8 +154,7 @@ fun NewPasswordScreen(
                                 RoundedCornerShape(12.dp)
                             )
                             else Modifier.border(1.dp, Color.White, RoundedCornerShape(12.dp))
-                        )
-                    ,
+                        ),
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                     colors = TextFieldDefaults.colors(
                         disabledTextColor = Color(0xFF2981FF),
@@ -192,7 +184,6 @@ fun NewPasswordScreen(
                         }
                     }
                 )
-
                 Text(
                     "Yeni şifrə",
                     style = MaterialTheme.typography.bodySmall,
@@ -200,7 +191,6 @@ fun NewPasswordScreen(
                     modifier = Modifier.padding(top=20.dp)
                 )
                 val email3=""
-
                 TextField(
                     shape = RoundedCornerShape(12.dp),
                     value = email3,
@@ -223,8 +213,7 @@ fun NewPasswordScreen(
                                 RoundedCornerShape(12.dp)
                             )
                             else Modifier.border(1.dp, Color.White, RoundedCornerShape(12.dp))
-                        )
-                    ,
+                        ),
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                     colors = TextFieldDefaults.colors(
                         disabledTextColor = Color(0xFF2981FF),
@@ -263,7 +252,6 @@ fun NewPasswordScreen(
 
             )
             val email=""
-
             TextField(
                 shape = RoundedCornerShape(12.dp),
                 value = email,
@@ -286,8 +274,7 @@ fun NewPasswordScreen(
                             RoundedCornerShape(12.dp)
                         )
                         else Modifier.border(1.dp, Color.White, RoundedCornerShape(12.dp))
-                    )
-                ,
+                    ),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                 colors = TextFieldDefaults.colors(
                     disabledTextColor = Color(0xFF2981FF),
@@ -316,11 +303,7 @@ fun NewPasswordScreen(
                         )
                     }
                 }
-
             )
-
-
-
         }
         Spacer(modifier = Modifier.height(16.dp))
         Column(
@@ -329,8 +312,7 @@ fun NewPasswordScreen(
             AuthButton(
                 text = "Yenilə",
                 onClick = {},
-                modifier = Modifier
-                    .fillMaxWidth()
+                modifier = Modifier.fillMaxWidth()
             )
         }
     }

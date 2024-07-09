@@ -47,43 +47,46 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.issuesolver.R
+import com.issuesolver.presentation.bottombar.AnimatedNavigationBar
 import com.issuesolver.presentation.common.AuthButton
 import com.issuesolver.presentation.navigation.mockNavController
 
 @Composable
 fun RemoveAccountScreen(
-    navController: NavController,
+//    navController: NavController,
 //    viewModel:  = hiltViewModel()
 
 ){
 
     var showPassword1 by remember { mutableStateOf(value = false) }
 
-
-
-    Scaffold(content = { padding ->
+    Scaffold(
+        modifier = Modifier
+            .navigationBarsPadding()
+        ,
+        bottomBar = {
+            AnimatedNavigationBar()
+        },
+        content = { padding ->
         Box(
             modifier = Modifier
+                .padding(padding)
                 .fillMaxSize()
-                .statusBarsPadding()
-                .navigationBarsPadding()
                 .imePadding()
                 .padding(top = 24.dp, start = 20.dp, end = 20.dp, bottom = 16.dp)
         ) {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .imePadding()
             ) {
                 Column() {
                     Box(
                         modifier = Modifier
-//                            .padding(top = 20.dp)
                             .size(40.dp)
                             .clip(RoundedCornerShape(100.dp))
                             .background(Color.White)
                             .clickable {
-                                navController.popBackStack()
+//                                navController.popBackStack()
                             },
                         contentAlignment = Alignment.Center
                     ) {
@@ -100,8 +103,7 @@ fun RemoveAccountScreen(
                         fontWeight = FontWeight.SemiBold,
                         textAlign = TextAlign.Start,
                         color = Color(0xFF2981FF),
-                        modifier = Modifier
-                            .padding(top = 24.dp),
+                        modifier = Modifier.padding(top = 24.dp),
                     )
                     Text(
                         "Zəhmət olmasa, hesabı silmək üçün məlumatlarınızı daxil edin.",
@@ -109,23 +111,17 @@ fun RemoveAccountScreen(
                         fontSize = 15.sp,
                         textAlign = TextAlign.Start,
                         color = Color(0xFF9D9D9D),
-                        modifier = Modifier
-                            .padding(top = 8.dp, bottom = 16.dp),
+                        modifier = Modifier.padding(top = 8.dp, bottom = 16.dp),
                     )
                 }
-//                Spacer(
-//                    modifier = Modifier.height(8.dp)
-//                )
                 Divider(
                     thickness = 0.5.dp,
                     color = Color(0xFF2981FF)
                 )
-//                Spacer(modifier = Modifier.height(8.dp))
                 Column(
                     Modifier
                         .padding(top = 24.dp)
                         .verticalScroll(rememberScrollState())
-
                 ) {
                     Text(
                         "Şifrə",
@@ -133,7 +129,6 @@ fun RemoveAccountScreen(
                         fontSize = 15.sp,
                     )
                     val email2 = ""
-
                     TextField(
                         shape = RoundedCornerShape(12.dp),
                         value = email2,
@@ -188,11 +183,8 @@ fun RemoveAccountScreen(
                                 )
                             }
                         }
-
                     )
-
                 }
-
             }
             Spacer(modifier = Modifier.height(16.dp))
             Column(
@@ -201,8 +193,7 @@ fun RemoveAccountScreen(
                 AuthButton(
                     text = "Hesabı sil",
                     onClick = {},
-                    modifier = Modifier
-                        .fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth()
                 )
             }
         }
@@ -213,5 +204,5 @@ fun RemoveAccountScreen(
 @Preview(showBackground = true)
 @Composable
 fun PreviewNewPasswordScreen() {
-    RemoveAccountScreen(mockNavController())
+    RemoveAccountScreen()
 }
