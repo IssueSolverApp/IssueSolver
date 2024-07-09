@@ -5,6 +5,7 @@ import android.view.WindowManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import com.issuesolver.TestUI
 import com.issuesolver.presentation.profile.profile.ProfileScreen
 import com.issuesolver.ui.theme.IssueSolverTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -20,7 +21,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             IssueSolverTheme {
 //                AppNavigation()
-                ProfileScreen()
+                TestUI()
             }
         }
     }

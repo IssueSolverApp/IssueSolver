@@ -16,7 +16,6 @@ class BarShape(
     private val cornerRadius: Dp,
     private val circleGap: Dp = 8.dp,
 ) : Shape {
-
     override fun createOutline(
         size: Size,
         layoutDirection: LayoutDirection,
@@ -24,7 +23,6 @@ class BarShape(
     ): Outline {
         return Outline.Generic(getPath(size, density))
     }
-
     private fun getPath(size: Size, density: Density): Path {
         val cutoutCenterX = offset
         val cutoutRadius = density.run { (circleRadius+circleGap).toPx() }
@@ -50,8 +48,8 @@ class BarShape(
                     rect = Rect(
                         left = 0f,
                         top = 0f,
-                        right = realLeftCornerDiameter,
-                        bottom = realLeftCornerDiameter
+                        right = 0f,
+                        bottom = 0f
                     ),
                     startAngleDegrees = 180.0f,
                     sweepAngleDegrees = 90.0f,
@@ -78,17 +76,13 @@ class BarShape(
             )
             // top right
             if (cutoutRightX < size.width) {
-                val realRightCornerDiameter = if (cutoutRightX <= size.width - cornerRadiusPx) {
-                    cornerDiameter
-                } else {
-                    (size.width - cutoutRightX) * 2
-                }
+
                 arcTo(
                     rect = Rect(
-                        left = size.width - realRightCornerDiameter,
+                        left = 0f,
                         top = 0f,
                         right = size.width,
-                        bottom = realRightCornerDiameter
+                        bottom = 0f
                     ),
                     startAngleDegrees = -90.0f,
                     sweepAngleDegrees = 90.0f,

@@ -48,9 +48,7 @@ import com.issuesolver.R
 
 
 @Composable
-fun AnimatedNavigationBar(
-
-) {
+fun AnimatedNavigationBar() {
     val barColor: Color=Color.White
     val circleColor: Color=Color(0xFF2981FF)
     val selectedColor: Color=Color.White
@@ -73,7 +71,7 @@ fun AnimatedNavigationBar(
     }
     val circleRadiusPx = LocalDensity.current.run { circleRadius.toPx().toInt() }
     val offsetTransition = updateTransition(offset, "offset transition")
-    val animation = spring<Float>(dampingRatio = 0.5f, stiffness = Spring.StiffnessVeryLow)
+    val animation = spring<Float>(dampingRatio = 0.9f, stiffness = Spring.StiffnessVeryLow)
     val cutoutOffset by offsetTransition.animateFloat(
         transitionSpec = {
             if (this.initialState == 0f) {
@@ -147,7 +145,6 @@ fun AnimatedNavigationBar(
                             modifier = Modifier.alpha(iconAlpha)
                         )
                     },
-//                    label = { Text(button.text) },
                     colors = NavigationBarItemDefaults.colors(
                         selectedIconColor = selectedColor,
                         selectedTextColor = selectedColor,
