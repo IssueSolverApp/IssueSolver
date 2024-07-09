@@ -7,6 +7,5 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class DeleteAccountRequest(
-    val aa: String? = null,
-    val bb: String? = null,
+    val password: String? = null,
 ) : Parcelable

@@ -7,6 +7,6 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class DeleteAccountResponse(
-    val aa: String? = null,
-    val bb: String? = null,
+    var success: Boolean? = null,
+    var message: String? = null
 ) : Parcelable

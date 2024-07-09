@@ -6,6 +6,8 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class UpdatePasswordRequest(
-    val aa: String? = null,
-    val bb: String? = null,
-) : Parcelable
+    val currentPassword: String? = null,
+    val password: String? = null,
+    val confirmPassword: String? = null,
+
+    ) : Parcelable
