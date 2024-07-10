@@ -7,6 +7,7 @@ import com.google.gson.Gson
 import com.issuesolver.data.network.auth.LoginService
 import com.issuesolver.data.network.jwt.AuthAuthenticator
 import com.issuesolver.data.network.jwt.AuthInterceptor
+import com.issuesolver.data.network.profile.ProfileService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -33,7 +34,7 @@ class ApiModule {
     @Singleton
     fun provideApiClient(gson: Gson, client: OkHttpClient): Retrofit {
         val retrofit = Retrofit.Builder()
-        retrofit.baseUrl("https://govermentauthapi20240610022027.azurewebsites.net/")
+        retrofit.baseUrl("https://govermentauthapi20240708181106.azurewebsites.net/")
             .addConverterFactory(GsonConverterFactory.create(gson))
             .client(client)
             .build()
@@ -46,6 +47,11 @@ class ApiModule {
     @Singleton
     fun provideApiService(retrofit: Retrofit): LoginService {
         return retrofit.create(LoginService::class.java)
+    }
+    @Provides
+    @Singleton
+    fun provideApiService2(retrofit: Retrofit): ProfileService {
+        return retrofit.create(ProfileService::class.java)
     }
 
     private val loggingInterceptor =

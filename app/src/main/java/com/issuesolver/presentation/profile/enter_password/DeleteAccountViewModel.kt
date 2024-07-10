@@ -36,7 +36,7 @@ class DeleteAccountViewModel @Inject constructor(
                     }
                     is Resource.Error -> {
                         _profileState.emit(State.error(resource.message))
-                        _uiState.value = uiState.value.copy(passwordError = resource.message)
+//                        _uiState.value = uiState.value.copy(passwordError = resource.message)
 
                     }
                 }

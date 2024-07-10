@@ -27,7 +27,7 @@ import com.issuesolver.presentation.profile.profile.ProfileScreen
 @Composable
 fun AppNavigation() {
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = Routes.PROFILE_PAGE) {
+    NavHost(navController = navController, startDestination = Routes.LOGIN) {
         composable(Routes.LOGIN,enterTransition = {
             scaleIntoContainer()
 

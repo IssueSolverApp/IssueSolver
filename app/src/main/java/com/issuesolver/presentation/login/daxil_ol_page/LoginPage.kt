@@ -72,9 +72,9 @@ fun LoginPage(
 
         }
         StatusR.SUCCESS -> {
-            //navController.navigate("")
-            Toast.makeText(LocalView.current.context, "Login Success", Toast.LENGTH_SHORT).show()
-            viewModel.clearLoginState()
+            navController.navigate("profile_page")
+//            Toast.makeText(LocalView.current.context, "Login Success", Toast.LENGTH_SHORT).show()
+//            viewModel.clearLoginState()
         }
         else-> {
 

@@ -1,11 +1,11 @@
 package com.issuesolver.presentation.profile.new_password
 
 data class NewPasswordScreenState (
-    val currentPassword: String? = null,
+    val currentPassword: String = "",
     val currentPasswordError: String? = null,
-    val newPassword: String? = null,
+    val newPassword: String = "",
     val newPasswordError: String? = null,
-    val confirmPassword: String? = null,
+    val confirmPassword: String = "",
     val confirmPasswordError: String? = null,
     val isLoading: Boolean = false
 )

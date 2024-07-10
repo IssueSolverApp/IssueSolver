@@ -36,7 +36,7 @@ class NewPasswordScreenViewModel @Inject constructor(
                     }
                     is Resource.Error -> {
                         _profileState.emit(State.error(resource.message))
-                        _uiState.value = uiState.value.copy(currentPasswordError = resource.message)
+//                        _uiState.value = uiState.value.copy(currentPasswordError = resource.message)
 
                     }
                 }

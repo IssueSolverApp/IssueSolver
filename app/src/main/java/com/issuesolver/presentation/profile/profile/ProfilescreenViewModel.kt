@@ -45,7 +45,7 @@ class ProfileScreenViewModel @Inject constructor(
 
                     }
                     is Resource.Error -> {
-                        _profileState.emit(State.error(resource.message))
+//                        _profileState.emit(State.error(resource.message))
                     }
                 }
             }

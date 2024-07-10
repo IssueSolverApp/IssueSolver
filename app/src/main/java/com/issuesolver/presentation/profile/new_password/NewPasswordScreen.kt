@@ -27,6 +27,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -44,21 +45,28 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.issuesolver.R
 import com.issuesolver.presentation.bottombar.AnimatedNavigationBar
 import com.issuesolver.presentation.common.AuthButton
+import com.issuesolver.presentation.common.ErrorText
 import com.issuesolver.presentation.navigation.mockNavController
 
 @Composable
 fun NewPasswordScreen(
     navController: NavController,
-//    viewModel:  = hiltViewModel()
+    viewModel: NewPasswordScreenViewModel  = hiltViewModel()
 
 ){
     var showPassword1 by remember { mutableStateOf(value = false) }
     var showPassword2 by remember { mutableStateOf(value = false) }
     var showPassword3 by remember { mutableStateOf(value = false) }
+
+
+    val uiState by viewModel.uiState.collectAsState()
+    val forgetPasswordState by viewModel.profileState.collectAsState()
+
 
     Scaffold(
         modifier = Modifier
@@ -132,10 +140,9 @@ fun NewPasswordScreen(
                     style = MaterialTheme.typography.bodySmall,
                     fontSize = 15.sp,
                 )
-                val email2=""
                 TextField(
                     shape = RoundedCornerShape(12.dp),
-                    value = email2,
+                    value = uiState.currentPassword,
                     onValueChange = {},
                     placeholder = {
                         Text("Şifrənizi daxil edin",
@@ -191,10 +198,9 @@ fun NewPasswordScreen(
                     fontSize = 15.sp,
                     modifier = Modifier.padding(top=20.dp)
                 )
-                val email3=""
                 TextField(
                     shape = RoundedCornerShape(12.dp),
-                    value = email3,
+                    value = uiState.newPassword,
                     onValueChange = {},
                     placeholder = {
                         Text("Yeni şifrəni təyin edin",
@@ -252,10 +258,9 @@ fun NewPasswordScreen(
                 modifier = Modifier.padding(top=20.dp)
 
             )
-            val email=""
             TextField(
                 shape = RoundedCornerShape(12.dp),
-                value = email,
+                value = uiState.confirmPassword,
                 onValueChange = {},
                 placeholder = {
                     Text("Şifrəni təsdiq edin",
@@ -305,6 +310,10 @@ fun NewPasswordScreen(
                     }
                 }
             )
+            ErrorText(
+                errorMessage = uiState.currentPasswordError,
+//                        isVisible = isPasswordError
+            )
         }
         Spacer(modifier = Modifier.height(16.dp))
         Column(
@@ -321,8 +330,3 @@ fun NewPasswordScreen(
 )
 }
 
-@Preview(showBackground = true)
-@Composable
-fun PreviewNewPasswordScreen() {
-    NewPasswordScreen(mockNavController())
-}

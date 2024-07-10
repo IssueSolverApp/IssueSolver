@@ -26,6 +26,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -37,18 +39,23 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.issuesolver.R
 import com.issuesolver.presentation.bottombar.AnimatedNavigationBar
 import com.issuesolver.presentation.common.AuthButton
+import com.issuesolver.presentation.common.ErrorText
 import com.issuesolver.presentation.navigation.mockNavController
 
 @Composable
 fun MyAccountScreen(
     navController: NavController,
-//    viewModel:  = hiltViewModel()
+    viewModel: MyAccountViewModel  = hiltViewModel()
 
 ){
+
+    val uiState by viewModel.uiState.collectAsState()
+    val forgetPasswordState by viewModel.profileState.collectAsState()
     Scaffold(
         modifier = Modifier
             .navigationBarsPadding(),
@@ -118,10 +125,9 @@ fun MyAccountScreen(
 //                            isFullNameError
                             ) Color.Red else Color.Black,
                         )
-                    val fullName=""
                     TextField(
                         shape = RoundedCornerShape(12.dp),
-                        value = fullName,
+                        value = uiState.fullName,
                         onValueChange = {
 //                            viewModel.handleEvent(RegisterPageEvent.FullNameChanged(it))
                         },
@@ -164,10 +170,15 @@ fun MyAccountScreen(
                             focusedIndicatorColor = Color.Transparent,
                         )
                     )
+
+                    ErrorText(
+                        errorMessage = uiState.fullNameError,
+//                        isVisible = isPasswordError
+                    )
                 }
                 Column(Modifier.padding(top = 20.dp)) {
                     Text(
-                        "E-poçt",
+                        text = "E-poçt",
                         style = MaterialTheme.typography.bodySmall,
                         fontSize = 15.sp,
                         color = if (
@@ -175,10 +186,9 @@ fun MyAccountScreen(
 //                            isEmailError
                             ) Color.Red else Color.Black,
                     )
-                    val email="aynurgambarova.06@gmail.com"
                     TextField(
                         shape = RoundedCornerShape(12.dp),
-                        value = email,
+                        value = uiState.email?: "No Email Available",
                         onValueChange = {
 //                            viewModel.handleEvent(RegisterPageEvent.EmailChanged(it))
                         },
@@ -216,10 +226,4 @@ fun MyAccountScreen(
         }
     }
     )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun PreviewNewPasswordScreen() {
-    MyAccountScreen(mockNavController())
 }

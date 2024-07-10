@@ -47,8 +47,6 @@ fun ProfileScreen(
 
 
     val uiState by viewModel.uiState.collectAsState()
-//    val email = uiState.email != null
-//    val fullName = uiState.fullName != null
 //    val isEmailError = uiState.emailError != null
 //    val isfullNameError = uiState.fullNameError != null
     val forgetPasswordState by viewModel.profileState.collectAsState()
@@ -265,10 +263,6 @@ fun ProfileScreen(
     })
 }
 
-//@Preview(showBackground = true)
-//@Composable
-//fun PreviewProfileScreen() {
-//    ProfileScreen()
-//}
+
 
 

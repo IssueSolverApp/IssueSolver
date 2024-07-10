@@ -73,7 +73,7 @@ class AuthAuthenticator @Inject constructor(
         loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
         val okHttpClient = OkHttpClient.Builder().addInterceptor(loggingInterceptor).build()
         val retrofit = Retrofit.Builder()
-            .baseUrl("https://govermentauthapi20240610022027.azurewebsites.net/")
+            .baseUrl("https://govermentauthapi20240708181106.azurewebsites.net/")
             .addConverterFactory(GsonConverterFactory.create())
             .client(okHttpClient)
             .build()
