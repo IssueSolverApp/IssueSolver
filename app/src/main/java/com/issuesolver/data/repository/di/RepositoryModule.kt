@@ -2,8 +2,12 @@ package com.issuesolver.data.repository.di
 
 import com.issuesolver.data.repository.ConfirmOtpRepositoryImpl
 import com.issuesolver.data.repository.ConfirmOtpRepositoryInterface
+import com.issuesolver.data.repository.DeleteAccountRepositoryImpl
+import com.issuesolver.data.repository.DeleteAccountRepositoryInterface
 import com.issuesolver.data.repository.ForgetPasswordRepositoryImpl
 import com.issuesolver.data.repository.ForgetPasswordRepositoryInterface
+import com.issuesolver.data.repository.GetMeRepositoryImpl
+import com.issuesolver.data.repository.GetMeRepositoryInterFace
 import com.issuesolver.data.repository.OtpTrustRepositoryImpl
 import com.issuesolver.data.repository.OtpTrustRepositoryInterface
 import com.issuesolver.data.repository.RegisterRepositoryImpl
@@ -14,6 +18,10 @@ import com.issuesolver.data.repository.ResetPasswordRepositoryImpl
 import com.issuesolver.data.repository.ResetPasswordRepositoryInterface
 import com.issuesolver.data.repository.SignInRepositoryImpl
 import com.issuesolver.data.repository.SignInRepositoryInterface
+import com.issuesolver.data.repository.UpdateFullNameRepositoryImpl
+import com.issuesolver.data.repository.UpdateFullNameRepositoryInterFace
+import com.issuesolver.data.repository.UpdatePasswordRepositoryImpl
+import com.issuesolver.data.repository.UpdatePasswordRepositoryInterFace
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -53,6 +61,19 @@ abstract class RepositoryModule {
     @Binds
     @Singleton
     abstract fun provideResetPasswordRepository(repository: ResetPasswordRepositoryImpl): ResetPasswordRepositoryInterface
+    //
+    @Binds
+    @Singleton
+    abstract fun provideGetMeRepository(repository: GetMeRepositoryImpl): GetMeRepositoryInterFace
+    @Binds
+    @Singleton
+    abstract fun provideUpdatePasswordRepository(repository: UpdatePasswordRepositoryImpl): UpdatePasswordRepositoryInterFace
+    @Binds
+    @Singleton
+    abstract fun provideUpdateFullNameRepository(repository: UpdateFullNameRepositoryImpl): UpdateFullNameRepositoryInterFace
+    @Binds
+    @Singleton
+    abstract fun provideDeleteAccountRepository(repository: DeleteAccountRepositoryImpl):DeleteAccountRepositoryInterface
 
 
 }

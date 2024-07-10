@@ -13,7 +13,8 @@ interface ResetPasswordRepositoryInterface {
     ): Response<RegisterResponseModel>
 }
 
-class ResetPasswordRepositoryImpl @Inject constructor(private val loginService: LoginService):ResetPasswordRepositoryInterface {
+class ResetPasswordRepositoryImpl @Inject constructor(private val loginService: LoginService)
+    :ResetPasswordRepositoryInterface {
     override suspend fun resetPassword(
         token: String,
         resetPasswordModel: ResetPasswordModel
