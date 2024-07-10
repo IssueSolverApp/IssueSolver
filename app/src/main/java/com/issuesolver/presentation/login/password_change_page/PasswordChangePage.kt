@@ -1,6 +1,5 @@
 package com.issuesolver.presentation.login.password_change_page
 
-import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.border
 import androidx.compose.foundation.gestures.scrollBy
@@ -28,11 +27,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.issuesolver.R
 import com.issuesolver.common.StatusR
-import com.issuesolver.domain.entity.networkModel.ResetPasswordModel
+import com.issuesolver.domain.entity.networkModel.login.ResetPasswordModel
 import com.issuesolver.presentation.common.AuthButton
 import com.issuesolver.presentation.common.ErrorText
 import com.issuesolver.presentation.common.LoadingOverlay
-import com.issuesolver.presentation.login.daxil_ol_page.LoginPageEvent
 import com.issuesolver.presentation.navigation.Routes
 import com.issuesolver.presentation.navigation.mockNavController
 import kotlinx.coroutines.launch

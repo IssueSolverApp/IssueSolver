@@ -55,10 +55,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.issuesolver.R
 import com.issuesolver.common.AlertDialogExample
-import com.issuesolver.common.Resource
 import com.issuesolver.common.StatusR
-import com.issuesolver.domain.entity.networkModel.RequestOtp
-import com.issuesolver.domain.entity.networkModel.ResendOtpModel
+import com.issuesolver.domain.entity.networkModel.login.RequestOtp
+import com.issuesolver.domain.entity.networkModel.login.ResendOtpModel
 import com.issuesolver.presentation.common.AuthButton
 import com.issuesolver.presentation.common.ErrorText
 import com.issuesolver.presentation.common.LoadingOverlay

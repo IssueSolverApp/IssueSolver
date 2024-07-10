@@ -4,10 +4,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.issuesolver.common.Resource
 import com.issuesolver.common.State
-import com.issuesolver.domain.entity.networkModel.RequestOtp
-import com.issuesolver.domain.entity.networkModel.ResendOtpModel
-import com.issuesolver.domain.usecase.OtpTrustUseCase
-import com.issuesolver.domain.usecase.ResendOtpUseCase
+import com.issuesolver.domain.entity.networkModel.login.RequestOtp
+import com.issuesolver.domain.entity.networkModel.login.ResendOtpModel
+import com.issuesolver.domain.usecase.login.backend.OtpTrustUseCase
+import com.issuesolver.domain.usecase.login.backend.ResendOtpUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

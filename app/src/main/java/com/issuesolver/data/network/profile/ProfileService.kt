@@ -1,10 +1,10 @@
 package com.issuesolver.data.network.profile
 
-import com.issuesolver.domain.entity.networkModel.DeleteAccountRequest
-import com.issuesolver.domain.entity.networkModel.GetMeResponse
-import com.issuesolver.domain.entity.networkModel.ProfileResponse
-import com.issuesolver.domain.entity.networkModel.UpdateFullNameRequest
-import com.issuesolver.domain.entity.networkModel.UpdatePasswordRequest
+import com.issuesolver.domain.entity.networkModel.profile.DeleteAccountRequest
+import com.issuesolver.domain.entity.networkModel.profile.GetMeResponse
+import com.issuesolver.domain.entity.networkModel.profile.ProfileResponse
+import com.issuesolver.domain.entity.networkModel.profile.UpdateFullNameRequest
+import com.issuesolver.domain.entity.networkModel.profile.UpdatePasswordRequest
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.DELETE

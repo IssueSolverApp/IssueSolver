@@ -1,11 +1,8 @@
 package com.issuesolver.data.network.jwt
 
-import android.app.LauncherActivity
-import android.content.Context
-import android.content.Intent
 import android.content.SharedPreferences
 import com.issuesolver.data.network.auth.LoginService
-import com.issuesolver.domain.entity.networkModel.LoginResponse
+import com.issuesolver.domain.entity.networkModel.login.LoginResponse
 import kotlinx.coroutines.runBlocking
 import okhttp3.Authenticator
 import okhttp3.Interceptor
@@ -17,7 +14,6 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Inject
-import javax.inject.Singleton
 
 //class AuthInterceptor(private val sharedPreferences: SharedPreferences): Interceptor {
 //    override fun intercept(chain: Interceptor.Chain): Response {
