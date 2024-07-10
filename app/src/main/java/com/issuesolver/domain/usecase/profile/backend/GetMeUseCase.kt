@@ -19,7 +19,7 @@ class GetMeUseCase @Inject constructor(private val getMeRepository: GetMeReposit
         try {
             val response = getMeRepository.getMe()
             if (response.isSuccessful) {
-                emit(Resource.Success(response.body()?.message))
+                emit(Resource.Success(response.body()))
             } else {
                 val errorResponse = response.errorBody()?.string()?.let {
                     parseErrorResponse(it)

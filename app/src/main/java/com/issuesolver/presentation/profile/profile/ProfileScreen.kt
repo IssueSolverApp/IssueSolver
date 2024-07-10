@@ -14,38 +14,45 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.CardDefaults.shape
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.semantics.SemanticsActions.OnClick
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.issuesolver.R
 import com.issuesolver.presentation.bottombar.AnimatedNavigationBar
-import com.issuesolver.presentation.bottombar.ButtonData
 import com.issuesolver.presentation.navigation.Routes
 
 
 @Composable
 fun ProfileScreen(
     navController: NavController,
-//    viewModel:  = hiltViewModel(),
+    viewModel: ProfileScreenViewModel = hiltViewModel(),
 ) {
+
+
+
+    val uiState by viewModel.uiState.collectAsState()
+//    val email = uiState.email != null
+//    val fullName = uiState.fullName != null
+//    val isEmailError = uiState.emailError != null
+//    val isfullNameError = uiState.fullNameError != null
+    val forgetPasswordState by viewModel.profileState.collectAsState()
+
 
     Scaffold(
         modifier = Modifier
@@ -88,7 +95,7 @@ fun ProfileScreen(
                         )
                         Column {
                             Text(
-                                "AYNUR QƏMBƏROVA",
+                                text=uiState.fullName ?: "No Name Available",
                                 fontWeight = FontWeight.W600,
                                 fontSize = 20.sp,
                                 color = Color(0xFF2981FF),
@@ -96,7 +103,7 @@ fun ProfileScreen(
                                 modifier = Modifier.padding()
                             )
                             Text(
-                                "aynurgambarova.06@gmail.com",
+                                text=uiState.email ?: "No Email Available",
                                 fontSize = 15.sp,
                                 color = Color(0xFF9D9D9D),
                                 textAlign = TextAlign.Start,
