@@ -1,4 +1,11 @@
 package com.issuesolver.presentation.profile.my_account
 
-class MyAccountEvent {
+
+sealed class MyAccountEvent {
+    data class FullNameChanged(val fullName: String) : MyAccountEvent()
+
+
+    object Submit : MyAccountEvent()
+
+
 }

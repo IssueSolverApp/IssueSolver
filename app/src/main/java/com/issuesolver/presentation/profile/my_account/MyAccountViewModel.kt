@@ -7,6 +7,8 @@ import com.issuesolver.common.State
 import com.issuesolver.domain.entity.networkModel.profile.UpdateFullNameRequest
 import com.issuesolver.domain.usecase.profile.backend.GetMeUseCase
 import com.issuesolver.domain.usecase.profile.backend.UpdateFullNameUseCase
+import com.issuesolver.domain.usecase.profile.local.FullNameUseCase
+import com.issuesolver.presentation.login.daxil_ol_page_email.VerificationCodePageEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -18,6 +20,9 @@ import javax.inject.Inject
 class MyAccountViewModel @Inject constructor(
     private val updateFullNameUseCase: UpdateFullNameUseCase,
     private val getMeUseCase: GetMeUseCase,
+    private val fullNameUseCase: FullNameUseCase,
+
+
     ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(MyAccountState())
@@ -72,6 +77,25 @@ class MyAccountViewModel @Inject constructor(
                     }
                 }
             }
+        }
+    }
+    fun handleEvent(event: MyAccountEvent) {
+        when (event) {
+            is MyAccountEvent.FullNameChanged -> {
+                val result = fullNameUseCase.execute(event.fullName)
+                _uiState.value = uiState.value.copy(
+                    fullName = event.fullName,
+                    fullNameError = result.errorMessage,
+                    isInputValid = result.successful
+                )
+            }
+
+            is MyAccountEvent.Submit -> {
+                if (uiState.value.isInputValid) {
+
+                }
+            }
+
         }
     }
 

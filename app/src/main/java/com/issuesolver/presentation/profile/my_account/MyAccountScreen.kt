@@ -1,5 +1,6 @@
 package com.issuesolver.presentation.profile.my_account
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -32,6 +33,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -42,10 +44,16 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.issuesolver.R
+import com.issuesolver.common.StatusR
+import com.issuesolver.domain.entity.networkModel.profile.UpdateFullNameRequest
+import com.issuesolver.domain.entity.networkModel.profile.UpdatePasswordRequest
 import com.issuesolver.presentation.bottombar.AnimatedNavigationBar
 import com.issuesolver.presentation.common.AuthButton
 import com.issuesolver.presentation.common.ErrorText
+import com.issuesolver.presentation.common.LoadingOverlay
 import com.issuesolver.presentation.navigation.mockNavController
+import com.issuesolver.presentation.profile.enter_password.DeleteAccountEvent
+import com.issuesolver.presentation.profile.new_password.NewPasswordScreenEvent
 
 @Composable
 fun MyAccountScreen(
@@ -55,7 +63,31 @@ fun MyAccountScreen(
 ){
 
     val uiState by viewModel.uiState.collectAsState()
-    val forgetPasswordState by viewModel.profileState.collectAsState()
+    val updateFullNameState by viewModel.profileState.collectAsState()
+    when(updateFullNameState?.status){
+
+        StatusR.LOADING -> {
+
+            LoadingOverlay()
+
+        }
+
+        StatusR.ERROR -> {
+            Toast.makeText(LocalView.current.context, "Kodun ishlemir X(", Toast.LENGTH_SHORT).show()
+
+
+        }
+        StatusR.SUCCESS -> {
+            navController.navigate("profile_page")
+            Toast.makeText(LocalView.current.context, "Full Name Changed <3", Toast.LENGTH_SHORT).show()
+//            viewModel.clearLoginState()
+        }
+        else-> {
+
+        }
+
+
+    }
     Scaffold(
         modifier = Modifier
             .navigationBarsPadding(),
@@ -190,8 +222,11 @@ fun MyAccountScreen(
                         shape = RoundedCornerShape(12.dp),
                         value = uiState.email?: "No Email Available",
                         onValueChange = {
-//                            viewModel.handleEvent(RegisterPageEvent.EmailChanged(it))
-                        },
+                            viewModel.handleEvent(
+                                MyAccountEvent.FullNameChanged(
+                                    it
+                                )
+                            )                        },
                         placeholder = {
                             Text(
                                 ("E-poçtunuzu daxil edin"),
@@ -219,7 +254,14 @@ fun MyAccountScreen(
             ) {
                 AuthButton(
                     text = "Dəyişiklikləri yadda saxla",
-                    onClick = {},
+                    onClick = {
+                        viewModel.handleEvent(MyAccountEvent.Submit)
+                        viewModel.updateProfile(
+                            UpdateFullNameRequest(
+                                uiState.fullName,
+                                )
+                        )
+                    },
                     modifier = Modifier.fillMaxWidth()
                 )
             }

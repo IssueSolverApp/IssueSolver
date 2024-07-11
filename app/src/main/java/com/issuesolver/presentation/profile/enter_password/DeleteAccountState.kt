@@ -4,5 +4,7 @@ data class DeleteAccountState (
 
     val password: String = "",
     val passwordError: String? = null,
-    val isLoading: Boolean = false
-)
+    val isLoading: Boolean = false,
+    val isInputValid: Boolean = false,
+
+    )

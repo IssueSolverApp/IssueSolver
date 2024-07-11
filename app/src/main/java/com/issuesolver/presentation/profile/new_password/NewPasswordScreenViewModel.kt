@@ -5,8 +5,13 @@ import androidx.lifecycle.viewModelScope
 import com.issuesolver.common.Resource
 import com.issuesolver.common.State
 import com.issuesolver.domain.entity.networkModel.profile.UpdatePasswordRequest
+import com.issuesolver.domain.usecase.login.backend.ResetPasswordUseCase
 import com.issuesolver.domain.usecase.profile.backend.GetMeUseCase
 import com.issuesolver.domain.usecase.profile.backend.UpdatePasswordUseCase
+import com.issuesolver.domain.usecase.profile.local.ConfirmNewPasswordUseCase
+import com.issuesolver.domain.usecase.profile.local.NewPasswordUseCase
+import com.issuesolver.domain.usecase.profile.local.PreviousPasswordUseCase
+import com.issuesolver.presentation.login.password_change_page.PasswordChangePageEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -16,8 +21,14 @@ import javax.inject.Inject
 
 @HiltViewModel
 class NewPasswordScreenViewModel @Inject constructor(
-    private val updatePasswordUseCase: UpdatePasswordUseCase
-) : ViewModel() {
+    private val updatePasswordUseCase: UpdatePasswordUseCase,
+    private val newPasswordUseCase: NewPasswordUseCase,
+    private val confirmNewPasswordUseCase: ConfirmNewPasswordUseCase,
+    private val previousPasswordUseCase: PreviousPasswordUseCase,
+
+
+
+    ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(NewPasswordScreenState())
     val uiState: StateFlow<NewPasswordScreenState> = _uiState.asStateFlow()
@@ -43,4 +54,75 @@ class NewPasswordScreenViewModel @Inject constructor(
             }
         }
     }
-}
+
+    fun handleEvent(event: NewPasswordScreenEvent) {
+        when (event) {
+            is NewPasswordScreenEvent.NewPasswordChanged -> {
+                val result = newPasswordUseCase.execute(
+                    event.newPassword,
+                    _uiState.value.confirmPassword
+                )
+                _uiState.value = _uiState.value.copy(
+                    newPassword = event.newPassword,
+                    newPasswordError = result.errorMessage,
+                    isInputValid = result.successful &&
+                            confirmNewPasswordUseCase.execute(
+                                event.newPassword,
+                                _uiState.value.confirmPassword
+                            ).successful &&
+                            previousPasswordUseCase.execute(
+                                _uiState.value.currentPassword
+
+                            ).successful
+                )
+            }
+
+            is NewPasswordScreenEvent.ConfirmPasswordChanged -> {
+                val result = confirmNewPasswordUseCase.execute(
+                    _uiState.value.newPassword,
+                    event.confirmPassword
+                )
+                _uiState.value = _uiState.value.copy(
+                    confirmPassword = event.confirmPassword,
+                    confirmPasswordError = result.errorMessage,
+                    isInputValid = result.successful &&
+                            newPasswordUseCase.execute(
+                        _uiState.value.newPassword,
+                        event.confirmPassword
+                    ).successful &&
+                            previousPasswordUseCase.execute(
+                                _uiState.value.currentPassword
+                            ).successful
+
+                )
+            }
+            is NewPasswordScreenEvent.CurrentPasswordChanged -> {
+                val result = previousPasswordUseCase.execute(
+                    event.currentPassword
+                )
+                _uiState.value = _uiState.value.copy(
+                    currentPassword = event.currentPassword,
+                    currentPasswordError = result.errorMessage,
+                    isInputValid = result.successful &&
+                            newPasswordUseCase.execute(
+                                _uiState.value.newPassword,
+                                _uiState.value.confirmPassword
+                            ).successful &&
+                            confirmNewPasswordUseCase.execute(
+                                _uiState.value.newPassword,
+                                _uiState.value.confirmPassword
+                            ).successful
+
+                )
+            }
+
+            is NewPasswordScreenEvent.Submit -> {
+                if (uiState.value.isInputValid) {
+                }
+            }
+
+        }
+    }
+    }
+
+

@@ -4,9 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.issuesolver.common.Resource
 import com.issuesolver.common.State
-import com.issuesolver.domain.entity.networkModel.profile.UpdatePasswordRequest
-import com.issuesolver.domain.usecase.profile.backend.GetMeUseCase
+import com.issuesolver.domain.entity.networkModel.profile.DeleteAccountRequest
 import com.issuesolver.domain.usecase.profile.backend.UpdatePasswordUseCase
+import com.issuesolver.domain.usecase.profile.local.PreviousPasswordUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -16,15 +16,17 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DeleteAccountViewModel @Inject constructor(
-    private val updatePasswordUseCase: UpdatePasswordUseCase
-) : ViewModel() {
+    private val updatePasswordUseCase: UpdatePasswordUseCase,
+    private val previousPasswordUseCase: PreviousPasswordUseCase,
+
+    ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(DeleteAccountState())
     val uiState: StateFlow<DeleteAccountState> = _uiState.asStateFlow()
     private val _profileState: MutableStateFlow<State?> =  MutableStateFlow(null)
     val profileState: StateFlow<State?> = _profileState
 
-    fun deletePassword(request:UpdatePasswordRequest) {
+    fun deleteAccount(request: DeleteAccountRequest) {
         viewModelScope.launch {
             updatePasswordUseCase(request).collect { resource ->
                 when(resource){
@@ -43,4 +45,25 @@ class DeleteAccountViewModel @Inject constructor(
             }
         }
     }
+
+    fun handleEvent(event: DeleteAccountEvent) {
+        when (event) {
+            is DeleteAccountEvent.PasswordChanged -> {
+                val result = previousPasswordUseCase.execute(
+                    event.password)
+                _uiState.value = _uiState.value.copy(
+                    password = event.password,
+                    passwordError = result.errorMessage,
+                    isInputValid = result.successful
+                )
+            }
+
+
+            is DeleteAccountEvent.Submit -> {
+                if (uiState.value.isInputValid) {
+                }
+            }
+        }
+    }
+
 }

@@ -1,5 +1,6 @@
 package com.issuesolver.presentation.profile.new_password
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -36,6 +37,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -48,10 +50,16 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.issuesolver.R
+import com.issuesolver.common.StatusR
+import com.issuesolver.domain.entity.networkModel.login.ResetPasswordModel
+import com.issuesolver.domain.entity.networkModel.profile.UpdatePasswordRequest
 import com.issuesolver.presentation.bottombar.AnimatedNavigationBar
 import com.issuesolver.presentation.common.AuthButton
 import com.issuesolver.presentation.common.ErrorText
+import com.issuesolver.presentation.common.LoadingOverlay
+import com.issuesolver.presentation.login.password_change_page.PasswordChangePageEvent
 import com.issuesolver.presentation.navigation.mockNavController
+import com.issuesolver.presentation.profile.enter_password.DeleteAccountEvent
 
 @Composable
 fun NewPasswordScreen(
@@ -65,7 +73,31 @@ fun NewPasswordScreen(
 
 
     val uiState by viewModel.uiState.collectAsState()
-    val forgetPasswordState by viewModel.profileState.collectAsState()
+    val deleteAccountState by viewModel.profileState.collectAsState()
+    when(deleteAccountState?.status){
+
+        StatusR.LOADING -> {
+
+            LoadingOverlay()
+
+        }
+
+        StatusR.ERROR -> {
+            Toast.makeText(LocalView.current.context, "Kodun ishlemir X(", Toast.LENGTH_SHORT).show()
+
+
+        }
+        StatusR.SUCCESS -> {
+            navController.navigate("profile_page")
+            Toast.makeText(LocalView.current.context, "Password Changed <3", Toast.LENGTH_SHORT).show()
+//            viewModel.clearLoginState()
+        }
+        else-> {
+
+        }
+
+
+    }
 
 
     Scaffold(
@@ -143,7 +175,13 @@ fun NewPasswordScreen(
                 TextField(
                     shape = RoundedCornerShape(12.dp),
                     value = uiState.currentPassword,
-                    onValueChange = {},
+                    onValueChange = {
+                        viewModel.handleEvent(
+                            NewPasswordScreenEvent.CurrentPasswordChanged(
+                                it
+                            )
+                        )
+                    },
                     placeholder = {
                         Text("Şifrənizi daxil edin",
                             color=Color(0xFF9D9D9D))
@@ -201,7 +239,13 @@ fun NewPasswordScreen(
                 TextField(
                     shape = RoundedCornerShape(12.dp),
                     value = uiState.newPassword,
-                    onValueChange = {},
+                    onValueChange = {
+                        viewModel.handleEvent(
+                            NewPasswordScreenEvent.NewPasswordChanged(
+                                it
+                            )
+                        )
+                    },
                     placeholder = {
                         Text("Yeni şifrəni təyin edin",
                                 color=Color(0xFF9D9D9D))
@@ -261,7 +305,13 @@ fun NewPasswordScreen(
             TextField(
                 shape = RoundedCornerShape(12.dp),
                 value = uiState.confirmPassword,
-                onValueChange = {},
+                onValueChange = {
+                    viewModel.handleEvent(
+                        NewPasswordScreenEvent.ConfirmPasswordChanged(
+                            it
+                        )
+                    )
+                },
                 placeholder = {
                     Text("Şifrəni təsdiq edin",
                         color=Color(0xFF9D9D9D))
@@ -321,7 +371,17 @@ fun NewPasswordScreen(
         ) {
             AuthButton(
                 text = "Yenilə",
-                onClick = {},
+                onClick = {
+                    viewModel.handleEvent(NewPasswordScreenEvent.Submit)
+                    viewModel.updatePassword(
+                        UpdatePasswordRequest(
+                            uiState.currentPassword,
+                            uiState.newPassword,
+                            uiState.confirmPassword,
+
+                            )
+                    )
+                },
                 modifier = Modifier.fillMaxWidth()
             )
         }

@@ -62,7 +62,8 @@ class PasswordChangePageViewModel @Inject constructor(
                 _uiState.value = _uiState.value.copy(
                     newpassword = event.newpassword,
                     newpasswordError = result.errorMessage,
-                    isInputValid = result.successful && validateRepeatedPasswordUseCase.execute(
+                    isInputValid = result.successful &&
+                            validateRepeatedPasswordUseCase.execute(
                         event.newpassword,
                         _uiState.value.repeatedPassword
                     ).successful

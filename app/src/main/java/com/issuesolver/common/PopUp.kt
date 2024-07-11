@@ -52,7 +52,7 @@ fun PopUp(
                     horizontalArrangement = Arrangement.SpaceEvenly,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    TextButton(onClick = { onConfirmation() }) {
+                    TextButton(onClick = { onConfirmation( ) }) {
                         Text(
                             text = button1,
                             fontSize = 20.sp,

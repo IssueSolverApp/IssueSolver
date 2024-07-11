@@ -7,7 +7,7 @@ import retrofit2.Response
 import javax.inject.Inject
 
 interface UpdatePasswordRepositoryInterFace{
-    suspend fun updatePassword(profile: UpdatePasswordRequest): Response<ProfileResponse>
+    suspend fun updatePassword(updatepassword: UpdatePasswordRequest): Response<ProfileResponse>
 }
 class UpdatePasswordRepositoryImpl @Inject constructor(private val profileService: ProfileService):
     UpdatePasswordRepositoryInterFace {
