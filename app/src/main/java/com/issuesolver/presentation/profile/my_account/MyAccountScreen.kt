@@ -161,7 +161,7 @@ fun MyAccountScreen(
                         shape = RoundedCornerShape(12.dp),
                         value = uiState.fullName,
                         onValueChange = {
-//                            viewModel.handleEvent(RegisterPageEvent.FullNameChanged(it))
+                            viewModel.handleEvent(MyAccountEvent.FullNameChanged(it))
                         },
                         placeholder = {
                             Text(
