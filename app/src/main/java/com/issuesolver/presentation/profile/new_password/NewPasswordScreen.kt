@@ -119,8 +119,10 @@ fun NewPasswordScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .imePadding()
+
         ) {
-            Column() {
+            Column(
+            ) {
                 Box(
                     modifier = Modifier
                         .size(40.dp)
@@ -166,6 +168,7 @@ fun NewPasswordScreen(
                 Modifier
                     .padding(top = 24.dp)
                     .verticalScroll(rememberScrollState())
+
             ) {
                 Text(
                     "Cari şifrə",
@@ -294,7 +297,7 @@ fun NewPasswordScreen(
                         }
                     }
                 )
-            }
+
             Text(
                 "Şifrənin təsdiqi",
                 style = MaterialTheme.typography.bodySmall,
@@ -365,7 +368,9 @@ fun NewPasswordScreen(
 //                        isVisible = isPasswordError
             )
         }
-        Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(150.dp))
+
+        }
         Column(
             modifier = Modifier.align(Alignment.BottomCenter)
         ) {

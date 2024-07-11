@@ -8,6 +8,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.navigation.NavController
 import com.issuesolver.presentation.navigation.AppNavigation
 import com.issuesolver.presentation.navigation.mockNavController
+import com.issuesolver.presentation.profile.new_password.NewPasswordScreen
 import com.issuesolver.presentation.profile.profile.ProfileScreen
 import com.issuesolver.ui.theme.IssueSolverTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -24,6 +25,7 @@ class MainActivity : ComponentActivity() {
             IssueSolverTheme {
                 AppNavigation()
 //                ProfileScreen(mockNavController())
+//                NewPasswordScreen(navController = mockNavController())
 
             }
         }

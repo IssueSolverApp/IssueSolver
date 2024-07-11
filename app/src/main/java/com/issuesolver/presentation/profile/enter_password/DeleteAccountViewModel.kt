@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.issuesolver.common.Resource
 import com.issuesolver.common.State
 import com.issuesolver.domain.entity.networkModel.profile.DeleteAccountRequest
+import com.issuesolver.domain.usecase.profile.backend.DeleteAccountUseCase
 import com.issuesolver.domain.usecase.profile.backend.UpdatePasswordUseCase
 import com.issuesolver.domain.usecase.profile.local.PreviousPasswordUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,7 +17,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DeleteAccountViewModel @Inject constructor(
-    private val updatePasswordUseCase: UpdatePasswordUseCase,
+    private val deleteAccountUseCase: DeleteAccountUseCase,
     private val previousPasswordUseCase: PreviousPasswordUseCase,
 
     ) : ViewModel() {
@@ -28,7 +29,7 @@ class DeleteAccountViewModel @Inject constructor(
 
     fun deleteAccount(request: DeleteAccountRequest) {
         viewModelScope.launch {
-            updatePasswordUseCase(request).collect { resource ->
+            deleteAccountUseCase(request).collect { resource ->
                 when(resource){
                     is Resource.Loading -> {
                         _profileState.emit(State.loading())

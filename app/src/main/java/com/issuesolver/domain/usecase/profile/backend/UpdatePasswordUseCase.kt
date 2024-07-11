@@ -4,6 +4,7 @@ import com.google.gson.Gson
 import com.issuesolver.common.Resource
 import com.issuesolver.data.repository.profile.UpdatePasswordRepositoryInterFace
 import com.issuesolver.domain.entity.networkModel.login.RegisterResponseModel
+import com.issuesolver.domain.entity.networkModel.profile.DeleteAccountRequest
 import com.issuesolver.domain.entity.networkModel.profile.UpdatePasswordRequest
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException

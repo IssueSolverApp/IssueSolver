@@ -78,8 +78,8 @@ fun MyAccountScreen(
 
         }
         StatusR.SUCCESS -> {
-            navController.navigate("profile_page")
-            Toast.makeText(LocalView.current.context, "Full Name Changed <3", Toast.LENGTH_SHORT).show()
+//            Toast.makeText(LocalView.current.context, "Full Name Changed <3", Toast.LENGTH_SHORT).show()
+//            navController.navigate("profile_page")
 //            viewModel.clearLoginState()
         }
         else-> {
