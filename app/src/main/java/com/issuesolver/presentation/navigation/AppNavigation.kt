@@ -1,5 +1,6 @@
 package com.issuesolver.presentation.navigation
 
+import android.content.Context
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.core.tween
@@ -8,11 +9,9 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.scaleIn
 import androidx.compose.animation.scaleOut
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
 import com.issuesolver.presentation.login.daxil_ol_page.LoginPage
 import com.issuesolver.presentation.login.daxil_ol_page_email.EmailVerificationPage
 import com.issuesolver.presentation.login.daxil_ol_verification_code.VerificationCodePage
@@ -23,6 +22,8 @@ import com.issuesolver.presentation.profile.enter_password.DeleteAccountScreen
 import com.issuesolver.presentation.profile.my_account.MyAccountScreen
 import com.issuesolver.presentation.profile.new_password.NewPasswordScreen
 import com.issuesolver.presentation.profile.profile.ProfileScreen
+
+
 
 @Composable
 fun AppNavigation() {
@@ -132,7 +133,20 @@ fun AppNavigation() {
             popExitTransition = {
                 scaleOutOfContainer()
             }) { NewPasswordScreen(navController) }
-        composable(Routes.PROFILE_MY_ACCOUNT) { MyAccountScreen(navController) }
+        composable(Routes.PROFILE_MY_ACCOUNT,enterTransition = {
+            scaleIntoContainer()
+
+        },
+            exitTransition = {
+                scaleOutOfContainer(direction = ScaleTransitionDirection.INWARDS)
+            },
+            popEnterTransition = {
+                scaleIntoContainer(direction = ScaleTransitionDirection.OUTWARDS)
+            },
+            popExitTransition = {
+                scaleOutOfContainer()
+            }) { MyAccountScreen(navController) }
+
 
         composable(Routes.PROFILE_DELETE_ACCOUNT,enterTransition = {
             scaleIntoContainer()

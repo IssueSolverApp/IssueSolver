@@ -1,6 +1,7 @@
 package com.issuesolver.common
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
@@ -26,11 +27,15 @@ fun PopUp(
     onDismiss: () -> Unit
 ) {
     Dialog(onDismissRequest = { onDismiss() }) {
-        Card(
+          Card(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp),
             shape = RoundedCornerShape(8.dp),
+            colors = CardDefaults.cardColors(
+                containerColor = Color.White,
+                contentColor = Color.Black
+            )
         ) {
             Column(
                 modifier = Modifier
@@ -80,6 +85,7 @@ fun PopUp(
             }
         }
     }
+
 }
 
 @Preview(showBackground = true)
