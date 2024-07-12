@@ -94,13 +94,13 @@ fun DeleteAccountScreen(
         modifier = Modifier
             .navigationBarsPadding()
         ,
-        bottomBar = {
-            AnimatedNavigationBar()
-        },
+//        bottomBar = {
+//            AnimatedNavigationBar()
+//        },
         content = { padding ->
         Box(
             modifier = Modifier
-                .padding(padding)
+//                .padding(padding)
                 .fillMaxSize()
                 .imePadding()
                 .padding(top = 24.dp, start = 20.dp, end = 20.dp, bottom = 16.dp)
@@ -198,6 +198,8 @@ fun DeleteAccountScreen(
                             cursorColor = Color(0xFF2981FF),
                             errorCursorColor = Color.Red,
                             focusedIndicatorColor = Color.Transparent,
+                            disabledIndicatorColor=Color.Transparent,
+                            unfocusedIndicatorColor =Color.Transparent
                         ),
                         visualTransformation = if (showPassword1) VisualTransformation.None else PasswordVisualTransformation(),
                         trailingIcon = {

@@ -91,13 +91,13 @@ fun MyAccountScreen(
     Scaffold(
         modifier = Modifier
             .navigationBarsPadding(),
-        bottomBar = {
-            AnimatedNavigationBar()
-        },
+//        bottomBar = {
+//            AnimatedNavigationBar()
+//        },
         content = { padding ->
         Box(
             modifier = Modifier
-                .padding(padding)
+//                .padding(padding)
                 .fillMaxSize()
                 .imePadding()
                 .padding(top = 13.dp, start = 20.dp, end = 20.dp, bottom = 34.dp)
@@ -200,6 +200,10 @@ fun MyAccountScreen(
                             cursorColor = Color(0xFF2981FF),
                             errorCursorColor = Color.Red,
                             focusedIndicatorColor = Color.Transparent,
+                            disabledIndicatorColor=Color.Transparent,
+                            unfocusedIndicatorColor =Color.Transparent
+
+
                         )
                     )
 
@@ -242,7 +246,12 @@ fun MyAccountScreen(
                         colors = TextFieldDefaults.colors(
                             disabledTextColor = Color.Gray,
                             disabledContainerColor = Color(0xFFe0e4e8),
-                        ),
+//                            focusedIndicatorColor=Color.Red,
+//                            unfocusedIndicatorColor=Color.Red
+                            disabledIndicatorColor=Color.Transparent
+//                            errorIndicatorColor
+
+                            ),
                         enabled = false,
 
                         )

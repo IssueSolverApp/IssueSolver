@@ -5,6 +5,7 @@ import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -101,7 +102,9 @@ fun ProfileScreen(
                         .background(color = Color.White)
                         .padding(top = 24.dp, start = 16.dp, end = 16.dp, bottom = 24.dp)
                         .fillMaxWidth()
-                        .clickable(onClick = { }),
+                        .clickable(onClick = { },
+                            interactionSource = remember { MutableInteractionSource() },
+                            indication = null),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ){
@@ -133,7 +136,9 @@ fun ProfileScreen(
                     Image(
                         painter = painterResource(R.drawable.settings_ic),
                         contentDescription = "settings_ic",
-                        modifier = Modifier.clickable(onClick = { navController.navigate(Routes.PROFILE_MY_ACCOUNT)})
+                        modifier = Modifier.clickable(onClick = { navController.navigate(Routes.PROFILE_MY_ACCOUNT)},
+                            interactionSource = remember { MutableInteractionSource() },
+                            indication = null)
                     )
                 }
                 Row(
@@ -142,7 +147,9 @@ fun ProfileScreen(
                         .background(color = Color.White)
                         .padding(top = 24.dp, start = 16.dp, end = 16.dp, bottom = 24.dp)
                         .fillMaxWidth()
-                        .clickable(onClick = {navController.navigate(Routes.PROFILE_NEW_PASSWORD) }),
+                        .clickable(onClick = {navController.navigate(Routes.PROFILE_NEW_PASSWORD) },
+                            interactionSource = remember { MutableInteractionSource() },
+                            indication = null),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ){
@@ -174,7 +181,9 @@ fun ProfileScreen(
                         .fillMaxWidth()
                         .clickable(onClick = {
                             val openURL = Intent(Intent.ACTION_VIEW, Uri.parse("https://issue-solver.vercel.app/"))
-                            context.startActivity(openURL) }),
+                            context.startActivity(openURL) },
+                            interactionSource = remember { MutableInteractionSource() },
+                            indication = null),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ){
@@ -197,7 +206,9 @@ fun ProfileScreen(
                         .fillMaxWidth()
                         .clickable(onClick = {
                             val openURL = Intent(Intent.ACTION_VIEW, Uri.parse("https://issue-solver.vercel.app/"))
-                            context.startActivity(openURL) }),
+                            context.startActivity(openURL) },
+                            interactionSource = remember { MutableInteractionSource() },
+                            indication = null),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ){
@@ -220,7 +231,9 @@ fun ProfileScreen(
                         .fillMaxWidth()
                         .clickable(onClick = {
                             val openURL = Intent(Intent.ACTION_VIEW, Uri.parse("https://issue-solver.vercel.app/"))
-                            context.startActivity(openURL) }),
+                            context.startActivity(openURL) },
+                            interactionSource = remember { MutableInteractionSource() },
+                            indication = null),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ){
@@ -244,7 +257,9 @@ fun ProfileScreen(
                         .fillMaxWidth()
                         .clickable(onClick = {
                              showDialog = true
-                        }),
+                        },
+                            interactionSource = remember { MutableInteractionSource() },
+                            indication = null),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ){
@@ -272,7 +287,9 @@ fun ProfileScreen(
                         .background(color = Color.White)
                         .padding(top = 24.dp, start = 16.dp, end = 16.dp, bottom = 24.dp)
                         .fillMaxWidth()
-                        .clickable(onClick = { navController.navigate("profile_delete_account") }),
+                        .clickable(onClick = { navController.navigate("profile_delete_account") },
+                            interactionSource = remember { MutableInteractionSource() },
+                            indication = null),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ){

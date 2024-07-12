@@ -103,14 +103,14 @@ fun NewPasswordScreen(
     Scaffold(
         modifier = Modifier
             .navigationBarsPadding(),
-        bottomBar = {
-            AnimatedNavigationBar()
-        },
+//        bottomBar = {
+//            AnimatedNavigationBar()
+//        },
 
         content = { padding ->
     Box(
         modifier = Modifier
-            .padding(padding)
+//            .padding(padding)
             .fillMaxSize()
             .imePadding()
             .padding(top = 13.dp, start = 20.dp, end = 20.dp, bottom = 34.dp)
@@ -214,6 +214,8 @@ fun NewPasswordScreen(
                         cursorColor = Color(0xFF2981FF),
                         errorCursorColor = Color.Red,
                         focusedIndicatorColor = Color.Transparent,
+                        disabledIndicatorColor=Color.Transparent,
+                        unfocusedIndicatorColor =Color.Transparent
                     ),
                     visualTransformation = if (showPassword1) VisualTransformation.None else PasswordVisualTransformation(),
                     trailingIcon = {
@@ -278,6 +280,8 @@ fun NewPasswordScreen(
                         cursorColor = Color(0xFF2981FF),
                         errorCursorColor = Color.Red,
                         focusedIndicatorColor = Color.Transparent,
+                        disabledIndicatorColor=Color.Transparent,
+                        unfocusedIndicatorColor =Color.Transparent
                     ),
                     visualTransformation = if (showPassword2) VisualTransformation.None else PasswordVisualTransformation(),
                     trailingIcon = {
@@ -344,6 +348,8 @@ fun NewPasswordScreen(
                     cursorColor = Color(0xFF2981FF),
                     errorCursorColor = Color.Red,
                     focusedIndicatorColor = Color.Transparent,
+                    disabledIndicatorColor=Color.Transparent,
+                    unfocusedIndicatorColor =Color.Transparent
                 ),
                 visualTransformation = if (showPassword3) VisualTransformation.None else PasswordVisualTransformation(),
                 trailingIcon = {
