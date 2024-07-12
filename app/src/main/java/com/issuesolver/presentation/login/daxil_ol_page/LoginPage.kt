@@ -35,6 +35,7 @@ import com.issuesolver.domain.entity.networkModel.login.LoginRequest
 import com.issuesolver.presentation.common.AuthButton
 import com.issuesolver.presentation.common.ErrorText
 import com.issuesolver.presentation.common.LoadingOverlay
+import com.issuesolver.presentation.navigation.Routes
 import kotlinx.coroutines.launch
 
 
@@ -72,7 +73,9 @@ fun LoginPage(
 
         }
         StatusR.SUCCESS -> {
-            navController.navigate("profile_page")
+            navController.navigate("profile_page"){
+                popUpTo(Routes.LOGIN) { inclusive = true }
+            }
 //            Toast.makeText(LocalView.current.context, "Login Success", Toast.LENGTH_SHORT).show()
 //            viewModel.clearLoginState()
         }
