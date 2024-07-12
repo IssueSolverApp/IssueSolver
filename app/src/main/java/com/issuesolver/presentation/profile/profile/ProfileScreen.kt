@@ -62,14 +62,14 @@ fun ProfileScreen(
             button1 = "Çıxış",
             button2 = "İmtina",
             onConfirmation = {
-                navController.navigate("login")
+                navController.navigate("login"){
+                    popUpTo(Routes.PROFILE_PAGE) { inclusive = true }
+                }
             },
             onDismiss = { showDialog = false }
         )
     }
     val uiState by viewModel.uiState.collectAsState()
-//    val isEmailError = uiState.emailError != null
-//    val isfullNameError = uiState.fullNameError != null
     val forgetPasswordState by viewModel.profileState.collectAsState()
     val context = LocalContext.current
 

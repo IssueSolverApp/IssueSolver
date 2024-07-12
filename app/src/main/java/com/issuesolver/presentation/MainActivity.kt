@@ -25,7 +25,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             IssueSolverTheme {
                 AppNavigation()
-                MyAccountScreen(mockNavController())
+//                MyAccountScreen(mockNavController())
 //                NewPasswordScreen(navController = mockNavController())
 
             }
