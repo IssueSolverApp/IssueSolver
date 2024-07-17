@@ -165,6 +165,8 @@ fun PasswordChangePage(
                             cursorColor = Color(0xFF2981FF),
                             errorCursorColor = Color.Red,
                             focusedIndicatorColor = Color.Transparent,
+                            disabledIndicatorColor=Color.Transparent,
+                            unfocusedIndicatorColor =Color.Transparent
                         ),
                         visualTransformation = if (showPassword) VisualTransformation.None else PasswordVisualTransformation(),
                         trailingIcon = {
@@ -227,7 +229,9 @@ fun PasswordChangePage(
                             disabledTextColor = Color(0xFF2981FF),
                             focusedIndicatorColor = Color.Transparent,
                             errorCursorColor = Color.Red,
-                            cursorColor = Color(0xFF2981FF)
+                            cursorColor = Color(0xFF2981FF),
+                            disabledIndicatorColor=Color.Transparent,
+                            unfocusedIndicatorColor =Color.Transparent
                         ),
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                         visualTransformation = if (showPassword1) VisualTransformation.None else PasswordVisualTransformation(),

@@ -157,6 +157,8 @@ fun EmailVerificationPage(
                             errorContainerColor = Color.White,
                             cursorColor = Color(0xFF2981FF),
                             focusedIndicatorColor = Color.Transparent,
+                            disabledIndicatorColor=Color.Transparent,
+                            unfocusedIndicatorColor =Color.Transparent
                         ),
                     )
                     ErrorText(

@@ -179,6 +179,8 @@ fun LoginPage(
                             cursorColor = Color(0xFF2981FF),
                             errorCursorColor = Color.Red,
                             focusedIndicatorColor = Color.Transparent,
+                            disabledIndicatorColor=Color.Transparent,
+                            unfocusedIndicatorColor =Color.Transparent
                         ),
                     )
                     ErrorText(
@@ -233,6 +235,8 @@ fun LoginPage(
                             cursorColor = Color(0xFF2981FF),
                             errorCursorColor = Color.Red,
                             focusedIndicatorColor = Color.Transparent,
+                            disabledIndicatorColor=Color.Transparent,
+                            unfocusedIndicatorColor =Color.Transparent
                         ),
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                         visualTransformation = if (showPassword) VisualTransformation.None else PasswordVisualTransformation(),

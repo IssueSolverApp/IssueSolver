@@ -49,6 +49,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.issuesolver.R
+import com.issuesolver.common.PopUp
 import com.issuesolver.common.StatusR
 import com.issuesolver.domain.entity.networkModel.profile.DeleteAccountRequest
 import com.issuesolver.presentation.bottombar.AnimatedNavigationBar
@@ -62,6 +63,8 @@ fun DeleteAccountScreen(
     viewModel:DeleteAccountViewModel  = hiltViewModel()
 
 ){
+
+    var showDialog by remember { mutableStateOf(false) }
 
     var showPassword1 by remember { mutableStateOf(value = false) }
     val uiState by viewModel.uiState.collectAsState()
@@ -91,13 +94,13 @@ fun DeleteAccountScreen(
         modifier = Modifier
             .navigationBarsPadding()
         ,
-        bottomBar = {
-            AnimatedNavigationBar()
-        },
+//        bottomBar = {
+//            AnimatedNavigationBar()
+//        },
         content = { padding ->
         Box(
             modifier = Modifier
-                .padding(padding)
+//                .padding(padding)
                 .fillMaxSize()
                 .imePadding()
                 .padding(top = 24.dp, start = 20.dp, end = 20.dp, bottom = 16.dp)
@@ -195,6 +198,8 @@ fun DeleteAccountScreen(
                             cursorColor = Color(0xFF2981FF),
                             errorCursorColor = Color.Red,
                             focusedIndicatorColor = Color.Transparent,
+                            disabledIndicatorColor=Color.Transparent,
+                            unfocusedIndicatorColor =Color.Transparent
                         ),
                         visualTransformation = if (showPassword1) VisualTransformation.None else PasswordVisualTransformation(),
                         trailingIcon = {
@@ -227,8 +232,26 @@ fun DeleteAccountScreen(
             ) {
                 AuthButton(
                     text = "Hesabı sil",
-                    onClick = {
+                    onClick = { showDialog = true }
 
+
+//                        viewModel.handleEvent(DeleteAccountEvent.Submit)
+//                        viewModel.deleteAccount(
+//                            DeleteAccountRequest(
+//                                uiState.password
+//                                )
+//                        )
+//                    }
+            ,
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
+            if (showDialog) {
+                PopUp(
+                    text = "Hesabınızı silmək istədiyinizə əminsiniz?",
+                    button1 = "Bəli",
+                    button2 = "Xeyr",
+                    onConfirmation = {
                         viewModel.handleEvent(DeleteAccountEvent.Submit)
                         viewModel.deleteAccount(
                             DeleteAccountRequest(
@@ -236,7 +259,7 @@ fun DeleteAccountScreen(
                                 )
                         )
                     },
-                    modifier = Modifier.fillMaxWidth()
+                    onDismiss = { showDialog = false }
                 )
             }
         }

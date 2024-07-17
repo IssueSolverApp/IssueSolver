@@ -11,4 +11,5 @@ object Routes {
     const val PROFILE_NEW_PASSWORD = "profile_new_password"
     const val PROFILE_MY_ACCOUNT = "profile_my_account"
     const val PROFILE_DELETE_ACCOUNT = "profile_delete_account"
+
 }
