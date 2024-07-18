@@ -1,6 +1,6 @@
 package com.issuesolver.presentation.bottombar
 
-import androidx.compose.animation.AnimatedContent
+import BottomBarScreen
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.animateFloatAsState
@@ -13,12 +13,9 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.offset
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Icon
@@ -36,7 +33,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.onPlaced
 import androidx.compose.ui.platform.LocalDensity
@@ -46,23 +42,28 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
-import com.issuesolver.R
+import androidx.navigation.NavController
+import androidx.navigation.NavDestination.Companion.hierarchy
+import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.compose.currentBackStackEntryAsState
 
 
 @Composable
-fun AnimatedNavigationBar() {
+fun AnimatedNavigationBar(navController: NavController) {
     val barColor: Color=Color.White
     val circleColor: Color=Color(0xFF2981FF)
     val selectedColor: Color=Color.White
     val unselectedColor: Color=Color.White
     val circleRadius = 28.dp
     val buttons = listOf(
-        ButtonData("Home", painterResource(id = R.drawable.home_ic)),
-        ButtonData("History", painterResource(id = R.drawable.group)),
-        ButtonData("Calendar", painterResource(id = R.drawable.ph_plus)),
-        ButtonData("Profile", painterResource(id = R.drawable.message)),
-        ButtonData("Settings", painterResource(id = R.drawable.profile))
+        BottomBarScreen.Home,
+        BottomBarScreen.MyRequest,
+        BottomBarScreen.NewRequest,
+        BottomBarScreen.Profile
     )
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentDestination = navBackStackEntry?.destination
+
     var selectedItem by rememberSaveable { mutableIntStateOf(0) }
     var barSize by remember { mutableStateOf(IntSize(0, 0)) }
     val offsetStep = remember(barSize) {
@@ -137,18 +138,26 @@ fun AnimatedNavigationBar() {
             horizontalArrangement = Arrangement.SpaceAround,
         ) {
             buttons.forEachIndexed { index, button ->
-                val isSelected = index == selectedItem
+                val isSelected = currentDestination?.hierarchy?.any {
+                    it.route == button.route
+                } == true
+                if (isSelected) selectedItem = index
+
                 NavigationBarItem(
                     selected = isSelected,
-                    onClick = { selectedItem = index },
+                    onClick = {  navController.navigate(button.route) {
+                        popUpTo(navController.graph.findStartDestination().id)
+                        launchSingleTop = true
+                        restoreState = true
+                    } },
                     icon = {
                         val iconAlpha by animateFloatAsState(
                             targetValue = if (isSelected) 0f else 1f,
                             label = "Navbar item icon"
                         )
                         Image(
-                            painter = button.icon,
-                            contentDescription = button.text,
+                            painter = painterResource(id = button.iconId),
+                            contentDescription = button.title,
                             modifier = Modifier.alpha(iconAlpha)
                         )
                     },
@@ -169,9 +178,11 @@ private fun Circle(
     modifier: Modifier = Modifier,
     color: Color = Color.White,
     radius: Dp,
-    button: ButtonData,
+    button: BottomBarScreen,
     iconColor: Color,
 ) {
+    val iconPainter = painterResource(id = button.iconId)  // Fetch the Painter here
+
     Box(
         contentAlignment = Alignment.Center,
         modifier = modifier
@@ -180,10 +191,10 @@ private fun Circle(
             .clip(CircleShape)
             .background(color),
     ) {
-        AnimatedContent(
-            targetState = button.icon, label = "Bottom bar circle icon",
-        ) { targetIcon ->
-            Icon(targetIcon, button.text, tint = iconColor)
-        }
+        Icon(
+            painter = iconPainter,
+            contentDescription = button.title,
+            tint = iconColor
+        )
     }
 }

@@ -42,10 +42,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.issuesolver.R
 import com.issuesolver.common.PopUp
-import com.issuesolver.domain.entity.networkModel.profile.DeleteAccountRequest
 import com.issuesolver.presentation.bottombar.AnimatedNavigationBar
 import com.issuesolver.presentation.navigation.Routes
-import com.issuesolver.presentation.profile.enter_password.DeleteAccountEvent
 
 
 @Composable
@@ -78,7 +76,7 @@ fun ProfileScreen(
         modifier = Modifier
         .navigationBarsPadding(),
         bottomBar = {
-            AnimatedNavigationBar()
+            AnimatedNavigationBar(navController)
         },
     content = { padding ->
         Box(

@@ -32,16 +32,12 @@ class BarShape(
             val cutoutEdgeOffset = cutoutRadius * 1.3f //add corner here
             val cutoutLeftX = cutoutCenterX - cutoutEdgeOffset
             val cutoutRightX = cutoutCenterX + cutoutEdgeOffset
-
-            // bottom left
             moveTo(x = 0F, y = (size.height))
-            // top left
             if (cutoutLeftX > 0) {
                 val realLeftCornerDiameter = if (cutoutLeftX >= cornerRadiusPx) {
                     // there is a space between rounded corner and cutout
                     cornerDiameter
                 } else {
-                    // rounded corner and cutout overlap
                     cutoutLeftX * 2
                 }
                 arcTo(
@@ -74,7 +70,6 @@ class BarShape(
                 x3 = cutoutRightX,
                 y3 = 0f,
             )
-            // top right
             if (cutoutRightX < size.width) {
 
                 arcTo(
@@ -89,7 +84,6 @@ class BarShape(
                     forceMoveTo = false
                 )
             }
-            // bottom right
             lineTo(x = size.width, y = size.height)
             close()
         }
