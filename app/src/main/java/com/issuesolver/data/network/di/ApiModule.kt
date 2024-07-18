@@ -7,6 +7,7 @@ import com.google.gson.Gson
 import com.issuesolver.data.network.auth.LoginService
 import com.issuesolver.data.network.jwt.AuthAuthenticator
 import com.issuesolver.data.network.jwt.AuthInterceptor
+import com.issuesolver.data.network.newrequest.NewRequestService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,6 +18,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
+import javax.inject.Qualifier
 import javax.inject.Singleton
 
 @Module
@@ -33,7 +35,7 @@ class ApiModule {
     @Singleton
     fun provideApiClient(gson: Gson, client: OkHttpClient): Retrofit {
         val retrofit = Retrofit.Builder()
-        retrofit.baseUrl("https://govermentauthapi20240610022027.azurewebsites.net/")
+        retrofit.baseUrl("https://issue-solver-421da800ab88.herokuapp.com/")
             .addConverterFactory(GsonConverterFactory.create(gson))
             .client(client)
             .build()
@@ -44,8 +46,14 @@ class ApiModule {
 
     @Provides
     @Singleton
-    fun provideApiService(retrofit: Retrofit): LoginService {
+    fun provideApiService( retrofit: Retrofit): LoginService {
         return retrofit.create(LoginService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideNewRequestService( retrofit: Retrofit): NewRequestService {
+        return retrofit.create(NewRequestService::class.java)
     }
 
     private val loggingInterceptor =
@@ -88,5 +96,18 @@ class ApiModule {
     fun provideAuthAuthenticator(sharedPreferences: SharedPreferences): AuthAuthenticator {
         return AuthAuthenticator(sharedPreferences)
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }

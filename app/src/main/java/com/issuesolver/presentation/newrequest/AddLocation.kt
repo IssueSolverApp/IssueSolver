@@ -18,6 +18,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -31,9 +32,14 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.unit.toSize
 
 @Composable
-fun AddLocation() {
+fun AddLocation(viewModel: RequestScreenViewModel) {
 
     var selectedText by remember { mutableStateOf("") }
+
+
+    val location by viewModel.location.collectAsState()
+
+
 
     Column{
 
@@ -45,8 +51,10 @@ fun AddLocation() {
         )
 
         TextField(
-            value = selectedText,
-            onValueChange = { selectedText = it },
+            value = location,
+            onValueChange = {
+                viewModel.updateLocation(it)
+            },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 8.dp, start = 20.dp, end = 20.dp)
@@ -87,6 +95,5 @@ fun AddLocation() {
         }
 
     }
-
 
 }

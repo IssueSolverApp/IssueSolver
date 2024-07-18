@@ -7,6 +7,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import com.issuesolver.presentation.login.qeydiyyat_page.RegisterPage
 import com.issuesolver.presentation.navigation.AppNavigation
+import com.issuesolver.presentation.newrequest.RequestInfoScreen
 import com.issuesolver.presentation.newrequest.RequestScreen
 import com.issuesolver.ui.theme.IssueSolverTheme
 import dagger.hilt.android.AndroidEntryPoint

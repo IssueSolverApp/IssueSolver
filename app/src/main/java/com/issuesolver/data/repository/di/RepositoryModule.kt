@@ -14,6 +14,8 @@ import com.issuesolver.data.repository.ResetPasswordRepositoryImpl
 import com.issuesolver.data.repository.ResetPasswordRepositoryInterface
 import com.issuesolver.data.repository.SignInRepositoryImpl
 import com.issuesolver.data.repository.SignInRepositoryInterface
+import com.issuesolver.data.repository.newrequestrepo.NewRequestRepositoryImpl
+import com.issuesolver.data.repository.newrequestrepo.NewRequestRepositoryInterface
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -37,9 +39,11 @@ abstract class RepositoryModule {
     @Singleton
     abstract fun provideResendOtpRepository(repository: ResendOtpRepositoryImpl): ResendOtpRepositoryInterface
 
+
     @Binds
     @Singleton
     abstract fun provideConfirmOtpRepository(repository: ConfirmOtpRepositoryImpl): ConfirmOtpRepositoryInterface
+
 
     @Binds
     @Singleton
@@ -50,9 +54,16 @@ abstract class RepositoryModule {
     @Singleton
     abstract fun provideOtpTrustRepository(repository: OtpTrustRepositoryImpl): OtpTrustRepositoryInterface
 
+
     @Binds
     @Singleton
     abstract fun provideResetPasswordRepository(repository: ResetPasswordRepositoryImpl): ResetPasswordRepositoryInterface
+
+
+    @Binds
+    @Singleton
+    abstract fun provideNewRequestRepository(repository: NewRequestRepositoryImpl): NewRequestRepositoryInterface
+
 
 
 }

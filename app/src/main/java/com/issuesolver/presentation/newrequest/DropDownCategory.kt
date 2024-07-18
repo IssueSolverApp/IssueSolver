@@ -24,12 +24,12 @@ import com.issuesolver.R
 
 
 @Composable
-fun DropDownMenu(category: String, placeHolder: String, list: List<String>) {
+fun DropDownCategory(category: String, placeHolder: String, list: List<String>) {
     var expanded by remember { mutableStateOf(false) }
     var selectedText by remember { mutableStateOf("") }
     var textFieldSize by remember { mutableStateOf(Size.Zero) }
 
-    val icon = if (expanded) R.drawable.vector__2_ else R.drawable.vector__3_
+    val icon = if (expanded) R.drawable.vector__3_ else R.drawable.vector__2_
 
     Column(Modifier.padding(start = 20.dp, end = 20.dp, top = 16.dp)) {
         Text(

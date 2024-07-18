@@ -9,6 +9,7 @@ import com.issuesolver.data.repository.RegisterRepositoryInterface
 import com.issuesolver.data.repository.ResendOtpRepositoryInterface
 import com.issuesolver.data.repository.ResetPasswordRepositoryInterface
 import com.issuesolver.data.repository.SignInRepositoryInterface
+import com.issuesolver.data.repository.newrequestrepo.NewRequestRepositoryInterface
 import com.issuesolver.domain.usecase.ConfirmOtpUseCase
 import com.issuesolver.domain.usecase.OtpTrustUseCase
 import com.issuesolver.domain.usecase.RegisterUseCase
@@ -23,6 +24,7 @@ import com.issuesolver.domain.usecase.login.ValidateEmailUseCase
 import com.issuesolver.domain.usecase.login.ValidateNewPasswordUseCase
 
 import com.issuesolver.domain.usecase.login.ValidateRepeatedPasswordUseCase
+import com.issuesolver.domain.usecase.newrequestusecase.NewRequestUseCase
 
 import dagger.Module
 import dagger.Provides
@@ -37,9 +39,10 @@ class UseCaseModule {
     @Provides
     @Singleton
     fun provideValidateEmailUseCase() = ValidateEmailUseCase()
+
     @Provides
     @Singleton
-    fun provideLoginUseCase()= LoginUseCase()
+    fun provideLoginUseCase() = LoginUseCase()
 
     @Provides
     @Singleton
@@ -56,7 +59,6 @@ class UseCaseModule {
     @Provides
     @Singleton
     fun provideValidateRepeatedPasswordUseCase() = ValidateRepeatedPasswordUseCase()
-
 
 
     @Provides
@@ -78,8 +80,10 @@ class UseCaseModule {
 
     @Provides
     @Singleton
-    fun provideSignInUseCase(signInRepository: SignInRepositoryInterface,
-                             sharedPreferences: SharedPreferences) =
+    fun provideSignInUseCase(
+        signInRepository: SignInRepositoryInterface,
+        sharedPreferences: SharedPreferences
+    ) =
         SignInUseCase(signInRepository, sharedPreferences)
 
 
@@ -97,11 +101,10 @@ class UseCaseModule {
         ResetPasswordUseCase(resetPassword)
 
 
-//    @Provides
-//    @Singleton
-//    fun provideSharedPreferences(app: Application): SharedPreferences {
-//        return PreferenceManager.getDefaultSharedPreferences(app)
-//    }
+    @Provides
+    @Singleton
+    fun provideNewRequestUseCase(newRequest: NewRequestRepositoryInterface) =
+        NewRequestUseCase(newRequest)
 
 
 }
