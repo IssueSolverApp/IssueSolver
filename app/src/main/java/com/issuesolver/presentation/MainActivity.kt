@@ -5,13 +5,7 @@ import android.view.WindowManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.navigation.NavController
-import com.issuesolver.presentation.navigation.AppNavigation
 import com.issuesolver.presentation.navigation.RootNavigationGraph
-import com.issuesolver.presentation.navigation.mockNavController
-import com.issuesolver.presentation.profile.my_account.MyAccountScreen
-import com.issuesolver.presentation.profile.new_password.NewPasswordScreen
-import com.issuesolver.presentation.profile.profile.ProfileScreen
 import com.issuesolver.ui.theme.IssueSolverTheme
 import dagger.hilt.android.AndroidEntryPoint
 

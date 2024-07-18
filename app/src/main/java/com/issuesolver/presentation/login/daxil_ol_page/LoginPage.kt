@@ -1,5 +1,6 @@
 package com.issuesolver.presentation.login.daxil_ol_page
 
+import BottomBarScreen
 import android.annotation.SuppressLint
 import android.widget.Toast
 import androidx.compose.foundation.background
@@ -18,7 +19,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -35,12 +35,12 @@ import com.issuesolver.domain.entity.networkModel.login.LoginRequest
 import com.issuesolver.presentation.common.AuthButton
 import com.issuesolver.presentation.common.ErrorText
 import com.issuesolver.presentation.common.LoadingOverlay
-import com.issuesolver.presentation.navigation.Routes
+import com.issuesolver.presentation.navigation.AuthScreen
+import com.issuesolver.presentation.navigation.Graph
 import kotlinx.coroutines.launch
 
 
 @SuppressLint("RememberReturnType")
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LoginPage(
     navController: NavController, viewModel: LoginPageViewModel = hiltViewModel(),
@@ -73,8 +73,8 @@ fun LoginPage(
 
         }
         StatusR.SUCCESS -> {
-            navController.navigate("profile_page"){
-                popUpTo(Routes.LOGIN) { inclusive = true }
+            navController.navigate(Graph.MAIN_SCREEN_PAGE){
+                popUpTo(AuthScreen.Login.route) { inclusive = true }
             }
 //            Toast.makeText(LocalView.current.context, "Login Success", Toast.LENGTH_SHORT).show()
 //            viewModel.clearLoginState()
@@ -263,7 +263,7 @@ fun LoginPage(
                     Text(
                         modifier = Modifier
                             .clickable(
-                                onClick = { navController.navigate("email verification") },
+                                onClick = { navController.navigate(AuthScreen.EmailVerification.route) },
                                 interactionSource = remember { MutableInteractionSource() },
                                 indication = null
                             )
@@ -316,7 +316,7 @@ fun LoginPage(
                         Text(
                             modifier = Modifier
                                 .clickable(
-                                    onClick = { navController.navigate("register") },
+                                    onClick = { navController.navigate(AuthScreen.Register.route) },
                                     interactionSource = remember { MutableInteractionSource() },
                                     indication = null
                                 ),

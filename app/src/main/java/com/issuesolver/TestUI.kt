@@ -18,15 +18,6 @@ fun TestUI(
 //    navController: NavController,
 //    viewModel:  = hiltViewModel(),
 ) {
-
-
-    Scaffold(modifier = Modifier
-//        .statusBarsPadding()
-        .navigationBarsPadding(),
-        bottomBar = {
-            AnimatedNavigationBar()
-        },
-        content = { padding ->
             Box(
                 modifier = Modifier
                     .fillMaxSize()
@@ -36,7 +27,7 @@ fun TestUI(
             ) {
 
             }
-        })
+
 }
 
 

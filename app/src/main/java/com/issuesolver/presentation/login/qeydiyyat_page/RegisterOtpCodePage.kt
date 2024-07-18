@@ -62,6 +62,7 @@ import com.issuesolver.presentation.common.AuthButton
 import com.issuesolver.presentation.common.ErrorText
 import com.issuesolver.presentation.common.LoadingOverlay
 import com.issuesolver.presentation.login.daxil_ol_verification_code.OtpInputField
+import com.issuesolver.presentation.navigation.AuthScreen
 import kotlinx.coroutines.delay
 
 
@@ -109,7 +110,7 @@ fun RegisterOtpCodePage(
             LoadingOverlay()        }
 
         StatusR.SUCCESS -> {
-            navController.navigate("login")
+            navController.navigate(AuthScreen.Login.route)
         }
 
         StatusR.ERROR -> {

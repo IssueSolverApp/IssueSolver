@@ -29,6 +29,7 @@ import com.issuesolver.domain.entity.networkModel.login.ResendOtpModel
 import com.issuesolver.presentation.common.AuthButton
 import com.issuesolver.presentation.common.ErrorText
 import com.issuesolver.presentation.common.LoadingOverlay
+import com.issuesolver.presentation.navigation.AuthScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -46,7 +47,7 @@ fun EmailVerificationPage(
         StatusR.LOADING -> {
             LoadingOverlay()        }
         StatusR.SUCCESS -> {
-            navController.navigate("otp")
+            navController.navigate(AuthScreen.Otp.route)
             viewModel.clearForgetPasswordState()
         }
         StatusR.ERROR -> {

@@ -1,5 +1,6 @@
 package com.issuesolver.presentation.profile.profile
-
+import BottomBarScreen
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import androidx.compose.foundation.Image
@@ -9,6 +10,7 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -43,14 +45,18 @@ import androidx.navigation.NavController
 import com.issuesolver.R
 import com.issuesolver.common.PopUp
 import com.issuesolver.presentation.bottombar.AnimatedNavigationBar
-import com.issuesolver.presentation.navigation.Routes
+import com.issuesolver.presentation.navigation.DetailsScreen
+import com.issuesolver.presentation.navigation.Graph
 
 
+@SuppressLint("SuspiciousIndentation")
 @Composable
 fun ProfileScreen(
     navController: NavController,
+    paddingValues: PaddingValues,
     viewModel: ProfileScreenViewModel = hiltViewModel(),
-) {
+
+    ) {
 
 
     var showDialog by remember { mutableStateOf(false) }
@@ -60,8 +66,8 @@ fun ProfileScreen(
             button1 = "Çıxış",
             button2 = "İmtina",
             onConfirmation = {
-                navController.navigate("login"){
-                    popUpTo(Routes.PROFILE_PAGE) { inclusive = true }
+                navController.navigate(Graph.AUTHENTICATION){
+                    popUpTo(BottomBarScreen.Profile.route) { inclusive = true }
                 }
             },
             onDismiss = { showDialog = false }
@@ -72,239 +78,239 @@ fun ProfileScreen(
     val context = LocalContext.current
 
 
-    Scaffold(
-        modifier = Modifier
-        .navigationBarsPadding(),
-        bottomBar = {
-            AnimatedNavigationBar(navController)
-        },
-    content = { padding ->
-        Box(
-            modifier = Modifier
-                .padding(padding)
-                .fillMaxSize()
-                .imePadding()
-                .padding(top = 24.dp, start = 20.dp, end = 20.dp, bottom = 16.dp)
-        ) {
-            Column(
+//    Scaffold(
+//        modifier = Modifier
+//            .navigationBarsPadding(),
+//        bottomBar = {
+//            AnimatedNavigationBar(navController)
+//        },
+//        content = { padding ->
+            Box(
                 modifier = Modifier
+                    .padding(paddingValues) // Use the passed padding here
                     .fillMaxSize()
                     .imePadding()
-                    .verticalScroll(rememberScrollState())
-                ,
-                verticalArrangement = Arrangement.spacedBy(12.dp)
+                    .padding(top = 24.dp, start = 20.dp, end = 20.dp, bottom = 16.dp)
             ) {
-                Row(
+                Column(
                     modifier = Modifier
-                        .clip(shape = RoundedCornerShape(8.dp))
-                        .background(color = Color.White)
-                        .padding(top = 24.dp, start = 16.dp, end = 16.dp, bottom = 24.dp)
-                        .fillMaxWidth()
-                        .clickable(onClick = { },
-                            interactionSource = remember { MutableInteractionSource() },
-                            indication = null),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ){
-                    Row (    verticalAlignment = Alignment.CenterVertically
+                        .fillMaxSize()
+                        .imePadding()
+                        .verticalScroll(rememberScrollState())
+                    ,
+                    verticalArrangement = Arrangement.spacedBy(12.dp)
+                ) {
+                    Row(
+                        modifier = Modifier
+                            .clip(shape = RoundedCornerShape(8.dp))
+                            .background(color = Color.White)
+                            .padding(top = 24.dp, start = 16.dp, end = 16.dp, bottom = 24.dp)
+                            .fillMaxWidth()
+                            .clickable(onClick = { },
+                                interactionSource = remember { MutableInteractionSource() },
+                                indication = null),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
                     ){
+                        Row (    verticalAlignment = Alignment.CenterVertically
+                        ){
+                            Image(
+                                painter = painterResource(R.drawable.et_profile_male),
+                                contentDescription = "et_profile_male",
+                                modifier = Modifier.padding(end=12.dp)
+                            )
+                            Column {
+                                Text(
+                                    text=uiState.fullName ?: "No Name Available",
+                                    fontWeight = FontWeight.W600,
+                                    fontSize = 20.sp,
+                                    color = Color(0xFF2981FF),
+                                    textAlign = TextAlign.Start,
+                                    modifier = Modifier.padding()
+                                )
+                                Text(
+                                    text=uiState.email ?: "No Email Available",
+                                    fontSize = 15.sp,
+                                    color = Color(0xFF9D9D9D),
+                                    textAlign = TextAlign.Start,
+                                    modifier = Modifier.padding()
+                                )
+                            }
+                        }
                         Image(
-                            painter = painterResource(R.drawable.et_profile_male),
-                            contentDescription = "et_profile_male",
-                            modifier = Modifier.padding(end=12.dp)
+                            painter = painterResource(R.drawable.settings_ic),
+                            contentDescription = "settings_ic",
+                            modifier = Modifier.clickable(onClick = { navController.navigate(DetailsScreen.ProfileMyAccount.route)},
+                                interactionSource = remember { MutableInteractionSource() },
+                                indication = null)
                         )
-                        Column {
-                            Text(
-                                text=uiState.fullName ?: "No Name Available",
-                                fontWeight = FontWeight.W600,
-                                fontSize = 20.sp,
-                                color = Color(0xFF2981FF),
-                                textAlign = TextAlign.Start,
-                                modifier = Modifier.padding()
+                    }
+                    Row(
+                        modifier = Modifier
+                            .clip(shape = RoundedCornerShape(8.dp))
+                            .background(color = Color.White)
+                            .padding(top = 24.dp, start = 16.dp, end = 16.dp, bottom = 24.dp)
+                            .fillMaxWidth()
+                            .clickable(onClick = {navController.navigate(DetailsScreen.ProfileNewPassword.route)},
+                                interactionSource = remember { MutableInteractionSource() },
+                                indication = null),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ){
+                        Row ( verticalAlignment = Alignment.CenterVertically){
+                            Image(
+                                painter = painterResource(R.drawable.pricavy_ic),
+                                contentDescription = "settings_ic",
                             )
                             Text(
-                                text=uiState.email ?: "No Email Available",
+                                "Şifrəni dəyiş",
+                                fontWeight = FontWeight.SemiBold,
                                 fontSize = 15.sp,
-                                color = Color(0xFF9D9D9D),
-                                textAlign = TextAlign.Start,
-                                modifier = Modifier.padding()
+                                color = Color.Black,
+//                        textAlign = TextAlign.Start,
+                                modifier = Modifier.padding(start=12.dp)
                             )
                         }
-                    }
-                    Image(
-                        painter = painterResource(R.drawable.settings_ic),
-                        contentDescription = "settings_ic",
-                        modifier = Modifier.clickable(onClick = { navController.navigate(Routes.PROFILE_MY_ACCOUNT)},
-                            interactionSource = remember { MutableInteractionSource() },
-                            indication = null)
-                    )
-                }
-                Row(
-                    modifier = Modifier
-                        .clip(shape = RoundedCornerShape(8.dp))
-                        .background(color = Color.White)
-                        .padding(top = 24.dp, start = 16.dp, end = 16.dp, bottom = 24.dp)
-                        .fillMaxWidth()
-                        .clickable(onClick = {navController.navigate(Routes.PROFILE_NEW_PASSWORD) },
-                            interactionSource = remember { MutableInteractionSource() },
-                            indication = null),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ){
-                    Row ( verticalAlignment = Alignment.CenterVertically){
                         Image(
-                            painter = painterResource(R.drawable.pricavy_ic),
-                            contentDescription = "settings_ic",
+                            painter = painterResource(R.drawable.profile_nav_array),
+                            contentDescription = "profile_nav_array"
                         )
+                    }
+                    Spacer(modifier = Modifier.height(36.dp))
+                    Row(
+                        modifier = Modifier
+                            .clip(shape = RoundedCornerShape(8.dp))
+                            .background(color = Color.White)
+                            .padding(top = 24.dp, start = 16.dp, end = 16.dp, bottom = 24.dp)
+                            .fillMaxWidth()
+                            .clickable(onClick = {
+                                val openURL = Intent(Intent.ACTION_VIEW, Uri.parse("https://issue-solver.vercel.app/"))
+                                context.startActivity(openURL) },
+                                interactionSource = remember { MutableInteractionSource() },
+                                indication = null),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ){
                         Text(
-                            "Şifrəni dəyiş",
+                            "Məxfilik siyasəti",
                             fontWeight = FontWeight.SemiBold,
                             fontSize = 15.sp,
                             color = Color.Black,
-//                        textAlign = TextAlign.Start,
-                        modifier = Modifier.padding(start=12.dp)
+                        )
+                        Image(
+                            painter = painterResource(R.drawable.profile_nav_array),
+                            contentDescription = "profile_nav_array",
                         )
                     }
-                    Image(
-                        painter = painterResource(R.drawable.profile_nav_array),
-                        contentDescription = "profile_nav_array"
-                    )
-                }
-                Spacer(modifier = Modifier.height(36.dp))
-                Row(
-                    modifier = Modifier
-                        .clip(shape = RoundedCornerShape(8.dp))
-                        .background(color = Color.White)
-                        .padding(top = 24.dp, start = 16.dp, end = 16.dp, bottom = 24.dp)
-                        .fillMaxWidth()
-                        .clickable(onClick = {
-                            val openURL = Intent(Intent.ACTION_VIEW, Uri.parse("https://issue-solver.vercel.app/"))
-                            context.startActivity(openURL) },
-                            interactionSource = remember { MutableInteractionSource() },
-                            indication = null),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ){
-                    Text(
-                        "Məxfilik siyasəti",
-                        fontWeight = FontWeight.SemiBold,
-                        fontSize = 15.sp,
-                        color = Color.Black,
-                    )
-                    Image(
-                        painter = painterResource(R.drawable.profile_nav_array),
-                        contentDescription = "profile_nav_array",
-                    )
-                }
-                Row(
-                    modifier = Modifier
-                        .clip(shape = RoundedCornerShape(8.dp))
-                        .background(color = Color.White)
-                        .padding(top = 24.dp, start = 16.dp, end = 16.dp, bottom = 24.dp)
-                        .fillMaxWidth()
-                        .clickable(onClick = {
-                            val openURL = Intent(Intent.ACTION_VIEW, Uri.parse("https://issue-solver.vercel.app/"))
-                            context.startActivity(openURL) },
-                            interactionSource = remember { MutableInteractionSource() },
-                            indication = null),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ){
-                    Text(
-                        "Tez-tez verilən suallar",
-                        fontWeight = FontWeight.SemiBold,
-                        fontSize = 15.sp,
-                        color = Color.Black,
-                    )
-                    Image(
-                        painter = painterResource(R.drawable.profile_nav_array),
-                        contentDescription = "profile_nav_array",
-                    )
-                }
-                Row(
-                    modifier = Modifier
-                        .clip(shape = RoundedCornerShape(8.dp))
-                        .background(color = Color.White)
-                        .padding(top = 24.dp, start = 16.dp, end = 16.dp, bottom = 24.dp)
-                        .fillMaxWidth()
-                        .clickable(onClick = {
-                            val openURL = Intent(Intent.ACTION_VIEW, Uri.parse("https://issue-solver.vercel.app/"))
-                            context.startActivity(openURL) },
-                            interactionSource = remember { MutableInteractionSource() },
-                            indication = null),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ){
-                    Text(
-                        "Tətbiq haqqında",
-                        fontWeight = FontWeight.SemiBold,
-                        fontSize = 15.sp,
-                        color = Color.Black,
-                    )
-                    Image(
-                        painter = painterResource(R.drawable.profile_nav_array),
-                        contentDescription = "profile_nav_array",
-                    )
-                }
-                Spacer(modifier = Modifier.height(36.dp))
-                Row(
-                    modifier = Modifier
-                        .clip(shape = RoundedCornerShape(8.dp))
-                        .background(color = Color.White)
-                        .padding(top = 24.dp, start = 16.dp, end = 16.dp, bottom = 24.dp)
-                        .fillMaxWidth()
-                        .clickable(onClick = {
-                             showDialog = true
-                        },
-                            interactionSource = remember { MutableInteractionSource() },
-                            indication = null),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ){
-                    Row( verticalAlignment = Alignment.CenterVertically) {
-                        Image(
-                            painter = painterResource(R.drawable.exit_ic),
-                            contentDescription = "exit_ic",
-                        )
+                    Row(
+                        modifier = Modifier
+                            .clip(shape = RoundedCornerShape(8.dp))
+                            .background(color = Color.White)
+                            .padding(top = 24.dp, start = 16.dp, end = 16.dp, bottom = 24.dp)
+                            .fillMaxWidth()
+                            .clickable(onClick = {
+                                val openURL = Intent(Intent.ACTION_VIEW, Uri.parse("https://issue-solver.vercel.app/"))
+                                context.startActivity(openURL) },
+                                interactionSource = remember { MutableInteractionSource() },
+                                indication = null),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ){
                         Text(
-                            "Hesabdan çıxış",
+                            "Tez-tez verilən suallar",
                             fontWeight = FontWeight.SemiBold,
                             fontSize = 15.sp,
                             color = Color.Black,
-                            modifier = Modifier.padding(start=12.dp)
+                        )
+                        Image(
+                            painter = painterResource(R.drawable.profile_nav_array),
+                            contentDescription = "profile_nav_array",
                         )
                     }
-                    Image(
-                        painter = painterResource(R.drawable.profile_nav_array),
-                        contentDescription = "profile_nav_array",
-                    )
-                }
-                Row(
-                    modifier = Modifier
-                        .clip(shape = RoundedCornerShape(8.dp))
-                        .background(color = Color.White)
-                        .padding(top = 24.dp, start = 16.dp, end = 16.dp, bottom = 24.dp)
-                        .fillMaxWidth()
-                        .clickable(onClick = { navController.navigate("profile_delete_account") },
-                            interactionSource = remember { MutableInteractionSource() },
-                            indication = null),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ){
-                    Text(
-                        "Hesabı sil",
-                        fontWeight = FontWeight.SemiBold,
-                        fontSize = 15.sp,
-                        color = Color(0xFfEF5648),
-                    )
-                    Image(
-                        painter = painterResource(R.drawable.profile_nav_array),
-                        contentDescription = "profile_nav_array",
-                    )
+                    Row(
+                        modifier = Modifier
+                            .clip(shape = RoundedCornerShape(8.dp))
+                            .background(color = Color.White)
+                            .padding(top = 24.dp, start = 16.dp, end = 16.dp, bottom = 24.dp)
+                            .fillMaxWidth()
+                            .clickable(onClick = {
+                                val openURL = Intent(Intent.ACTION_VIEW, Uri.parse("https://issue-solver.vercel.app/"))
+                                context.startActivity(openURL) },
+                                interactionSource = remember { MutableInteractionSource() },
+                                indication = null),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ){
+                        Text(
+                            "Tətbiq haqqında",
+                            fontWeight = FontWeight.SemiBold,
+                            fontSize = 15.sp,
+                            color = Color.Black,
+                        )
+                        Image(
+                            painter = painterResource(R.drawable.profile_nav_array),
+                            contentDescription = "profile_nav_array",
+                        )
+                    }
+                    Spacer(modifier = Modifier.height(36.dp))
+                    Row(
+                        modifier = Modifier
+                            .clip(shape = RoundedCornerShape(8.dp))
+                            .background(color = Color.White)
+                            .padding(top = 24.dp, start = 16.dp, end = 16.dp, bottom = 24.dp)
+                            .fillMaxWidth()
+                            .clickable(onClick = {
+                                showDialog = true
+                            },
+                                interactionSource = remember { MutableInteractionSource() },
+                                indication = null),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ){
+                        Row( verticalAlignment = Alignment.CenterVertically) {
+                            Image(
+                                painter = painterResource(R.drawable.exit_ic),
+                                contentDescription = "exit_ic",
+                            )
+                            Text(
+                                "Hesabdan çıxış",
+                                fontWeight = FontWeight.SemiBold,
+                                fontSize = 15.sp,
+                                color = Color.Black,
+                                modifier = Modifier.padding(start=12.dp)
+                            )
+                        }
+                        Image(
+                            painter = painterResource(R.drawable.profile_nav_array),
+                            contentDescription = "profile_nav_array",
+                        )
+                    }
+                    Row(
+                        modifier = Modifier
+                            .clip(shape = RoundedCornerShape(8.dp))
+                            .background(color = Color.White)
+                            .padding(top = 24.dp, start = 16.dp, end = 16.dp, bottom = 24.dp)
+                            .fillMaxWidth()
+                            .clickable(onClick = { navController.navigate(DetailsScreen.ProfileDeleteAccount.route) },
+                                interactionSource = remember { MutableInteractionSource() },
+                                indication = null),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ){
+                        Text(
+                            "Hesabı sil",
+                            fontWeight = FontWeight.SemiBold,
+                            fontSize = 15.sp,
+                            color = Color(0xFfEF5648),
+                        )
+                        Image(
+                            painter = painterResource(R.drawable.profile_nav_array),
+                            contentDescription = "profile_nav_array",
+                        )
+                    }
                 }
             }
-        }
-    })
+//        })
 }
 
 

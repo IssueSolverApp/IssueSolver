@@ -46,7 +46,7 @@ fun NavGraphBuilder.authNavGraph(navController: NavHostController) {
 }
 
 sealed class AuthScreen(val route: String) {
-//    object SPLASH : AuthScreen(route = "SPLASH")
+    //    object SPLASH : AuthScreen(route = "SPLASH")
     object Login : AuthScreen(route = "LOGIN")
     object EmailVerification : AuthScreen(route = "EMAIL_VERIFICATION")
     object Otp : AuthScreen(route = "OTP")

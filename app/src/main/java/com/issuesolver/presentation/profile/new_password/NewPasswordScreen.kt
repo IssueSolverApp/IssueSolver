@@ -1,5 +1,6 @@
 package com.issuesolver.presentation.profile.new_password
 
+import BottomBarScreen
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -58,7 +59,6 @@ import com.issuesolver.presentation.common.AuthButton
 import com.issuesolver.presentation.common.ErrorText
 import com.issuesolver.presentation.common.LoadingOverlay
 import com.issuesolver.presentation.login.password_change_page.PasswordChangePageEvent
-import com.issuesolver.presentation.navigation.mockNavController
 import com.issuesolver.presentation.profile.enter_password.DeleteAccountEvent
 
 @Composable
@@ -88,7 +88,7 @@ fun NewPasswordScreen(
 
         }
         StatusR.SUCCESS -> {
-            navController.navigate("profile_page")
+            navController.navigate(BottomBarScreen.Profile.route)
             Toast.makeText(LocalView.current.context, "Password Changed <3", Toast.LENGTH_SHORT).show()
 //            viewModel.clearLoginState()
         }
@@ -108,296 +108,296 @@ fun NewPasswordScreen(
 //        },
 
         content = { padding ->
-    Box(
-        modifier = Modifier
+            Box(
+                modifier = Modifier
 //            .padding(padding)
-            .fillMaxSize()
-            .imePadding()
-            .padding(top = 13.dp, start = 20.dp, end = 20.dp, bottom = 34.dp)
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .imePadding()
-
-        ) {
-            Column(
+                    .fillMaxSize()
+                    .imePadding()
+                    .padding(top = 13.dp, start = 20.dp, end = 20.dp, bottom = 34.dp)
             ) {
-                Box(
+                Column(
                     modifier = Modifier
-                        .size(40.dp)
-                        .clip(RoundedCornerShape(100.dp))
-                        .background(Color.White)
-                        .clickable {
-                            navController.popBackStack()
-                        },
-                    contentAlignment = Alignment.Center
+                        .fillMaxSize()
+                        .imePadding()
+
                 ) {
-                    Image(
-                        painter = painterResource(R.drawable.backarray),
-                        contentDescription = "Back",
-                        modifier = Modifier.size(24.dp)
-                    )
-                }
-                Text(
-                    "Yeni şifrə",
-                    style = MaterialTheme.typography.headlineMedium,
-                    fontSize = 28.sp,
-                    fontWeight = FontWeight.SemiBold,
-                    textAlign = TextAlign.Start,
-                    color = Color(0xFF2981FF),
-                    modifier = Modifier.padding(top = 24.dp),
-                )
-                Text(
-                    "Yeni şifrə təyin edə bilərsiz.",
-                    style = MaterialTheme.typography.bodySmall,
-                    fontSize = 15.sp,
-                    textAlign = TextAlign.Start,
-                    color = Color(0xFF9D9D9D),
-                    modifier = Modifier.padding(top = 8.dp, bottom = 16.dp),
-                )
-            }
+                    Column(
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .size(40.dp)
+                                .clip(RoundedCornerShape(100.dp))
+                                .background(Color.White)
+                                .clickable {
+                                    navController.popBackStack()
+                                },
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Image(
+                                painter = painterResource(R.drawable.backarray),
+                                contentDescription = "Back",
+                                modifier = Modifier.size(24.dp)
+                            )
+                        }
+                        Text(
+                            "Yeni şifrə",
+                            style = MaterialTheme.typography.headlineMedium,
+                            fontSize = 28.sp,
+                            fontWeight = FontWeight.SemiBold,
+                            textAlign = TextAlign.Start,
+                            color = Color(0xFF2981FF),
+                            modifier = Modifier.padding(top = 24.dp),
+                        )
+                        Text(
+                            "Yeni şifrə təyin edə bilərsiz.",
+                            style = MaterialTheme.typography.bodySmall,
+                            fontSize = 15.sp,
+                            textAlign = TextAlign.Start,
+                            color = Color(0xFF9D9D9D),
+                            modifier = Modifier.padding(top = 8.dp, bottom = 16.dp),
+                        )
+                    }
 //                Spacer(
 //                    modifier = Modifier.height(8.dp)
 //                )
-            Divider(
-                thickness = 0.5.dp,
-                color = Color(0xFF2981FF)
-            )
-            Column(
-                Modifier
-                    .padding(top = 24.dp)
-                    .verticalScroll(rememberScrollState())
-
-            ) {
-                Text(
-                    "Cari şifrə",
-                    style = MaterialTheme.typography.bodySmall,
-                    fontSize = 15.sp,
-                )
-                TextField(
-                    shape = RoundedCornerShape(12.dp),
-                    value = uiState.currentPassword,
-                    onValueChange = {
-                        viewModel.handleEvent(
-                            NewPasswordScreenEvent.CurrentPasswordChanged(
-                                it
-                            )
-                        )
-                    },
-                    placeholder = {
-                        Text("Şifrənizi daxil edin",
-                            color=Color(0xFF9D9D9D))
-                    },
-                    singleLine = true,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 8.dp)
-                        .border(1.dp, Color.White, RoundedCornerShape(12.dp))
-                        .then(
-                            if (
-//                            isPasswordError
-                                false) Modifier.border(
-                                1.dp,
-                                Color.Red,
-                                RoundedCornerShape(12.dp)
-                            )
-                            else Modifier.border(1.dp, Color.White, RoundedCornerShape(12.dp))
-                        ),
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-                    colors = TextFieldDefaults.colors(
-                        disabledTextColor = Color(0xFF2981FF),
-                        focusedContainerColor = Color.White,
-                        unfocusedContainerColor = Color.White,
-                        disabledContainerColor = Color.White,
-                        errorContainerColor = Color.White,
-                        cursorColor = Color(0xFF2981FF),
-                        errorCursorColor = Color.Red,
-                        focusedIndicatorColor = Color.Transparent,
-                        disabledIndicatorColor=Color.Transparent,
-                        unfocusedIndicatorColor =Color.Transparent
-                    ),
-                    visualTransformation = if (showPassword1) VisualTransformation.None else PasswordVisualTransformation(),
-                    trailingIcon = {
-                        val icon =
-                            if (showPassword1) painterResource(R.drawable.unhiddeneye) else painterResource(
-                                R.drawable.hiddeneye
-                            )
-                        val description = if (showPassword1) "Hide password" else "Show password"
-                        IconButton(onClick = { showPassword1 = !showPassword1 }) {
-                            Icon(
-                                painter = icon,
-                                tint = if ( false
-//                                isPasswordError
-                                ) Color.Red else Color(0xFF2981FF),
-                                contentDescription = description
-                            )
-                        }
-                    }
-                )
-                Text(
-                    "Yeni şifrə",
-                    style = MaterialTheme.typography.bodySmall,
-                    fontSize = 15.sp,
-                    modifier = Modifier.padding(top=20.dp)
-                )
-                TextField(
-                    shape = RoundedCornerShape(12.dp),
-                    value = uiState.newPassword,
-                    onValueChange = {
-                        viewModel.handleEvent(
-                            NewPasswordScreenEvent.NewPasswordChanged(
-                                it
-                            )
-                        )
-                    },
-                    placeholder = {
-                        Text("Yeni şifrəni təyin edin",
-                                color=Color(0xFF9D9D9D))
-                    },
-                    singleLine = true,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 8.dp)
-                        .border(1.dp, Color.White, RoundedCornerShape(12.dp))
-                        .then(
-                            if (
-//                            isPasswordError
-                                false) Modifier.border(
-                                1.dp,
-                                Color.Red,
-                                RoundedCornerShape(12.dp)
-                            )
-                            else Modifier.border(1.dp, Color.White, RoundedCornerShape(12.dp))
-                        ),
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-                    colors = TextFieldDefaults.colors(
-                        disabledTextColor = Color(0xFF2981FF),
-                        focusedContainerColor = Color.White,
-                        unfocusedContainerColor = Color.White,
-                        disabledContainerColor = Color.White,
-                        errorContainerColor = Color.White,
-                        cursorColor = Color(0xFF2981FF),
-                        errorCursorColor = Color.Red,
-                        focusedIndicatorColor = Color.Transparent,
-                        disabledIndicatorColor=Color.Transparent,
-                        unfocusedIndicatorColor =Color.Transparent
-                    ),
-                    visualTransformation = if (showPassword2) VisualTransformation.None else PasswordVisualTransformation(),
-                    trailingIcon = {
-                        val icon =
-                            if (showPassword2) painterResource(R.drawable.unhiddeneye) else painterResource(
-                                R.drawable.hiddeneye
-                            )
-                        val description = if (showPassword2) "Hide password" else "Show password"
-                        IconButton(onClick = { showPassword2 = !showPassword2 }) {
-                            Icon(
-                                painter = icon,
-                                tint = if ( false
-//                                isPasswordError
-                                ) Color.Red else Color(0xFF2981FF),
-                                contentDescription = description
-                            )
-                        }
-                    }
-                )
-
-            Text(
-                "Şifrənin təsdiqi",
-                style = MaterialTheme.typography.bodySmall,
-                fontSize = 15.sp,
-                modifier = Modifier.padding(top=20.dp)
-
-            )
-            TextField(
-                shape = RoundedCornerShape(12.dp),
-                value = uiState.confirmPassword,
-                onValueChange = {
-                    viewModel.handleEvent(
-                        NewPasswordScreenEvent.ConfirmPasswordChanged(
-                            it
-                        )
+                    Divider(
+                        thickness = 0.5.dp,
+                        color = Color(0xFF2981FF)
                     )
-                },
-                placeholder = {
-                    Text("Şifrəni təsdiq edin",
-                        color=Color(0xFF9D9D9D))
-                },
-                singleLine = true,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 8.dp)
-                    .border(1.dp, Color.White, RoundedCornerShape(12.dp))
-                    .then(
-                        if (
+                    Column(
+                        Modifier
+                            .padding(top = 24.dp)
+                            .verticalScroll(rememberScrollState())
+
+                    ) {
+                        Text(
+                            "Cari şifrə",
+                            style = MaterialTheme.typography.bodySmall,
+                            fontSize = 15.sp,
+                        )
+                        TextField(
+                            shape = RoundedCornerShape(12.dp),
+                            value = uiState.currentPassword,
+                            onValueChange = {
+                                viewModel.handleEvent(
+                                    NewPasswordScreenEvent.CurrentPasswordChanged(
+                                        it
+                                    )
+                                )
+                            },
+                            placeholder = {
+                                Text("Şifrənizi daxil edin",
+                                    color=Color(0xFF9D9D9D))
+                            },
+                            singleLine = true,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(top = 8.dp)
+                                .border(1.dp, Color.White, RoundedCornerShape(12.dp))
+                                .then(
+                                    if (
 //                            isPasswordError
-                            false) Modifier.border(
-                            1.dp,
-                            Color.Red,
-                            RoundedCornerShape(12.dp)
-                        )
-                        else Modifier.border(1.dp, Color.White, RoundedCornerShape(12.dp))
-                    ),
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-                colors = TextFieldDefaults.colors(
-                    disabledTextColor = Color(0xFF2981FF),
-                    focusedContainerColor = Color.White,
-                    unfocusedContainerColor = Color.White,
-                    disabledContainerColor = Color.White,
-                    errorContainerColor = Color.White,
-                    cursorColor = Color(0xFF2981FF),
-                    errorCursorColor = Color.Red,
-                    focusedIndicatorColor = Color.Transparent,
-                    disabledIndicatorColor=Color.Transparent,
-                    unfocusedIndicatorColor =Color.Transparent
-                ),
-                visualTransformation = if (showPassword3) VisualTransformation.None else PasswordVisualTransformation(),
-                trailingIcon = {
-                    val icon =
-                        if (showPassword3) painterResource(R.drawable.unhiddeneye) else painterResource(
-                            R.drawable.hiddeneye
-                        )
-                    val description = if (showPassword3) "Hide password" else "Show password"
-                    IconButton(onClick = { showPassword3 = !showPassword3 }) {
-                        Icon(
-                            painter = icon,
-                            tint = if ( false
+                                        false) Modifier.border(
+                                        1.dp,
+                                        Color.Red,
+                                        RoundedCornerShape(12.dp)
+                                    )
+                                    else Modifier.border(1.dp, Color.White, RoundedCornerShape(12.dp))
+                                ),
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                            colors = TextFieldDefaults.colors(
+                                disabledTextColor = Color(0xFF2981FF),
+                                focusedContainerColor = Color.White,
+                                unfocusedContainerColor = Color.White,
+                                disabledContainerColor = Color.White,
+                                errorContainerColor = Color.White,
+                                cursorColor = Color(0xFF2981FF),
+                                errorCursorColor = Color.Red,
+                                focusedIndicatorColor = Color.Transparent,
+                                disabledIndicatorColor=Color.Transparent,
+                                unfocusedIndicatorColor =Color.Transparent
+                            ),
+                            visualTransformation = if (showPassword1) VisualTransformation.None else PasswordVisualTransformation(),
+                            trailingIcon = {
+                                val icon =
+                                    if (showPassword1) painterResource(R.drawable.unhiddeneye) else painterResource(
+                                        R.drawable.hiddeneye
+                                    )
+                                val description = if (showPassword1) "Hide password" else "Show password"
+                                IconButton(onClick = { showPassword1 = !showPassword1 }) {
+                                    Icon(
+                                        painter = icon,
+                                        tint = if ( false
 //                                isPasswordError
-                                ) Color.Red else Color(0xFF2981FF),
-                            contentDescription = description
+                                        ) Color.Red else Color(0xFF2981FF),
+                                        contentDescription = description
+                                    )
+                                }
+                            }
                         )
-                    }
-                }
-            )
-            ErrorText(
-                errorMessage = uiState.currentPasswordError,
+                        Text(
+                            "Yeni şifrə",
+                            style = MaterialTheme.typography.bodySmall,
+                            fontSize = 15.sp,
+                            modifier = Modifier.padding(top=20.dp)
+                        )
+                        TextField(
+                            shape = RoundedCornerShape(12.dp),
+                            value = uiState.newPassword,
+                            onValueChange = {
+                                viewModel.handleEvent(
+                                    NewPasswordScreenEvent.NewPasswordChanged(
+                                        it
+                                    )
+                                )
+                            },
+                            placeholder = {
+                                Text("Yeni şifrəni təyin edin",
+                                    color=Color(0xFF9D9D9D))
+                            },
+                            singleLine = true,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(top = 8.dp)
+                                .border(1.dp, Color.White, RoundedCornerShape(12.dp))
+                                .then(
+                                    if (
+//                            isPasswordError
+                                        false) Modifier.border(
+                                        1.dp,
+                                        Color.Red,
+                                        RoundedCornerShape(12.dp)
+                                    )
+                                    else Modifier.border(1.dp, Color.White, RoundedCornerShape(12.dp))
+                                ),
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                            colors = TextFieldDefaults.colors(
+                                disabledTextColor = Color(0xFF2981FF),
+                                focusedContainerColor = Color.White,
+                                unfocusedContainerColor = Color.White,
+                                disabledContainerColor = Color.White,
+                                errorContainerColor = Color.White,
+                                cursorColor = Color(0xFF2981FF),
+                                errorCursorColor = Color.Red,
+                                focusedIndicatorColor = Color.Transparent,
+                                disabledIndicatorColor=Color.Transparent,
+                                unfocusedIndicatorColor =Color.Transparent
+                            ),
+                            visualTransformation = if (showPassword2) VisualTransformation.None else PasswordVisualTransformation(),
+                            trailingIcon = {
+                                val icon =
+                                    if (showPassword2) painterResource(R.drawable.unhiddeneye) else painterResource(
+                                        R.drawable.hiddeneye
+                                    )
+                                val description = if (showPassword2) "Hide password" else "Show password"
+                                IconButton(onClick = { showPassword2 = !showPassword2 }) {
+                                    Icon(
+                                        painter = icon,
+                                        tint = if ( false
+//                                isPasswordError
+                                        ) Color.Red else Color(0xFF2981FF),
+                                        contentDescription = description
+                                    )
+                                }
+                            }
+                        )
+
+                        Text(
+                            "Şifrənin təsdiqi",
+                            style = MaterialTheme.typography.bodySmall,
+                            fontSize = 15.sp,
+                            modifier = Modifier.padding(top=20.dp)
+
+                        )
+                        TextField(
+                            shape = RoundedCornerShape(12.dp),
+                            value = uiState.confirmPassword,
+                            onValueChange = {
+                                viewModel.handleEvent(
+                                    NewPasswordScreenEvent.ConfirmPasswordChanged(
+                                        it
+                                    )
+                                )
+                            },
+                            placeholder = {
+                                Text("Şifrəni təsdiq edin",
+                                    color=Color(0xFF9D9D9D))
+                            },
+                            singleLine = true,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(top = 8.dp)
+                                .border(1.dp, Color.White, RoundedCornerShape(12.dp))
+                                .then(
+                                    if (
+//                            isPasswordError
+                                        false) Modifier.border(
+                                        1.dp,
+                                        Color.Red,
+                                        RoundedCornerShape(12.dp)
+                                    )
+                                    else Modifier.border(1.dp, Color.White, RoundedCornerShape(12.dp))
+                                ),
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                            colors = TextFieldDefaults.colors(
+                                disabledTextColor = Color(0xFF2981FF),
+                                focusedContainerColor = Color.White,
+                                unfocusedContainerColor = Color.White,
+                                disabledContainerColor = Color.White,
+                                errorContainerColor = Color.White,
+                                cursorColor = Color(0xFF2981FF),
+                                errorCursorColor = Color.Red,
+                                focusedIndicatorColor = Color.Transparent,
+                                disabledIndicatorColor=Color.Transparent,
+                                unfocusedIndicatorColor =Color.Transparent
+                            ),
+                            visualTransformation = if (showPassword3) VisualTransformation.None else PasswordVisualTransformation(),
+                            trailingIcon = {
+                                val icon =
+                                    if (showPassword3) painterResource(R.drawable.unhiddeneye) else painterResource(
+                                        R.drawable.hiddeneye
+                                    )
+                                val description = if (showPassword3) "Hide password" else "Show password"
+                                IconButton(onClick = { showPassword3 = !showPassword3 }) {
+                                    Icon(
+                                        painter = icon,
+                                        tint = if ( false
+//                                isPasswordError
+                                        ) Color.Red else Color(0xFF2981FF),
+                                        contentDescription = description
+                                    )
+                                }
+                            }
+                        )
+                        ErrorText(
+                            errorMessage = uiState.currentPasswordError,
 //                        isVisible = isPasswordError
-            )
-        }
-            Spacer(modifier = Modifier.height(150.dp))
+                        )
+                    }
+                    Spacer(modifier = Modifier.height(150.dp))
 
-        }
-        Column(
-            modifier = Modifier.align(Alignment.BottomCenter)
-        ) {
-            AuthButton(
-                text = "Yenilə",
-                onClick = {
-                    viewModel.handleEvent(NewPasswordScreenEvent.Submit)
-                    viewModel.updatePassword(
-                        UpdatePasswordRequest(
-                            uiState.currentPassword,
-                            uiState.newPassword,
-                            uiState.confirmPassword,
+                }
+                Column(
+                    modifier = Modifier.align(Alignment.BottomCenter)
+                ) {
+                    AuthButton(
+                        text = "Yenilə",
+                        onClick = {
+                            viewModel.handleEvent(NewPasswordScreenEvent.Submit)
+                            viewModel.updatePassword(
+                                UpdatePasswordRequest(
+                                    uiState.currentPassword,
+                                    uiState.newPassword,
+                                    uiState.confirmPassword,
 
+                                    )
                             )
+                        },
+                        modifier = Modifier.fillMaxWidth()
                     )
-                },
-                modifier = Modifier.fillMaxWidth()
-            )
+                }
+            }
         }
-    }
-}
-)
+    )
 }
 

@@ -1,30 +1,42 @@
 package com.issuesolver.presentation.navigation
 
 import BottomBarScreen
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import com.issuesolver.TestUI
 import com.issuesolver.presentation.bottombar.ButtonData
+import com.issuesolver.presentation.profile.enter_password.DeleteAccountScreen
+import com.issuesolver.presentation.profile.my_account.MyAccountScreen
+import com.issuesolver.presentation.profile.new_password.NewPasswordScreen
+import com.issuesolver.presentation.profile.profile.ProfileScreen
 
 
 @Composable
-fun MainNavGraph(navController: NavHostController) {
+fun MainNavGraph(navController: NavHostController, paddingValues: PaddingValues) {
     NavHost(
         navController = navController,
         route = Graph.MAIN_SCREEN_PAGE,
-        startDestination = BottomBarScreen.Home.route
+        startDestination = BottomBarScreen.Profile.route
     ) {
         composable(route = BottomBarScreen.Home.route) {
+            TestUI()
         }
         composable(route = BottomBarScreen.MyRequest.route) {
+            TestUI()
         }
         composable(route = BottomBarScreen.NewRequest.route) {
+            TestUI()
         }
         composable(route = BottomBarScreen.Profile.route) {
+            ProfileScreen(navController, paddingValues)
+
         }
+        detailsNavGraph(navController)
     }
 }
 
@@ -33,20 +45,23 @@ fun MainNavGraph(navController: NavHostController) {
 fun NavGraphBuilder.detailsNavGraph(navController: NavHostController) {
     navigation(
         route = Graph.DETAILS,
-        startDestination = DetailsScreen.PROFILENEWPASSWORD.route
+        startDestination = DetailsScreen.ProfileNewPassword.route
     ) {
-        composable(route = DetailsScreen.PROFILENEWPASSWORD.route) {
+        composable(route = DetailsScreen.ProfileNewPassword.route) {
+            NewPasswordScreen(navController)
         }
-        composable(route = DetailsScreen.PROFILEMYACCOUNT.route) {
+        composable(route = DetailsScreen.ProfileMyAccount.route) {
+            MyAccountScreen(navController)
         }
-        composable(route = DetailsScreen.PROFILEDELETEACCOUNT.route) {
+        composable(route = DetailsScreen.ProfileDeleteAccount.route) {
+            DeleteAccountScreen(navController)
         }
     }
 }
 
 sealed class DetailsScreen(val route: String) {
-    object PROFILENEWPASSWORD : DetailsScreen(route = "PROFILE_NEW_PASSWORD")
-    object PROFILEMYACCOUNT : DetailsScreen(route = "PROFILE_MY_ACCOUNT")
-    object PROFILEDELETEACCOUNT : DetailsScreen(route = "PROFILE_DELETE_ACCOUNT")
+    object ProfileNewPassword : DetailsScreen(route = "PROFILE_NEW_PASSWORD")
+    object ProfileMyAccount : DetailsScreen(route = "PROFILE_MY_ACCOUNT")
+    object ProfileDeleteAccount : DetailsScreen(route = "PROFILE_DELETE_ACCOUNT")
 
 }

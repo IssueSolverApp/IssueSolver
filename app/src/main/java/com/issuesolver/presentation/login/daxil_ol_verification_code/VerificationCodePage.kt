@@ -46,7 +46,7 @@ import com.issuesolver.domain.entity.networkModel.login.RequestOtp
 import com.issuesolver.presentation.common.AuthButton
 import com.issuesolver.presentation.common.ErrorText
 import com.issuesolver.presentation.common.LoadingOverlay
-import com.issuesolver.presentation.navigation.mockNavController
+import com.issuesolver.presentation.navigation.AuthScreen
 import kotlinx.coroutines.delay
 
 @SuppressLint("DefaultLocale")
@@ -70,7 +70,7 @@ fun VerificationCodePage(
             CircularProgressIndicator()
         }
         StatusR.SUCCESS -> {
-            navController.navigate("password change")
+            navController.navigate(AuthScreen.PasswordChange.route)
             viewModel.clearOtpTrustState()
         }
         StatusR.ERROR -> {
@@ -431,12 +431,6 @@ internal fun CharacterContainer(
 }
 
 
-@Preview(showBackground = true)
-@Composable
-fun VerificationCodePagePreview() {
-    MaterialTheme {
-        VerificationCodePage(navController = mockNavController())
-    }
-}
+
 
 

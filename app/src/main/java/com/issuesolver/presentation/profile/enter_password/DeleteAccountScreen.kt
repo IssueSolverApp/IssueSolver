@@ -1,5 +1,6 @@
 package com.issuesolver.presentation.profile.enter_password
 
+import BottomBarScreen
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -79,7 +80,7 @@ fun DeleteAccountScreen(
             Toast.makeText(LocalView.current.context, "Kodun ishlemir X(", Toast.LENGTH_SHORT).show()
         }
         StatusR.SUCCESS -> {
-            navController.navigate("profile_page")
+            navController.navigate(BottomBarScreen.Profile.route)
             Toast.makeText(LocalView.current.context, "Account Deleted !!!!", Toast.LENGTH_SHORT).show()
 //            viewModel.clearLoginState()
         }

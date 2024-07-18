@@ -9,6 +9,7 @@ import com.issuesolver.domain.usecase.profile.backend.GetMeUseCase
 import com.issuesolver.domain.usecase.profile.backend.UpdateFullNameUseCase
 import com.issuesolver.domain.usecase.profile.local.FullNameUseCase
 import com.issuesolver.presentation.login.daxil_ol_page_email.VerificationCodePageEvent
+import com.issuesolver.presentation.profile.profile.ProfileScreenState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -30,6 +31,7 @@ class MyAccountViewModel @Inject constructor(
     private val _profileState: MutableStateFlow<State?> =  MutableStateFlow(null)
     val profileState: StateFlow<State?> = _profileState
 
+
     init {
         fetchProfile()
     }
@@ -43,6 +45,7 @@ class MyAccountViewModel @Inject constructor(
                     }
                     is Resource.Success -> {
                         _profileState.emit(State.success())
+
                     }
                     is Resource.Error -> {
                         _profileState.emit(State.error(resource.message))

@@ -49,9 +49,9 @@ import com.issuesolver.R
 import com.issuesolver.domain.entity.networkModel.login.RegisterRequestModel
 import com.issuesolver.presentation.common.AuthButton
 import com.issuesolver.presentation.common.ErrorText
-import com.issuesolver.presentation.navigation.Routes
 import com.issuesolver.common.StatusR
 import com.issuesolver.presentation.common.LoadingOverlay
+import com.issuesolver.presentation.navigation.AuthScreen
 
 
 @Composable
@@ -83,7 +83,7 @@ fun RegisterPage(navController: NavController, viewModel: RegisterViewModel = hi
             LoadingOverlay()        }
 
         StatusR.SUCCESS -> {
-            navController.navigate(Routes.REGISTER_OTP + "/${uiState.email}")
+            navController.navigate(AuthScreen.RegisterOtp.route + "/${uiState.email}")
             viewModel.clearRegisterState()
         }
 
@@ -448,7 +448,7 @@ fun RegisterPage(navController: NavController, viewModel: RegisterViewModel = hi
                                     confirmPassword = uiState.repeatedPassword
                                 )
                             )
-                            navController.navigate(Routes.REGISTER_OTP + "/${uiState.email}")
+                            navController.navigate(AuthScreen.RegisterOtp.route + "/${uiState.email}")
                         }
                     },
                     enabled = uiState.isInputValid,

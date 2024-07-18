@@ -5,5 +5,7 @@ data class ProfileScreenState (
     val email: String? = null,
     val fullNameError: String? = null,
     val emailError: String? = null,
-    val isLoading: Boolean = false
-)
+    val isLoading: Boolean = false,
+    val isInputValid: Boolean = false,
+
+    )

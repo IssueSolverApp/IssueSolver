@@ -1,5 +1,6 @@
 package com.issuesolver.presentation.profile.my_account
 
+import BottomBarScreen
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -51,7 +52,6 @@ import com.issuesolver.presentation.bottombar.AnimatedNavigationBar
 import com.issuesolver.presentation.common.AuthButton
 import com.issuesolver.presentation.common.ErrorText
 import com.issuesolver.presentation.common.LoadingOverlay
-import com.issuesolver.presentation.navigation.mockNavController
 import com.issuesolver.presentation.profile.enter_password.DeleteAccountEvent
 import com.issuesolver.presentation.profile.new_password.NewPasswordScreenEvent
 
@@ -270,6 +270,7 @@ fun MyAccountScreen(
                                 uiState.fullName,
                                 )
                         )
+                        navController.popBackStack()
                     },
                     modifier = Modifier.fillMaxWidth()
                 )
