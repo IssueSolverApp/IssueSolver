@@ -22,8 +22,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             IssueSolverTheme {
-                //AppNavigation()
-                RequestScreen()
+                AppNavigation()
             }
         }
     }
