@@ -9,7 +9,6 @@ import com.issuesolver.presentation.bottombar.MainScreen
 @Composable
 fun RootNavigationGraph() {
     val navController = rememberNavController()
-    val navControllerBottomBar = rememberNavController()
 
 
     NavHost(
@@ -21,7 +20,6 @@ fun RootNavigationGraph() {
         composable(route = Graph.MAIN_SCREEN_PAGE) {
             MainScreen()
         }
-        detailsNavGraph(navController = navControllerBottomBar)
 
     }
 }

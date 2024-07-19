@@ -95,9 +95,8 @@ fun DeleteAccountScreen(
         modifier = Modifier
             .navigationBarsPadding()
         ,
-//        bottomBar = {
-//            AnimatedNavigationBar()
-//        },
+        bottomBar = {
+        },
         content = { padding ->
         Box(
             modifier = Modifier

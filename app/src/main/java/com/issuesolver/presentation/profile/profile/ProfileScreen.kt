@@ -66,9 +66,7 @@ fun ProfileScreen(
             button1 = "Çıxış",
             button2 = "İmtina",
             onConfirmation = {
-                navController.navigate(Graph.AUTHENTICATION){
-                    popUpTo(BottomBarScreen.Profile.route) { inclusive = true }
-                }
+                navController.navigate(Graph.AUTHENTICATION)
             },
             onDismiss = { showDialog = false }
         )

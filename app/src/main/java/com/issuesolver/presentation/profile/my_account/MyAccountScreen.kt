@@ -93,13 +93,11 @@ fun MyAccountScreen(
     Scaffold(
         modifier = Modifier
             .navigationBarsPadding(),
-//        bottomBar = {
-//            AnimatedNavigationBar()
-//        },
+        bottomBar = {},
         content = { padding ->
         Box(
             modifier = Modifier
-//                .padding(padding)
+                .padding(padding)
                 .fillMaxSize()
                 .imePadding()
                 .padding(top = 13.dp, start = 20.dp, end = 20.dp, bottom = 34.dp)
@@ -182,7 +180,7 @@ fun MyAccountScreen(
                                 if (
                                     false
 //                                    isFullNameError
-                                    ) Modifier.border(
+                                ) Modifier.border(
                                     1.dp,
                                     Color.Red,
                                     RoundedCornerShape(12.dp)
@@ -191,7 +189,8 @@ fun MyAccountScreen(
                                     1.dp,
                                     Color.White,
                                     RoundedCornerShape(12.dp)
-                                )),
+                                )
+                            ),
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
                         colors = TextFieldDefaults.colors(
                             disabledTextColor = Color(0xFF2981FF),

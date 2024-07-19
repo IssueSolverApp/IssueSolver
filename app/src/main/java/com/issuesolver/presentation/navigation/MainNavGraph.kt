@@ -3,6 +3,11 @@ package com.issuesolver.presentation.navigation
 import BottomBarScreen
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavBackStackEntry
+import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -36,17 +41,6 @@ fun MainNavGraph(navController: NavHostController, paddingValues: PaddingValues)
             ProfileScreen(navController, paddingValues)
 
         }
-        detailsNavGraph(navController)
-    }
-}
-
-
-
-fun NavGraphBuilder.detailsNavGraph(navController: NavHostController) {
-    navigation(
-        route = Graph.DETAILS,
-        startDestination = DetailsScreen.ProfileNewPassword.route
-    ) {
         composable(route = DetailsScreen.ProfileNewPassword.route) {
             NewPasswordScreen(navController)
         }
@@ -55,9 +49,27 @@ fun NavGraphBuilder.detailsNavGraph(navController: NavHostController) {
         }
         composable(route = DetailsScreen.ProfileDeleteAccount.route) {
             DeleteAccountScreen(navController)
-        }
-    }
+        }    }
 }
+
+
+
+//fun NavGraphBuilder.detailsNavGraph(navController: NavHostController) {
+//    navigation(
+//        route = Graph.DETAILS,
+//        startDestination = DetailsScreen.ProfileNewPassword.route
+//    ) {
+////        composable(route = DetailsScreen.ProfileNewPassword.route) {
+////            NewPasswordScreen(navController)
+////        }
+////        composable(route = DetailsScreen.ProfileMyAccount.route) {
+////            MyAccountScreen(navController)
+////        }
+////        composable(route = DetailsScreen.ProfileDeleteAccount.route) {
+////            DeleteAccountScreen(navController)
+////        }
+//    }
+//}
 
 sealed class DetailsScreen(val route: String) {
     object ProfileNewPassword : DetailsScreen(route = "PROFILE_NEW_PASSWORD")
@@ -65,3 +77,12 @@ sealed class DetailsScreen(val route: String) {
     object ProfileDeleteAccount : DetailsScreen(route = "PROFILE_DELETE_ACCOUNT")
 
 }
+
+//@Composable
+//inline fun <reified T : ViewModel> NavBackStackEntry.sharedViewModel(navController: NavController): T {
+//    val navGraphRoute = destination.parent?.route ?: return viewModel()
+//    val parentEntry = remember(this) {
+//        navController.getBackStackEntry(navGraphRoute)
+//    }
+//    return viewModel(parentEntry)
+//}

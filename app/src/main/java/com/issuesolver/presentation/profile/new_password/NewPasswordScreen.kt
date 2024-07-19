@@ -103,9 +103,8 @@ fun NewPasswordScreen(
     Scaffold(
         modifier = Modifier
             .navigationBarsPadding(),
-//        bottomBar = {
-//            AnimatedNavigationBar()
-//        },
+        bottomBar = {
+        },
 
         content = { padding ->
             Box(
