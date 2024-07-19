@@ -54,13 +54,14 @@ import com.issuesolver.presentation.common.ErrorText
 import com.issuesolver.presentation.common.LoadingOverlay
 import com.issuesolver.presentation.profile.enter_password.DeleteAccountEvent
 import com.issuesolver.presentation.profile.new_password.NewPasswordScreenEvent
+import com.issuesolver.presentation.profile.profile.ProfileScreenState
+import com.issuesolver.presentation.profile.profile.ProfileScreenViewModel
 
 @Composable
 fun MyAccountScreen(
     navController: NavController,
-    viewModel: MyAccountViewModel  = hiltViewModel()
-
-){
+    viewModel: MyAccountViewModel  = hiltViewModel(),
+    ){
 
     val uiState by viewModel.uiState.collectAsState()
     val updateFullNameState by viewModel.profileState.collectAsState()
@@ -79,7 +80,7 @@ fun MyAccountScreen(
         }
         StatusR.SUCCESS -> {
 //            Toast.makeText(LocalView.current.context, "Full Name Changed <3", Toast.LENGTH_SHORT).show()
-//            navController.navigate("profile_page")
+//            navController.navigate(BottomBarScreen.Profile.route)
 //            viewModel.clearLoginState()
         }
         else-> {
@@ -88,6 +89,7 @@ fun MyAccountScreen(
 
 
     }
+
     Scaffold(
         modifier = Modifier
             .navigationBarsPadding(),
