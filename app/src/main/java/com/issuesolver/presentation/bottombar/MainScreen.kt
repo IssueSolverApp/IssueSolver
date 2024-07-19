@@ -28,7 +28,6 @@ fun MainScreen(navController: NavHostController = rememberNavController()) {
     Scaffold(
         modifier = Modifier.navigationBarsPadding(),
         bottomBar = {
-            // Conditionally display the bottom bar
             if (currentRoute.value in listOf(
                     BottomBarScreen.Home.route,
                     BottomBarScreen.MyRequest.route,
