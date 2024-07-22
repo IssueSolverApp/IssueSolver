@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -44,28 +45,25 @@ import kotlin.math.roundToInt
 
 @Composable
 fun Splash() {
-    val animatableX1 = remember { Animatable(0f) }
-    val animatableX2 = remember { Animatable(0f) }
     val scope = rememberCoroutineScope()
-    var boxWidth by remember { mutableStateOf(0f) }
-    var rowWidth by remember { mutableStateOf(0f) }
+    var boxWidth by remember { mutableStateOf(1f) } // Avoid division by zero
+    val imageAnimatable = remember { Animatable(0f) } // Start as a float representing pixels
+    val textAnimatable = remember { Animatable(0f) }  // Start as a float representing pixels
 
-    LaunchedEffect(Unit) {
+    LaunchedEffect(boxWidth) {
         scope.launch {
-            animatableX1.animateTo(
-                targetValue = 0f,
+            // Animate image to its end position with a padding of 10.dp from the right
+            imageAnimatable.animateTo(
+                targetValue = ((boxWidth/2)+60) ,  // Image width 50.dp + end padding 10.dp
                 animationSpec = tween(
-                    durationMillis = 2000,
-                    easing = LinearEasing
+                    durationMillis = 2000
                 )
             )
-        }
-        scope.launch {
-            animatableX2.animateTo(
-                targetValue = 0f,
+            // Animate text to center of the screen
+            textAnimatable.animateTo(
+                targetValue = (boxWidth / 2),
                 animationSpec = tween(
-                    durationMillis = 1000,
-                    easing = LinearEasing
+                    durationMillis = 2000
                 )
             )
         }
@@ -81,44 +79,33 @@ fun Splash() {
     ) {
         Row(
             modifier = Modifier
-                .onGloballyPositioned { coordinates ->
-                    rowWidth = coordinates.size.width.toFloat()
-                }
-                .offset {
-                    IntOffset(
-                        x = ((boxWidth - rowWidth) / 2).roundToInt(),
-                        y = 0
-                    )
-                },
+                .fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Image(
                 painter = painterResource(R.drawable.ellipse_9),
                 contentDescription = "ellipse_9",
                 modifier = Modifier
+                    .padding(start=70.dp)
+                    .offset { IntOffset(imageAnimatable.value.roundToInt() - 190.dp.toPx().roundToInt(), 0) }
                     .size(32.dp)
-                    .offset {
-                        IntOffset(
-                            x = (animatableX1.value * (boxWidth - rowWidth) / 2).roundToInt(),
-                            y = 0
-                        )
-                    }
-            )
-            Spacer(modifier = Modifier.width(16.dp))
+
+                ,
+
+
+
+                )
+            Spacer(modifier = Modifier.width(10.dp))
             Text(
                 text = "Issue Solver",
                 style = MaterialTheme.typography.headlineMedium,
                 fontSize = 32.sp,
                 fontWeight = FontWeight.W600,
-                textAlign = TextAlign.Start,
+                textAlign = TextAlign.Center,
                 color = Color(0xFF2981FF),
                 modifier = Modifier
-                    .offset {
-                        IntOffset(
-                            x = (animatableX2.value * (boxWidth - rowWidth) / 2).roundToInt(),
-                            y = 0
-                        )
-                    }
+                    .offset { IntOffset(imageAnimatable.value.roundToInt() - 190.dp.toPx().roundToInt(), 0) },
+
             )
         }
     }
