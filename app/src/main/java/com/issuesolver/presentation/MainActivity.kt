@@ -6,6 +6,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import com.issuesolver.presentation.navigation.RootNavigationGraph
+import com.issuesolver.presentation.splash.Splash
 import com.issuesolver.ui.theme.IssueSolverTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -19,7 +20,8 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             IssueSolverTheme {
-                RootNavigationGraph()
+                Splash()
+//                RootNavigationGraph()
             }
         }
     }
