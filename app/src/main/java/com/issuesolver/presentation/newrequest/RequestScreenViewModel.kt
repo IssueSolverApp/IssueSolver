@@ -8,7 +8,6 @@ import androidx.lifecycle.viewModelScope
 import com.issuesolver.common.Resource
 import com.issuesolver.common.State
 import com.issuesolver.domain.entity.networkModel.NewRequest
-import com.issuesolver.domain.entity.networkModel.RegisterRequestModel
 import com.issuesolver.domain.usecase.newrequestusecase.NewRequestUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

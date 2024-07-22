@@ -1,32 +1,20 @@
 package com.issuesolver.domain.usecase.di
 
-import android.app.Application
 import android.content.SharedPreferences
 import com.issuesolver.data.repository.login.ConfirmOtpRepositoryInterface
+import com.issuesolver.data.repository.login.OtpTrustRepositoryInterface
 import com.issuesolver.data.repository.profile.DeleteAccountRepositoryInterface
 import com.issuesolver.data.repository.profile.GetMeRepositoryInterFace
-import com.issuesolver.data.repository.login.OtpTrustRepositoryInterface
 import com.issuesolver.data.repository.login.RegisterRepositoryInterface
 import com.issuesolver.data.repository.login.ResendOtpRepositoryInterface
 import com.issuesolver.data.repository.login.ResetPasswordRepositoryInterface
 import com.issuesolver.data.repository.login.SignInRepositoryInterface
 import com.issuesolver.data.repository.profile.UpdateFullNameRepositoryInterFace
 import com.issuesolver.data.repository.profile.UpdatePasswordRepositoryInterFace
-import com.issuesolver.domain.usecase.login.backend.ConfirmOtpUseCase
 import com.issuesolver.domain.usecase.login.backend.OtpTrustUseCase
 import com.issuesolver.domain.usecase.login.backend.RegisterUseCase
-import android.preference.PreferenceManager
-import com.issuesolver.data.repository.ConfirmOtpRepositoryInterface
-import com.issuesolver.data.repository.OtpTrustRepositoryInterface
-import com.issuesolver.data.repository.RegisterRepositoryInterface
-import com.issuesolver.data.repository.ResendOtpRepositoryInterface
-import com.issuesolver.data.repository.ResetPasswordRepositoryInterface
-import com.issuesolver.data.repository.SignInRepositoryInterface
 import com.issuesolver.data.repository.newrequestrepo.NewRequestRepositoryInterface
-import com.issuesolver.domain.usecase.ConfirmOtpUseCase
-import com.issuesolver.domain.usecase.OtpTrustUseCase
-import com.issuesolver.domain.usecase.RegisterUseCase
-
+import com.issuesolver.domain.usecase.login.backend.ConfirmOtpUseCase
 import com.issuesolver.domain.usecase.login.backend.ResendOtpUseCase
 import com.issuesolver.domain.usecase.login.backend.ResetPasswordUseCase
 import com.issuesolver.domain.usecase.login.backend.SignInUseCase
@@ -35,7 +23,6 @@ import com.issuesolver.domain.usecase.login.local.ValidatePasswordUseCase
 import com.issuesolver.domain.usecase.login.local.LoginUseCase
 import com.issuesolver.domain.usecase.login.local.ValidateEmailUseCase
 import com.issuesolver.domain.usecase.login.local.ValidateNewPasswordUseCase
-
 import com.issuesolver.domain.usecase.login.local.ValidateRepeatedPasswordUseCase
 import com.issuesolver.domain.usecase.profile.backend.DeleteAccountUseCase
 import com.issuesolver.domain.usecase.profile.backend.GetMeUseCase
@@ -45,7 +32,6 @@ import com.issuesolver.domain.usecase.profile.local.ConfirmNewPasswordUseCase
 import com.issuesolver.domain.usecase.profile.local.FullNameUseCase
 import com.issuesolver.domain.usecase.profile.local.NewPasswordUseCase
 import com.issuesolver.domain.usecase.profile.local.PreviousPasswordUseCase
-import com.issuesolver.domain.usecase.login.ValidateRepeatedPasswordUseCase
 import com.issuesolver.domain.usecase.newrequestusecase.NewRequestUseCase
 
 import dagger.Module

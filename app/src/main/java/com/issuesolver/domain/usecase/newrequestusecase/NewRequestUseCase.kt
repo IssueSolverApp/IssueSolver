@@ -5,8 +5,6 @@ import com.issuesolver.common.Resource
 import com.issuesolver.data.repository.newrequestrepo.NewRequestRepositoryInterface
 import com.issuesolver.domain.entity.networkModel.NewRequest
 import com.issuesolver.domain.entity.networkModel.NewRequestResponseBody
-import com.issuesolver.domain.entity.networkModel.RegisterResponseModel
-import com.issuesolver.domain.entity.networkModel.RequestOtp
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException
 import java.io.IOException

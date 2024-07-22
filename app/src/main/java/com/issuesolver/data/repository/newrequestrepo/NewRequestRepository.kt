@@ -4,8 +4,6 @@ import com.issuesolver.data.network.auth.LoginService
 import com.issuesolver.data.network.newrequest.NewRequestService
 import com.issuesolver.domain.entity.networkModel.NewRequest
 import com.issuesolver.domain.entity.networkModel.NewRequestResponseBody
-import com.issuesolver.domain.entity.networkModel.RegisterResponseModel
-import com.issuesolver.domain.entity.networkModel.RequestOtp
 import retrofit2.Response
 import javax.inject.Inject
 

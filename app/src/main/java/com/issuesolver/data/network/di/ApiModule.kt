@@ -8,6 +8,7 @@ import com.issuesolver.data.network.auth.LoginService
 import com.issuesolver.data.network.jwt.AuthAuthenticator
 import com.issuesolver.data.network.jwt.AuthInterceptor
 import com.issuesolver.data.network.newrequest.NewRequestService
+import com.issuesolver.data.network.profile.ProfileService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -34,7 +35,7 @@ class ApiModule {
     @Singleton
     fun provideApiClient(gson: Gson, client: OkHttpClient): Retrofit {
         val retrofit = Retrofit.Builder()
-        retrofit.baseUrl("https://issue-solver-421da800ab88.herokuapp.com/")
+        retrofit.baseUrl("https://gatewayy-f20db7ab0323.herokuapp.com/")
             .addConverterFactory(GsonConverterFactory.create(gson))
             .client(client)
             .build()
@@ -47,6 +48,12 @@ class ApiModule {
     @Singleton
     fun provideApiService( retrofit: Retrofit): LoginService {
         return retrofit.create(LoginService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideProfileService( retrofit: Retrofit): ProfileService {
+        return retrofit.create(ProfileService::class.java)
     }
 
     @Provides
