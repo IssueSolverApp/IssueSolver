@@ -4,11 +4,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.issuesolver.common.Resource
 import com.issuesolver.common.State
-import com.issuesolver.domain.entity.networkModel.ResetPasswordModel
-import com.issuesolver.domain.usecase.OtpTrustUseCase
-import com.issuesolver.domain.usecase.ResetPasswordUseCase
-import com.issuesolver.domain.usecase.login.ValidateNewPasswordUseCase
-import com.issuesolver.domain.usecase.login.ValidateRepeatedPasswordUseCase
+import com.issuesolver.domain.entity.networkModel.login.ResetPasswordModel
+import com.issuesolver.domain.usecase.login.backend.OtpTrustUseCase
+import com.issuesolver.domain.usecase.login.backend.ResetPasswordUseCase
+import com.issuesolver.domain.usecase.login.local.ValidateNewPasswordUseCase
+import com.issuesolver.domain.usecase.login.local.ValidateRepeatedPasswordUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -62,7 +62,8 @@ class PasswordChangePageViewModel @Inject constructor(
                 _uiState.value = _uiState.value.copy(
                     newpassword = event.newpassword,
                     newpasswordError = result.errorMessage,
-                    isInputValid = result.successful && validateRepeatedPasswordUseCase.execute(
+                    isInputValid = result.successful &&
+                            validateRepeatedPasswordUseCase.execute(
                         event.newpassword,
                         _uiState.value.repeatedPassword
                     ).successful

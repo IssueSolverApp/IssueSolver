@@ -1,19 +1,17 @@
 package com.issuesolver.data.network.auth
 
-import com.issuesolver.domain.entity.networkModel.LoginRequest
-import com.issuesolver.domain.entity.networkModel.LoginResponse
-import com.issuesolver.domain.entity.networkModel.OtpTrustResponse
-import com.issuesolver.domain.entity.networkModel.RegisterResponseModel
-import com.issuesolver.domain.entity.networkModel.RegisterRequestModel
-import com.issuesolver.domain.entity.networkModel.RequestOtp
-import com.issuesolver.domain.entity.networkModel.ResendOtpModel
-import com.issuesolver.domain.entity.networkModel.ResetPasswordModel
-import okhttp3.ResponseBody
+import com.issuesolver.domain.entity.networkModel.login.LoginRequest
+import com.issuesolver.domain.entity.networkModel.login.LoginResponse
+import com.issuesolver.domain.entity.networkModel.login.OtpTrustResponse
+import com.issuesolver.domain.entity.networkModel.login.RegisterResponseModel
+import com.issuesolver.domain.entity.networkModel.login.RegisterRequestModel
+import com.issuesolver.domain.entity.networkModel.login.RequestOtp
+import com.issuesolver.domain.entity.networkModel.login.ResendOtpModel
+import com.issuesolver.domain.entity.networkModel.login.ResetPasswordModel
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.POST
 import retrofit2.http.Query
-import retrofit2.http.Url
 
 
 interface LoginService {

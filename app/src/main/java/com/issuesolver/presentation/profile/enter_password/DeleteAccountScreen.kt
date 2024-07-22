@@ -1,5 +1,7 @@
 package com.issuesolver.presentation.profile.enter_password
 
+import BottomBarScreen
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -27,6 +29,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -35,40 +38,69 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.issuesolver.R
+import com.issuesolver.common.PopUp
+import com.issuesolver.common.StatusR
+import com.issuesolver.domain.entity.networkModel.profile.DeleteAccountRequest
 import com.issuesolver.presentation.bottombar.AnimatedNavigationBar
 import com.issuesolver.presentation.common.AuthButton
+import com.issuesolver.presentation.common.ErrorText
+import com.issuesolver.presentation.common.LoadingOverlay
 
 @Composable
 fun DeleteAccountScreen(
     navController: NavController,
-//    viewModel:  = hiltViewModel()
+    viewModel:DeleteAccountViewModel  = hiltViewModel()
 
 ){
 
+    var showDialog by remember { mutableStateOf(false) }
+
     var showPassword1 by remember { mutableStateOf(value = false) }
+    val uiState by viewModel.uiState.collectAsState()
+    val deleteAccountState by viewModel.profileState.collectAsState()
+    when(deleteAccountState?.status){
+
+        StatusR.LOADING -> {
+            LoadingOverlay()
+        }
+
+        StatusR.ERROR -> {
+            Toast.makeText(LocalView.current.context, "Kodun ishlemir X(", Toast.LENGTH_SHORT).show()
+        }
+        StatusR.SUCCESS -> {
+            navController.navigate(BottomBarScreen.Profile.route)
+            Toast.makeText(LocalView.current.context, "Account Deleted !!!!", Toast.LENGTH_SHORT).show()
+//            viewModel.clearLoginState()
+        }
+        else-> {
+
+        }
+
+
+    }
 
     Scaffold(
         modifier = Modifier
             .navigationBarsPadding()
         ,
         bottomBar = {
-            AnimatedNavigationBar()
         },
         content = { padding ->
         Box(
             modifier = Modifier
-                .padding(padding)
+//                .padding(padding)
                 .fillMaxSize()
                 .imePadding()
                 .padding(top = 24.dp, start = 20.dp, end = 20.dp, bottom = 16.dp)
@@ -126,11 +158,15 @@ fun DeleteAccountScreen(
                         style = MaterialTheme.typography.bodySmall,
                         fontSize = 15.sp,
                     )
-                    val email2 = ""
                     TextField(
                         shape = RoundedCornerShape(12.dp),
-                        value = email2,
-                        onValueChange = {},
+                        value = uiState.password,
+                        onValueChange = {viewModel.handleEvent(
+                            DeleteAccountEvent.PasswordChanged(
+                                it
+                            )
+                        )
+                                        },
                         placeholder = {
                             Text(
                                 "Şifrənizi daxil edin",
@@ -162,6 +198,8 @@ fun DeleteAccountScreen(
                             cursorColor = Color(0xFF2981FF),
                             errorCursorColor = Color.Red,
                             focusedIndicatorColor = Color.Transparent,
+                            disabledIndicatorColor=Color.Transparent,
+                            unfocusedIndicatorColor =Color.Transparent
                         ),
                         visualTransformation = if (showPassword1) VisualTransformation.None else PasswordVisualTransformation(),
                         trailingIcon = {
@@ -182,6 +220,10 @@ fun DeleteAccountScreen(
                             }
                         }
                     )
+                    ErrorText(
+                        errorMessage = uiState.passwordError,
+//                        isVisible = isPasswordError
+                    )
                 }
             }
             Spacer(modifier = Modifier.height(16.dp))
@@ -190,17 +232,37 @@ fun DeleteAccountScreen(
             ) {
                 AuthButton(
                     text = "Hesabı sil",
-                    onClick = {},
+                    onClick = { showDialog = true }
+
+
+//                        viewModel.handleEvent(DeleteAccountEvent.Submit)
+//                        viewModel.deleteAccount(
+//                            DeleteAccountRequest(
+//                                uiState.password
+//                                )
+//                        )
+//                    }
+            ,
                     modifier = Modifier.fillMaxWidth()
+                )
+            }
+            if (showDialog) {
+                PopUp(
+                    text = "Hesabınızı silmək istədiyinizə əminsiniz?",
+                    button1 = "Bəli",
+                    button2 = "Xeyr",
+                    onConfirmation = {
+                        viewModel.handleEvent(DeleteAccountEvent.Submit)
+                        viewModel.deleteAccount(
+                            DeleteAccountRequest(
+                                uiState.password
+                                )
+                        )
+                    },
+                    onDismiss = { showDialog = false }
                 )
             }
         }
     }
     )
 }
-//
-//@Preview(showBackground = true)
-//@Composable
-//fun PreviewNewPasswordScreen() {
-//    DeleteAccountScreen()
-//}

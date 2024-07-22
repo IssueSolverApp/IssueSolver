@@ -1,5 +1,7 @@
 package com.issuesolver.presentation.profile.my_account
 
+import BottomBarScreen
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -26,10 +28,13 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -37,24 +42,58 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.issuesolver.R
+import com.issuesolver.common.StatusR
+import com.issuesolver.domain.entity.networkModel.profile.UpdateFullNameRequest
+import com.issuesolver.domain.entity.networkModel.profile.UpdatePasswordRequest
 import com.issuesolver.presentation.bottombar.AnimatedNavigationBar
 import com.issuesolver.presentation.common.AuthButton
-import com.issuesolver.presentation.navigation.mockNavController
+import com.issuesolver.presentation.common.ErrorText
+import com.issuesolver.presentation.common.LoadingOverlay
+import com.issuesolver.presentation.profile.enter_password.DeleteAccountEvent
+import com.issuesolver.presentation.profile.new_password.NewPasswordScreenEvent
+import com.issuesolver.presentation.profile.profile.ProfileScreenState
+import com.issuesolver.presentation.profile.profile.ProfileScreenViewModel
 
 @Composable
 fun MyAccountScreen(
     navController: NavController,
-//    viewModel:  = hiltViewModel()
+    viewModel: MyAccountViewModel  = hiltViewModel(),
+    ){
 
-){
+    val uiState by viewModel.uiState.collectAsState()
+    val updateFullNameState by viewModel.profileState.collectAsState()
+    when(updateFullNameState?.status){
+
+        StatusR.LOADING -> {
+
+            LoadingOverlay()
+
+        }
+
+        StatusR.ERROR -> {
+            Toast.makeText(LocalView.current.context, "Kodun ishlemir X(", Toast.LENGTH_SHORT).show()
+
+
+        }
+        StatusR.SUCCESS -> {
+//            Toast.makeText(LocalView.current.context, "Full Name Changed <3", Toast.LENGTH_SHORT).show()
+//            navController.navigate(BottomBarScreen.Profile.route)
+//            viewModel.clearLoginState()
+        }
+        else-> {
+
+        }
+
+
+    }
+
     Scaffold(
         modifier = Modifier
             .navigationBarsPadding(),
-        bottomBar = {
-            AnimatedNavigationBar()
-        },
+        bottomBar = {},
         content = { padding ->
         Box(
             modifier = Modifier
@@ -118,12 +157,11 @@ fun MyAccountScreen(
 //                            isFullNameError
                             ) Color.Red else Color.Black,
                         )
-                    val fullName=""
                     TextField(
                         shape = RoundedCornerShape(12.dp),
-                        value = fullName,
+                        value = uiState.fullName,
                         onValueChange = {
-//                            viewModel.handleEvent(RegisterPageEvent.FullNameChanged(it))
+                            viewModel.handleEvent(MyAccountEvent.FullNameChanged(it))
                         },
                         placeholder = {
                             Text(
@@ -142,7 +180,7 @@ fun MyAccountScreen(
                                 if (
                                     false
 //                                    isFullNameError
-                                    ) Modifier.border(
+                                ) Modifier.border(
                                     1.dp,
                                     Color.Red,
                                     RoundedCornerShape(12.dp)
@@ -151,7 +189,8 @@ fun MyAccountScreen(
                                     1.dp,
                                     Color.White,
                                     RoundedCornerShape(12.dp)
-                                )),
+                                )
+                            ),
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
                         colors = TextFieldDefaults.colors(
                             disabledTextColor = Color(0xFF2981FF),
@@ -162,12 +201,21 @@ fun MyAccountScreen(
                             cursorColor = Color(0xFF2981FF),
                             errorCursorColor = Color.Red,
                             focusedIndicatorColor = Color.Transparent,
+                            disabledIndicatorColor=Color.Transparent,
+                            unfocusedIndicatorColor =Color.Transparent
+
+
                         )
+                    )
+
+                    ErrorText(
+                        errorMessage = uiState.fullNameError,
+//                        isVisible = isPasswordError
                     )
                 }
                 Column(Modifier.padding(top = 20.dp)) {
                     Text(
-                        "E-poçt",
+                        text = "E-poçt",
                         style = MaterialTheme.typography.bodySmall,
                         fontSize = 15.sp,
                         color = if (
@@ -175,13 +223,15 @@ fun MyAccountScreen(
 //                            isEmailError
                             ) Color.Red else Color.Black,
                     )
-                    val email="aynurgambarova.06@gmail.com"
                     TextField(
                         shape = RoundedCornerShape(12.dp),
-                        value = email,
+                        value = uiState.email?: "No Email Available",
                         onValueChange = {
-//                            viewModel.handleEvent(RegisterPageEvent.EmailChanged(it))
-                        },
+                            viewModel.handleEvent(
+                                MyAccountEvent.FullNameChanged(
+                                    it
+                                )
+                            )                        },
                         placeholder = {
                             Text(
                                 ("E-poçtunuzu daxil edin"),
@@ -197,7 +247,12 @@ fun MyAccountScreen(
                         colors = TextFieldDefaults.colors(
                             disabledTextColor = Color.Gray,
                             disabledContainerColor = Color(0xFFe0e4e8),
-                        ),
+//                            focusedIndicatorColor=Color.Red,
+//                            unfocusedIndicatorColor=Color.Red
+                            disabledIndicatorColor=Color.Transparent
+//                            errorIndicatorColor
+
+                            ),
                         enabled = false,
 
                         )
@@ -209,17 +264,19 @@ fun MyAccountScreen(
             ) {
                 AuthButton(
                     text = "Dəyişiklikləri yadda saxla",
-                    onClick = {},
+                    onClick = {
+                        viewModel.handleEvent(MyAccountEvent.Submit)
+                        viewModel.updateProfile(
+                            UpdateFullNameRequest(
+                                uiState.fullName,
+                                )
+                        )
+                        navController.popBackStack()
+                    },
                     modifier = Modifier.fillMaxWidth()
                 )
             }
         }
     }
     )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun PreviewNewPasswordScreen() {
-    MyAccountScreen(mockNavController())
 }

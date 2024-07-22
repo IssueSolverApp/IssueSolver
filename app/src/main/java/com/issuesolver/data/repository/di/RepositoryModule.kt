@@ -39,11 +39,9 @@ abstract class RepositoryModule {
     @Singleton
     abstract fun provideResendOtpRepository(repository: ResendOtpRepositoryImpl): ResendOtpRepositoryInterface
 
-
     @Binds
     @Singleton
     abstract fun provideConfirmOtpRepository(repository: ConfirmOtpRepositoryImpl): ConfirmOtpRepositoryInterface
-
 
     @Binds
     @Singleton
@@ -54,10 +52,22 @@ abstract class RepositoryModule {
     @Singleton
     abstract fun provideOtpTrustRepository(repository: OtpTrustRepositoryImpl): OtpTrustRepositoryInterface
 
-
     @Binds
     @Singleton
     abstract fun provideResetPasswordRepository(repository: ResetPasswordRepositoryImpl): ResetPasswordRepositoryInterface
+    //
+    @Binds
+    @Singleton
+    abstract fun provideGetMeRepository(repository: GetMeRepositoryImpl): GetMeRepositoryInterFace
+    @Binds
+    @Singleton
+    abstract fun provideUpdatePasswordRepository(repository: UpdatePasswordRepositoryImpl): UpdatePasswordRepositoryInterFace
+    @Binds
+    @Singleton
+    abstract fun provideUpdateFullNameRepository(repository: UpdateFullNameRepositoryImpl): UpdateFullNameRepositoryInterFace
+    @Binds
+    @Singleton
+    abstract fun provideDeleteAccountRepository(repository: DeleteAccountRepositoryImpl): DeleteAccountRepositoryInterface
 
 
     @Binds

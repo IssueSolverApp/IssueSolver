@@ -1,6 +1,5 @@
 package com.issuesolver.presentation.login.password_change_page
 
-import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.border
 import androidx.compose.foundation.gestures.scrollBy
@@ -28,13 +27,11 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.issuesolver.R
 import com.issuesolver.common.StatusR
-import com.issuesolver.domain.entity.networkModel.ResetPasswordModel
+import com.issuesolver.domain.entity.networkModel.login.ResetPasswordModel
 import com.issuesolver.presentation.common.AuthButton
 import com.issuesolver.presentation.common.ErrorText
 import com.issuesolver.presentation.common.LoadingOverlay
-import com.issuesolver.presentation.login.daxil_ol_page.LoginPageEvent
-import com.issuesolver.presentation.navigation.Routes
-import com.issuesolver.presentation.navigation.mockNavController
+import com.issuesolver.presentation.navigation.AuthScreen
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -63,7 +60,7 @@ fun PasswordChangePage(
         StatusR.LOADING -> {
             LoadingOverlay()        }
         StatusR.SUCCESS -> {
-            navController.navigate("login")
+            navController.navigate(AuthScreen.Login.route)
         }
         StatusR.ERROR -> {
 
@@ -167,6 +164,8 @@ fun PasswordChangePage(
                             cursorColor = Color(0xFF2981FF),
                             errorCursorColor = Color.Red,
                             focusedIndicatorColor = Color.Transparent,
+                            disabledIndicatorColor=Color.Transparent,
+                            unfocusedIndicatorColor =Color.Transparent
                         ),
                         visualTransformation = if (showPassword) VisualTransformation.None else PasswordVisualTransformation(),
                         trailingIcon = {
@@ -229,7 +228,9 @@ fun PasswordChangePage(
                             disabledTextColor = Color(0xFF2981FF),
                             focusedIndicatorColor = Color.Transparent,
                             errorCursorColor = Color.Red,
-                            cursorColor = Color(0xFF2981FF)
+                            cursorColor = Color(0xFF2981FF),
+                            disabledIndicatorColor=Color.Transparent,
+                            unfocusedIndicatorColor =Color.Transparent
                         ),
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                         visualTransformation = if (showPassword1) VisualTransformation.None else PasswordVisualTransformation(),
@@ -282,15 +283,9 @@ fun PasswordChangePage(
     )
 
     BackHandler {
-        navController.popBackStack(Routes.EMAIL_VERIFICATION, inclusive = false)
+        navController.popBackStack(AuthScreen.EmailVerification.route, inclusive = false)
     }
 }
 
 
-@Preview(showBackground = true)
-@Composable
-fun PasswordChangePagePreview() {
-    MaterialTheme {
-        PasswordChangePage(navController = mockNavController())
-    }
-}
+

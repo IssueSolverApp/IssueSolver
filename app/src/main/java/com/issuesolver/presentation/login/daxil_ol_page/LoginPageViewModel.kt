@@ -4,10 +4,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.issuesolver.common.Resource
 import com.issuesolver.common.State
-import com.issuesolver.domain.entity.networkModel.LoginRequest
-import com.issuesolver.domain.usecase.SignInUseCase
-import com.issuesolver.domain.usecase.login.ValidatePasswordUseCase
-import com.issuesolver.domain.usecase.login.LoginUseCase
+import com.issuesolver.domain.entity.networkModel.login.LoginRequest
+import com.issuesolver.domain.usecase.login.backend.SignInUseCase
+import com.issuesolver.domain.usecase.login.local.ValidatePasswordUseCase
+import com.issuesolver.domain.usecase.login.local.LoginUseCase
 
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

@@ -18,7 +18,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
@@ -43,11 +42,11 @@ import androidx.navigation.NavController
 import com.issuesolver.R
 import com.issuesolver.common.AlertDialogExample
 import com.issuesolver.common.StatusR
-import com.issuesolver.domain.entity.networkModel.RequestOtp
+import com.issuesolver.domain.entity.networkModel.login.RequestOtp
 import com.issuesolver.presentation.common.AuthButton
 import com.issuesolver.presentation.common.ErrorText
 import com.issuesolver.presentation.common.LoadingOverlay
-import com.issuesolver.presentation.navigation.mockNavController
+import com.issuesolver.presentation.navigation.AuthScreen
 import kotlinx.coroutines.delay
 
 @SuppressLint("DefaultLocale")
@@ -71,7 +70,7 @@ fun VerificationCodePage(
             CircularProgressIndicator()
         }
         StatusR.SUCCESS -> {
-            navController.navigate("password change")
+            navController.navigate(AuthScreen.PasswordChange.route)
             viewModel.clearOtpTrustState()
         }
         StatusR.ERROR -> {
@@ -251,9 +250,11 @@ fun VerificationCodePage(
                 AuthButton(
                     text = "Təsdiqlə",
                     onClick = {
-                        viewModel.otpTrust(RequestOtp(
+                        viewModel.otpTrust(
+                            RequestOtp(
                             otpCode = otpValue.text
-                        ))
+                        )
+                        )
                               },
 
                     modifier = Modifier
@@ -430,12 +431,6 @@ internal fun CharacterContainer(
 }
 
 
-@Preview(showBackground = true)
-@Composable
-fun VerificationCodePagePreview() {
-    MaterialTheme {
-        VerificationCodePage(navController = mockNavController())
-    }
-}
+
 
 
