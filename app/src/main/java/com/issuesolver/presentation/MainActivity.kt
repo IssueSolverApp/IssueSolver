@@ -20,8 +20,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             IssueSolverTheme {
-                Splash()
-//                RootNavigationGraph()
+                RootNavigationGraph()
             }
         }
     }
