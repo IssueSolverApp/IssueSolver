@@ -1,10 +1,7 @@
 package com.issuesolver.presentation.home.filter
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
@@ -18,24 +15,23 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.issuesolver.R
-import com.issuesolver.domain.entity.networkModel.profile.UpdatePasswordRequest
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.issuesolver.presentation.common.AuthButton
-import com.issuesolver.presentation.home.home.HomeScreen
 import com.issuesolver.presentation.newrequest.DropDownCategory
-import com.issuesolver.presentation.profile.new_password.NewPasswordScreenEvent
+import com.issuesolver.presentation.newrequest.DropDownOrganization
+import com.issuesolver.presentation.newrequest.RequestScreenViewModel
 
 @Composable
-fun FilterScreen(){
-    val suggestions = listOf("Kotlin", "Java", "Dart", "Python")
-
-
+fun FilterScreen(
+//    viewModel: FilterViewModel = hiltViewModel(),
+                 viewModel2: RequestScreenViewModel = hiltViewModel()){
+    val listDate= listOf("Last Day","Last Week","Last Month")
+    val listStatus= listOf("Gözləmədə","Baxılır","Əsassızdır","Həll olundu","Arxivdədir")
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -73,26 +69,26 @@ fun FilterScreen(){
 
             ) {
                 DropDownCategory(
-                    category = "Problemin yönləndiriləcəyi qurum",
-                    placeHolder = "Qurum",
-                    list = suggestions
+                    category = "Kateqoriya",
+                    placeHolder = "Problemin Kateqoriyası",
+                    viewModel = viewModel2
                 )
 
-                DropDownCategory(
-                    category = "Problemin Kateqoriyası",
-                    placeHolder = "Kateqoriya",
-                    list = suggestions
+                DropDownOrganization(
+                    category = "Qurum",
+                    placeHolder = "Problemin yönləndiriləcəyi qurum",
+                    viewModel = viewModel2
                 )
-                DropDownCategory(
-                    category = "Problemin statusu",
-                    placeHolder = "Status",
-                    list = suggestions
+                StaticDropDown(
+                    category="Status",
+                    placeHolder="Problemin statusu",
+                    list=listStatus
                 )
 
-                DropDownCategory(
-                    category = "Problemin tarixi",
-                    placeHolder = "Tarix",
-                    list = suggestions
+                StaticDropDown(
+                    category="Tarix",
+                    placeHolder="Problemin tarixi",
+                    list=listDate
                 )
 
             }
