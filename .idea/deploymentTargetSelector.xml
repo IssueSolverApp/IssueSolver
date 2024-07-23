@@ -27,9 +27,6 @@
       <SelectionState runConfigName="IssueSolver.Issue_Solver.app">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="AndroidStudioProjects.IssueSolver.Issue_Solver.app">
-        <option name="selectionMode" value="DROPDOWN" />
-      </SelectionState>
     </selectionStates>
   </component>
 </project>
