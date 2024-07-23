@@ -9,14 +9,20 @@ import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
 
-class FilterUseCase @Inject constructor(private val getCategory: FilterInterface) {
+class FilterUseCase @Inject constructor(private val filter: FilterInterface) {
 
 
-    suspend operator fun invoke() = flow {
+    suspend operator fun invoke( status: String,
+                                 categoryName: String,
+                                 organizationName: String,
+                                 days: String) = flow {
 
         emit(Resource.Loading())
         try {
-            val response = getCategory.getCategory()
+            val response = filter.filter( status,
+                categoryName,
+                organizationName,
+                days)
             if (response.isSuccessful) {
                 emit(Resource.Success(response.body()))
             } else {

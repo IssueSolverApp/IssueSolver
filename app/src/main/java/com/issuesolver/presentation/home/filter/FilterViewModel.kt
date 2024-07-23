@@ -5,12 +5,10 @@ import androidx.lifecycle.viewModelScope
 import com.issuesolver.common.Resource
 import com.issuesolver.common.State
 import com.issuesolver.domain.entity.networkModel.category.CategoryData
-import com.issuesolver.domain.entity.networkModel.home.CategoryData2
 import com.issuesolver.domain.entity.networkModel.organization.OrganizationData
 import com.issuesolver.domain.usecase.home.backend.FilterUseCase
 import com.issuesolver.domain.usecase.newrequestusecase.GetCategoryUseCase
 import com.issuesolver.domain.usecase.newrequestusecase.GetOrganizationUseCase
-import com.issuesolver.domain.usecase.profile.backend.DeleteAccountUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

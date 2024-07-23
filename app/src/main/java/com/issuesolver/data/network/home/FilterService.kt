@@ -11,7 +11,7 @@ import retrofit2.http.Query
 
 interface FilterService {
     @GET("category")
-    suspend fun getCategory(@Query("status") status: String,
+    suspend fun filter(@Query("status") status: String,
                             @Query("categoryName") categoryName: String,
                             @Query("organizationName") organizationName: String,
                             @Query("days") days: String,
