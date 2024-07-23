@@ -22,5 +22,6 @@ interface  ProfileService {
     @PUT("api/Users/updatefullname")
     suspend fun updatefullname(@Body request: UpdateFullNameRequest): Response<ProfileResponse>
 
+
 }
 

@@ -2,6 +2,8 @@ package com.issuesolver.data.repository.di
 
 
 
+import com.issuesolver.data.repository.home.FilterInterface
+import com.issuesolver.data.repository.home.FilterRepositoryImpl
 import com.issuesolver.data.repository.login.ConfirmOtpRepositoryImpl
 import com.issuesolver.data.repository.login.ConfirmOtpRepositoryInterface
 import com.issuesolver.data.repository.login.ForgetPasswordRepositoryImpl
@@ -84,6 +86,8 @@ abstract class RepositoryModule {
     @Singleton
     abstract fun provideNewRequestRepository(repository: NewRequestRepositoryImpl): NewRequestRepositoryInterface
 
-
+    @Binds
+    @Singleton
+    abstract fun provideFilterRepository(repository: FilterRepositoryImpl): FilterInterface
 
 }

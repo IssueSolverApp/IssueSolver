@@ -1,6 +1,7 @@
 package com.issuesolver.domain.usecase.di
 
 import android.content.SharedPreferences
+import com.issuesolver.data.repository.home.FilterInterface
 import com.issuesolver.data.repository.login.ConfirmOtpRepositoryInterface
 import com.issuesolver.data.repository.login.OtpTrustRepositoryInterface
 import com.issuesolver.data.repository.profile.DeleteAccountRepositoryInterface
@@ -14,6 +15,7 @@ import com.issuesolver.data.repository.profile.UpdatePasswordRepositoryInterFace
 import com.issuesolver.domain.usecase.login.backend.OtpTrustUseCase
 import com.issuesolver.domain.usecase.login.backend.RegisterUseCase
 import com.issuesolver.data.repository.newrequestrepo.NewRequestRepositoryInterface
+import com.issuesolver.domain.usecase.home.backend.FilterUseCase
 import com.issuesolver.domain.usecase.login.backend.ConfirmOtpUseCase
 import com.issuesolver.domain.usecase.login.backend.ResendOtpUseCase
 import com.issuesolver.domain.usecase.login.backend.ResetPasswordUseCase
@@ -154,5 +156,9 @@ class UseCaseModule {
     fun provideNewRequestUseCase(newRequest: NewRequestRepositoryInterface) =
         NewRequestUseCase(newRequest)
 
+    @Provides
+    @Singleton
+    fun provideFilterUseCase(filterInterface: FilterInterface) =
+        FilterUseCase(filterInterface)
 
 }

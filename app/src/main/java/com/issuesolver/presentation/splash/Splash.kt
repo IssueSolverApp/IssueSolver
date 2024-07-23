@@ -53,18 +53,18 @@ fun Splash() {
     LaunchedEffect(Unit) {
         scope.launch {
             animatableX1.animateTo(
-                targetValue = 0f,
+                targetValue = 0.5f,
                 animationSpec = tween(
-                    durationMillis = 2000,
+                    durationMillis = 1000,
                     easing = LinearEasing
                 )
             )
         }
         scope.launch {
             animatableX2.animateTo(
-                targetValue = 0f,
+                targetValue = 0.5f,
                 animationSpec = tween(
-                    durationMillis = 1000,
+                    durationMillis = 500,
                     easing = LinearEasing
                 )
             )
@@ -86,7 +86,7 @@ fun Splash() {
                 }
                 .offset {
                     IntOffset(
-                        x = ((boxWidth - rowWidth) / 2).roundToInt(),
+                        x = 0,
                         y = 0
                     )
                 },
