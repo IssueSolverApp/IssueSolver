@@ -55,16 +55,22 @@ fun RequestScreen(viewModel: RequestScreenViewModel = hiltViewModel()) {
             AddLocation(viewModel)
 
             DropDownCategory(
-                category = "Problemin Kateqoriyası",
-                placeHolder = "Kateqoriya",
-                list = suggestions
+                category = "Kateqoriya",
+                placeHolder = "Problemin Kateqoriyası",
+                viewModel = viewModel
             )
 
-            DropDownCategory(
-                category = "Problemin yönləndiriləcəyi qurum",
-                placeHolder = "Qurum",
-                list = suggestions
+            DropDownOrganization(
+                category = "Qurum",
+                placeHolder = "Problemin yönləndiriləcəyi qurum",
+                viewModel = viewModel
             )
+
+//            DropDownCategory(
+//                category = "Problemin yönləndiriləcəyi qurum",
+//                placeHolder = "Qurum",
+//                list = suggestions
+//            )
 
             Description()
 

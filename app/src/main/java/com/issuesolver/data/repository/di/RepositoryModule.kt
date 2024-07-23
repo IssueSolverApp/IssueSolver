@@ -1,7 +1,6 @@
 package com.issuesolver.data.repository.di
 
 
-
 import com.issuesolver.data.repository.login.ConfirmOtpRepositoryImpl
 import com.issuesolver.data.repository.login.ConfirmOtpRepositoryInterface
 import com.issuesolver.data.repository.login.ForgetPasswordRepositoryImpl
@@ -16,6 +15,10 @@ import com.issuesolver.data.repository.login.ResetPasswordRepositoryImpl
 import com.issuesolver.data.repository.login.ResetPasswordRepositoryInterface
 import com.issuesolver.data.repository.login.SignInRepositoryImpl
 import com.issuesolver.data.repository.login.SignInRepositoryInterface
+import com.issuesolver.data.repository.newrequestrepo.GetCategoryRepositoryImpl
+import com.issuesolver.data.repository.newrequestrepo.GetCategoryRepositoryInterface
+import com.issuesolver.data.repository.newrequestrepo.GetOrganizationRepositoryImpl
+import com.issuesolver.data.repository.newrequestrepo.GetOrganizationRepositoryInterface
 import com.issuesolver.data.repository.newrequestrepo.NewRequestRepositoryImpl
 import com.issuesolver.data.repository.newrequestrepo.NewRequestRepositoryInterface
 import com.issuesolver.data.repository.profile.DeleteAccountRepositoryImpl
@@ -83,6 +86,14 @@ abstract class RepositoryModule {
     @Binds
     @Singleton
     abstract fun provideNewRequestRepository(repository: NewRequestRepositoryImpl): NewRequestRepositoryInterface
+
+    @Binds
+    @Singleton
+    abstract fun provideGetCategoryRepository(repository: GetCategoryRepositoryImpl):GetCategoryRepositoryInterface
+
+    @Binds
+    @Singleton
+    abstract fun provideGetOrganizationRepository(repository: GetOrganizationRepositoryImpl):GetOrganizationRepositoryInterface
 
 
 
