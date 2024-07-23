@@ -15,6 +15,8 @@ import androidx.compose.material3.Divider
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -26,7 +28,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 
 @Composable
 fun RequestScreen(viewModel: RequestScreenViewModel = hiltViewModel()) {
-    val suggestions = listOf("Kotlin", "Java", "Dart", "Python")
+
+
+    val isFormValid by viewModel.isFormValid.collectAsState()
 
 
 
@@ -66,27 +70,24 @@ fun RequestScreen(viewModel: RequestScreenViewModel = hiltViewModel()) {
                 viewModel = viewModel
             )
 
-//            DropDownCategory(
-//                category = "Problemin yönləndiriləcəyi qurum",
-//                placeHolder = "Qurum",
-//                list = suggestions
-//            )
-
-            Description()
+            Description(viewModel)
 
             Column(
                 modifier = Modifier
             ) {
                 Button(
-                    onClick = { },
+                    onClick = {
+                        viewModel.sendRequest()
+                    },
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(top = 16.dp, start = 20.dp, end = 20.dp),
                     shape = RoundedCornerShape(50.dp),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0xFF2981FF),
+                        containerColor = if (isFormValid) Color(0xFF2981FF) else Color(0xFF9AC2FB),
                         disabledContainerColor = Color(0xFF9AC2FB)
-                    )
+                    ),
+                    enabled = isFormValid
                 ) {
                     Text(
                         text = "Paylaş",
@@ -101,14 +102,7 @@ fun RequestScreen(viewModel: RequestScreenViewModel = hiltViewModel()) {
 
                 Button(
                     onClick = {
-//                              viewModel.sendRequest(
-//
-//                                NewRequest(
-//                                    address = "",
-//                                    description = "",
-//                                    organizationName = ""
-//                                )
-//                              )
+                        viewModel.resetFields()
                     },
                     modifier = Modifier
                         .fillMaxWidth()
