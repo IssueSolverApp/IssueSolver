@@ -14,6 +14,10 @@ import com.issuesolver.data.repository.ResetPasswordRepositoryImpl
 import com.issuesolver.data.repository.ResetPasswordRepositoryInterface
 import com.issuesolver.data.repository.SignInRepositoryImpl
 import com.issuesolver.data.repository.SignInRepositoryInterface
+import com.issuesolver.data.repository.newrequestrepo.GetCategoryRepositoryImpl
+import com.issuesolver.data.repository.newrequestrepo.GetCategoryRepositoryInterface
+import com.issuesolver.data.repository.newrequestrepo.GetOrganizationRepositoryImpl
+import com.issuesolver.data.repository.newrequestrepo.GetOrganizationRepositoryInterface
 import com.issuesolver.data.repository.newrequestrepo.NewRequestRepositoryImpl
 import com.issuesolver.data.repository.newrequestrepo.NewRequestRepositoryInterface
 import dagger.Binds
@@ -63,6 +67,14 @@ abstract class RepositoryModule {
     @Binds
     @Singleton
     abstract fun provideNewRequestRepository(repository: NewRequestRepositoryImpl): NewRequestRepositoryInterface
+
+    @Binds
+    @Singleton
+    abstract fun provideGetCategoryRepository(repository: GetCategoryRepositoryImpl):GetCategoryRepositoryInterface
+
+    @Binds
+    @Singleton
+    abstract fun provideGetOrganizationRepository(repository: GetOrganizationRepositoryImpl):GetOrganizationRepositoryInterface
 
 
 

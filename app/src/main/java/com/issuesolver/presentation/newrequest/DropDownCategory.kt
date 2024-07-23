@@ -24,12 +24,15 @@ import com.issuesolver.R
 
 
 @Composable
-fun DropDownCategory(category: String, placeHolder: String, list: List<String>) {
+fun DropDownCategory(category: String, placeHolder: String, viewModel: RequestScreenViewModel) {
     var expanded by remember { mutableStateOf(false) }
     var selectedText by remember { mutableStateOf("") }
     var textFieldSize by remember { mutableStateOf(Size.Zero) }
 
     val icon = if (expanded) R.drawable.vector__3_ else R.drawable.vector__2_
+
+
+    val categoryList by viewModel.category.collectAsState()
 
     Column(Modifier.padding(start = 20.dp, end = 20.dp, top = 16.dp)) {
         Text(
@@ -71,12 +74,12 @@ fun DropDownCategory(category: String, placeHolder: String, list: List<String>) 
             modifier = Modifier
                 .width(with(LocalDensity.current) { textFieldSize.width.toDp() })
         ) {
-            list.forEach { label ->
+            categoryList?.forEach { label ->
 
                 DropdownMenuItem(
-                    text = {Text(text = label)},
+                    text = {Text(text = label.categoryName)},
                     onClick = {
-                        selectedText = label
+                        selectedText = label.categoryName
                         expanded = false
                     }
                 )

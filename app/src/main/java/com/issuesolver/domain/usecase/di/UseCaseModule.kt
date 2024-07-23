@@ -9,6 +9,8 @@ import com.issuesolver.data.repository.RegisterRepositoryInterface
 import com.issuesolver.data.repository.ResendOtpRepositoryInterface
 import com.issuesolver.data.repository.ResetPasswordRepositoryInterface
 import com.issuesolver.data.repository.SignInRepositoryInterface
+import com.issuesolver.data.repository.newrequestrepo.GetCategoryRepositoryInterface
+import com.issuesolver.data.repository.newrequestrepo.GetOrganizationRepositoryInterface
 import com.issuesolver.data.repository.newrequestrepo.NewRequestRepositoryInterface
 import com.issuesolver.domain.usecase.ConfirmOtpUseCase
 import com.issuesolver.domain.usecase.OtpTrustUseCase
@@ -24,6 +26,8 @@ import com.issuesolver.domain.usecase.login.ValidateEmailUseCase
 import com.issuesolver.domain.usecase.login.ValidateNewPasswordUseCase
 
 import com.issuesolver.domain.usecase.login.ValidateRepeatedPasswordUseCase
+import com.issuesolver.domain.usecase.newrequestusecase.GetCategoryUseCase
+import com.issuesolver.domain.usecase.newrequestusecase.GetOrganizationUseCase
 import com.issuesolver.domain.usecase.newrequestusecase.NewRequestUseCase
 
 import dagger.Module
@@ -105,6 +109,16 @@ class UseCaseModule {
     @Singleton
     fun provideNewRequestUseCase(newRequest: NewRequestRepositoryInterface) =
         NewRequestUseCase(newRequest)
+
+    @Provides
+    @Singleton
+    fun provideGetCategoryUseCase(newRequest: GetCategoryRepositoryInterface) =
+        GetCategoryUseCase(newRequest)
+
+    @Provides
+    @Singleton
+    fun provideGetOrganizationUseCase(newRequest: GetOrganizationRepositoryInterface) =
+        GetOrganizationUseCase(newRequest)
 
 
 }
