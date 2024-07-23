@@ -15,6 +15,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.issuesolver.TestUI
 import com.issuesolver.presentation.bottombar.ButtonData
+import com.issuesolver.presentation.newrequest.RequestScreen
 import com.issuesolver.presentation.profile.enter_password.DeleteAccountScreen
 import com.issuesolver.presentation.profile.my_account.MyAccountScreen
 import com.issuesolver.presentation.profile.new_password.NewPasswordScreen
@@ -35,7 +36,7 @@ fun MainNavGraph(navController: NavHostController, paddingValues: PaddingValues)
             TestUI()
         }
         composable(route = BottomBarScreen.NewRequest.route) {
-            TestUI()
+            RequestScreen()
         }
         composable(route = BottomBarScreen.Profile.route) {
             ProfileScreen(navController, paddingValues)

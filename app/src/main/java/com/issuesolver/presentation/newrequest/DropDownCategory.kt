@@ -58,9 +58,13 @@ fun DropDownCategory(category: String, placeHolder: String, viewModel: RequestSc
                 Icon(
                     painter = painterResource(id = icon),
                     contentDescription = "contentDescription",
-                    modifier = Modifier.clickable { expanded = !expanded },
+                    modifier = Modifier.clickable {
+                        expanded = !expanded
+                        viewModel.getCategory()
+                    },
                     tint = Color.Unspecified
-                )            },
+                )
+            },
             colors = TextFieldDefaults.colors(
                 focusedContainerColor = Color.White,
                 unfocusedContainerColor = Color.White,
@@ -77,10 +81,11 @@ fun DropDownCategory(category: String, placeHolder: String, viewModel: RequestSc
             categoryList?.forEach { label ->
 
                 DropdownMenuItem(
-                    text = {Text(text = label.categoryName)},
+                    text = { Text(text = label.categoryName) },
                     onClick = {
                         selectedText = label.categoryName
                         expanded = false
+                        viewModel.selectCategory(label.categoryName)
                     }
                 )
             }

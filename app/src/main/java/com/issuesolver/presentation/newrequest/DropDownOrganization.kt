@@ -40,7 +40,7 @@ fun DropDownOrganization(category: String, placeHolder: String, viewModel: Reque
     val icon = if (expanded) R.drawable.vector__3_ else R.drawable.vector__2_
 
 
-    val categoryList by viewModel.category.collectAsState()
+    val categoryList by viewModel.organization.collectAsState()
 
     Column(Modifier.padding(start = 20.dp, end = 20.dp, top = 16.dp)) {
         Text(
@@ -66,9 +66,13 @@ fun DropDownOrganization(category: String, placeHolder: String, viewModel: Reque
                 Icon(
                     painter = painterResource(id = icon),
                     contentDescription = "contentDescription",
-                    modifier = Modifier.clickable { expanded = !expanded },
+                    modifier = Modifier.clickable {
+                        expanded = !expanded
+                        viewModel.getOrganization()
+                    },
                     tint = Color.Unspecified
-                )            },
+                )
+            },
             colors = TextFieldDefaults.colors(
                 focusedContainerColor = Color.White,
                 unfocusedContainerColor = Color.White,
@@ -85,10 +89,11 @@ fun DropDownOrganization(category: String, placeHolder: String, viewModel: Reque
             categoryList?.forEach { label ->
 
                 DropdownMenuItem(
-                    text = { Text(text = label.categoryName) },
+                    text = { Text(text = label.name) },
                     onClick = {
-                        selectedText = label.categoryName
+                        selectedText = label.name
                         expanded = false
+                        viewModel.selectOrganization(label.name)
                     }
                 )
             }
