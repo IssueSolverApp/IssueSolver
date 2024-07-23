@@ -38,7 +38,7 @@ fun FilterScreen(
             .statusBarsPadding()
             .navigationBarsPadding()
             .imePadding()
-            .padding(top = 22.dp, start = 20.dp, end = 20.dp, bottom = 16.dp)
+            .padding(top = 22.dp, bottom = 16.dp)
     ) {
         Column(
             modifier = Modifier

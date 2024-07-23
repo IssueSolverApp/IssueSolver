@@ -14,7 +14,7 @@ sealed class BottomBarScreen(
     object MyRequest : BottomBarScreen(
         route = "MY_REQUESTS",
         title = "My Requests",
-        iconId = R.drawable.group
+        iconId = R.drawable.groupbottombar
     )
 
     object NewRequest : BottomBarScreen(
