@@ -1,6 +1,7 @@
 package com.issuesolver.presentation.newrequest
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBarsPadding
@@ -24,26 +25,31 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 
 
 @Composable
-fun RequestScreen(viewModel: RequestScreenViewModel = hiltViewModel()) {
+fun RequestScreen(
+    navController: NavController,
+    paddingValues: PaddingValues,
+    viewModel: RequestScreenViewModel = hiltViewModel()
+) {
 
 
     val isFormValid by viewModel.isFormValid.collectAsState()
 
 
 
-    Scaffold { padding ->
+//    Scaffold { padding ->
 
         Column(
             Modifier
                 .imePadding()
-                .statusBarsPadding()
-                .navigationBarsPadding()
+                .padding(paddingValues)
+                .padding(bottom = 16.dp)
                 .verticalScroll(rememberScrollState())
         ) {
-            Navigation()
+            Navigation(navController)
 
             Divider(
                 thickness = 0.5.dp,
@@ -127,7 +133,7 @@ fun RequestScreen(viewModel: RequestScreenViewModel = hiltViewModel()) {
         }
 
 
-    }
+    //}
 }
 
 

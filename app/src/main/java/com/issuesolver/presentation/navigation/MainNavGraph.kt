@@ -15,6 +15,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.issuesolver.TestUI
 import com.issuesolver.presentation.bottombar.ButtonData
+import com.issuesolver.presentation.newrequest.RequestInfoScreen
 import com.issuesolver.presentation.newrequest.RequestScreen
 import com.issuesolver.presentation.profile.enter_password.DeleteAccountScreen
 import com.issuesolver.presentation.profile.my_account.MyAccountScreen
@@ -36,7 +37,7 @@ fun MainNavGraph(navController: NavHostController, paddingValues: PaddingValues)
             TestUI()
         }
         composable(route = BottomBarScreen.NewRequest.route) {
-            RequestScreen()
+            RequestScreen(navController, paddingValues)
         }
         composable(route = BottomBarScreen.Profile.route) {
             ProfileScreen(navController, paddingValues)
@@ -50,7 +51,12 @@ fun MainNavGraph(navController: NavHostController, paddingValues: PaddingValues)
         }
         composable(route = DetailsScreen.ProfileDeleteAccount.route) {
             DeleteAccountScreen(navController)
-        }    }
+        }
+        composable(route = DetailsScreen.RequestInfoScreen.route) {
+            RequestInfoScreen()
+        }
+
+    }
 }
 
 
@@ -76,6 +82,9 @@ sealed class DetailsScreen(val route: String) {
     object ProfileNewPassword : DetailsScreen(route = "PROFILE_NEW_PASSWORD")
     object ProfileMyAccount : DetailsScreen(route = "PROFILE_MY_ACCOUNT")
     object ProfileDeleteAccount : DetailsScreen(route = "PROFILE_DELETE_ACCOUNT")
+    object RequestInfoScreen : DetailsScreen(route = "REQUEST_INFO_SCREEN")
+
+
 
 }
 

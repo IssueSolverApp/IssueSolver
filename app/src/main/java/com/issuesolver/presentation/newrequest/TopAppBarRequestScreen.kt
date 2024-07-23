@@ -1,6 +1,7 @@
 package com.issuesolver.presentation.newrequest
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -14,10 +15,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.issuesolver.R
+import com.issuesolver.presentation.navigation.DetailsScreen
 
 @Composable
-fun Navigation(){
+fun Navigation(navController: NavController){
 
 
     Column(modifier = Modifier
@@ -39,6 +42,7 @@ fun Navigation(){
                 contentDescription = "Example Image",
                 modifier = Modifier
                     .size(32.dp)
+                    .clickable { navController.navigate(DetailsScreen.RequestInfoScreen.route) }
                 //.padding(end = 20.dp, top = 20.dp)
             )
         }
