@@ -40,7 +40,7 @@ fun FilterScreen(
 
     ){
 
-    val listDate= listOf("Last Day","Last Week","Last Month")
+    val listDate= listOf("Son bir gün","Son bir həftə","Son bir ay")
     val listStatus= listOf("Gözləmədə","Baxılır","Əsassızdır","Həll olundu","Arxivdədir")
     Box(
         modifier = Modifier

@@ -19,7 +19,6 @@ import javax.inject.Inject
 @HiltViewModel
 
 class FilterViewModel @Inject constructor(
-    private val filterUseCase: FilterUseCase,
     private val getCategoryUseCase: GetCategoryUseCase,
     private val getOrganizationUseCase: GetOrganizationUseCase
 

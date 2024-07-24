@@ -33,7 +33,7 @@ fun MainNavGraph(navController: NavHostController, paddingValues: PaddingValues)
     ) {
         composable(route = BottomBarScreen.Home.route) {
 //            HomeScreen()
-            FilterScreen()
+//            FilterScreen()
         }
         composable(route = BottomBarScreen.MyRequest.route) {
             TestUI()
@@ -55,7 +55,7 @@ fun MainNavGraph(navController: NavHostController, paddingValues: PaddingValues)
             DeleteAccountScreen(navController)
         }
         composable(route = DetailsScreen.HomeFilterScreen.route) {
-            FilterScreen()
+//            FilterScreen()
         }
     }
 
