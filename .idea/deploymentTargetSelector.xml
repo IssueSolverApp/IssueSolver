@@ -26,7 +26,7 @@
       </SelectionState>
       <SelectionState runConfigName="IssueSolver.Issue_Solver.app">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2024-07-24T06:04:58.703545500Z">
+        <DropdownSelection timestamp="2024-07-24T15:13:45.618945Z">
           <Target type="DEFAULT_BOOT">
             <handle>
               <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\qukun\.android\avd\Pixel_7_API_30.avd" />
