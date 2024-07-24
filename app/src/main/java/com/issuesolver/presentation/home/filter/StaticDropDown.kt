@@ -75,14 +75,14 @@ fun StaticDropDown(category: String, placeHolder: String, list: String) {
         ) {
             list.forEach { label ->
 
-                DropdownMenuItem(
-                    text = {Text(
-                        text = label)},
-                    onClick = {
-                        selectedText = label
-                        expanded = false
-                    }
-                )
+//                DropdownMenuItem(
+//                    text = {Text(
+//                        text = label)},
+//                    onClick = {
+//                        selectedText = label
+//                        expanded = false
+//                    }
+//                )
             }
         }
     }

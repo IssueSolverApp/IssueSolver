@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -102,14 +103,12 @@ fun NewPasswordScreen(
 
     Scaffold(
         modifier = Modifier
-            .navigationBarsPadding(),
-        bottomBar = {
-        },
-
+            .navigationBarsPadding()
+            .statusBarsPadding(),
         content = { padding ->
             Box(
                 modifier = Modifier
-//            .padding(padding)
+//            .padding()
                     .fillMaxSize()
                     .imePadding()
                     .padding(top = 13.dp, start = 20.dp, end = 20.dp, bottom = 34.dp)
@@ -121,6 +120,7 @@ fun NewPasswordScreen(
 
                 ) {
                     Column(
+
                     ) {
                         Box(
                             modifier = Modifier
@@ -372,8 +372,9 @@ fun NewPasswordScreen(
                             errorMessage = uiState.currentPasswordError,
 //                        isVisible = isPasswordError
                         )
+                        Spacer(modifier = Modifier.height(150.dp))
+
                     }
-                    Spacer(modifier = Modifier.height(150.dp))
 
                 }
                 Column(

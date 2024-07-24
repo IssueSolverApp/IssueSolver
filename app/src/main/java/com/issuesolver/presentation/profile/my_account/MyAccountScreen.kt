@@ -92,15 +92,17 @@ fun MyAccountScreen(
 
     Scaffold(
         modifier = Modifier
-            .navigationBarsPadding(),
+            .navigationBarsPadding()
+            .statusBarsPadding(),
+
         bottomBar = {},
         content = { padding ->
         Box(
             modifier = Modifier
-                .padding(padding)
+//                .padding(padding)
                 .fillMaxSize()
                 .imePadding()
-                .padding(top = 13.dp, start = 20.dp, end = 20.dp, bottom = 34.dp)
+                .padding(top = 24.dp, start = 20.dp, end = 20.dp, bottom = 34.dp)
         ) {
             Column(
                 modifier = Modifier
