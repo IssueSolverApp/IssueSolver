@@ -45,8 +45,8 @@ fun FilterScreen(
 //    val listOrganizations = listOf()
     val listDays = listOf("Last Day", "Last Week", "Last Month")
     var status by remember { mutableStateOf(listStatus.first()) }
-    var categoryName by remember { mutableStateOf(listCategories.first()) }
-    var organizationName by remember { mutableStateOf(listOrganizations.first()) }
+//    var categoryName by remember { mutableStateOf(listCategories.first()) }
+//    var organizationName by remember { mutableStateOf(listOrganizations.first()) }
     var days by remember { mutableStateOf(listDays.first()) }
     Box(
         modifier = Modifier

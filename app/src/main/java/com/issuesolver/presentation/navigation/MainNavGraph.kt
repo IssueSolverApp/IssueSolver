@@ -57,9 +57,7 @@ fun MainNavGraph(navController: NavHostController, paddingValues: PaddingValues)
         composable(route = DetailsScreen.HomeFilterScreen.route) {
 //            FilterScreen()
         }
-    }
 
-        }
         composable(route = DetailsScreen.RequestInfoScreen.route) {
             RequestInfoScreen(navController)
         }
