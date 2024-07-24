@@ -81,7 +81,8 @@ fun DeleteAccountScreen(
             Toast.makeText(LocalView.current.context, "Kodun ishlemir X(", Toast.LENGTH_SHORT).show()
         }
         StatusR.SUCCESS -> {
-            navController.navigate(BottomBarScreen.Profile.route)
+            navController.popBackStack()
+            viewModel.clearState()
             Toast.makeText(LocalView.current.context, "Account Deleted !!!!", Toast.LENGTH_SHORT).show()
 //            viewModel.clearLoginState()
         }

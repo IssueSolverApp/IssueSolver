@@ -89,7 +89,8 @@ fun NewPasswordScreen(
 
         }
         StatusR.SUCCESS -> {
-            navController.navigate(BottomBarScreen.Profile.route)
+            navController.popBackStack()
+            viewModel.clearState()
             Toast.makeText(LocalView.current.context, "Password Changed <3", Toast.LENGTH_SHORT).show()
 //            viewModel.clearLoginState()
         }

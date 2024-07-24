@@ -31,7 +31,12 @@ class MyAccountViewModel @Inject constructor(
     val uiState: StateFlow<MyAccountState> = _uiState.asStateFlow()
     private val _profileState: MutableStateFlow<State?> =  MutableStateFlow(null)
     val profileState: StateFlow<State?> = _profileState
+    private val _profileState2: MutableStateFlow<State?> =  MutableStateFlow(null)
+    val profileState2: StateFlow<State?> = _profileState2
 
+    fun clearState() {
+        _profileState2.value = null
+    }
 
     init {
         fetchProfile()
@@ -42,16 +47,16 @@ class MyAccountViewModel @Inject constructor(
             updateFullNameUseCase(request).collect { resource ->
                 when(resource){
                     is Resource.Loading -> {
-                        _profileState.emit(State.loading())
+                        _profileState2.emit(State.loading())
                     }
                     is Resource.Success -> {
-                        _profileState.emit(State.success())
+                        _profileState2.emit(State.success())
                         request.fullName?.let { ProfileUpdateManager.notifyProfileUpdated(it) }
 
 
                     }
                     is Resource.Error -> {
-                        _profileState.emit(State.error(resource.message))
+                        _profileState2.emit(State.error(resource.message))
                         _uiState.value = uiState.value.copy(fullNameError = resource.message)
 
                     }
@@ -81,6 +86,7 @@ class MyAccountViewModel @Inject constructor(
 //                        _uiState.value = uiState.value.copy(fullNameError = resource.message)
 
                     }
+
                 }
             }
         }
