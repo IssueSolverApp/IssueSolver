@@ -24,10 +24,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.issuesolver.R
 
 @Composable
-fun RequestInfoScreen() {
+fun RequestInfoScreen(navController: NavController) {
 
     Scaffold { padding ->
         Column(
@@ -43,7 +44,7 @@ fun RequestInfoScreen() {
                     .clip(RoundedCornerShape(100.dp))
                     .background(Color.White)
                     .clickable {
-
+                        navController.popBackStack()
                     },
                 contentAlignment = Alignment.Center
             ) {

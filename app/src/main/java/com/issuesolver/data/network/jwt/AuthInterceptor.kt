@@ -1,8 +1,12 @@
 package com.issuesolver.data.network.jwt
 
 import android.content.SharedPreferences
+import android.util.Log
+import com.google.gson.JsonObject
 import com.issuesolver.data.network.auth.LoginService
 import com.issuesolver.domain.entity.networkModel.login.LoginResponse
+import com.issuesolver.domain.entity.networkModel.login.RefreshTokenRequest
+import com.issuesolver.domain.entity.networkModel.login.RefreshTokenResponse
 import kotlinx.coroutines.runBlocking
 import okhttp3.Authenticator
 import okhttp3.Interceptor
@@ -42,7 +46,7 @@ class AuthInterceptor @Inject constructor(
 }
 
 
-
+/*
 class AuthAuthenticator @Inject constructor(
     private val sharedPreferences: SharedPreferences
 ) : Authenticator {
@@ -53,7 +57,7 @@ class AuthAuthenticator @Inject constructor(
         return runBlocking {
             val newTokenResponse = getNewToken(refreshToken)
             if (!newTokenResponse.isSuccessful || newTokenResponse.body() == null) {
-                // Couldn't refresh the token, so restart the login process
+
                 sharedPreferences.edit().clear().apply()
                 null
             } else {
@@ -73,7 +77,7 @@ class AuthAuthenticator @Inject constructor(
         loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
         val okHttpClient = OkHttpClient.Builder().addInterceptor(loggingInterceptor).build()
         val retrofit = Retrofit.Builder()
-            .baseUrl("https://govermentauthapi20240708181106.azurewebsites.net/")
+            .baseUrl("https://gatewayy-f20db7ab0323.herokuapp.com/")
             .addConverterFactory(GsonConverterFactory.create())
             .client(okHttpClient)
             .build()
@@ -81,6 +85,111 @@ class AuthAuthenticator @Inject constructor(
         return service.refreshToken("Bearer $refreshToken")
     }
 }
+
+*/
+
+
+class AuthAuthenticator @Inject constructor(
+    private val sharedPreferences: SharedPreferences
+) : Authenticator {
+
+    override fun authenticate(route: Route?, response: Response): Request? {
+        val refreshToken = sharedPreferences.getString("refresh_token", null)
+        if (refreshToken == null) {
+            // Логирование, если refreshToken равен null
+            Log.e("AuthAuthenticator", "Refresh token is null")
+            return null
+        }
+
+        return runBlocking {
+            val newTokenResponse = getNewToken(refreshToken)
+            if (!newTokenResponse.isSuccessful || newTokenResponse.body() == null) {
+                // Логирование неуспешного ответа
+                Log.e("AuthAuthenticator", "Failed to refresh token: ${newTokenResponse.errorBody()?.string()}")
+                sharedPreferences.edit().clear().apply()
+                null
+            } else {
+                val newAccessToken = newTokenResponse.body()?.data?.token
+                if (newAccessToken == null) {
+                    // Логирование, если новый accessToken равен null
+                    Log.e("AuthAuthenticator", "New access token is null")
+                    return@runBlocking null
+                }
+                sharedPreferences.edit().putString("access_token", newAccessToken).apply()
+                response.request.newBuilder()
+                    .header("Authorization", "Bearer $newAccessToken")
+                    .build()
+            }
+        }
+    }
+
+    private suspend fun getNewToken(refreshToken: String): retrofit2.Response<RefreshTokenResponse> {
+        val loggingInterceptor = HttpLoggingInterceptor()
+        loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
+        val okHttpClient = OkHttpClient.Builder().addInterceptor(loggingInterceptor).build()
+        val retrofit = Retrofit.Builder()
+            .baseUrl("https://gatewayy-f20db7ab0323.herokuapp.com/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(okHttpClient)
+            .build()
+        val service = retrofit.create(LoginService::class.java)
+        return service.refreshToken(RefreshTokenRequest(refreshToken))
+    }
+
+
+
+    /*
+
+    private suspend fun getNewToken(refreshToken: String?):
+            retrofit2.Response<LoginResponse>? {
+        val loggingInterceptor = HttpLoggingInterceptor()
+
+        val okHttpClient = OkHttpClient.Builder()
+            .addInterceptor(loggingInterceptor)
+            .addInterceptor { chain ->
+                val requestBuilder = chain.request().newBuilder()
+
+                val request = requestBuilder.build()
+
+                chain.proceed(request)
+            }
+            .build()
+
+        val retrofit = Retrofit.Builder()
+            .baseUrl("https://gatewayy-f20db7ab0323.herokuapp.com/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(okHttpClient)
+            .build()
+        val service = retrofit.create(LoginService::class.java)
+
+        val body = JsonObject()
+        body.addProperty("refresh_token", refreshToken)
+
+        val bearerToken = refreshToken
+
+
+        if (refreshToken?.isEmpty() == true) {
+            return null
+        }
+        return service.refreshToken(bearerToken)
+    }
+
+    private fun newRequest(request: Request, accessToken: String): Request {
+        return request.newBuilder()
+            .header("Authorization", accessToken)
+            .build()
+    }*/
+}
+
+
+
+
+
+
+
+
+
+
 
 
 //@Singleton

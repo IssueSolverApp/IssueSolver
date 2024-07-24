@@ -53,7 +53,7 @@ fun MainNavGraph(navController: NavHostController, paddingValues: PaddingValues)
             DeleteAccountScreen(navController)
         }
         composable(route = DetailsScreen.RequestInfoScreen.route) {
-            RequestInfoScreen()
+            RequestInfoScreen(navController)
         }
 
     }
