@@ -3,6 +3,7 @@ package com.issuesolver.domain.usecase.di
 import android.app.Application
 import android.content.SharedPreferences
 import com.issuesolver.data.repository.home.FilterInterface
+import com.issuesolver.data.repository.home.RequestInterface
 import com.issuesolver.data.repository.login.ConfirmOtpRepositoryInterface
 import com.issuesolver.data.repository.login.OtpTrustRepositoryInterface
 
@@ -21,6 +22,7 @@ import com.issuesolver.domain.usecase.login.backend.OtpTrustUseCase
 import com.issuesolver.domain.usecase.login.backend.RegisterUseCase
 import com.issuesolver.data.repository.newrequestrepo.NewRequestRepositoryInterface
 import com.issuesolver.domain.usecase.home.backend.FilterUseCase
+import com.issuesolver.domain.usecase.home.backend.RequestUseCase
 import com.issuesolver.domain.usecase.login.backend.ConfirmOtpUseCase
 import com.issuesolver.domain.usecase.login.backend.ResendOtpUseCase
 import com.issuesolver.domain.usecase.login.backend.ResetPasswordUseCase
@@ -173,6 +175,11 @@ class UseCaseModule {
     @Singleton
     fun provideGetOrganizationUseCase(newRequest: GetOrganizationRepositoryInterface) =
         GetOrganizationUseCase(newRequest)
+
+    @Provides
+    @Singleton
+    fun provideRequestInterface(requestInterface: RequestInterface) =
+        RequestUseCase(requestInterface)
 
     @Provides
     @Singleton

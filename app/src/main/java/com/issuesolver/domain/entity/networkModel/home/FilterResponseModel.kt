@@ -1,11 +1,12 @@
 package com.issuesolver.domain.entity.networkModel.home
 
-import java.util.Locale.Category
+
 
 
 data class FilterResponseModel(
     val data: List<FilterData>,
     val message: String,
+    val fullName: String,
     val success: Boolean
 )
 data class FilterData(
@@ -19,7 +20,7 @@ data class FilterData(
     val commentCount:Int,
     val likeCount:Int,
     val likeSuccess:Boolean,
-    val category:List<CategoryData>
+    val category:CategoryData
 )
 data class CategoryData(
     val categoryId:Int,
