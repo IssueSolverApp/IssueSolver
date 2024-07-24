@@ -433,7 +433,7 @@ fun RegisterPage(navController: NavController, viewModel: RegisterViewModel = hi
                     .padding(start = 20.dp, end = 20.dp, bottom = 16.dp)
             ) {
                 AuthButton(
-                    text = "Daxil ol",
+                    text = "Davam et",
                     onClick = {
                         viewModel.handleEvent(RegisterPageEvent.Submit)
                         if (!isChecked) {
@@ -448,7 +448,7 @@ fun RegisterPage(navController: NavController, viewModel: RegisterViewModel = hi
                                     confirmPassword = uiState.repeatedPassword
                                 )
                             )
-                            navController.navigate(AuthScreen.RegisterOtp.route + "/${uiState.email}")
+//                            navController.navigate(AuthScreen.RegisterOtp.route + "/${uiState.email}")
                         }
                     },
                     enabled = uiState.isInputValid,

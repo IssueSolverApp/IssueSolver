@@ -107,40 +107,84 @@ class RegisterViewModel @Inject constructor(
                 )
             }
 
+//            is RegisterPageEvent.PasswordChanged -> {
+//                val result = validateNewPasswordUseCase.execute(
+//                    event.password,
+//                    _uiState.value.repeatedPassword
+//                )
+//
+//                _uiState.value = _uiState.value.copy(
+//                    password = event.password,
+//                    passwordError = result.errorMessage,
+//                    isInputValid = result.successful &&
+//                            validateRepeatedPasswordUseCase.execute(
+//                                event.password, _uiState.value.repeatedPassword
+//                            ).successful &&
+//                            validateFullNameUseCase.execute(_uiState.value.fullName).successful &&
+//                            validateEmailUseCase.execute(_uiState.value.email).successful
+//                )
+//            }
+//
+//            is RegisterPageEvent.RepeatedPasswordChanged -> {
+//                val result = validateRepeatedPasswordUseCase.execute(
+//                    _uiState.value.password,
+//                    event.repeatedPassword
+//                )
+//                _uiState.value = _uiState.value.copy(
+//                    repeatedPassword = event.repeatedPassword,
+//                    repeatedPasswordError = result.errorMessage,
+//                    isInputValid = validateNewPasswordUseCase.execute(
+//                        _uiState.value.password,
+//                        event.repeatedPassword
+//                    ).successful &&
+//                            result.successful &&
+//                            validateFullNameUseCase.execute(_uiState.value.fullName).successful &&
+//                            validateEmailUseCase.execute(_uiState.value.email).successful
+//                )
+//            }
+
             is RegisterPageEvent.PasswordChanged -> {
-                val result = validateNewPasswordUseCase.execute(
+                val newPasswordValidation = validateNewPasswordUseCase.execute(
                     event.password,
                     _uiState.value.repeatedPassword
                 )
+                val repeatedPasswordValidation = validateRepeatedPasswordUseCase.execute(
+                    event.password,
+                    _uiState.value.repeatedPassword
+                )
+
                 _uiState.value = _uiState.value.copy(
                     password = event.password,
-                    passwordError = result.errorMessage,
-                    isInputValid = result.successful &&
-                            validateRepeatedPasswordUseCase.execute(
-                                event.password, _uiState.value.repeatedPassword
-                            ).successful &&
+                    passwordError = newPasswordValidation.errorMessage,
+                    repeatedPasswordError = if (newPasswordValidation.successful) null else _uiState.value.repeatedPasswordError,
+                    isInputValid = newPasswordValidation.successful &&
+                            repeatedPasswordValidation.successful &&
                             validateFullNameUseCase.execute(_uiState.value.fullName).successful &&
                             validateEmailUseCase.execute(_uiState.value.email).successful
                 )
             }
 
             is RegisterPageEvent.RepeatedPasswordChanged -> {
-                val result = validateRepeatedPasswordUseCase.execute(
+                val newPasswordValidation = validateNewPasswordUseCase.execute(
                     _uiState.value.password,
                     event.repeatedPassword
                 )
+                val repeatedPasswordValidation = validateRepeatedPasswordUseCase.execute(
+                    _uiState.value.password,
+                    event.repeatedPassword
+                )
+
                 _uiState.value = _uiState.value.copy(
                     repeatedPassword = event.repeatedPassword,
-                    repeatedPasswordError = result.errorMessage,
-                    isInputValid = validateNewPasswordUseCase.execute(
-                        _uiState.value.password,
-                        event.repeatedPassword
-                    ).successful &&
-                            result.successful &&
+                    repeatedPasswordError = repeatedPasswordValidation.errorMessage,
+                    passwordError = if (repeatedPasswordValidation.successful) null else _uiState.value.passwordError,
+                    isInputValid = newPasswordValidation.successful &&
+                            repeatedPasswordValidation.successful &&
                             validateFullNameUseCase.execute(_uiState.value.fullName).successful &&
                             validateEmailUseCase.execute(_uiState.value.email).successful
                 )
             }
+
 
             is RegisterPageEvent.Submit -> {
                 if (uiState.value.isInputValid) {
