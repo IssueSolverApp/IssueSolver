@@ -24,7 +24,7 @@ import com.issuesolver.R
 
 
 @Composable
-fun StaticDropDown(category: String, placeHolder: String, list: List<String>) {
+fun StaticDropDown(category: String, placeHolder: String, list: String) {
     var expanded by remember { mutableStateOf(false) }
     var selectedText by remember { mutableStateOf("") }
     var textFieldSize by remember { mutableStateOf(Size.Zero) }
