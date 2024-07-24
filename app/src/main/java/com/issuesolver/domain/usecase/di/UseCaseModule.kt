@@ -2,8 +2,11 @@ package com.issuesolver.domain.usecase.di
 
 import android.app.Application
 import android.content.SharedPreferences
+import com.issuesolver.data.repository.home.FilterInterface
+import com.issuesolver.data.repository.home.RequestInterface
 import com.issuesolver.data.repository.login.ConfirmOtpRepositoryInterface
 import com.issuesolver.data.repository.login.OtpTrustRepositoryInterface
+
 import com.issuesolver.data.repository.login.RegisterRepositoryInterface
 import com.issuesolver.data.repository.login.ResendOtpRepositoryInterface
 import com.issuesolver.data.repository.login.ResetPasswordRepositoryInterface
@@ -11,14 +14,16 @@ import com.issuesolver.data.repository.login.SignInRepositoryInterface
 
 import com.issuesolver.data.repository.newrequestrepo.GetCategoryRepositoryInterface
 import com.issuesolver.data.repository.newrequestrepo.GetOrganizationRepositoryInterface
-import com.issuesolver.data.repository.newrequestrepo.NewRequestRepositoryInterface
 import com.issuesolver.data.repository.profile.DeleteAccountRepositoryInterface
 import com.issuesolver.data.repository.profile.GetMeRepositoryInterFace
 import com.issuesolver.data.repository.profile.UpdateFullNameRepositoryInterFace
 import com.issuesolver.data.repository.profile.UpdatePasswordRepositoryInterFace
-import com.issuesolver.domain.usecase.login.backend.ConfirmOtpUseCase
 import com.issuesolver.domain.usecase.login.backend.OtpTrustUseCase
 import com.issuesolver.domain.usecase.login.backend.RegisterUseCase
+import com.issuesolver.data.repository.newrequestrepo.NewRequestRepositoryInterface
+import com.issuesolver.domain.usecase.home.backend.FilterUseCase
+import com.issuesolver.domain.usecase.home.backend.RequestUseCase
+import com.issuesolver.domain.usecase.login.backend.ConfirmOtpUseCase
 import com.issuesolver.domain.usecase.login.backend.ResendOtpUseCase
 import com.issuesolver.domain.usecase.login.backend.ResetPasswordUseCase
 import com.issuesolver.domain.usecase.login.backend.SignInUseCase
@@ -171,5 +176,14 @@ class UseCaseModule {
     fun provideGetOrganizationUseCase(newRequest: GetOrganizationRepositoryInterface) =
         GetOrganizationUseCase(newRequest)
 
+    @Provides
+    @Singleton
+    fun provideRequestInterface(requestInterface: RequestInterface) =
+        RequestUseCase(requestInterface)
+
+    @Provides
+    @Singleton
+    fun provideFilterUseCase(filterInterface: FilterInterface) =
+        FilterUseCase(filterInterface)
 
 }

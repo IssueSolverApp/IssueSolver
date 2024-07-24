@@ -1,6 +1,11 @@
 package com.issuesolver.data.repository.di
 
 
+
+import com.issuesolver.data.repository.home.FilterInterface
+import com.issuesolver.data.repository.home.FilterRepositoryImpl
+import com.issuesolver.data.repository.home.RequestInterface
+import com.issuesolver.data.repository.home.RequestRepositoryImpl
 import com.issuesolver.data.repository.login.ConfirmOtpRepositoryImpl
 import com.issuesolver.data.repository.login.ConfirmOtpRepositoryInterface
 import com.issuesolver.data.repository.login.ForgetPasswordRepositoryImpl
@@ -96,5 +101,13 @@ abstract class RepositoryModule {
     abstract fun provideGetOrganizationRepository(repository: GetOrganizationRepositoryImpl):GetOrganizationRepositoryInterface
 
 
+
+    @Binds
+    @Singleton
+    abstract fun provideRequestRepository(repository: RequestRepositoryImpl): RequestInterface
+
+    @Binds
+    @Singleton
+    abstract fun provideFilterRepository(repository: FilterRepositoryImpl): FilterInterface
 
 }

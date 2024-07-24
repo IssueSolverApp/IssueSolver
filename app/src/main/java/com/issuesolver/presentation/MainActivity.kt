@@ -5,8 +5,8 @@ import android.view.WindowManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import com.issuesolver.presentation.home.filter.FilterScreen
 import com.issuesolver.presentation.navigation.RootNavigationGraph
-import com.issuesolver.presentation.newrequest.RequestScreen
 import com.issuesolver.ui.theme.IssueSolverTheme
 import dagger.hilt.android.AndroidEntryPoint
 

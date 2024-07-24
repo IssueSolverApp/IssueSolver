@@ -5,6 +5,8 @@ import android.content.SharedPreferences
 import android.util.Log
 import com.google.gson.Gson
 import com.issuesolver.data.network.auth.LoginService
+import com.issuesolver.data.network.home.FilterService
+import com.issuesolver.data.network.home.RequestService
 import com.issuesolver.data.network.jwt.AuthAuthenticator
 import com.issuesolver.data.network.jwt.AuthInterceptor
 import com.issuesolver.data.network.newrequest.NewRequestService
@@ -60,6 +62,16 @@ class ApiModule {
     @Singleton
     fun provideNewRequestService( retrofit: Retrofit): NewRequestService {
         return retrofit.create(NewRequestService::class.java)
+    }
+    @Provides
+    @Singleton
+    fun provideRequestService( retrofit: Retrofit): RequestService {
+        return retrofit.create(RequestService::class.java)
+    }
+    @Provides
+    @Singleton
+    fun provideFilterService( retrofit: Retrofit): FilterService {
+        return retrofit.create(FilterService::class.java)
     }
 
     private val loggingInterceptor =

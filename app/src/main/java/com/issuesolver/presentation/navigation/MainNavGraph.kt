@@ -16,7 +16,9 @@ import androidx.navigation.navigation
 import com.issuesolver.TestUI
 import com.issuesolver.presentation.bottombar.ButtonData
 import com.issuesolver.presentation.newrequest.RequestInfoScreen
+import com.issuesolver.presentation.home.filter.FilterScreen
 import com.issuesolver.presentation.newrequest.RequestScreen
+import com.issuesolver.presentation.home.home.HomeScreen
 import com.issuesolver.presentation.profile.enter_password.DeleteAccountScreen
 import com.issuesolver.presentation.profile.my_account.MyAccountScreen
 import com.issuesolver.presentation.profile.new_password.NewPasswordScreen
@@ -52,6 +54,10 @@ fun MainNavGraph(navController: NavHostController, paddingValues: PaddingValues)
         composable(route = DetailsScreen.ProfileDeleteAccount.route) {
             DeleteAccountScreen(navController)
         }
+        composable(route = DetailsScreen.HomeFilterScreen.route) {
+//            FilterScreen()
+        }
+
         composable(route = DetailsScreen.RequestInfoScreen.route) {
             RequestInfoScreen(navController)
         }
@@ -84,6 +90,8 @@ sealed class DetailsScreen(val route: String) {
     object ProfileDeleteAccount : DetailsScreen(route = "PROFILE_DELETE_ACCOUNT")
     object RequestInfoScreen : DetailsScreen(route = "REQUEST_INFO_SCREEN")
 
+
+    object HomeFilterScreen : DetailsScreen(route = "Home_Filter_Screen")
 
 
 }
