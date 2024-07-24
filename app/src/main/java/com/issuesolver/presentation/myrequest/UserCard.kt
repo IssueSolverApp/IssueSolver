@@ -2,6 +2,8 @@ package com.issuesolver.presentation.myrequest
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -11,6 +13,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -37,8 +40,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.graphics.BlendMode.Companion.Color
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
@@ -47,36 +52,49 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.issuesolver.R
+import com.issuesolver.common.AlertDialogExample
+import kotlin.math.roundToInt
 
 @Composable
 fun UserCard() {
     var expanded by remember { mutableStateOf(false) }
     val fullText =
         "Office ipsum you must be muted. Teeth recap latest didn't at. Innovation hill as wider assassin heads-up stronger give.Innovation hill as wider assassin heads-up stronger give.Innovation hill as wider assassin heads-up stronger give.Innovation hill as wider assassin heads-up stronger give.Innovation hill as wider assassin heads-up stronger give.Innovation hill as wider assassin heads-up stronger give."
-    val shortText = fullText.take(100) + "..."
+    val additionalText = "daha çox göstər..."
+    val approximateCharacterPerLine = 50 
+    val maxLines = 3
 
-    //Box(modifier = Modifier.padding(top = 50.dp, start = 20.dp, end = 20.dp)) {
+    val maxTextLength = (approximateCharacterPerLine * maxLines) - additionalText.length
+    val shortText = if (fullText.length > maxTextLength) {
+        fullText.take(maxTextLength) + "..."
+    } else {
+        fullText
+    }
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .wrapContentHeight()
-            .padding(start = 20.dp, end = 20.dp, top = 50.dp),
+            .wrapContentHeight(),
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.onPrimaryContainer
+            containerColor = androidx.compose.ui.graphics.Color.White
         )
     ) {
 
-        Column(modifier = Modifier.wrapContentHeight()) {
+        Column(modifier = Modifier
+            .wrapContentHeight()
+            .padding(16.dp)) {
 
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(start = 16.dp, top = 16.dp)
+//                    .padding(start = 16.dp, top = 16.dp)
 
             ) {
 
@@ -86,46 +104,43 @@ fun UserCard() {
                         contentDescription = "Profile Image",
                         modifier = Modifier
                             .size(32.dp)
-                            .clip(CircleShape)
+//                            .clip(CircleShape)
                     )
-                    Spacer(modifier = Modifier.width(8.dp))
+//                    Spacer(modifier = Modifier.width(8.dp))
 
                     Text(
                         text = "Aynur Qəmbərova",
                         style = MaterialTheme.typography.bodyMedium,
                         color = Color(0xFF2981FF),
-
+                        modifier = Modifier.padding(start=6.dp),
+                        fontSize = 15.sp,
+                        fontWeight = FontWeight.W400
                         )
-
                 }
 
                 Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center,
-                    modifier = Modifier.padding(end = 16.dp)
+                    modifier = Modifier
+                        .clip(shape = CircleShape)
+                        .background(color = Color(0xFFc8dcfc))
+                        .padding(8.dp)
+                        .clickable(onClick = { }),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
-
-                    Button(
-                        onClick = { /* Do something */ },
-                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFD8E8FF)),
-                        shape = RoundedCornerShape(50.dp),
-                        contentPadding = PaddingValues(10.dp)
-                    ) {
-                        Spacer(modifier = Modifier.width(20.dp))
-                        Box(
-                            modifier = Modifier
-                                .size(8.dp)
-                                .background(Color(0xFF007AFF), CircleShape)
-
-                        )
-                        Spacer(modifier = Modifier.width(8.dp))
+                    Image(
+                        painter = painterResource(R.drawable.ellipse_9),
+                        contentDescription = "ellipse_9",
+                        modifier = Modifier
+                            .padding(start = 20.dp)
+                            .size(8.dp)
+                    )
                         Text(
                             text = "Gözləmədə",
                             color = Color(0xFF0169FE),
                             fontSize = 13.sp,
-                            modifier = Modifier.padding(end = 20.dp)
+                            fontWeight = FontWeight.W400,
+                            modifier = Modifier.padding(start=8.dp,end=20.dp)
                         )
-                    }
                 }
 
 
@@ -133,75 +148,66 @@ fun UserCard() {
 
             Divider(
                 thickness = 0.5.dp,
-                color = Color(0xFF2981FF),
+                color = Color(0xFFc3dcff),
                 modifier = Modifier.padding(
-                    start = 20.dp,
-                    end = 20.dp,
                     top = 8.dp,
-                    bottom = 10.dp
+                    bottom = 16.dp
                 )
             )
 
-            Button(
-                onClick = { /* Do something */ },
-                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFF0F4F9)),
-                shape = RoundedCornerShape(50.dp),
-                contentPadding = PaddingValues(10.dp),
-                modifier = Modifier.padding(start = 20.dp)
-            ) {
 //                    Spacer(modifier = Modifier.width(5.dp))
 
                 Text(
                     text = "Küçə heyvanlarına qarşı zorbalıq",
                     color = Color(0xFF8C8C8C),
                     fontSize = 13.sp,
-
+                    fontWeight = FontWeight.W400,
+                    modifier = Modifier
+                        .clip(shape = RoundedCornerShape(50.dp))
+                        .background(color = Color(0xFFF0F4F9))
+                        .padding(top=8.dp, bottom = 8.dp, start = 11.dp, end = 11.dp)
                     )
-            }
 
 
 
-            Column(modifier = Modifier.padding(start = 20.dp, end = 20.dp, top = 8.dp)) {
-                val text = if (expanded) fullText else shortText
+
+            Column(modifier = Modifier.padding(top = 8.dp)) {
+                val textToShow = if (expanded) fullText else shortText
                 val annotatedString = buildAnnotatedString {
-                    append(text)
-                    if (!expanded) {
+                    append(textToShow)
+                    if (!expanded && fullText.length > maxTextLength) {
                         withStyle(
                             style = SpanStyle(
-                                color = MaterialTheme.colorScheme.primary,
-                                fontWeight = FontWeight.Normal,
-                                textDecoration = TextDecoration.Underline
+                                color = Color(0xFF2981FF),
+                                fontWeight = FontWeight.W500
                             )
                         ) {
-                            append(" daha çox göstər")
+                            append("  daha çox göstər")
                         }
-                        addStringAnnotation(
-                            tag = "read_more",
-                            annotation = "read_more",
-                            start = text.length,
-                            end = text.length + " daha çox göstər".length
-                        )
                     }
                 }
 
                 ClickableText(
                     text = annotatedString,
-                    style = TextStyle(fontSize = 16.sp),
                     onClick = { offset ->
-                        annotatedString.getStringAnnotations("read_more", offset, offset)
-                            .firstOrNull()?.let {
-                                expanded = true
-                            }
-                    }
+                        if (annotatedString.getStringAnnotations(tag = "read_more", start = offset, end = offset).isNotEmpty()) {
+                            expanded = !expanded
+                        }
+                    },
+                    style = TextStyle(
+                        color = Color(0xFF6E6E6E),
+                        fontSize = 15.sp,
+                        fontWeight = FontWeight.Medium
+                    )
                 )
             }
 
+
+
             Divider(
                 thickness = 0.5.dp,
-                color = Color(0xFF2981FF),
+                color = Color(0xFFc3dcff),
                 modifier = Modifier.padding(
-                    start = 20.dp,
-                    end = 20.dp,
                     top = 16.dp,
                 )
             )
@@ -210,7 +216,6 @@ fun UserCard() {
                 horizontalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier
                     .fillMaxWidth()
-                    //.padding(start = 16.dp, end = 16.dp)
             ) {
                 Row {
                     IconButton(onClick = { /* Like action */ }) {
@@ -230,8 +235,8 @@ fun UserCard() {
                 Row {
                     IconButton(onClick = { /* Like action */ }) {
                         Icon(
-                            painter = painterResource(id = R.drawable.delete_unabale), // Replace with your icon
-                            contentDescription = null
+                            painter = painterResource(id = R.drawable.vector),
+                            contentDescription = null,
                         )
                     }
                 }
@@ -239,10 +244,14 @@ fun UserCard() {
 
         }
 
-
     }
     //}
 
 
 
+}
+@Preview(showBackground = true, backgroundColor = 0xF0F4F9)
+@Composable
+fun PreviewUserCard() {
+    UserCard()
 }
