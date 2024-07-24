@@ -1,5 +1,6 @@
 package com.issuesolver.presentation.home.filter
 
+import BottomBarScreen
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -21,15 +22,24 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.issuesolver.presentation.common.AuthButton
+import com.issuesolver.presentation.home.home.HomeViewModel
+import com.issuesolver.presentation.navigation.AuthScreen
+import com.issuesolver.presentation.navigation.DetailsScreen
 import com.issuesolver.presentation.newrequest.DropDownCategory
 import com.issuesolver.presentation.newrequest.DropDownOrganization
 import com.issuesolver.presentation.newrequest.RequestScreenViewModel
 
 @Composable
 fun FilterScreen(
-//    viewModel: FilterViewModel = hiltViewModel(),
-                 viewModel2: RequestScreenViewModel = hiltViewModel()){
+    navController: NavController,
+    viewModel: FilterViewModel = hiltViewModel(),
+    viewModel2: RequestScreenViewModel = hiltViewModel(),
+    viewModel3: HomeViewModel = hiltViewModel(),
+
+    ){
+
     val listDate= listOf("Last Day","Last Week","Last Month")
     val listStatus= listOf("Gözləmədə","Baxılır","Əsassızdır","Həll olundu","Arxivdədir")
     Box(
@@ -101,16 +111,14 @@ fun FilterScreen(
         ) {
             AuthButton(
                 text = "Axtarış et",
-                onClick = {},
-                modifier = Modifier.fillMaxWidth()
+                onClick = {
+                    viewModel3.loadItems()
+                    navController.navigate(BottomBarScreen.Home.route)                          },
+                modifier = Modifier.fillMaxWidth(),
+
             )
         }
 
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun FilterScreenPreview() {
-    FilterScreen()
-}

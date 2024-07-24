@@ -53,7 +53,12 @@ fun MainNavGraph(navController: NavHostController, paddingValues: PaddingValues)
         }
         composable(route = DetailsScreen.ProfileDeleteAccount.route) {
             DeleteAccountScreen(navController)
-        }    }
+        }
+        composable(route = DetailsScreen.HomeFilterScreen.route) {
+            FilterScreen()
+        }
+    }
+
 }
 
 
@@ -79,6 +84,8 @@ sealed class DetailsScreen(val route: String) {
     object ProfileNewPassword : DetailsScreen(route = "PROFILE_NEW_PASSWORD")
     object ProfileMyAccount : DetailsScreen(route = "PROFILE_MY_ACCOUNT")
     object ProfileDeleteAccount : DetailsScreen(route = "PROFILE_DELETE_ACCOUNT")
+    object HomeFilterScreen : DetailsScreen(route = "Home_Filter_Screen")
+
 
 }
 
