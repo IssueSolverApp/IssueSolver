@@ -21,8 +21,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             IssueSolverTheme {
-                UserCard()
-                //RootNavigationGraph()
+                RootNavigationGraph()
             }
         }
     }
