@@ -37,10 +37,10 @@
       </SelectionState>
       <SelectionState runConfigName="AndroidStudioProjects.IssueSolver.Issue_Solver.app">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2024-07-24T12:43:23.471908Z">
+        <DropdownSelection timestamp="2024-07-24T15:47:09.914895Z">
           <Target type="DEFAULT_BOOT">
             <handle>
-              <DeviceId pluginId="LocalEmulator" identifier="path=/Users/aminamehdiyeva/.android/avd/Pixel_8_API_30_1.avd" />
+              <DeviceId pluginId="PhysicalDevice" identifier="serial=eqiflfyppjuom7fe" />
             </handle>
           </Target>
         </DropdownSelection>
