@@ -3,6 +3,8 @@ package com.issuesolver.data.network.auth
 import com.issuesolver.domain.entity.networkModel.login.LoginRequest
 import com.issuesolver.domain.entity.networkModel.login.LoginResponse
 import com.issuesolver.domain.entity.networkModel.login.OtpTrustResponse
+import com.issuesolver.domain.entity.networkModel.login.RefreshTokenRequest
+import com.issuesolver.domain.entity.networkModel.login.RefreshTokenResponse
 import com.issuesolver.domain.entity.networkModel.login.RegisterResponseModel
 import com.issuesolver.domain.entity.networkModel.login.RegisterRequestModel
 import com.issuesolver.domain.entity.networkModel.login.RequestOtp
@@ -40,7 +42,7 @@ interface LoginService {
     suspend fun resetPassword(@Query("token") token: String, @Body resetPassword: ResetPasswordModel): Response<RegisterResponseModel>
 
     @POST("api/Auths/login-refreshtoken")
-    suspend fun refreshToken(@Body token: String?): Response<LoginResponse>
+    suspend fun refreshToken(@Body token: RefreshTokenRequest): Response<RefreshTokenResponse>
 
 }
 

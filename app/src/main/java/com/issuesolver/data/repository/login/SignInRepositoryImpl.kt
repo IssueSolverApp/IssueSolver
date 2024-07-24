@@ -29,12 +29,12 @@ class SignInRepositoryImpl @Inject constructor(
         return response
     }
 
-    suspend fun refreshAccessToken(): Response<LoginResponse> {
-        val refreshToken = sharedPreferences.getString("refreshToken", null)
-        // Call your refresh token endpoint here
-        // Example:
-        return loginService.refreshToken(refreshToken)
-
-    }
+//    suspend fun refreshAccessToken(): Response<LoginResponse> {
+//        val refreshToken = sharedPreferences.getString("refreshToken", null)
+//        // Call your refresh token endpoint here
+//        // Example:
+//        return loginService.refreshToken(refreshToken)
+//
+//    }
 
 }
