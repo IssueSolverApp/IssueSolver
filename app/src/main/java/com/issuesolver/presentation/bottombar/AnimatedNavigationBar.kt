@@ -63,6 +63,7 @@ fun AnimatedNavigationBar(navController: NavController) {
     )
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
+    //bug
 
     var selectedItem by rememberSaveable { mutableIntStateOf(0) }
     var barSize by remember { mutableStateOf(IntSize(0, 0)) }
