@@ -11,6 +11,12 @@ import com.issuesolver.data.repository.login.RegisterRepositoryInterface
 import com.issuesolver.data.repository.login.ResendOtpRepositoryInterface
 import com.issuesolver.data.repository.login.ResetPasswordRepositoryInterface
 import com.issuesolver.data.repository.login.SignInRepositoryInterface
+import com.issuesolver.data.repository.myrequestrepo.GetCommentRepositoryInterface
+import com.issuesolver.data.repository.myrequestrepo.GetRequestByIdRepositoryInterface
+import com.issuesolver.data.repository.myrequestrepo.LikeRepositoryInterface
+import com.issuesolver.data.repository.myrequestrepo.MyRequestRepositoryInterface
+import com.issuesolver.data.repository.myrequestrepo.RemoveLikeRepositoryInterface
+import com.issuesolver.data.repository.myrequestrepo.SendCommentRepositoryInterface
 
 import com.issuesolver.data.repository.newrequestrepo.GetCategoryRepositoryInterface
 import com.issuesolver.data.repository.newrequestrepo.GetOrganizationRepositoryInterface
@@ -33,6 +39,12 @@ import com.issuesolver.domain.usecase.login.local.ValidateFullNameUseCase
 import com.issuesolver.domain.usecase.login.local.ValidateNewPasswordUseCase
 import com.issuesolver.domain.usecase.login.local.ValidatePasswordUseCase
 import com.issuesolver.domain.usecase.login.local.ValidateRepeatedPasswordUseCase
+import com.issuesolver.domain.usecase.myrequestusecase.GetCommentUseCase
+import com.issuesolver.domain.usecase.myrequestusecase.GetRequestByIdUseCase
+import com.issuesolver.domain.usecase.myrequestusecase.LikeUseCase
+import com.issuesolver.domain.usecase.myrequestusecase.MyRequestUseCase
+import com.issuesolver.domain.usecase.myrequestusecase.RemoveLikeUseCase
+import com.issuesolver.domain.usecase.myrequestusecase.SendCommentUceCase
 
 import com.issuesolver.domain.usecase.newrequestusecase.GetCategoryUseCase
 import com.issuesolver.domain.usecase.newrequestusecase.GetOrganizationUseCase
@@ -185,5 +197,35 @@ class UseCaseModule {
     @Singleton
     fun provideFilterUseCase(filterInterface: FilterInterface) =
         FilterUseCase(filterInterface)
+
+    @Provides
+    @Singleton
+    fun provideMyRequestUseCase(myRequest: MyRequestRepositoryInterface) =
+        MyRequestUseCase(myRequest)
+
+    @Provides
+    @Singleton
+    fun provideGetRequestByIdUseCase(myRequest: GetRequestByIdRepositoryInterface) =
+        GetRequestByIdUseCase(myRequest)
+
+    @Provides
+    @Singleton
+    fun provideLikeUseCase(myRequest: LikeRepositoryInterface) =
+        LikeUseCase(myRequest)
+
+    @Provides
+    @Singleton
+    fun provideRemoveLikeUseCase(myRequest: RemoveLikeRepositoryInterface) =
+        RemoveLikeUseCase(myRequest)
+
+    @Provides
+    @Singleton
+    fun provideSendCommentUseCase(myRequest: SendCommentRepositoryInterface) =
+        SendCommentUceCase(myRequest)
+
+    @Provides
+    @Singleton
+    fun provideGetCommentUseCase(myRequest: GetCommentRepositoryInterface) =
+        GetCommentUseCase(myRequest)
 
 }

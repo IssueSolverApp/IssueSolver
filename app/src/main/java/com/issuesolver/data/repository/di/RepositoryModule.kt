@@ -20,6 +20,18 @@ import com.issuesolver.data.repository.login.ResetPasswordRepositoryImpl
 import com.issuesolver.data.repository.login.ResetPasswordRepositoryInterface
 import com.issuesolver.data.repository.login.SignInRepositoryImpl
 import com.issuesolver.data.repository.login.SignInRepositoryInterface
+import com.issuesolver.data.repository.myrequestrepo.GetCommentRepositoryImpl
+import com.issuesolver.data.repository.myrequestrepo.GetCommentRepositoryInterface
+import com.issuesolver.data.repository.myrequestrepo.GetRequestByIdRepositoryImpl
+import com.issuesolver.data.repository.myrequestrepo.GetRequestByIdRepositoryInterface
+import com.issuesolver.data.repository.myrequestrepo.LikeRepositoryImpl
+import com.issuesolver.data.repository.myrequestrepo.LikeRepositoryInterface
+import com.issuesolver.data.repository.myrequestrepo.MyRequestRepositoryImpl
+import com.issuesolver.data.repository.myrequestrepo.MyRequestRepositoryInterface
+import com.issuesolver.data.repository.myrequestrepo.RemoveLikeRepositoryImpl
+import com.issuesolver.data.repository.myrequestrepo.RemoveLikeRepositoryInterface
+import com.issuesolver.data.repository.myrequestrepo.SendCommentRepositoryImpl
+import com.issuesolver.data.repository.myrequestrepo.SendCommentRepositoryInterface
 import com.issuesolver.data.repository.newrequestrepo.GetCategoryRepositoryImpl
 import com.issuesolver.data.repository.newrequestrepo.GetCategoryRepositoryInterface
 import com.issuesolver.data.repository.newrequestrepo.GetOrganizationRepositoryImpl
@@ -109,5 +121,34 @@ abstract class RepositoryModule {
     @Binds
     @Singleton
     abstract fun provideFilterRepository(repository: FilterRepositoryImpl): FilterInterface
+
+    @Binds
+    @Singleton
+    abstract fun provideMyRequestRepository(repository: MyRequestRepositoryImpl): MyRequestRepositoryInterface
+
+    @Binds
+    @Singleton
+    abstract fun provideGetRequestByIdRepository(repository: GetRequestByIdRepositoryImpl): GetRequestByIdRepositoryInterface
+
+    @Binds
+    @Singleton
+    abstract fun provideLikeRepository(repository: LikeRepositoryImpl): LikeRepositoryInterface
+
+
+    @Binds
+    @Singleton
+    abstract fun provideRemoveLikeRepository(repository: RemoveLikeRepositoryImpl): RemoveLikeRepositoryInterface
+
+    @Binds
+    @Singleton
+    abstract fun provideSendCommentRepository(repository: SendCommentRepositoryImpl): SendCommentRepositoryInterface
+
+
+    @Binds
+    @Singleton
+    abstract fun provideGetCommentRepository(repository: GetCommentRepositoryImpl): GetCommentRepositoryInterface
+
+
+
 
 }
