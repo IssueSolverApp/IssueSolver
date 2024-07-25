@@ -1,29 +1,35 @@
 package com.issuesolver.domain.entity.networkModel.home
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
 
 
-
+@Parcelize
 data class FilterResponseModel(
-    val data: List<FilterData>,
-    val message: String,
-    val fullName: String,
-    val success: Boolean
-)
+    val data: List<FilterData>?= listOf(),
+    val message: String? = null,
+    val fullName: String? = null,
+    val success: Boolean? = null
+):Parcelable
+
+@Parcelize
 data class FilterData(
-    val requestId: Int,
-    val fullName: String,
-    val address:String,
-    val description:String,
-    val status:String,
-    val organizationName:String,
-    val createDate:String,
-    val commentCount:Int,
-    val likeCount:Int,
-    val likeSuccess:Boolean,
-    val category:CategoryData
-)
+    val requestId: Int? = null,
+    val fullName: String? = null,
+    val address:String? = null,
+    val description:String? = null,
+    val status:String? = null,
+    val organizationName:String? = null,
+    val createDate:String? = null,
+    val commentCount:Int? = null,
+    val likeCount:Int? = null,
+    val likeSuccess:Boolean? = null,
+    val category:CategoryData = CategoryData()
+):Parcelable
+
+@Parcelize
 data class CategoryData(
-    val categoryId:Int,
-    val categoryName:String
-)
+    val categoryId:Int? = null,
+    val categoryName:String? = null
+):Parcelable
 

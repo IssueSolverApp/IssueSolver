@@ -9,6 +9,7 @@ import com.issuesolver.data.network.home.FilterService
 import com.issuesolver.data.network.home.RequestService
 import com.issuesolver.data.network.jwt.AuthAuthenticator
 import com.issuesolver.data.network.jwt.AuthInterceptor
+import com.issuesolver.data.network.myrequest.MyRequestService
 import com.issuesolver.data.network.newrequest.NewRequestService
 import com.issuesolver.data.network.profile.ProfileService
 import dagger.Module
@@ -72,6 +73,12 @@ class ApiModule {
     @Singleton
     fun provideFilterService( retrofit: Retrofit): FilterService {
         return retrofit.create(FilterService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideMyRequestService( retrofit: Retrofit): MyRequestService {
+        return retrofit.create(MyRequestService::class.java)
     }
 
     private val loggingInterceptor =
