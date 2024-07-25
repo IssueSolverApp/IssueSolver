@@ -34,6 +34,9 @@ class NewPasswordScreenViewModel @Inject constructor(
     val uiState: StateFlow<NewPasswordScreenState> = _uiState.asStateFlow()
     private val _profileState: MutableStateFlow<State?> =  MutableStateFlow(null)
     val profileState: StateFlow<State?> = _profileState
+    fun clearState() {
+        _profileState.value = null
+    }
 
     fun updatePassword(request:UpdatePasswordRequest) {
         viewModelScope.launch {

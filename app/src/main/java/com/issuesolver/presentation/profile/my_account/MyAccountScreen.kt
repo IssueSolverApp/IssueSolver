@@ -52,6 +52,7 @@ import com.issuesolver.presentation.bottombar.AnimatedNavigationBar
 import com.issuesolver.presentation.common.AuthButton
 import com.issuesolver.presentation.common.ErrorText
 import com.issuesolver.presentation.common.LoadingOverlay
+import com.issuesolver.presentation.navigation.DetailsScreen
 import com.issuesolver.presentation.profile.enter_password.DeleteAccountEvent
 import com.issuesolver.presentation.profile.new_password.NewPasswordScreenEvent
 import com.issuesolver.presentation.profile.profile.ProfileScreenState
@@ -64,7 +65,7 @@ fun MyAccountScreen(
     ){
 
     val uiState by viewModel.uiState.collectAsState()
-    val updateFullNameState by viewModel.profileState.collectAsState()
+    val updateFullNameState by viewModel.profileState2.collectAsState()
     when(updateFullNameState?.status){
 
         StatusR.LOADING -> {
@@ -80,7 +81,9 @@ fun MyAccountScreen(
         }
         StatusR.SUCCESS -> {
 //            Toast.makeText(LocalView.current.context, "Full Name Changed <3", Toast.LENGTH_SHORT).show()
-//            navController.navigate(BottomBarScreen.Profile.route)
+            navController.popBackStack()
+            viewModel.clearState()
+
 //            viewModel.clearLoginState()
         }
         else-> {
@@ -92,15 +95,17 @@ fun MyAccountScreen(
 
     Scaffold(
         modifier = Modifier
-            .navigationBarsPadding(),
+            .navigationBarsPadding()
+            .statusBarsPadding(),
+
         bottomBar = {},
         content = { padding ->
         Box(
             modifier = Modifier
-                .padding(padding)
+//                .padding(padding)
                 .fillMaxSize()
                 .imePadding()
-                .padding(top = 13.dp, start = 20.dp, end = 20.dp, bottom = 34.dp)
+                .padding(top = 24.dp, start = 20.dp, end = 20.dp, bottom = 34.dp)
         ) {
             Column(
                 modifier = Modifier
@@ -271,7 +276,6 @@ fun MyAccountScreen(
                                 uiState.fullName,
                                 )
                         )
-                        navController.popBackStack()
                     },
                     modifier = Modifier.fillMaxWidth()
                 )

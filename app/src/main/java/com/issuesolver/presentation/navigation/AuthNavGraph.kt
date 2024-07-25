@@ -37,7 +37,7 @@ fun NavGraphBuilder.authNavGraph(navController: NavHostController) {
         composable(route = AuthScreen.Register.route) {
             RegisterPage(navController)
         }
-        composable(route = AuthScreen.RegisterOtp.route) {navBackStack ->
+        composable(route = AuthScreen.RegisterOtp.route+ "/{id}") {navBackStack ->
             val email = navBackStack.arguments?.getString("id")
 
             RegisterOtpCodePage(navController = navController, email = email)

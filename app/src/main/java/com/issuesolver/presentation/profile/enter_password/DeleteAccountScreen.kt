@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -65,6 +66,7 @@ fun DeleteAccountScreen(
 
 ){
 
+
     var showDialog by remember { mutableStateOf(false) }
 
     var showPassword1 by remember { mutableStateOf(value = false) }
@@ -80,7 +82,8 @@ fun DeleteAccountScreen(
             Toast.makeText(LocalView.current.context, "Kodun ishlemir X(", Toast.LENGTH_SHORT).show()
         }
         StatusR.SUCCESS -> {
-            navController.navigate(BottomBarScreen.Profile.route)
+            navController.popBackStack()
+            viewModel.clearState()
             Toast.makeText(LocalView.current.context, "Account Deleted !!!!", Toast.LENGTH_SHORT).show()
 //            viewModel.clearLoginState()
         }
@@ -94,7 +97,9 @@ fun DeleteAccountScreen(
     Scaffold(
         modifier = Modifier
             .navigationBarsPadding()
-        ,
+            .statusBarsPadding(),
+
+
         bottomBar = {
         },
         content = { padding ->

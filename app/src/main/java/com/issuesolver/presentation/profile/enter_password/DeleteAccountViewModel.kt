@@ -26,6 +26,9 @@ class DeleteAccountViewModel @Inject constructor(
     val uiState: StateFlow<DeleteAccountState> = _uiState.asStateFlow()
     private val _profileState: MutableStateFlow<State?> =  MutableStateFlow(null)
     val profileState: StateFlow<State?> = _profileState
+    fun clearState() {
+        _profileState.value = null
+    }
 
     fun deleteAccount(request: DeleteAccountRequest) {
         viewModelScope.launch {
