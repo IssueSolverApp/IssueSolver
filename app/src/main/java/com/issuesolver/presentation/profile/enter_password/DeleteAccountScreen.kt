@@ -237,7 +237,9 @@ fun DeleteAccountScreen(
             ) {
                 AuthButton(
                     text = "Hesabı sil",
-                    onClick = { showDialog = true }
+                    onClick = { showDialog = true },
+                    enabled = uiState.isInputValid,
+
 
 
 //                        viewModel.handleEvent(DeleteAccountEvent.Submit)
@@ -247,7 +249,7 @@ fun DeleteAccountScreen(
 //                                )
 //                        )
 //                    }
-            ,
+
                     modifier = Modifier.fillMaxWidth()
                 )
             }
