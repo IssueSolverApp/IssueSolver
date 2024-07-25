@@ -182,7 +182,7 @@ fun ProfileScreen(
                             .padding(top = 24.dp, start = 16.dp, end = 16.dp, bottom = 24.dp)
                             .fillMaxWidth()
                             .clickable(onClick = {
-                                val openURL = Intent(Intent.ACTION_VIEW, Uri.parse("https://issue-solver.vercel.app/"))
+                                val openURL = Intent(Intent.ACTION_VIEW, Uri.parse("https://issue-solver.vercel.app/dashboard/privacy"))
                                 context.startActivity(openURL) },
                                 interactionSource = remember { MutableInteractionSource() },
                                 indication = null),
@@ -207,7 +207,7 @@ fun ProfileScreen(
                             .padding(top = 24.dp, start = 16.dp, end = 16.dp, bottom = 24.dp)
                             .fillMaxWidth()
                             .clickable(onClick = {
-                                val openURL = Intent(Intent.ACTION_VIEW, Uri.parse("https://issue-solver.vercel.app/"))
+                                val openURL = Intent(Intent.ACTION_VIEW, Uri.parse("https://issue-solver.vercel.app/dashboard/faq"))
                                 context.startActivity(openURL) },
                                 interactionSource = remember { MutableInteractionSource() },
                                 indication = null),
@@ -232,7 +232,7 @@ fun ProfileScreen(
                             .padding(top = 24.dp, start = 16.dp, end = 16.dp, bottom = 24.dp)
                             .fillMaxWidth()
                             .clickable(onClick = {
-                                val openURL = Intent(Intent.ACTION_VIEW, Uri.parse("https://issue-solver.vercel.app/"))
+                                val openURL = Intent(Intent.ACTION_VIEW, Uri.parse("https://issue-solver.vercel.app/dashboard/about"))
                                 context.startActivity(openURL) },
                                 interactionSource = remember { MutableInteractionSource() },
                                 indication = null),
