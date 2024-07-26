@@ -7,6 +7,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import com.issuesolver.presentation.myrequest.UserCard
 import com.issuesolver.presentation.home.filter.FilterScreen
+import com.issuesolver.presentation.myrequest.MyRequestScreen
 import com.issuesolver.presentation.navigation.RootNavigationGraph
 import com.issuesolver.ui.theme.IssueSolverTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -21,7 +22,8 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             IssueSolverTheme {
-                RootNavigationGraph()
+                //RootNavigationGraph()
+                MyRequestScreen()
             }
         }
     }
