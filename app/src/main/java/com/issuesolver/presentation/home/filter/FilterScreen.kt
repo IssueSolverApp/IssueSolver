@@ -13,6 +13,8 @@ import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -32,22 +34,26 @@ import com.issuesolver.presentation.newrequest.DropDownCategory
 import com.issuesolver.presentation.newrequest.DropDownOrganization
 import com.issuesolver.presentation.newrequest.RequestScreenViewModel
 
+
 @Composable
 fun FilterScreen(
     navController: NavController,
-    viewModel: FilterViewModel = hiltViewModel(),
     viewModel2: RequestScreenViewModel = hiltViewModel(),
     viewModel3: HomeViewModel = hiltViewModel(),
 
     ){
-    val listStatus = listOf("Pending", "Reviewing", "Unfounded", "Resolved", "Archived")
-//    val listCategories = listOf()
-//    val listOrganizations = listOf()
-    val listDays = listOf("Last Day", "Last Week", "Last Month")
+
+    val listStatus = listOf("Gözləmədə", "Baxılır", "Əsassızdır", "Həlledildi", "Arxivdədir")
+    val listDays = listOf("Son bir gün", "Son bir həftə", "Son bir ay")
+    val listCategories = viewModel2.category.collectAsState(initial = emptyList()).value
+    val listOrganizations = viewModel2.organization.collectAsState(initial = emptyList()).value
+
     var status by remember { mutableStateOf(listStatus.first()) }
-//    var categoryName by remember { mutableStateOf(listCategories.first()) }
-//    var organizationName by remember { mutableStateOf(listOrganizations.first()) }
+    var categoryName by remember { mutableStateOf(listCategories?.firstOrNull()?.toString() ?: "") }
+    var organizationName by remember { mutableStateOf(listOrganizations?.firstOrNull()?.toString() ?: "") }
     var days by remember { mutableStateOf(listDays.first()) }
+
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -107,11 +113,12 @@ fun FilterScreen(
             AuthButton(
                 text = "Axtarış et",
                 onClick = {
-                    viewModel3.loadItems(status = "", categoryName = "", organizationName = "", days = "")
-                    navController.navigate(BottomBarScreen.Home.route)                          },
+                    viewModel3.updateFilterParams(status, categoryName, organizationName, days)
+                    navController.navigate(BottomBarScreen.Home.route)
+
+                },
                 modifier = Modifier.fillMaxWidth(),
             )
         }
     }
 }
-

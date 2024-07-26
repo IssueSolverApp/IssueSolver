@@ -1,4 +1,4 @@
-package com.issuesolver.presentation.myrequest
+package com.issuesolver.presentation.home.home
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -61,15 +61,14 @@ import com.issuesolver.common.AlertDialogExample
 import kotlin.math.roundToInt
 
 @Composable
-fun UserCard(fullName: String?,
+fun RequestsCard(
+    fullName: String?,
              status: String?,
              description: String?,
              categoryName:String?
 ) {
     var expanded by remember { mutableStateOf(false) }
     val fullText =description
-    val fullName=fullName
-        //"Office ipsum you must be muted. Teeth recap latest didn't at. Innovation hill as wider assassin heads-up stronger give.Innovation hill as wider assassin heads-up stronger give.Innovation hill as wider assassin heads-up stronger give.Innovation hill as wider assassin heads-up stronger give.Innovation hill as wider assassin heads-up stronger give.Innovation hill as wider assassin heads-up stronger give."
     val additionalText = "daha çox göstər..."
     val approximateCharacterPerLine = 50
     val maxLines = 3
@@ -99,19 +98,16 @@ fun UserCard(fullName: String?,
                 horizontalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier
                     .fillMaxWidth()
-//                    .padding(start = 16.dp, top = 16.dp)
 
             ) {
 
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Image(
-                        painter = painterResource(id = R.drawable.et_profile_male), // Replace with your drawable resource
+                        painter = painterResource(id = R.drawable.et_profile_male),
                         contentDescription = "Profile Image",
                         modifier = Modifier
                             .size(32.dp)
-//                            .clip(CircleShape)
                     )
-//                    Spacer(modifier = Modifier.width(8.dp))
 
                     Text(
                         text = "Aynur Qəmbərova",
@@ -229,23 +225,15 @@ fun UserCard(fullName: String?,
                 Row {
                     IconButton(onClick = { /* Like action */ }) {
                         Icon(
-                            painter = painterResource(id = R.drawable.heart_default), // Replace with your icon
+                            painter = painterResource(id = R.drawable.heart_default),
                             contentDescription = null
                         )
                     }
 
                     IconButton(onClick = { /* Like action */ }) {
                         Icon(
-                            painter = painterResource(id = R.drawable.coment), // Replace with your icon
+                            painter = painterResource(id = R.drawable.coment),
                             contentDescription = null
-                        )
-                    }
-                }
-                Row {
-                    IconButton(onClick = { /* Like action */ }) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.vector),
-                            contentDescription = null,
                         )
                     }
                 }

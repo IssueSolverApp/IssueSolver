@@ -10,8 +10,10 @@ import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import androidx.navigation.navigation
 import com.issuesolver.TestUI
 import com.issuesolver.presentation.bottombar.ButtonData
@@ -30,10 +32,11 @@ fun MainNavGraph(navController: NavHostController, paddingValues: PaddingValues)
     NavHost(
         navController = navController,
         route = Graph.MAIN_SCREEN_PAGE,
-        startDestination = BottomBarScreen.Profile.route
+        startDestination = BottomBarScreen.Home.route
     ) {
-        composable(route = BottomBarScreen.Home.route) {
-            TestUI()
+        composable(route = BottomBarScreen.Home.route,
+            ) {
+            HomeScreen()
         }
         composable(route = BottomBarScreen.MyRequest.route) {
             TestUI()
@@ -55,7 +58,7 @@ fun MainNavGraph(navController: NavHostController, paddingValues: PaddingValues)
             DeleteAccountScreen(navController)
         }
         composable(route = DetailsScreen.HomeFilterScreen.route) {
-//            FilterScreen()
+            FilterScreen(navController)
         }
 
         composable(route = DetailsScreen.RequestInfoScreen.route) {

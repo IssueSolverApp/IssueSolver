@@ -12,10 +12,12 @@ import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -26,7 +28,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
+import androidx.paging.LoadState
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
 import com.issuesolver.R
+import com.issuesolver.domain.entity.networkModel.home.FilterData
+import com.issuesolver.presentation.myrequest.UserCard
+import com.issuesolver.presentation.navigation.DetailsScreen
 
 
 @Composable
@@ -77,7 +86,9 @@ fun HomeScreen(
                             contentDescription = "filter",
                             modifier = Modifier
                                 .padding(end = 14.dp)
-                                .clickable {  }
+                                .clickable {
+//                                    navController.navigate(DetailsScreen.HomeFilterScreen.route)
+                                }
                         )
                         Image(
                             painter = painterResource(R.drawable.group__1_),
@@ -93,16 +104,50 @@ fun HomeScreen(
 
 
 
+            val moviePagingItems: LazyPagingItems<FilterData> = viewModel.requestsState.collectAsLazyPagingItems()
+
+
+            LazyColumn {
+                items(moviePagingItems.itemCount) { index ->
+                    moviePagingItems[index]?.let { filterData ->
+                        RequestsCard(
+                            fullName = filterData.fullName,
+                            status = filterData.status,
+                            description = filterData.description,
+                            categoryName = filterData.category?.categoryName
+                        )
+                    }
+                }
+
+                moviePagingItems.apply {
+                    when {
+                        loadState.refresh is LoadState.Loading -> {
+                            item {
+                            }
+                        }
+                        loadState.append is LoadState.Loading -> {
+                            item {
+                            }
+                        }
+                        loadState.refresh is LoadState.Error -> {
+                            val e = moviePagingItems.loadState.refresh as LoadState.Error
+                            item {
+                                Text(text = "Error: ${e.error.localizedMessage}")
+                            }
+                        }
+                        loadState.append is LoadState.Error -> {
+                            val e = moviePagingItems.loadState.append as LoadState.Error
+                            item {
+                                Text(text = "Error: ${e.error.localizedMessage}")
+                            }
+                        }
+                    }
+                }
+            }
         }
-
     }
+}
 
-}
-@Preview(showBackground = true)
-@Composable
-fun HomeScreenPreview() {
-    HomeScreen()
-}
 
 
 

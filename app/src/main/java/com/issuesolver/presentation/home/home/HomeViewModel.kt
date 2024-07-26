@@ -2,57 +2,45 @@ package com.issuesolver.presentation.home.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.issuesolver.common.Resource
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
+import com.issuesolver.domain.entity.networkModel.home.FilterData
 import com.issuesolver.domain.usecase.home.backend.FilterUseCase
 import com.issuesolver.domain.usecase.home.backend.RequestUseCase
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val requestUseCase: RequestUseCase,
-    private val filterUseCase: FilterUseCase,
+    private val filterUseCase: FilterUseCase
+) : ViewModel() {
 
-    ) : ViewModel(){
+    private val _requestsState: MutableStateFlow<PagingData<FilterData>> = MutableStateFlow(value = PagingData.empty())
+    val requestsState: StateFlow<PagingData<FilterData>> get() = _requestsState
 
-    private val _items = MutableStateFlow<List<String>>(emptyList())
-    val items = _items.asStateFlow()
+   init {
 
-    init {
-        fetchRequests()
+            fetchFilteredRequests("","","","")
+
     }
 
-    private fun fetchRequests(page: Int = 1, size: Int = 10) {
+   private  fun fetchFilteredRequests(
+        status: String,
+        categoryName: String,
+        organizationName: String,
+        days: String
+    ) {
         viewModelScope.launch {
-            requestUseCase(page, size).collect { resource ->
-                when (resource) {
-                    is Resource.Error -> TODO()
-                    is Resource.Loading -> TODO()
-                    is Resource.Success -> TODO()
+            filterUseCase(status, categoryName, organizationName, days)
+                .distinctUntilChanged()
+                .cachedIn(viewModelScope)
+                .collect {
+                    _requestsState.value = it
                 }
-            }
         }
     }
-       private fun fetchFileterdRequests(
-            status: String,
-            categoryName: String,
-            organizationName: String,
-            days: String
-        ) {
-            viewModelScope.launch {
-                filterUseCase(status, categoryName, organizationName, days).collect { resource ->
-                    when (resource) {
-                        is Resource.Error -> TODO()
-                        is Resource.Loading -> TODO()
-                        is Resource.Success -> TODO()
-                    }
-                }
-            }
-        }
 
-        fun loadItems(status: String = "", categoryName: String = "", organizationName: String = "", days: String = "") {
-        viewModelScope.launch {
-            fetchFileterdRequests(status, categoryName, organizationName, days)
-        } }
-    }
+
+}

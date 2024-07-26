@@ -20,7 +20,7 @@ class FilterPagingSource(
     }
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, FilterData> {
-        val page = params.key ?: 1
+        val page = params.key ?: 0
         return try {
             val response = filterService.filter(
                 status,

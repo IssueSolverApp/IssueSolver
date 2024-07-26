@@ -10,7 +10,7 @@ import retrofit2.http.POST
 import retrofit2.http.Query
 
 interface FilterService {
-    @GET("category")
+    @GET("request/filter")
     suspend fun filter(@Query("status") status: String,
                             @Query("categoryName") categoryName: String,
                             @Query("organizationName") organizationName: String,

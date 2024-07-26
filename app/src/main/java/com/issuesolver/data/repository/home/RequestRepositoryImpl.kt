@@ -21,6 +21,16 @@ import javax.inject.Inject
 //
 //}
 
+//interface RequestInterface{
+//    suspend fun request(page:Int, size:Int): Response<FilterResponseModel>
+//}
+//class RequestRepositoryImpl @Inject constructor(private val requestService: RequestService):RequestInterface{
+//    override suspend fun request(page: Int, size: Int): Response<FilterResponseModel> {
+//        return requestService.filter( page,size)
+//    }
+//
+//}
+
 interface RequestInterface {
     fun request(): Pager<Int, FilterData>
 }
@@ -30,7 +40,7 @@ class RequestRepositoryImpl @Inject constructor(
 ) : RequestInterface {
     override fun request(): Pager<Int, FilterData> {
         return Pager(
-            config = PagingConfig(pageSize = 100),
+            config = PagingConfig(pageSize = 3),
             pagingSourceFactory = { HomePagingSource(requestService) }
         )
     }
