@@ -61,16 +61,20 @@ import com.issuesolver.common.AlertDialogExample
 import kotlin.math.roundToInt
 
 @Composable
-fun UserCard() {
+fun UserCard(fullName: String?,
+             status: String?,
+             description: String?,
+             categoryName:String?
+) {
     var expanded by remember { mutableStateOf(false) }
-    val fullText =
-        "Office ipsum you must be muted. Teeth recap latest didn't at. Innovation hill as wider assassin heads-up stronger give.Innovation hill as wider assassin heads-up stronger give.Innovation hill as wider assassin heads-up stronger give.Innovation hill as wider assassin heads-up stronger give.Innovation hill as wider assassin heads-up stronger give.Innovation hill as wider assassin heads-up stronger give."
+    val fullText =description
+        //"Office ipsum you must be muted. Teeth recap latest didn't at. Innovation hill as wider assassin heads-up stronger give.Innovation hill as wider assassin heads-up stronger give.Innovation hill as wider assassin heads-up stronger give.Innovation hill as wider assassin heads-up stronger give.Innovation hill as wider assassin heads-up stronger give.Innovation hill as wider assassin heads-up stronger give."
     val additionalText = "daha çox göstər..."
-    val approximateCharacterPerLine = 50 
+    val approximateCharacterPerLine = 50
     val maxLines = 3
 
     val maxTextLength = (approximateCharacterPerLine * maxLines) - additionalText.length
-    val shortText = if (fullText.length > maxTextLength) {
+    val shortText = if (fullText!!.length > maxTextLength) {
         fullText.take(maxTextLength) + "..."
     } else {
         fullText
@@ -134,13 +138,15 @@ fun UserCard() {
                             .padding(start = 20.dp)
                             .size(8.dp)
                     )
+                    status?.let {
                         Text(
-                            text = "Gözləmədə",
+                            text = it,
                             color = Color(0xFF0169FE),
                             fontSize = 13.sp,
                             fontWeight = FontWeight.W400,
                             modifier = Modifier.padding(start=8.dp,end=20.dp)
                         )
+                    }
                 }
 
 
@@ -157,8 +163,9 @@ fun UserCard() {
 
 //                    Spacer(modifier = Modifier.width(5.dp))
 
+            categoryName?.let {
                 Text(
-                    text = "Küçə heyvanlarına qarşı zorbalıq",
+                    text = it,
                     color = Color(0xFF8C8C8C),
                     fontSize = 13.sp,
                     fontWeight = FontWeight.W400,
@@ -166,7 +173,8 @@ fun UserCard() {
                         .clip(shape = RoundedCornerShape(50.dp))
                         .background(color = Color(0xFFF0F4F9))
                         .padding(top=8.dp, bottom = 8.dp, start = 11.dp, end = 11.dp)
-                    )
+                )
+            }
 
 
 
@@ -250,8 +258,8 @@ fun UserCard() {
 
 
 }
-@Preview(showBackground = true, backgroundColor = 0xF0F4F9)
-@Composable
-fun PreviewUserCard() {
-    UserCard()
-}
+//@Preview(showBackground = true, backgroundColor = 0xF0F4F9)
+//@Composable
+//fun PreviewUserCard() {
+//    UserCard()
+//}

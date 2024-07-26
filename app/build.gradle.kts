@@ -55,6 +55,11 @@ android {
 
 dependencies {
 
+    val paging_version = "3.3.1"
+
+    implementation("androidx.paging:paging-runtime:$paging_version")
+    implementation("androidx.paging:paging-compose:3.3.1")
+
     implementation("androidx.datastore:datastore-preferences:1.1.1")
 
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
