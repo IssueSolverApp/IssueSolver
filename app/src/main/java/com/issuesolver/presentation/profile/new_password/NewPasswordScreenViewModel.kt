@@ -65,17 +65,21 @@ class NewPasswordScreenViewModel @Inject constructor(
                     event.newPassword,
                     _uiState.value.confirmPassword
                 )
+                val result2 = confirmNewPasswordUseCase.execute(
+                    event.newPassword,
+                    _uiState.value.confirmPassword
+                )
                 _uiState.value = _uiState.value.copy(
                     newPassword = event.newPassword,
-                    newPasswordError = result.errorMessage,
+                    newPasswordError = if (result.successful) null else _uiState.value.newPasswordError,
                     isInputValid = result.successful &&
+                            result2.successful &&
                             confirmNewPasswordUseCase.execute(
                                 event.newPassword,
                                 _uiState.value.confirmPassword
                             ).successful &&
                             previousPasswordUseCase.execute(
                                 _uiState.value.currentPassword
-
                             ).successful
                 )
             }
@@ -85,10 +89,14 @@ class NewPasswordScreenViewModel @Inject constructor(
                     _uiState.value.newPassword,
                     event.confirmPassword
                 )
+                val result2 = newPasswordUseCase.execute(
+                    _uiState.value.newPassword,
+                    event.confirmPassword
+                )
                 _uiState.value = _uiState.value.copy(
                     confirmPassword = event.confirmPassword,
-                    confirmPasswordError = result.errorMessage,
-                    isInputValid = result.successful &&
+                    confirmPasswordError = if (result.successful) null else _uiState.value.confirmPasswordError,
+                    isInputValid = result.successful && result2.successful &&
                             newPasswordUseCase.execute(
                         _uiState.value.newPassword,
                         event.confirmPassword

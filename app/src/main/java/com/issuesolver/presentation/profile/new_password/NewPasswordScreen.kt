@@ -393,7 +393,9 @@ fun NewPasswordScreen(
 
                                     )
                             )
+
                         },
+                        enabled = uiState.isInputValid,
                         modifier = Modifier.fillMaxWidth()
                     )
                 }
