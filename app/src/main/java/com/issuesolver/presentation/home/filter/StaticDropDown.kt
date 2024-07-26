@@ -24,7 +24,7 @@ import com.issuesolver.R
 
 
 @Composable
-fun StaticDropDown(category: String, placeHolder: String, list: String) {
+fun StaticDropDown(category: String, placeHolder: String, list:List<String>) {
     var expanded by remember { mutableStateOf(false) }
     var selectedText by remember { mutableStateOf("") }
     var textFieldSize by remember { mutableStateOf(Size.Zero) }
@@ -76,12 +76,9 @@ fun StaticDropDown(category: String, placeHolder: String, list: String) {
             list.forEach { label ->
 
                 DropdownMenuItem(
-                    text = {
-                        Text(
-                        text = "label")
-                           },
+                    text = { Text(text = label) },
                     onClick = {
-                        selectedText = "label"
+                        selectedText = label
                         expanded = false
                     }
                 )

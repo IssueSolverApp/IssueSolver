@@ -48,10 +48,10 @@ fun FilterScreen(
     val listCategories = viewModel2.category.collectAsState(initial = emptyList()).value
     val listOrganizations = viewModel2.organization.collectAsState(initial = emptyList()).value
 
-    var status by remember { mutableStateOf(listStatus.first()) }
+    var status by remember { mutableStateOf(listStatus.firstOrNull()?.toString() ?: "") }
     var categoryName by remember { mutableStateOf(listCategories?.firstOrNull()?.toString() ?: "") }
     var organizationName by remember { mutableStateOf(listOrganizations?.firstOrNull()?.toString() ?: "") }
-    var days by remember { mutableStateOf(listDays.first()) }
+    var days by remember { mutableStateOf(listDays.firstOrNull()?.toString() ?: "")  }
 
 
     Box(
@@ -98,12 +98,12 @@ fun FilterScreen(
                 StaticDropDown(
                     category ="Status",
                     placeHolder ="Problemin statusu",
-                    list =status
+                    list = listStatus
                 )
                 StaticDropDown(
                     category ="Tarix",
                     placeHolder ="Problemin tarixi",
-                    list =days
+                    list = listDays
                 )
             }
         }
