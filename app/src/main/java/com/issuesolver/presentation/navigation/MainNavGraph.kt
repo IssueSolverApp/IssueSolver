@@ -36,7 +36,7 @@ fun MainNavGraph(navController: NavHostController, paddingValues: PaddingValues)
     ) {
         composable(route = BottomBarScreen.Home.route,
             ) {
-            HomeScreen()
+            HomeScreen(navController)
         }
         composable(route = BottomBarScreen.MyRequest.route) {
             TestUI()

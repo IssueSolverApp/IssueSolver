@@ -40,6 +40,7 @@ import com.issuesolver.presentation.navigation.DetailsScreen
 
 @Composable
 fun HomeScreen(
+    navController: NavController,
     viewModel: HomeViewModel = hiltViewModel(),
     ) {
     Box(
@@ -87,7 +88,7 @@ fun HomeScreen(
                             modifier = Modifier
                                 .padding(end = 14.dp)
                                 .clickable {
-//                                    navController.navigate(DetailsScreen.HomeFilterScreen.route)
+                                    navController.navigate(DetailsScreen.HomeFilterScreen.route)
                                 }
                         )
                         Image(
