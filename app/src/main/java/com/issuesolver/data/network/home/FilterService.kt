@@ -15,6 +15,8 @@ interface FilterService {
                             @Query("categoryName") categoryName: String,
                             @Query("organizationName") organizationName: String,
                             @Query("days") days: String,
+                       @Query("page") page: Int,
+                       @Query("size") size: Int
                              ): Response<FilterResponseModel>
 }
 

@@ -392,7 +392,7 @@ fun NewPasswordScreen(
                                     uiState.confirmPassword,
 
                                     )
-                            )
+                           )
 
                         },
                         enabled = uiState.isInputValid,

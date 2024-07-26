@@ -55,6 +55,7 @@ android {
 
 dependencies {
 
+    implementation(libs.androidx.paging.common.android)
     val paging_version = "3.3.1"
 
     implementation("androidx.paging:paging-runtime:$paging_version")
