@@ -30,23 +30,17 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.issuesolver.presentation.common.AuthButton
 import com.issuesolver.presentation.home.home.HomeViewModel
-import com.issuesolver.presentation.newrequest.DropDownCategory
-import com.issuesolver.presentation.newrequest.DropDownOrganization
-import com.issuesolver.presentation.newrequest.RequestScreenViewModel
-
 
 @Composable
 fun FilterScreen(
     navController: NavController,
-    viewModel2: RequestScreenViewModel = hiltViewModel(),
-    viewModel3: HomeViewModel = hiltViewModel(),
-
+    viewModel: HomeViewModel = hiltViewModel()
     ){
 
     val listStatus = listOf("Gözləmədə", "Baxılır", "Əsassızdır", "Həlledildi", "Arxivdədir")
     val listDays = listOf("Son bir gün", "Son bir həftə", "Son bir ay")
-    val listCategories = viewModel2.category.collectAsState(initial = emptyList()).value
-    val listOrganizations = viewModel2.organization.collectAsState(initial = emptyList()).value
+    val listCategories = viewModel.category.collectAsState(initial = emptyList()).value
+    val listOrganizations = viewModel.organization.collectAsState(initial = emptyList()).value
 
     var status by remember { mutableStateOf(listStatus.firstOrNull()?.toString() ?: "")  }
     var categoryName by remember { mutableStateOf(listCategories?.firstOrNull()?.toString() ?: "") }
@@ -84,26 +78,28 @@ fun FilterScreen(
             )
             Column(
             ) {
-                DropDownCategory(
+                CategoryDropDown(
                     category = "Kateqoriya",
                     placeHolder = "Problemin Kateqoriyası",
-                    viewModel = viewModel2
+                    viewModel = viewModel
                 )
-
-                DropDownOrganization(
+                OrganizationDropDown(
                     category = "Qurum",
                     placeHolder = "Problemin yönləndiriləcəyi qurum",
-                    viewModel = viewModel2
+                    viewModel = viewModel
                 )
-                StaticDropDown(
+                StaticDropDownStatus(
                     category ="Status",
                     placeHolder ="Problemin statusu",
-                    list = listStatus
+                    list = listStatus,
+                    viewModel=viewModel
+
                 )
-                StaticDropDown(
+                StaticDropDownDays(
                     category ="Tarix",
                     placeHolder ="Problemin tarixi",
-                    list = listDays
+                    list = listDays,
+                    viewModel=viewModel
                 )
             }
         }
@@ -113,8 +109,8 @@ fun FilterScreen(
             AuthButton(
                 text = "Axtarış et",
                 onClick = {
-                    val route = "${BottomBarScreen.Home.route}?status=$status&categoryName=$categoryName&organizationName=$organizationName&days=$days"
-                    navController.navigate(route)
+                    viewModel.applyFilters(status, categoryName, organizationName, days)
+                    navController.navigate(BottomBarScreen.Home.route)
                 },
                 modifier = Modifier.fillMaxWidth(),
             )

@@ -18,6 +18,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -42,21 +44,16 @@ import com.issuesolver.presentation.navigation.DetailsScreen
 fun HomeScreen(
     navController: NavController,
     viewModel: HomeViewModel = hiltViewModel(),
-    status: String? = null,
-    categoryName: String? = null,
-    organizationName: String? = null,
-    days: String? = null
     ) {
 
-    val safeStatus = status ?: ""
-    val safeCategoryName = categoryName ?: ""
-    val safeOrganizationName = organizationName ?: ""
-    val safeDays = days ?: ""
+    val selectedStatus by viewModel.selectedStatus.collectAsState()
+    val selectedCategory by viewModel.selectedCategory.collectAsState()
+    val selectedOrganization by viewModel.selectedOrganization.collectAsState()
+    val selectedDays by viewModel.selectedDays.collectAsState()
 
-    LaunchedEffect(safeStatus, safeCategoryName, safeOrganizationName, safeDays) {
-        viewModel.updateFilterParams(safeStatus, safeCategoryName, safeOrganizationName, safeDays)
+    LaunchedEffect(selectedStatus, selectedCategory, selectedOrganization, selectedDays) {
+        viewModel.fetchFilteredRequests(selectedStatus, selectedCategory, selectedOrganization, selectedDays)
     }
-
 
     Box(
         modifier = Modifier

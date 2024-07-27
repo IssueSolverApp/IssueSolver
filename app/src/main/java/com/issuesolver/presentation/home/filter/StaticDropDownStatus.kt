@@ -21,10 +21,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.unit.toSize
 import com.issuesolver.R
+import com.issuesolver.presentation.home.home.HomeViewModel
 
 
 @Composable
-fun StaticDropDown(category: String, placeHolder: String, list:List<String>) {
+fun StaticDropDownStatus(category: String, placeHolder: String, list:List<String>,viewModel: HomeViewModel) {
     var expanded by remember { mutableStateOf(false) }
     var selectedText by remember { mutableStateOf("") }
     var textFieldSize by remember { mutableStateOf(Size.Zero) }
@@ -80,6 +81,8 @@ fun StaticDropDown(category: String, placeHolder: String, list:List<String>) {
                     onClick = {
                         selectedText = label
                         expanded = false
+                        viewModel.selectStatus(label)
+
                     }
                 )
             }
