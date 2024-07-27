@@ -60,7 +60,7 @@ class FilterRepositoryImpl @Inject constructor(
 ) : FilterInterface {
     override fun filter(status: String, categoryName: String, organizationName: String, days: String): Pager<Int, FilterData> {
         return Pager(
-            config = PagingConfig(pageSize = 100),
+            config = PagingConfig(pageSize = 10),
             pagingSourceFactory = { FilterPagingSource(filterService, status, categoryName, organizationName, days) }
         )
     }

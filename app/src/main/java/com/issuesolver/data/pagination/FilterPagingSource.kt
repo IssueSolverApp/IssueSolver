@@ -34,7 +34,8 @@ class FilterPagingSource(
                 val data = response.body()?.data ?: emptyList()
                 LoadResult.Page(
                     data = data,
-                    prevKey = if (page == 1) null else page - 1,
+                    prevKey = null,
+//                    if (page == 1) null else page - 1,
                     nextKey = if (data.isEmpty()) null else page + 1
                 )
             } else {
