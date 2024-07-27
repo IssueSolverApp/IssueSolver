@@ -57,7 +57,6 @@ fun OrganizationDropDown(category: String, placeHolder: String, viewModel: HomeV
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 8.dp)
-                .height(56.dp)
                 .onGloballyPositioned { coordinates ->
                     textFieldSize = coordinates.size.toSize()
                 }

@@ -1,11 +1,15 @@
 package com.issuesolver.presentation.newrequest
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -38,14 +42,20 @@ fun RequestScreen(
     val isFormValid by viewModel.isFormValid.collectAsState()
 
 
-
 //    Scaffold { padding ->
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .statusBarsPadding()
+            .navigationBarsPadding()
+            .imePadding()
+            .padding(paddingValues)
+            .padding(top = 7.dp, start = 20.dp, end = 20.dp, bottom = 16.dp)
+    ) {
 
         Column(
             Modifier
                 .imePadding()
-                .padding(paddingValues)
-                .padding(bottom = 16.dp)
                 .verticalScroll(rememberScrollState())
         ) {
             Navigation(navController)
@@ -54,10 +64,7 @@ fun RequestScreen(
                 thickness = 0.5.dp,
                 color = Color(0xFF2981FF),
                 modifier = Modifier.padding(
-                    start = 20.dp,
-                    end = 20.dp,
-                    top = 20.dp,
-                    bottom = 16.dp
+                    bottom = 12.dp
                 )
             )
 
@@ -86,7 +93,7 @@ fun RequestScreen(
                     },
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = 16.dp, start = 20.dp, end = 20.dp),
+                        .padding(top = 16.dp),
                     shape = RoundedCornerShape(50.dp),
                     colors = ButtonDefaults.buttonColors(
                         containerColor = if (isFormValid) Color(0xFF2981FF) else Color(0xFF9AC2FB),
@@ -111,7 +118,7 @@ fun RequestScreen(
                     },
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = 16.dp, start = 20.dp, end = 20.dp, bottom = 10.dp),
+                        .padding(top = 16.dp, bottom = 10.dp),
                     shape = RoundedCornerShape(50.dp),
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Color(0xFFFFFFFF),
@@ -132,9 +139,9 @@ fun RequestScreen(
         }
 
 
-    //}
+        //}
+    }
 }
-
 
 //
 //@Composable

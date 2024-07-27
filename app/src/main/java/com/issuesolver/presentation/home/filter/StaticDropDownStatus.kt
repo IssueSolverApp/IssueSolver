@@ -48,7 +48,6 @@ fun StaticDropDownStatus(category: String, placeHolder: String, list:List<String
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 8.dp)
-                .height(56.dp)
                 .onGloballyPositioned { coordinates ->
                     textFieldSize = coordinates.size.toSize()
                 }

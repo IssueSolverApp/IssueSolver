@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -25,7 +26,7 @@ fun Navigation(navController: NavController){
 
     Column(modifier = Modifier
         .fillMaxWidth()
-        .padding(start = 20.dp, end = 20.dp, top = 16.dp, bottom = 20.dp)) {
+        .padding( bottom = 20.dp)) {
         Row(
             horizontalArrangement = Arrangement.SpaceBetween,
             modifier = Modifier.fillMaxWidth()
@@ -34,6 +35,7 @@ fun Navigation(navController: NavController){
             Text(
                 text = "Yeni Sorğu",
                 fontSize = 28.sp,
+                fontWeight = FontWeight.W600,
                 color = Color(0xFF2981FF)
             )
 
@@ -51,8 +53,4 @@ fun Navigation(navController: NavController){
             color = Color(0xFF9D9D9D),
             modifier = Modifier.padding(top = 8.dp))
     }
-
-
-
-
 }

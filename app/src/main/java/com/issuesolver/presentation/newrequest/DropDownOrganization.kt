@@ -42,7 +42,7 @@ fun DropDownOrganization(category: String, placeHolder: String, viewModel: Reque
 
     val categoryList by viewModel.organization.collectAsState()
 
-    Column(Modifier.padding(start = 20.dp, end = 20.dp, top = 16.dp)) {
+    Column(Modifier.padding(top = 16.dp)) {
         Text(
             text = placeHolder,
             fontSize = 15.sp,
@@ -56,7 +56,6 @@ fun DropDownOrganization(category: String, placeHolder: String, viewModel: Reque
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 8.dp)
-                .height(56.dp)
                 .onGloballyPositioned { coordinates ->
                     textFieldSize = coordinates.size.toSize()
                 }

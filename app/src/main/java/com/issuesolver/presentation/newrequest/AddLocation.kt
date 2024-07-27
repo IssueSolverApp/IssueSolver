@@ -111,14 +111,12 @@ fun AddLocation(viewModel: RequestScreenViewModel) {
             text = "Problemin baş verdiyi yer",
             fontSize = 15.sp,
             color = Color(0xFF000B1B),
-            modifier = Modifier.padding(start = 20.dp, end = 20.dp)
         )
 
         TextField(
             value = location,
             onValueChange = { newText ->
                 val textLength = newText.length
-                // Обновляем состояние только если текст в пределах максимальной длины
                 if (textLength <= maxLength) {
                     viewModel.updateLocation(newText)
                     isError = textLength < 5
@@ -126,7 +124,7 @@ fun AddLocation(viewModel: RequestScreenViewModel) {
             },
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 8.dp, start = 20.dp, end = 20.dp)
+                .padding(top = 8.dp)
                 .then(
                 if (isError) Modifier.border(
                     1.dp,
@@ -162,17 +160,17 @@ fun AddLocation(viewModel: RequestScreenViewModel) {
                 .padding(top = 8.dp)
         ) {
             Text(
-                text = "Min:5-Max:50 simvol",
-                fontSize = 15.sp,
-                color = Color(0xFF9D9D9D),
-                modifier = Modifier.padding(start = 20.dp, end = 20.dp)
-            )
-            Text(
                 text = "Sorğu necə paylaşılır?",
                 fontSize = 15.sp,
                 color = Color(0xFF2981FF),
-                modifier = Modifier.padding(start = 20.dp, end = 20.dp)
             )
+            Text(
+                text = "Min:5-Max:50 simvol",
+                fontSize = 15.sp,
+                color = Color(0xFF9D9D9D),
+                modifier = Modifier.clickable {  }
+            )
+
         }
     }
 }

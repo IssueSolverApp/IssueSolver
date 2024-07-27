@@ -34,7 +34,7 @@ fun DropDownCategory(category: String, placeHolder: String, viewModel: RequestSc
 
     val categoryList by viewModel.category.collectAsState()
 
-    Column(Modifier.padding(start = 20.dp, end = 20.dp, top = 16.dp)) {
+    Column(Modifier.padding(top = 16.dp)) {
         Text(
             text = placeHolder,
             fontSize = 15.sp,
@@ -48,7 +48,6 @@ fun DropDownCategory(category: String, placeHolder: String, viewModel: RequestSc
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 8.dp)
-                .height(56.dp)
                 .onGloballyPositioned { coordinates ->
                     textFieldSize = coordinates.size.toSize()
                 }

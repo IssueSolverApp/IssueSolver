@@ -112,7 +112,7 @@ fun HomeScreen(
             Divider(
                 thickness = 0.5.dp,
                 color = Color(0xFF2981FF),
-                modifier = Modifier.padding(end = 7.dp)
+                modifier = Modifier.padding(bottom = 18.dp)
             )
 
 
@@ -120,7 +120,9 @@ fun HomeScreen(
             val moviePagingItems: LazyPagingItems<FilterData> = viewModel.requestsState.collectAsLazyPagingItems()
 
 
-            LazyColumn {
+            LazyColumn(
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+            ) {
                 items(moviePagingItems.itemCount) { index ->
                     moviePagingItems[index]?.let { filterData ->
                         RequestsCard(
