@@ -22,7 +22,6 @@ class HomeViewModel @Inject constructor(
     val requestsState: StateFlow<PagingData<FilterData>> get() = _requestsState.asStateFlow()
 
     init {
-        fetchFilteredRequests()
         viewModelScope.launch {
             _filterParams
                 .collect { params ->

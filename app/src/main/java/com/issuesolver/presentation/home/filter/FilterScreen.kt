@@ -48,7 +48,7 @@ fun FilterScreen(
     val listCategories = viewModel2.category.collectAsState(initial = emptyList()).value
     val listOrganizations = viewModel2.organization.collectAsState(initial = emptyList()).value
 
-    var status by remember { mutableStateOf(listStatus.first()) }
+    var status by remember { mutableStateOf(listStatus.firstOrNull()?.toString() ?: "")  }
     var categoryName by remember { mutableStateOf(listCategories?.firstOrNull()?.toString() ?: "") }
     var organizationName by remember { mutableStateOf(listOrganizations?.firstOrNull()?.toString() ?: "") }
     var days by remember { mutableStateOf(listDays.firstOrNull()?.toString() ?: "")  }
@@ -115,8 +115,6 @@ fun FilterScreen(
                 onClick = {
                     val route = "${BottomBarScreen.Home.route}?status=$status&categoryName=$categoryName&organizationName=$organizationName&days=$days"
                     navController.navigate(route)
-
-
                 },
                 modifier = Modifier.fillMaxWidth(),
             )

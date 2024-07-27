@@ -36,21 +36,21 @@ fun MainNavGraph(navController: NavHostController, paddingValues: PaddingValues)
     ) {
         composable(
             route = "${BottomBarScreen.Home.route}?status={status}&categoryName={categoryName}&organizationName={organizationName}&days={days}",
-            arguments = listOf(
-                navArgument("status") { type = NavType.StringType; defaultValue = "" },
-                navArgument("categoryName") { type = NavType.StringType; defaultValue = "" },
-                navArgument("organizationName") { type = NavType.StringType; defaultValue = "" },
-                navArgument("days") { type = NavType.StringType; defaultValue = "" }
-            )
-        ) { backStackEntry ->
+        ) { navBackStack ->
+            val status = navBackStack.arguments?.getString("status") ?: ""
+            val categoryName = navBackStack.arguments?.getString("categoryName") ?: ""
+            val organizationName = navBackStack.arguments?.getString("organizationName") ?: ""
+            val days = navBackStack.arguments?.getString("days") ?: ""
+
             HomeScreen(
                 navController = navController,
-                status = backStackEntry.arguments?.getString("status") ?: "",
-                categoryName = backStackEntry.arguments?.getString("categoryName") ?: "",
-                organizationName = backStackEntry.arguments?.getString("organizationName") ?: "",
-                days = backStackEntry.arguments?.getString("days") ?: ""
+                status = status,
+                categoryName = categoryName,
+                organizationName = organizationName,
+                days = days
             )
         }
+
         composable(route = BottomBarScreen.MyRequest.route) {
             TestUI()
         }

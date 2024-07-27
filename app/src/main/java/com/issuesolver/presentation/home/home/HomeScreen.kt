@@ -53,9 +53,10 @@ fun HomeScreen(
     val safeOrganizationName = organizationName ?: ""
     val safeDays = days ?: ""
 
-    LaunchedEffect(safeStatus, safeCategoryName,safeOrganizationName,safeDays) {
+    LaunchedEffect(safeStatus, safeCategoryName, safeOrganizationName, safeDays) {
         viewModel.updateFilterParams(safeStatus, safeCategoryName, safeOrganizationName, safeDays)
     }
+
 
     Box(
         modifier = Modifier
