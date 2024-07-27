@@ -19,6 +19,7 @@ import com.issuesolver.presentation.newrequest.RequestInfoScreen
 import com.issuesolver.presentation.home.filter.FilterScreen
 import com.issuesolver.presentation.newrequest.RequestScreen
 import com.issuesolver.presentation.home.home.HomeScreen
+import com.issuesolver.presentation.myrequest.MyRequestScreen
 import com.issuesolver.presentation.profile.enter_password.DeleteAccountScreen
 import com.issuesolver.presentation.profile.my_account.MyAccountScreen
 import com.issuesolver.presentation.profile.new_password.NewPasswordScreen
@@ -36,7 +37,7 @@ fun MainNavGraph(navController: NavHostController, paddingValues: PaddingValues)
             TestUI()
         }
         composable(route = BottomBarScreen.MyRequest.route) {
-            TestUI()
+            MyRequestScreen()
         }
         composable(route = BottomBarScreen.NewRequest.route) {
             RequestScreen(navController, paddingValues)

@@ -29,7 +29,7 @@ class MyRequestRepositoryImpl @Inject constructor(
 ) : MyRequestRepositoryInterface {
     override fun getMyRequests(): Pager<Int, FilterData> {
         return Pager(
-            config = PagingConfig(pageSize = 100),
+            config = PagingConfig(pageSize = 3),
             pagingSourceFactory = { MyRequestPagingSource(myRequestService) }
         )
     }

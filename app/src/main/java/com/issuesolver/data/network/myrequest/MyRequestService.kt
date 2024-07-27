@@ -28,12 +28,12 @@ interface MyRequestService {
 
 
     @POST("api/v1/likes/post")
-    suspend fun like(@Query("requestId") requestId: Int): Response<LikeResponse>
+    suspend fun like(@Query("requestId") requestId: Int?): Response<LikeResponse>
     //api/v1/likes/post
     //requestId
 
     @DELETE("api/v1/likes")
-    suspend fun removeLike(@Query("requestId") requestId: Int): Response<LikeResponse>
+    suspend fun removeLike(@Query("requestId") requestId: Int?): Response<LikeResponse>
 
 
     @POST("api/v1/comments/post")
@@ -48,4 +48,11 @@ interface MyRequestService {
         @Query("page") page: Int,
         @Query("size") size: Int,
     ): Response<CommentResponse>
+
+
+    @GET("request/by-id/{requestId}")
+    suspend fun deleteRequestById(@Path("requestId") requestId: Int): Response<FilterResponseModel>
+
+
+
 }
