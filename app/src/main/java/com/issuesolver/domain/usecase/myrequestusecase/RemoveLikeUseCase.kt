@@ -12,7 +12,7 @@ import javax.inject.Inject
 
 class RemoveLikeUseCase@Inject constructor(private val myRequest: RemoveLikeRepositoryInterface)  {
 
-    suspend operator fun invoke( requestId: Int) = flow {
+    suspend operator fun invoke( requestId: Int?) = flow {
 
         emit(Resource.Loading())
         try {

@@ -8,11 +8,11 @@ import javax.inject.Inject
 
 
 interface LikeRepositoryInterface{
-    suspend fun like(requestId: Int): Response<LikeResponse>
+    suspend fun like(requestId: Int?): Response<LikeResponse>
 }
 
 class LikeRepositoryImpl @Inject constructor(private val myRequestService: MyRequestService):LikeRepositoryInterface {
-    override suspend fun like(requestId: Int): Response<LikeResponse> {
+    override suspend fun like(requestId: Int?): Response<LikeResponse> {
         return myRequestService.like(requestId)
     }
 }

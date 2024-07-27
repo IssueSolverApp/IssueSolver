@@ -22,8 +22,8 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             IssueSolverTheme {
-                //RootNavigationGraph()
-                MyRequestScreen()
+                RootNavigationGraph()
+//                MyRequestScreen()
             }
         }
     }

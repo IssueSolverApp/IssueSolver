@@ -10,7 +10,7 @@ import java.io.IOException
 import javax.inject.Inject
 
 class LikeUseCase@Inject constructor(private val myRequest: LikeRepositoryInterface) {
-    suspend operator fun invoke( requestId: Int) = flow {
+    suspend operator fun invoke( requestId: Int?) = flow {
 
         emit(Resource.Loading())
         try {

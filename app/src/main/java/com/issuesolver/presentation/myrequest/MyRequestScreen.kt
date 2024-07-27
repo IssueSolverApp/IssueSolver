@@ -22,49 +22,98 @@ fun MyRequestScreen(viewModel: MyRequestViewModel = hiltViewModel()) {
 
 
     LazyColumn {
-        items(moviePagingItems.itemCount) {  item ->
-            when (item) {
-                null -> {
-                    // Показать shimmer effect или индикатор загрузки для элемента
-                }
-                else -> {
-                    // Показать элемент списка
-                    UserCard(fullName = moviePagingItems.itemSnapshotList.items.firstOrNull()?.fullName,
-                        status = moviePagingItems.itemSnapshotList.items.firstOrNull()?.status,
-                        description = moviePagingItems.itemSnapshotList.items.firstOrNull()?.description,
-                        categoryName = moviePagingItems.itemSnapshotList.items.firstOrNull()?.category?.categoryName)
-                }
+        items(moviePagingItems.itemCount) { index ->
+            moviePagingItems[index]?.let { filterData ->
+                UserCard(
+                    fullName = filterData.fullName,
+                    status = filterData.status,
+                    description = filterData.description,
+                    categoryName = filterData.category.categoryName,
+                    viewModel = viewModel,
+                    requestId = filterData.requestId,
+                    likeSuccess=filterData.likeSuccess
+                )
             }
         }
 
+        // Include your loading and error handling as before
         moviePagingItems.apply {
             when {
                 loadState.refresh is LoadState.Loading -> {
                     item {
-                        // Показать shimmer effect или индикатор загрузки для всей страницы
+                        // Display loading state
                     }
                 }
                 loadState.append is LoadState.Loading -> {
                     item {
-                        // Показать индикатор загрузки при подгрузке данных
+                        // Display loading at the end of the list
                     }
                 }
                 loadState.refresh is LoadState.Error -> {
                     val e = moviePagingItems.loadState.refresh as LoadState.Error
                     item {
-                        // Показать сообщение об ошибке
                         Text(text = "Error: ${e.error.localizedMessage}")
                     }
                 }
                 loadState.append is LoadState.Error -> {
                     val e = moviePagingItems.loadState.append as LoadState.Error
                     item {
-                        // Показать сообщение об ошибке при подгрузке данных
                         Text(text = "Error: ${e.error.localizedMessage}")
                     }
                 }
             }
         }
     }
+
+
+
+
+
+//    LazyColumn {
+//        items(moviePagingItems.itemCount) {  item ->
+//            when (item) {
+//                null -> {
+//                    // Показать shimmer effect или индикатор загрузки для элемента
+//                }
+//                else -> {
+//                    // Показать элемент списка
+//                    UserCard(fullName = moviePagingItems.itemSnapshotList.items.firstOrNull()?.fullName,
+//                        status = moviePagingItems.itemSnapshotList.items.firstOrNull()?.status,
+//                        description = moviePagingItems.itemSnapshotList.items.firstOrNull()?.description,
+//                        categoryName = moviePagingItems.itemSnapshotList.items.firstOrNull()?.category?.categoryName,
+//                        viewModel= viewModel)
+//                }
+//            }
+//        }
+//
+//        moviePagingItems.apply {
+//            when {
+//                loadState.refresh is LoadState.Loading -> {
+//                    item {
+//                        // Показать shimmer effect или индикатор загрузки для всей страницы
+//                    }
+//                }
+//                loadState.append is LoadState.Loading -> {
+//                    item {
+//                        // Показать индикатор загрузки при подгрузке данных
+//                    }
+//                }
+//                loadState.refresh is LoadState.Error -> {
+//                    val e = moviePagingItems.loadState.refresh as LoadState.Error
+//                    item {
+//                        // Показать сообщение об ошибке
+//                        Text(text = "Error: ${e.error.localizedMessage}")
+//                    }
+//                }
+//                loadState.append is LoadState.Error -> {
+//                    val e = moviePagingItems.loadState.append as LoadState.Error
+//                    item {
+//                        // Показать сообщение об ошибке при подгрузке данных
+//                        Text(text = "Error: ${e.error.localizedMessage}")
+//                    }
+//                }
+//            }
+//        }
+//    }
 
 }

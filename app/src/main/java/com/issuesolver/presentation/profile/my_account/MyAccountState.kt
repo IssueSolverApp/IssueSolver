@@ -6,5 +6,4 @@ data class MyAccountState (
     val email: String? = null,
     val isLoading: Boolean = false,
     val isInputValid: Boolean = false,
-
     )
