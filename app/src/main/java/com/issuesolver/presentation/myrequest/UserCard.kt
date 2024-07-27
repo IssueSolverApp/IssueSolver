@@ -58,6 +58,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.issuesolver.R
 import com.issuesolver.common.AlertDialogExample
+import com.issuesolver.common.PopUp
+import com.issuesolver.domain.entity.networkModel.profile.DeleteAccountRequest
+import com.issuesolver.presentation.profile.enter_password.DeleteAccountEvent
 import kotlin.math.roundToInt
 
 @Composable
@@ -66,6 +69,26 @@ fun UserCard(fullName: String?,
              description: String?,
              categoryName:String?
 ) {
+    var showDialog by remember { mutableStateOf(false) }
+
+    if (showDialog) {
+
+//        AlertDialogExample(
+//            message = "Sorğular yalnız "Gözləmədə" statusunda silinə bilər.",
+//            onConfirmation = { showDialog = false }
+//        )
+
+        PopUp(
+            text = "Hesabınızı silmək istədiyinizə əminsiniz?",
+            button1 = "Bəli",
+            button2 = "Ləğv et",
+            onConfirmation = {
+                // deletee
+            },
+            onDismiss = { showDialog = false }
+        )
+    }
+
     var expanded by remember { mutableStateOf(false) }
     val fullText =description
     val fullName=fullName
@@ -242,7 +265,7 @@ fun UserCard(fullName: String?,
                     }
                 }
                 Row {
-                    IconButton(onClick = { /* Like action */ }) {
+                    IconButton(onClick = { showDialog = true }) {
                         Icon(
                             painter = painterResource(id = R.drawable.vector),
                             contentDescription = null,

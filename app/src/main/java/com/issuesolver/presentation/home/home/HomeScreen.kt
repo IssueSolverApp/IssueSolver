@@ -15,11 +15,14 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -36,9 +39,11 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.issuesolver.R
 import com.issuesolver.common.PlaceholderShimmerCard
+import com.issuesolver.common.SnackBar
 import com.issuesolver.domain.entity.networkModel.home.FilterData
 import com.issuesolver.presentation.myrequest.UserCard
 import com.issuesolver.presentation.navigation.DetailsScreen
+import kotlinx.coroutines.delay
 
 
 @Composable
@@ -54,6 +59,17 @@ fun HomeScreen(
 
     LaunchedEffect(selectedStatus, selectedCategory, selectedOrganization, selectedDays) {
         viewModel.fetchFilteredRequests(selectedStatus, selectedCategory, selectedOrganization, selectedDays)
+    }
+    val snackbarHostState = remember { SnackbarHostState() }
+    val success = navController.currentBackStackEntry
+        ?.savedStateHandle
+        ?.get<Boolean>("requestSuccess") ?: false
+
+    if (success) {
+        LaunchedEffect(key1 = success) {
+            snackbarHostState.showSnackbar("Request sent successfully!")
+            navController.currentBackStackEntry?.savedStateHandle?.remove<Boolean>("requestSuccess")
+        }
     }
 
     Box(
@@ -72,6 +88,11 @@ fun HomeScreen(
             Column(
                 Modifier.padding(bottom = 16.dp)
             ) {
+
+                SnackbarHost(hostState = snackbarHostState) { snackbarData ->
+                    SnackBar(snackbarData = "Sorğunuz uğurla paylaşıldı")
+                }
+
                 Row(
                     modifier = Modifier
                         .fillMaxWidth(),
@@ -115,12 +136,7 @@ fun HomeScreen(
                 color = Color(0xFF2981FF),
                 modifier = Modifier.padding(bottom = 18.dp)
             )
-
-
-
             val moviePagingItems: LazyPagingItems<FilterData> = viewModel.requestsState.collectAsLazyPagingItems()
-
-
             LazyColumn(
                 verticalArrangement = Arrangement.spacedBy(8.dp),
             ) {
@@ -134,7 +150,6 @@ fun HomeScreen(
                         )
                     }
                 }
-
                 moviePagingItems.apply {
                     when {
                         loadState.refresh is LoadState.Loading -> {

@@ -1,6 +1,8 @@
 package com.issuesolver.presentation.newrequest
 
+import BottomBarScreen
 import android.annotation.SuppressLint
+import android.widget.Toast
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -23,11 +25,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.issuesolver.common.StatusR
+import com.issuesolver.presentation.common.LoadingOverlay
 
 
 @SuppressLint("SuspiciousIndentation")
@@ -40,7 +45,33 @@ fun RequestScreen(
 
 
     val isFormValid by viewModel.isFormValid.collectAsState()
+    val deleteAccountState by viewModel.newRequestState.collectAsState()
+    when(deleteAccountState?.status) {
 
+        StatusR.LOADING -> {
+
+            LoadingOverlay()
+
+        }
+
+        StatusR.ERROR -> {
+            Toast.makeText(LocalView.current.context, "Kodun ishlemir X(", Toast.LENGTH_SHORT)
+                .show()
+
+
+        }
+
+        StatusR.SUCCESS -> {
+            navController.currentBackStackEntry?.savedStateHandle?.set("requestSuccess", true)
+            navController.navigate(BottomBarScreen.Home.route) {
+                popUpTo(BottomBarScreen.Home.route) { inclusive = true }
+            }//            viewModel.clearLoginState()
+        }
+
+        else -> {
+
+        }
+    }
 
 //    Scaffold { padding ->
     Box(

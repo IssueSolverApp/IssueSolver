@@ -59,12 +59,10 @@ fun PopUp(
                 ) {
                     TextButton(onClick = { onConfirmation( ) }) {
                         Text(
-                            text = button1,
+                            text = button2,
                             fontSize = 20.sp,
-                            fontWeight = W400,
-                            color = Color(0xFFEF5648),
-
-                            )
+                            color = Color(0xFF4D96FF),
+                        )
                     }
                     Image(
                         painter = painterResource(R.drawable.line),
@@ -75,11 +73,11 @@ fun PopUp(
                     )
                     TextButton(onClick = { onDismiss() }) {
                         Text(
-                            text = button2,
+                            text = button1,
                             fontSize = 20.sp,
-                            fontWeight = W400,
-                            color = Color.Black
-                        )
+                            color = Color(0xFFEF5648),
+
+                            )
                     }
                 }
             }

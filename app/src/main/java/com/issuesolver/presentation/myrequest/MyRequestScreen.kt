@@ -15,10 +15,16 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -33,8 +39,12 @@ import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.issuesolver.R
+import com.issuesolver.common.PlaceholderShimmerCard
+import com.issuesolver.common.SnackBar
 import com.issuesolver.domain.entity.networkModel.home.FilterData
+import com.issuesolver.presentation.home.home.RequestsCard
 import com.issuesolver.presentation.navigation.DetailsScreen
+import kotlinx.coroutines.delay
 
 @Composable
 fun MyRequestScreen(navController: NavController,
@@ -43,6 +53,8 @@ fun MyRequestScreen(navController: NavController,
     //val lazyPagingItems = viewModel.myRequests.collectAsLazyPagingItems()
 
     //val moviesState = viewModel.moviesState.collectAsLazyPagingItems()
+
+
     val moviePagingItems: LazyPagingItems<FilterData> = viewModel.moviesState.collectAsLazyPagingItems()
 
     Box(
@@ -58,6 +70,7 @@ fun MyRequestScreen(navController: NavController,
                 .fillMaxSize()
                 .imePadding()
         ) {
+
             Text(
                 "Mənim sorğularım",
                 style = MaterialTheme.typography.headlineMedium,
@@ -73,52 +86,39 @@ fun MyRequestScreen(navController: NavController,
                 modifier = Modifier.padding(bottom = 27.dp)
             )
 
-            LazyColumn (
+            LazyColumn(
                 verticalArrangement = Arrangement.spacedBy(8.dp),
-            ){
-                items(moviePagingItems.itemCount) { item ->
-                    when (item) {
-                        null -> {
-                            // Показать shimmer effect или индикатор загрузки для элемента
-                        }
-
-                        else -> {
-                            // Показать элемент списка
-                            UserCard(
-                                fullName = moviePagingItems.itemSnapshotList.items.firstOrNull()?.fullName,
-                                status = moviePagingItems.itemSnapshotList.items.firstOrNull()?.status,
-                                description = moviePagingItems.itemSnapshotList.items.firstOrNull()?.description,
-                                categoryName = moviePagingItems.itemSnapshotList.items.firstOrNull()?.category?.categoryName
-                            )
-                        }
+            ) {
+                items(moviePagingItems.itemCount) { index ->
+                    moviePagingItems[index]?.let { filterData ->
+                        UserCard(
+                            fullName = filterData.fullName,
+                            status = filterData.status,
+                            description = filterData.description,
+                            categoryName = filterData.category?.categoryName
+                        )
                     }
                 }
                 moviePagingItems.apply {
                     when {
                         loadState.refresh is LoadState.Loading -> {
-                            item {
-                                // Показать shimmer effect или индикатор загрузки для всей страницы
+                            items(5) {
+                                PlaceholderShimmerCard()
                             }
                         }
-
                         loadState.append is LoadState.Loading -> {
                             item {
-                                // Показать индикатор загрузки при подгрузке данных
                             }
                         }
-
                         loadState.refresh is LoadState.Error -> {
                             val e = moviePagingItems.loadState.refresh as LoadState.Error
                             item {
-                                // Показать сообщение об ошибке
                                 Text(text = "Error: ${e.error.localizedMessage}")
                             }
                         }
-
                         loadState.append is LoadState.Error -> {
                             val e = moviePagingItems.loadState.append as LoadState.Error
                             item {
-                                // Показать сообщение об ошибке при подгрузке данных
                                 Text(text = "Error: ${e.error.localizedMessage}")
                             }
                         }
