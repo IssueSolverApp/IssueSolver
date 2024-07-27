@@ -35,6 +35,7 @@ import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.issuesolver.R
+import com.issuesolver.common.PlaceholderShimmerCard
 import com.issuesolver.domain.entity.networkModel.home.FilterData
 import com.issuesolver.presentation.myrequest.UserCard
 import com.issuesolver.presentation.navigation.DetailsScreen
@@ -137,7 +138,8 @@ fun HomeScreen(
                 moviePagingItems.apply {
                     when {
                         loadState.refresh is LoadState.Loading -> {
-                            item {
+                            items(5) {
+                                PlaceholderShimmerCard()
                             }
                         }
                         loadState.append is LoadState.Loading -> {
