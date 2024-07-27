@@ -78,7 +78,7 @@ class MyRequestViewModel @Inject constructor(
 
 
     private var _removeLike: MutableStateFlow<State?> = MutableStateFlow(null)
-    val removeLike: StateFlow<State?> = _like.asStateFlow()
+    val removeLike: StateFlow<State?> = _removeLike.asStateFlow()
     fun removeLike(requestId: Int?) {
         viewModelScope.launch {
             removeLikeUseCase.invoke(requestId).collect { resource ->

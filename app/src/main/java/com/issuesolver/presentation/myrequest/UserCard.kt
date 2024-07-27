@@ -67,15 +67,35 @@ fun UserCard(fullName: String?,
     } else {
         fullText
     }
-        var favoriteState by remember { mutableStateOf(likeSuccess) }
-//    var isFavorite by remember { mutableStateOf(false) }
+        var favoriteState by rememberSaveable { mutableStateOf(likeSuccess) }
 
-        //val favoriteState by viewModel.favoriteState.collectAsState()
-    //var favoriteState by rememberSaveable { mutableStateOf(false) }
 
-    val loginState by viewModel.removeLike.collectAsState()
+    val removeLikeState by viewModel.removeLike.collectAsState()
 
-    when(loginState?.status){
+    when(removeLikeState?.status){
+
+        StatusR.LOADING -> {
+
+        }
+
+        StatusR.ERROR -> {
+
+            favoriteState = true
+
+        }
+        StatusR.SUCCESS -> {
+
+        }
+        else-> {
+
+        }
+
+
+    }
+
+    val like by viewModel.like.collectAsState()
+
+    when(like?.status){
 
         StatusR.LOADING -> {
 
@@ -83,6 +103,7 @@ fun UserCard(fullName: String?,
         }
 
         StatusR.ERROR -> {
+
             favoriteState = false
 
         }
@@ -247,7 +268,7 @@ fun UserCard(fullName: String?,
                 Row {
                     IconButton(onClick = {
                         //viewModel.toggleFavorite()
-                        if (likeSuccess!!) {
+                        if (favoriteState!!) {
 
                             viewModel.removeLike(requestId = requestId)
 
@@ -255,13 +276,8 @@ fun UserCard(fullName: String?,
 
                             viewModel.sendLike(requestId = requestId)
 
-
                         }
-                        //likeSuccess=!likeSuccess
-                        //likeSuccess=!likeSuccess
-                        //(!likeSuccess).also { it.also { likeSuccess } }
 
-                        // Переключение состояния
                         favoriteState = !favoriteState!!
                     }) {
                         val icon = if (favoriteState!!) R.drawable.heart_clicked else R.drawable.heart_default
