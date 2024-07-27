@@ -46,17 +46,17 @@ import com.issuesolver.presentation.navigation.AuthScreen
 import com.issuesolver.presentation.navigation.Graph
 
 @Composable
-fun UserCard(fullName: String?,
-             status: String?,
-             description: String?,
-             categoryName:String?,
-             viewModel: MyRequestViewModel,
-             requestId: Int?,
-             likeSuccess:Boolean?
+fun UserCard(
+    fullName: String?,
+    status: String?,
+    description: String?,
+    categoryName: String?,
+    viewModel: MyRequestViewModel,
+    requestId: Int?,
+    likeSuccess: Boolean?
 ) {
     var expanded by remember { mutableStateOf(false) }
-    val fullText =description
-        //"Office ipsum you must be muted. Teeth recap latest didn't at. Innovation hill as wider assassin heads-up stronger give.Innovation hill as wider assassin heads-up stronger give.Innovation hill as wider assassin heads-up stronger give.Innovation hill as wider assassin heads-up stronger give.Innovation hill as wider assassin heads-up stronger give.Innovation hill as wider assassin heads-up stronger give."
+    val fullText = description
     val additionalText = "daha çox göstər..."
     val approximateCharacterPerLine = 50
     val maxLines = 3
@@ -67,58 +67,8 @@ fun UserCard(fullName: String?,
     } else {
         fullText
     }
-        var favoriteState by rememberSaveable { mutableStateOf(likeSuccess) }
-
-
-    val removeLikeState by viewModel.removeLike.collectAsState()
-
-    when(removeLikeState?.status){
-
-        StatusR.LOADING -> {
-
-        }
-
-        StatusR.ERROR -> {
-
-            favoriteState = true
-
-        }
-        StatusR.SUCCESS -> {
-
-        }
-        else-> {
-
-        }
-
-
-    }
-
-    val like by viewModel.like.collectAsState()
-
-    when(like?.status){
-
-        StatusR.LOADING -> {
-
-
-        }
-
-        StatusR.ERROR -> {
-
-            favoriteState = false
-
-        }
-        StatusR.SUCCESS -> {
-
-        }
-        else-> {
-
-        }
-
-
-    }
-
-
-
+    val likeStates by viewModel.likeStates.collectAsState()
+    val favoriteState = likeStates[requestId] ?: likeSuccess ?: false
 
     Card(
         modifier = Modifier
@@ -128,46 +78,37 @@ fun UserCard(fullName: String?,
             containerColor = androidx.compose.ui.graphics.Color.White
         )
     ) {
-
         Column(modifier = Modifier
             .wrapContentHeight()
-            .padding(16.dp)) {
-
+            .padding(16.dp)
+        ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier
                     .fillMaxWidth()
-//                    .padding(start = 16.dp, top = 16.dp)
-
             ) {
-
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Image(
-                        painter = painterResource(id = R.drawable.et_profile_male), // Replace with your drawable resource
+                        painter = painterResource(id = R.drawable.et_profile_male),
                         contentDescription = "Profile Image",
-                        modifier = Modifier
-                            .size(32.dp)
-//                            .clip(CircleShape)
+                        modifier = Modifier.size(32.dp)
                     )
-//                    Spacer(modifier = Modifier.width(8.dp))
-
                     Text(
-                        text = fullName?: "",
+                        text = fullName ?: "",
                         style = MaterialTheme.typography.bodyMedium,
                         color = Color(0xFF2981FF),
-                        modifier = Modifier.padding(start=6.dp),
+                        modifier = Modifier.padding(start = 6.dp),
                         fontSize = 15.sp,
                         fontWeight = FontWeight.W400
-                        )
+                    )
                 }
 
                 Row(
                     modifier = Modifier
                         .clip(shape = CircleShape)
                         .background(color = Color(0xFFc8dcfc))
-                        .padding(8.dp)
-                        .clickable(onClick = { }),
+                        .padding(8.dp),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
@@ -184,24 +125,17 @@ fun UserCard(fullName: String?,
                             color = Color(0xFF0169FE),
                             fontSize = 13.sp,
                             fontWeight = FontWeight.W400,
-                            modifier = Modifier.padding(start=8.dp,end=20.dp)
+                            modifier = Modifier.padding(start = 8.dp, end = 20.dp)
                         )
                     }
                 }
-
-
             }
 
             Divider(
                 thickness = 0.5.dp,
                 color = Color(0xFFc3dcff),
-                modifier = Modifier.padding(
-                    top = 8.dp,
-                    bottom = 16.dp
-                )
+                modifier = Modifier.padding(top = 8.dp, bottom = 16.dp)
             )
-
-//                    Spacer(modifier = Modifier.width(5.dp))
 
             categoryName?.let {
                 Text(
@@ -212,12 +146,9 @@ fun UserCard(fullName: String?,
                     modifier = Modifier
                         .clip(shape = RoundedCornerShape(50.dp))
                         .background(color = Color(0xFFF0F4F9))
-                        .padding(top=8.dp, bottom = 8.dp, start = 11.dp, end = 11.dp)
+                        .padding(top = 8.dp, bottom = 8.dp, start = 11.dp, end = 11.dp)
                 )
             }
-
-
-
 
             Column(modifier = Modifier.padding(top = 8.dp)) {
                 val textToShow = if (expanded) fullText else shortText
@@ -250,68 +181,52 @@ fun UserCard(fullName: String?,
                 )
             }
 
-
-
             Divider(
                 thickness = 0.5.dp,
                 color = Color(0xFFc3dcff),
-                modifier = Modifier.padding(
-                    top = 16.dp,
-                )
+                modifier = Modifier.padding(top = 16.dp)
             )
 
             Row(
                 horizontalArrangement = Arrangement.SpaceBetween,
-                modifier = Modifier
-                    .fillMaxWidth()
+                modifier = Modifier.fillMaxWidth()
             ) {
                 Row {
                     IconButton(onClick = {
-                        //viewModel.toggleFavorite()
-                        if (favoriteState!!) {
-
+                        if (favoriteState) {
                             viewModel.removeLike(requestId = requestId)
-
                         } else {
-
                             viewModel.sendLike(requestId = requestId)
-
                         }
-
-                        favoriteState = !favoriteState!!
                     }) {
-                        val icon = if (favoriteState!!) R.drawable.heart_clicked else R.drawable.heart_default
+                        val icon = if (favoriteState) R.drawable.heart_clicked else R.drawable.heart_default
                         Icon(
-                            painter = painterResource(id = icon), // Replace with your icon
+                            painter = painterResource(id = icon),
                             contentDescription = null,
                             tint = androidx.compose.ui.graphics.Color.Red
                         )
                     }
 
-                    IconButton(onClick = { /* Like action */ }) {
+                    IconButton(onClick = { /* Comment action */ }) {
                         Icon(
-                            painter = painterResource(id = R.drawable.coment), // Replace with your icon
+                            painter = painterResource(id = R.drawable.coment),
                             contentDescription = null
                         )
                     }
                 }
                 Row {
-                    IconButton(onClick = { /* Like action */ }) {
+                    IconButton(onClick = {
+                        requestId?.let { viewModel.deleteRequestById(it) }
+                    }) {
                         Icon(
                             painter = painterResource(id = R.drawable.vector),
-                            contentDescription = null,
+                            contentDescription = null
                         )
                     }
                 }
             }
-
         }
-
     }
-    //}
-
-
-
 }
 //@Preview(showBackground = true, backgroundColor = 0xF0F4F9)
 //@Composable

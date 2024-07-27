@@ -50,8 +50,8 @@ interface MyRequestService {
     ): Response<CommentResponse>
 
 
-    @GET("request/by-id/{requestId}")
-    suspend fun deleteRequestById(@Path("requestId") requestId: Int): Response<FilterResponseModel>
+    @DELETE("request/{requestId}")
+    suspend fun deleteRequestById(@Path("requestId") requestId: Int): Response<LikeResponse>
 
 
 

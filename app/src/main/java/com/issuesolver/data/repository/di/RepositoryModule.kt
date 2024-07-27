@@ -20,6 +20,8 @@ import com.issuesolver.data.repository.login.ResetPasswordRepositoryImpl
 import com.issuesolver.data.repository.login.ResetPasswordRepositoryInterface
 import com.issuesolver.data.repository.login.SignInRepositoryImpl
 import com.issuesolver.data.repository.login.SignInRepositoryInterface
+import com.issuesolver.data.repository.myrequestrepo.DeleteRequestByIdImpl
+import com.issuesolver.data.repository.myrequestrepo.DeleteRequestByIdInterface
 import com.issuesolver.data.repository.myrequestrepo.GetCommentRepositoryImpl
 import com.issuesolver.data.repository.myrequestrepo.GetCommentRepositoryInterface
 import com.issuesolver.data.repository.myrequestrepo.GetRequestByIdRepositoryImpl
@@ -149,6 +151,9 @@ abstract class RepositoryModule {
     abstract fun provideGetCommentRepository(repository: GetCommentRepositoryImpl): GetCommentRepositoryInterface
 
 
+    @Binds
+    @Singleton
+    abstract fun provideDeleteRequestByIdRepository(repository: DeleteRequestByIdImpl): DeleteRequestByIdInterface
 
 
 }
