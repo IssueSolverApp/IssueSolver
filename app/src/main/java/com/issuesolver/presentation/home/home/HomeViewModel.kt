@@ -17,7 +17,6 @@ class HomeViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _filterParams = MutableStateFlow(FilterParams("", "", "", ""))
-    val filterParams: StateFlow<FilterParams> = _filterParams.asStateFlow()
 
     private val _requestsState: MutableStateFlow<PagingData<FilterData>> = MutableStateFlow(PagingData.empty())
     val requestsState: StateFlow<PagingData<FilterData>> get() = _requestsState.asStateFlow()

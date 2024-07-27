@@ -42,7 +42,21 @@ import com.issuesolver.presentation.navigation.DetailsScreen
 fun HomeScreen(
     navController: NavController,
     viewModel: HomeViewModel = hiltViewModel(),
+    status: String? = null,
+    categoryName: String? = null,
+    organizationName: String? = null,
+    days: String? = null
     ) {
+
+    val safeStatus = status ?: ""
+    val safeCategoryName = categoryName ?: ""
+    val safeOrganizationName = organizationName ?: ""
+    val safeDays = days ?: ""
+
+    LaunchedEffect(safeStatus, safeCategoryName,safeOrganizationName,safeDays) {
+        viewModel.updateFilterParams(safeStatus, safeCategoryName, safeOrganizationName, safeDays)
+    }
+
     Box(
         modifier = Modifier
             .fillMaxSize()

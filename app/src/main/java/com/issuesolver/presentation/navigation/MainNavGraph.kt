@@ -32,11 +32,24 @@ fun MainNavGraph(navController: NavHostController, paddingValues: PaddingValues)
     NavHost(
         navController = navController,
         route = Graph.MAIN_SCREEN_PAGE,
-        startDestination = BottomBarScreen.Home.route
+        startDestination = BottomBarScreen.Profile.route
     ) {
-        composable(route = BottomBarScreen.Home.route,
-            ) {
-            HomeScreen(navController)
+        composable(
+            route = "${BottomBarScreen.Home.route}?status={status}&categoryName={categoryName}&organizationName={organizationName}&days={days}",
+            arguments = listOf(
+                navArgument("status") { type = NavType.StringType; defaultValue = "" },
+                navArgument("categoryName") { type = NavType.StringType; defaultValue = "" },
+                navArgument("organizationName") { type = NavType.StringType; defaultValue = "" },
+                navArgument("days") { type = NavType.StringType; defaultValue = "" }
+            )
+        ) { backStackEntry ->
+            HomeScreen(
+                navController = navController,
+                status = backStackEntry.arguments?.getString("status") ?: "",
+                categoryName = backStackEntry.arguments?.getString("categoryName") ?: "",
+                organizationName = backStackEntry.arguments?.getString("organizationName") ?: "",
+                days = backStackEntry.arguments?.getString("days") ?: ""
+            )
         }
         composable(route = BottomBarScreen.MyRequest.route) {
             TestUI()
@@ -92,8 +105,6 @@ sealed class DetailsScreen(val route: String) {
     object ProfileMyAccount : DetailsScreen(route = "PROFILE_MY_ACCOUNT")
     object ProfileDeleteAccount : DetailsScreen(route = "PROFILE_DELETE_ACCOUNT")
     object RequestInfoScreen : DetailsScreen(route = "REQUEST_INFO_SCREEN")
-
-
     object HomeFilterScreen : DetailsScreen(route = "Home_Filter_Screen")
 
 

@@ -48,7 +48,7 @@ fun FilterScreen(
     val listCategories = viewModel2.category.collectAsState(initial = emptyList()).value
     val listOrganizations = viewModel2.organization.collectAsState(initial = emptyList()).value
 
-    var status by remember { mutableStateOf(listStatus.firstOrNull()?.toString() ?: "") }
+    var status by remember { mutableStateOf(listStatus.first()) }
     var categoryName by remember { mutableStateOf(listCategories?.firstOrNull()?.toString() ?: "") }
     var organizationName by remember { mutableStateOf(listOrganizations?.firstOrNull()?.toString() ?: "") }
     var days by remember { mutableStateOf(listDays.firstOrNull()?.toString() ?: "")  }
@@ -113,8 +113,9 @@ fun FilterScreen(
             AuthButton(
                 text = "Axtarış et",
                 onClick = {
-                    viewModel3.updateFilterParams(status, categoryName, organizationName, days)
-                    navController.navigate(BottomBarScreen.Home.route)
+                    val route = "${BottomBarScreen.Home.route}?status=$status&categoryName=$categoryName&organizationName=$organizationName&days=$days"
+                    navController.navigate(route)
+
 
                 },
                 modifier = Modifier.fillMaxWidth(),
