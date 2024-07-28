@@ -60,17 +60,17 @@ fun HomeScreen(
     LaunchedEffect(selectedStatus, selectedCategory, selectedOrganization, selectedDays) {
         viewModel.fetchFilteredRequests(selectedStatus, selectedCategory, selectedOrganization, selectedDays)
     }
-    val snackbarHostState = remember { SnackbarHostState() }
-    val success = navController.currentBackStackEntry
-        ?.savedStateHandle
-        ?.get<Boolean>("requestSuccess") ?: false
-
-    if (success) {
-        LaunchedEffect(key1 = success) {
-            snackbarHostState.showSnackbar("Request sent successfully!")
-            navController.currentBackStackEntry?.savedStateHandle?.remove<Boolean>("requestSuccess")
-        }
-    }
+//    val snackbarHostState = remember { SnackbarHostState() }
+//    val success = navController.currentBackStackEntry
+//        ?.savedStateHandle
+//        ?.get<Boolean>("requestSuccess") ?: false
+//
+//    if (success) {
+//        LaunchedEffect(key1 = success) {
+//            snackbarHostState.showSnackbar("Request sent successfully!")
+//            navController.currentBackStackEntry?.savedStateHandle?.remove<Boolean>("requestSuccess")
+//        }
+//    }
 
     Box(
         modifier = Modifier
@@ -89,9 +89,9 @@ fun HomeScreen(
                 Modifier.padding(bottom = 16.dp)
             ) {
 
-                SnackbarHost(hostState = snackbarHostState) { snackbarData ->
-                    SnackBar(snackbarData = "Sorğunuz uğurla paylaşıldı")
-                }
+//                SnackbarHost(hostState = snackbarHostState) { snackbarData ->
+//                    SnackBar(snackbarData = "Sorğunuz uğurla paylaşıldı")
+//                }
 
                 Row(
                     modifier = Modifier

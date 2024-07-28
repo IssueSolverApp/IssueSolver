@@ -5,6 +5,9 @@ import android.view.WindowManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.runtime.CompositionLocalProvider
+import com.issuesolver.common.LocalSnackbarManager
+import com.issuesolver.common.SnackbarManager
 import com.issuesolver.presentation.myrequest.UserCard
 import com.issuesolver.presentation.home.filter.FilterScreen
 import com.issuesolver.presentation.home.home.HomeScreen
@@ -22,9 +25,11 @@ class MainActivity : ComponentActivity() {
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
 
         setContent {
-            IssueSolverTheme {
-                RootNavigationGraph()
+            CompositionLocalProvider(LocalSnackbarManager provides SnackbarManager.instance) {
+                IssueSolverTheme {
+                    RootNavigationGraph()
 //                HomeScreen()
+                }
             }
         }
     }

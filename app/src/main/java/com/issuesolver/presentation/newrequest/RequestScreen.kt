@@ -30,17 +30,23 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
+import com.issuesolver.common.SnackbarManager
 import com.issuesolver.common.StatusR
 import com.issuesolver.presentation.common.LoadingOverlay
+import kotlinx.coroutines.launch
 
 
-@SuppressLint("SuspiciousIndentation")
+@SuppressLint("SuspiciousIndentation", "CoroutineCreationDuringComposition")
 @Composable
 fun RequestScreen(
     navController: NavController,
     paddingValues: PaddingValues,
-    viewModel: RequestScreenViewModel = hiltViewModel()
+    snackbarManager: SnackbarManager,
+    viewModel: RequestScreenViewModel = hiltViewModel(),
+
+
 ) {
 
 
@@ -62,10 +68,21 @@ fun RequestScreen(
         }
 
         StatusR.SUCCESS -> {
-            navController.currentBackStackEntry?.savedStateHandle?.set("requestSuccess", true)
-            navController.navigate(BottomBarScreen.Home.route) {
-                popUpTo(BottomBarScreen.Home.route) { inclusive = true }
-            }//            viewModel.clearLoginState()
+            viewModel.viewModelScope.launch {
+                snackbarManager.showMessage("Sorğunuz uğurla paylaşıldı")
+                viewModel.resetFields()
+
+//                        navController.navigate(BottomBarScreen.Home.route) {
+//                            popUpTo(BottomBarScreen.Home.route) { inclusive = true }
+//
+//                }
+            }
+
+
+//            navController.currentBackStackEntry?.savedStateHandle?.set("requestSuccess", true)
+//            navController.navigate(BottomBarScreen.Home.route) {
+//                popUpTo(BottomBarScreen.Home.route) { inclusive = true }
+//            }//            viewModel.clearLoginState()
         }
 
         else -> {
