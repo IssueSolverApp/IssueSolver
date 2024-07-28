@@ -46,6 +46,8 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.issuesolver.R
 import com.issuesolver.common.StatusR
+import com.issuesolver.presentation.home.home.StatusColors
+import com.issuesolver.presentation.home.home.statusColorMap
 
 
 @Composable
@@ -92,6 +94,9 @@ fun OpenedMyRequestScreen(navController:NavController,  id: String,   viewModel:
 
         }
     }
+
+    val statusColors = statusColorMap[ requestById?.status] ?: StatusColors(androidx.compose.ui.graphics.Color.Transparent,
+        androidx.compose.ui.graphics.Color.Transparent)
 
     Scaffold(
         modifier = Modifier
@@ -178,7 +183,7 @@ fun OpenedMyRequestScreen(navController:NavController,  id: String,   viewModel:
                                     Row(
                                         modifier = Modifier
                                             .clip(shape = CircleShape)
-                                            .background(color = Color(0xFFc8dcfc))
+                                            .background(color = statusColors.backgroundColor)
                                             .padding(8.dp)
                                             .clickable(onClick = { }),
                                         horizontalArrangement = Arrangement.SpaceBetween,
@@ -189,12 +194,14 @@ fun OpenedMyRequestScreen(navController:NavController,  id: String,   viewModel:
                                             contentDescription = "ellipse_9",
                                             modifier = Modifier
                                                 .padding(start = 20.dp)
-                                                .size(8.dp)
+                                                .size(8.dp),
+                                            colorFilter = androidx.compose.ui.graphics.ColorFilter.tint(statusColors.textColor)
+
                                         )
                                         requestById?.status?.let {
                                             Text(
                                                 text = it,
-                                                color = Color(0xFF0169FE),
+                                                color = statusColors.textColor,
                                                 fontSize = 13.sp,
                                                 fontWeight = FontWeight.W400,
                                                 modifier = Modifier.padding(start = 8.dp, end = 20.dp)

@@ -42,6 +42,8 @@ import androidx.compose.ui.unit.sp
 import com.issuesolver.R
 import com.issuesolver.common.StatusR
 import com.issuesolver.common.PopUp
+import com.issuesolver.presentation.home.home.StatusColors
+import com.issuesolver.presentation.home.home.statusColorMap
 
 
 @Composable
@@ -87,6 +89,10 @@ fun UserCard(
     } else {
         fullText
     }
+
+    val statusColors = statusColorMap[status] ?: StatusColors(androidx.compose.ui.graphics.Color.Transparent,
+        androidx.compose.ui.graphics.Color.Transparent)
+
     val likeStates by viewModel.likeStates.collectAsState()
     var favoriteState = likeStates[requestId] ?: likeSuccess
 //    if (favoriteState!=likeSuccess){
@@ -158,7 +164,7 @@ fun UserCard(
                 Row(
                     modifier = Modifier
                         .clip(shape = CircleShape)
-                        .background(color = Color(0xFFc8dcfc))
+                        .background(color = statusColors.backgroundColor)
                         .padding(8.dp)
                         .clickable(onClick = { }),
                     horizontalArrangement = Arrangement.SpaceBetween,
@@ -169,12 +175,14 @@ fun UserCard(
                         contentDescription = "ellipse_9",
                         modifier = Modifier
                             .padding(start = 20.dp)
-                            .size(8.dp)
+                            .size(8.dp),
+                        colorFilter = androidx.compose.ui.graphics.ColorFilter.tint(statusColors.textColor)
+
                     )
                     status?.let {
                         Text(
                             text = it,
-                            color = Color(0xFF0169FE),
+                            color = statusColors.textColor,
                             fontSize = 13.sp,
                             fontWeight = FontWeight.W400,
                             modifier = Modifier.padding(start=8.dp,end=20.dp)
