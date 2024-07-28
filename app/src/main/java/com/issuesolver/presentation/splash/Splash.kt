@@ -37,7 +37,7 @@ fun Splash(navController: NavHostController) {
                     stiffness = Spring.StiffnessVeryLow
                 )
             )
-            delay(1000)
+            delay(700)
             navController.navigate(AuthScreen.Login.route) {
                 popUpTo(navController.graph.startDestinationId)
                 launchSingleTop = true
