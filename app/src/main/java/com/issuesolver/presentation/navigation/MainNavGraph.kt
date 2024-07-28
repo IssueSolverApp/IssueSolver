@@ -33,7 +33,7 @@ import com.issuesolver.presentation.profile.profile.ProfileScreen
 
 
 @Composable
-fun MainNavGraph(navController: NavHostController, paddingValues: PaddingValues,    snackbarManager: SnackbarManager
+fun MainNavGraph(navController: NavHostController, paddingValues: PaddingValues, snackbarManager: SnackbarManager
 
 ) {
     NavHost(
@@ -44,10 +44,10 @@ fun MainNavGraph(navController: NavHostController, paddingValues: PaddingValues,
         composable(
             route=BottomBarScreen.Home.route
         ) {
-            HomeScreen(navController = navController)
+            HomeScreen(navController, paddingValues)
         }
         composable(route = BottomBarScreen.MyRequest.route) {
-            MyRequestScreen(navController)
+            MyRequestScreen(navController, paddingValues)
         }
         composable(route = BottomBarScreen.NewRequest.route) {
             RequestScreen(navController, paddingValues,snackbarManager)

@@ -1,5 +1,6 @@
 package com.issuesolver.presentation.navigation
 
+import android.window.SplashScreen
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
@@ -10,17 +11,18 @@ import com.issuesolver.presentation.login.daxil_ol_verification_code.Verificatio
 import com.issuesolver.presentation.login.password_change_page.PasswordChangePage
 import com.issuesolver.presentation.login.qeydiyyat_page.RegisterOtpCodePage
 import com.issuesolver.presentation.login.qeydiyyat_page.RegisterPage
+import com.issuesolver.presentation.splash.Splash
 
 
 fun NavGraphBuilder.authNavGraph(navController: NavHostController) {
     navigation(
         route = Graph.AUTHENTICATION,
-        startDestination = AuthScreen.Login.route
+        startDestination = AuthScreen.SPLASH.route
     ) {
 
-//        composable(route = AuthScreen.SPLASH.route) {
-//            SplashScreen(navController = navController)
-//        }
+        composable(route = AuthScreen.SPLASH.route) {
+            Splash(navController)
+        }
 
         composable(route = AuthScreen.Login.route) {
             LoginPage(navController = navController)
@@ -46,7 +48,7 @@ fun NavGraphBuilder.authNavGraph(navController: NavHostController) {
 }
 
 sealed class AuthScreen(val route: String) {
-    //    object SPLASH : AuthScreen(route = "SPLASH")
+        object SPLASH : AuthScreen(route = "SPLASH")
     object Login : AuthScreen(route = "LOGIN")
     object EmailVerification : AuthScreen(route = "EMAIL_VERIFICATION")
     object Otp : AuthScreen(route = "OTP")

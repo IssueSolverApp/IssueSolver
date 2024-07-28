@@ -94,8 +94,6 @@ fun RequestScreen(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .statusBarsPadding()
-            .navigationBarsPadding()
             .imePadding()
             .padding(paddingValues)
             .padding(top = 7.dp, start = 20.dp, end = 20.dp, bottom = 16.dp)

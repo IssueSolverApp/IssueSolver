@@ -3,6 +3,7 @@ package com.issuesolver.presentation.myrequest
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBarsPadding
@@ -31,7 +32,8 @@ import com.issuesolver.presentation.navigation.DetailsScreen
 
 @Composable
 fun MyRequestScreen(navController: NavController,
-    viewModel: MyRequestViewModel = hiltViewModel()
+                    paddingValues: PaddingValues,
+                    viewModel: MyRequestViewModel = hiltViewModel()
 ) {
 
 //    LaunchedEffect {
@@ -50,8 +52,7 @@ fun MyRequestScreen(navController: NavController,
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .statusBarsPadding()
-            .navigationBarsPadding()
+            .padding(paddingValues)
             .imePadding()
             .padding(top = 20.dp, start = 20.dp, end = 20.dp, bottom = 25.dp)
     ) {
@@ -125,9 +126,6 @@ fun MyRequestScreen(navController: NavController,
             }
         }
     }
-}
-
-
 
 
 
@@ -180,3 +178,4 @@ fun MyRequestScreen(navController: NavController,
 //        }
 //    }
 
+}

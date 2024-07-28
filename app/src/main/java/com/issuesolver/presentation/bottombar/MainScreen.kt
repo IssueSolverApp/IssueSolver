@@ -2,6 +2,7 @@ package com.issuesolver.presentation.bottombar
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -43,7 +44,10 @@ fun MainScreen(navController: NavHostController = rememberNavController(), snack
 
 
     Scaffold(
-        modifier = Modifier.navigationBarsPadding(),
+        modifier = Modifier
+            .statusBarsPadding()
+            .navigationBarsPadding(),
+
         snackbarHost = { TopSnackbarHost(snackbarHostState) },
 
         bottomBar = {

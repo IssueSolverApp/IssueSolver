@@ -34,7 +34,8 @@ fun DropDownCategory(category: String, placeHolder: String, viewModel: RequestSc
 
     val categoryList by viewModel.category.collectAsState()
 
-    Column(Modifier.padding(top = 16.dp)) {
+    Column(Modifier.padding(top = 16.dp)
+    ) {
         Text(
             text = placeHolder,
             fontSize = 15.sp,
@@ -52,6 +53,7 @@ fun DropDownCategory(category: String, placeHolder: String, viewModel: RequestSc
                     textFieldSize = coordinates.size.toSize()
                 }
                 .clip(MaterialTheme.shapes.medium),
+
             placeholder = { Text(category, color = Color(0xFF9D9D9D)) },
             trailingIcon = {
                 Icon(
