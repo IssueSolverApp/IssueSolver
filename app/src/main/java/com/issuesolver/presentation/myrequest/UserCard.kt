@@ -89,6 +89,7 @@ fun UserCard(
 
         StatusR.SUCCESS -> {
 
+
         }
 
         StatusR.ERROR -> {
@@ -231,17 +232,17 @@ fun UserCard(
 //                        if(favoriteState!=likeSuccess){
 //
 //                        }
-                        if (isLiked!!) {
+                        if (favoriteState!!) {
                             viewModel.removeLike(requestId = requestId)
 //                            favoriteState=false
                         } else {
                             viewModel.sendLike(requestId = requestId)
 //                            favoriteState=true
                         }
-                        isLiked = !isLiked!!
+                        favoriteState = !favoriteState!!
 
                     }) {
-                        val icon = if (isLiked!!) R.drawable.heart_clicked else R.drawable.heart_default
+                        val icon = if (favoriteState!!) R.drawable.heart_clicked else R.drawable.heart_default
                         Icon(
                             painter = painterResource(id = icon),
                             contentDescription = null,

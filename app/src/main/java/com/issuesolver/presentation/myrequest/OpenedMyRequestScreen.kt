@@ -66,6 +66,8 @@ fun OpenedMyRequestScreen(navController:NavController,  id: String,   viewModel:
             isLiked = it.likeSuccess!!
         }
     }
+    val likeStates by viewModel.likeStates.collectAsState()
+    var favoriteState = likeStates[id.toInt()] ?: requestById?.likeSuccess?: false
 
     val deleteRequest by viewModel.deleteRequest.collectAsState()
 
@@ -320,15 +322,15 @@ fun OpenedMyRequestScreen(navController:NavController,  id: String,   viewModel:
                                             horizontalAlignment = Alignment.CenterHorizontally
                                         ) {
                                             IconButton(onClick = {
-                                                if (isLiked!!) {
+                                                if (favoriteState!!) {
                                                     viewModel.removeLike(requestId = id.toInt())
                                                 } else {
                                                     viewModel.sendLike(requestId = id.toInt())
                                                 }
-                                                isLiked = !isLiked!!
+                                                favoriteState = !favoriteState!!
 
                                              }) {
-                                                val icon = if (isLiked!!) R.drawable.heart_clicked else R.drawable.heart_default
+                                                val icon = if (favoriteState!!) R.drawable.heart_clicked else R.drawable.heart_default
 
                                                 Icon(
                                                     painter = painterResource(id = icon),
