@@ -21,8 +21,8 @@ import com.issuesolver.R
 @Composable
 fun PopUp(
     text: String,
-    button1: String,
-    button2: String,
+    confirm: String,
+    dismiss: String,
     onConfirmation: () -> Unit,
     onDismiss: () -> Unit
 ) {
@@ -57,13 +57,14 @@ fun PopUp(
                     horizontalArrangement = Arrangement.SpaceEvenly,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    TextButton(onClick = { onConfirmation( ) }) {
+                    TextButton(onClick = { onDismiss() }) {
                         Text(
-                            text = button2,
+                            text = dismiss,
                             fontSize = 20.sp,
                             color = Color(0xFF4D96FF),
-                        )
+                            )
                     }
+
                     Image(
                         painter = painterResource(R.drawable.line),
                         contentDescription = "line",
@@ -71,14 +72,16 @@ fun PopUp(
                             .padding(horizontal = 8.dp)
                             .height(24.dp)
                     )
-                    TextButton(onClick = { onDismiss() }) {
+
+                    TextButton(onClick = { onConfirmation( ) }) {
                         Text(
-                            text = button1,
+                            text = confirm,
                             fontSize = 20.sp,
                             color = Color(0xFFEF5648),
 
                             )
                     }
+
                 }
             }
         }
@@ -91,8 +94,8 @@ fun PopUp(
 fun PreviewPopUp() {
     PopUp(
         text = "Hesabınızı silmək istədiyinizə əminsiniz?",
-        button1 = "Bəli",
-        button2 = "Xeyr",
+        confirm = "Bəli",
+        dismiss = "Xeyr",
         onConfirmation = {},
         onDismiss = {}
     )

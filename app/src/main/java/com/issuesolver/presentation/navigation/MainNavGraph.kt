@@ -78,6 +78,8 @@ fun MainNavGraph(navController: NavHostController, paddingValues: PaddingValues,
             id?.let { it1 ->  OpenedMyRequestScreen(navController, id= it1) }
         }
 
+        authNavGraph(navController = navController)
+
     }
 }
 

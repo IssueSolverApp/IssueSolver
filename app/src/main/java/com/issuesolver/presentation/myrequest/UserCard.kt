@@ -66,8 +66,8 @@ fun UserCard(
 
         PopUp(
             text = "Hesabınızı silmək istədiyinizə əminsiniz?",
-            button1 = "Bəli",
-            button2 = "Ləğv et",
+            confirm = "Bəli",
+            dismiss = "Ləğv et",
             onConfirmation = {
                 // deletee
             },

@@ -63,8 +63,8 @@ fun ProfileScreen(
     if (showDialog) {
         PopUp(
             text = "Hesabdan çıxış etməyə əminsiniz?",
-            button1 = "Çıxış",
-            button2 = "İmtina",
+            dismiss = "İmtina",
+            confirm = "Çıxış",
             onConfirmation = {
                 navController.navigate(Graph.AUTHENTICATION)
             },

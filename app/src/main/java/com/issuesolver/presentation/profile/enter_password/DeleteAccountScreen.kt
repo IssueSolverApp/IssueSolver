@@ -256,8 +256,8 @@ fun DeleteAccountScreen(
             if (showDialog) {
                 PopUp(
                     text = "Sorğunuzu silmək istədiyinizə əminsiniz?",
-                    button1 = "Bəli",
-                    button2 = "Xeyr",
+                    confirm = "Bəli",
+                    dismiss = "Xeyr",
                     onConfirmation = {
                         viewModel.handleEvent(DeleteAccountEvent.Submit)
                         viewModel.deleteAccount(
