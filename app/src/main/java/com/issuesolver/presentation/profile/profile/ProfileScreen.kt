@@ -85,7 +85,7 @@ fun ProfileScreen(
 //        content = { padding ->
             Box(
                 modifier = Modifier
-                    .padding(paddingValues) // Use the passed padding here
+                    .padding(paddingValues)
                     .fillMaxSize()
                     .imePadding()
                     .padding(top = 24.dp, start = 20.dp, end = 20.dp, bottom = 16.dp)

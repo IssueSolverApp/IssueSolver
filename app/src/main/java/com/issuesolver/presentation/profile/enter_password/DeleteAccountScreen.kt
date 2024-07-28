@@ -255,7 +255,7 @@ fun DeleteAccountScreen(
             }
             if (showDialog) {
                 PopUp(
-                    text = "Hesabınızı silmək istədiyinizə əminsiniz?",
+                    text = "Sorğunuzu silmək istədiyinizə əminsiniz?",
                     button1 = "Bəli",
                     button2 = "Xeyr",
                     onConfirmation = {

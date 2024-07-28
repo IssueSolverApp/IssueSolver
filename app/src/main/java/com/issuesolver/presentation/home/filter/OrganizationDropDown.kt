@@ -1,7 +1,11 @@
 package com.issuesolver.presentation.home.filter
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
@@ -9,7 +13,12 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Size
@@ -21,10 +30,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.unit.toSize
 import com.issuesolver.R
-
+import com.issuesolver.presentation.home.home.HomeViewModel
 
 @Composable
-fun StaticDropDown(category: String, placeHolder: String, list: String) {
+fun OrganizationDropDown(category: String, placeHolder: String, viewModel: HomeViewModel) {
     var expanded by remember { mutableStateOf(false) }
     var selectedText by remember { mutableStateOf("") }
     var textFieldSize by remember { mutableStateOf(Size.Zero) }
@@ -32,6 +41,7 @@ fun StaticDropDown(category: String, placeHolder: String, list: String) {
     val icon = if (expanded) R.drawable.vector__3_ else R.drawable.vector__2_
 
 
+    val categoryList by viewModel.organization.collectAsState()
 
     Column(Modifier.padding(start = 20.dp, end = 20.dp, top = 16.dp)) {
         Text(
@@ -47,7 +57,6 @@ fun StaticDropDown(category: String, placeHolder: String, list: String) {
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 8.dp)
-                .height(56.dp)
                 .onGloballyPositioned { coordinates ->
                     textFieldSize = coordinates.size.toSize()
                 }
@@ -57,9 +66,13 @@ fun StaticDropDown(category: String, placeHolder: String, list: String) {
                 Icon(
                     painter = painterResource(id = icon),
                     contentDescription = "contentDescription",
-                    modifier = Modifier.clickable { expanded = !expanded },
+                    modifier = Modifier.clickable {
+                        expanded = !expanded
+                        viewModel.getOrganization()
+                    },
                     tint = Color.Unspecified
-                )            },
+                )
+            },
             colors = TextFieldDefaults.colors(
                 focusedContainerColor = Color.White,
                 unfocusedContainerColor = Color.White,
@@ -73,16 +86,14 @@ fun StaticDropDown(category: String, placeHolder: String, list: String) {
             modifier = Modifier
                 .width(with(LocalDensity.current) { textFieldSize.width.toDp() })
         ) {
-            list.forEach { label ->
+            categoryList?.forEach { label ->
 
                 DropdownMenuItem(
-                    text = {
-                        Text(
-                        text = "label")
-                           },
+                    text = { Text(text = label.name) },
                     onClick = {
-                        selectedText = "label"
+                        selectedText = label.name
                         expanded = false
+                        viewModel.selectOrganization(label.name)
                     }
                 )
             }

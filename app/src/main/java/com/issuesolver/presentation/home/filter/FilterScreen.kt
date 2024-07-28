@@ -13,6 +13,8 @@ import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -28,26 +30,24 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.issuesolver.presentation.common.AuthButton
 import com.issuesolver.presentation.home.home.HomeViewModel
-import com.issuesolver.presentation.newrequest.DropDownCategory
-import com.issuesolver.presentation.newrequest.DropDownOrganization
-import com.issuesolver.presentation.newrequest.RequestScreenViewModel
 
 @Composable
 fun FilterScreen(
     navController: NavController,
-    viewModel: FilterViewModel = hiltViewModel(),
-    viewModel2: RequestScreenViewModel = hiltViewModel(),
-    viewModel3: HomeViewModel = hiltViewModel(),
-
+    viewModel: HomeViewModel = hiltViewModel()
     ){
-    val listStatus = listOf("Pending", "Reviewing", "Unfounded", "Resolved", "Archived")
-//    val listCategories = listOf()
-//    val listOrganizations = listOf()
-    val listDays = listOf("Last Day", "Last Week", "Last Month")
-    var status by remember { mutableStateOf(listStatus.first()) }
-//    var categoryName by remember { mutableStateOf(listCategories.first()) }
-//    var organizationName by remember { mutableStateOf(listOrganizations.first()) }
-    var days by remember { mutableStateOf(listDays.first()) }
+
+    val listStatus = listOf("Gözləmədə", "Baxılır", "Əsassızdır", "Həlledildi", "Arxivdədir")
+    val listDays = listOf("Son bir gün", "Son bir həftə", "Son bir ay")
+    val listCategories = viewModel.category.collectAsState(initial = emptyList()).value
+    val listOrganizations = viewModel.organization.collectAsState(initial = emptyList()).value
+
+    var status by remember { mutableStateOf(listStatus.firstOrNull()?.toString() ?: "")  }
+    var categoryName by remember { mutableStateOf(listCategories?.firstOrNull()?.toString() ?: "") }
+    var organizationName by remember { mutableStateOf(listOrganizations?.firstOrNull()?.toString() ?: "") }
+    var days by remember { mutableStateOf(listDays.firstOrNull()?.toString() ?: "")  }
+
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -78,26 +78,28 @@ fun FilterScreen(
             )
             Column(
             ) {
-                DropDownCategory(
+                CategoryDropDown(
                     category = "Kateqoriya",
                     placeHolder = "Problemin Kateqoriyası",
-                    viewModel = viewModel2
+                    viewModel = viewModel
                 )
-
-                DropDownOrganization(
+                OrganizationDropDown(
                     category = "Qurum",
                     placeHolder = "Problemin yönləndiriləcəyi qurum",
-                    viewModel = viewModel2
+                    viewModel = viewModel
                 )
-                StaticDropDown(
+                StaticDropDownStatus(
                     category ="Status",
                     placeHolder ="Problemin statusu",
-                    list =status
+                    list = listStatus,
+                    viewModel=viewModel
+
                 )
-                StaticDropDown(
+                StaticDropDownDays(
                     category ="Tarix",
                     placeHolder ="Problemin tarixi",
-                    list =days
+                    list = listDays,
+                    viewModel=viewModel
                 )
             }
         }
@@ -107,11 +109,11 @@ fun FilterScreen(
             AuthButton(
                 text = "Axtarış et",
                 onClick = {
-                    viewModel3.loadItems(status = "", categoryName = "", organizationName = "", days = "")
-                    navController.navigate(BottomBarScreen.Home.route)                          },
+                    viewModel.applyFilters(status, categoryName, organizationName, days)
+                    navController.navigate(BottomBarScreen.Home.route)
+                },
                 modifier = Modifier.fillMaxWidth(),
             )
         }
     }
 }
-

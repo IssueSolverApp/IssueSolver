@@ -43,7 +43,6 @@ fun Description(viewModel: RequestScreenViewModel) {
             text = "Ətraflı izah",
             fontSize = 15.sp,
             color = Color(0xFF000B1B),
-            modifier = Modifier.padding(start = 20.dp, end = 20.dp)
         )
 
         TextField(
@@ -58,7 +57,7 @@ fun Description(viewModel: RequestScreenViewModel) {
             modifier = Modifier
                 .height(140.dp)
                 .fillMaxWidth()
-                .padding(top = 8.dp, start = 20.dp, end = 20.dp)
+                .padding(top = 8.dp)
                 .clip(MaterialTheme.shapes.medium)
                 .then(
                 if (isError) Modifier.border(
@@ -91,7 +90,7 @@ fun Description(viewModel: RequestScreenViewModel) {
             text = "Min:10-Max:500 simvol",
             fontSize = 15.sp,
             color = Color(0xFF9D9D9D),
-            modifier = Modifier.padding(start = 20.dp, end = 20.dp, top = 8.dp)
+            modifier = Modifier.padding(top = 8.dp)
         )
     }
 }

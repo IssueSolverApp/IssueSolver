@@ -1,4 +1,4 @@
-package com.issuesolver.presentation.newrequest
+package com.issuesolver.presentation.home.filter
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -21,20 +21,18 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.unit.toSize
 import com.issuesolver.R
+import com.issuesolver.presentation.home.home.HomeViewModel
 
 
 @Composable
-fun DropDownCategory(category: String, placeHolder: String, viewModel: RequestScreenViewModel) {
+fun StaticDropDownDays(category: String, placeHolder: String, list:List<String>,viewModel: HomeViewModel) {
     var expanded by remember { mutableStateOf(false) }
     var selectedText by remember { mutableStateOf("") }
     var textFieldSize by remember { mutableStateOf(Size.Zero) }
 
     val icon = if (expanded) R.drawable.vector__3_ else R.drawable.vector__2_
 
-
-    val categoryList by viewModel.category.collectAsState()
-
-    Column(Modifier.padding(top = 16.dp)) {
+    Column(Modifier.padding(start = 20.dp, end = 20.dp, top = 16.dp)) {
         Text(
             text = placeHolder,
             fontSize = 15.sp,
@@ -57,13 +55,9 @@ fun DropDownCategory(category: String, placeHolder: String, viewModel: RequestSc
                 Icon(
                     painter = painterResource(id = icon),
                     contentDescription = "contentDescription",
-                    modifier = Modifier.clickable {
-                        expanded = !expanded
-                        viewModel.getCategory()
-                    },
+                    modifier = Modifier.clickable { expanded = !expanded },
                     tint = Color.Unspecified
-                )
-            },
+                )            },
             colors = TextFieldDefaults.colors(
                 focusedContainerColor = Color.White,
                 unfocusedContainerColor = Color.White,
@@ -77,14 +71,14 @@ fun DropDownCategory(category: String, placeHolder: String, viewModel: RequestSc
             modifier = Modifier
                 .width(with(LocalDensity.current) { textFieldSize.width.toDp() })
         ) {
-            categoryList?.forEach { label ->
+            list.forEach { label ->
 
                 DropdownMenuItem(
-                    text = { Text(text = label.categoryName) },
+                    text = { Text(text = label) },
                     onClick = {
-                        selectedText = label.categoryName
+                        selectedText = label
                         expanded = false
-                        viewModel.selectCategory(label.categoryName)
+                        viewModel.selectDays(label)
                     }
                 )
             }

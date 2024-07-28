@@ -1,4 +1,4 @@
-package com.issuesolver.presentation.newrequest
+package com.issuesolver.presentation.home.filter
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -21,10 +21,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.unit.toSize
 import com.issuesolver.R
+import com.issuesolver.presentation.home.home.HomeViewModel
 
 
 @Composable
-fun DropDownCategory(category: String, placeHolder: String, viewModel: RequestScreenViewModel) {
+fun CategoryDropDown (category: String, placeHolder: String, viewModel: HomeViewModel) {
     var expanded by remember { mutableStateOf(false) }
     var selectedText by remember { mutableStateOf("") }
     var textFieldSize by remember { mutableStateOf(Size.Zero) }
@@ -34,7 +35,7 @@ fun DropDownCategory(category: String, placeHolder: String, viewModel: RequestSc
 
     val categoryList by viewModel.category.collectAsState()
 
-    Column(Modifier.padding(top = 16.dp)) {
+    Column(Modifier.padding(start = 20.dp, end = 20.dp, top = 16.dp)) {
         Text(
             text = placeHolder,
             fontSize = 15.sp,

@@ -1,7 +1,12 @@
 package com.issuesolver.presentation.newrequest
 
+import BottomBarScreen
+import android.annotation.SuppressLint
+import android.widget.Toast
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBarsPadding
@@ -13,7 +18,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Divider
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -21,32 +25,85 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
+import com.issuesolver.common.SnackbarManager
+import com.issuesolver.common.StatusR
+import com.issuesolver.presentation.common.LoadingOverlay
+import kotlinx.coroutines.launch
 
 
+@SuppressLint("SuspiciousIndentation", "CoroutineCreationDuringComposition")
 @Composable
 fun RequestScreen(
     navController: NavController,
     paddingValues: PaddingValues,
-    viewModel: RequestScreenViewModel = hiltViewModel()
+    snackbarManager: SnackbarManager,
+    viewModel: RequestScreenViewModel = hiltViewModel(),
+
+
 ) {
 
 
     val isFormValid by viewModel.isFormValid.collectAsState()
+    val deleteAccountState by viewModel.newRequestState.collectAsState()
+    when(deleteAccountState?.status) {
+
+        StatusR.LOADING -> {
+
+            LoadingOverlay()
+
+        }
+
+        StatusR.ERROR -> {
+            Toast.makeText(LocalView.current.context, "Kodun ishlemir X(", Toast.LENGTH_SHORT)
+                .show()
 
 
+        }
+
+        StatusR.SUCCESS -> {
+            viewModel.viewModelScope.launch {
+                snackbarManager.showMessage("Sorğunuz uğurla paylaşıldı")
+                viewModel.resetFields()
+
+//                        navController.navigate(BottomBarScreen.Home.route) {
+//                            popUpTo(BottomBarScreen.Home.route) { inclusive = true }
+//
+//                }
+            }
+
+
+//            navController.currentBackStackEntry?.savedStateHandle?.set("requestSuccess", true)
+//            navController.navigate(BottomBarScreen.Home.route) {
+//                popUpTo(BottomBarScreen.Home.route) { inclusive = true }
+//            }//            viewModel.clearLoginState()
+        }
+
+        else -> {
+
+        }
+    }
 
 //    Scaffold { padding ->
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .statusBarsPadding()
+            .navigationBarsPadding()
+            .imePadding()
+            .padding(paddingValues)
+            .padding(top = 7.dp, start = 20.dp, end = 20.dp, bottom = 16.dp)
+    ) {
 
         Column(
             Modifier
                 .imePadding()
-                .padding(paddingValues)
-                .padding(bottom = 16.dp)
                 .verticalScroll(rememberScrollState())
         ) {
             Navigation(navController)
@@ -55,10 +112,7 @@ fun RequestScreen(
                 thickness = 0.5.dp,
                 color = Color(0xFF2981FF),
                 modifier = Modifier.padding(
-                    start = 20.dp,
-                    end = 20.dp,
-                    top = 20.dp,
-                    bottom = 16.dp
+                    bottom = 12.dp
                 )
             )
 
@@ -87,7 +141,7 @@ fun RequestScreen(
                     },
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = 16.dp, start = 20.dp, end = 20.dp),
+                        .padding(top = 16.dp),
                     shape = RoundedCornerShape(50.dp),
                     colors = ButtonDefaults.buttonColors(
                         containerColor = if (isFormValid) Color(0xFF2981FF) else Color(0xFF9AC2FB),
@@ -112,7 +166,7 @@ fun RequestScreen(
                     },
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = 16.dp, start = 20.dp, end = 20.dp, bottom = 10.dp),
+                        .padding(top = 16.dp, bottom = 10.dp),
                     shape = RoundedCornerShape(50.dp),
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Color(0xFFFFFFFF),
@@ -133,9 +187,9 @@ fun RequestScreen(
         }
 
 
-    //}
+        //}
+    }
 }
-
 
 //
 //@Composable

@@ -2,6 +2,7 @@ package com.issuesolver.presentation.navigation
 
 import BottomBarScreen
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.material3.SnackbarDuration
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.lifecycle.ViewModel
@@ -10,15 +11,19 @@ import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import androidx.navigation.navigation
 import com.issuesolver.TestUI
+import com.issuesolver.common.SnackbarManager
 import com.issuesolver.presentation.bottombar.ButtonData
 import com.issuesolver.presentation.newrequest.RequestInfoScreen
 import com.issuesolver.presentation.home.filter.FilterScreen
 import com.issuesolver.presentation.newrequest.RequestScreen
 import com.issuesolver.presentation.home.home.HomeScreen
+import com.issuesolver.presentation.myrequest.MyRequestScreen
 import com.issuesolver.presentation.myrequest.MyRequestScreen
 import com.issuesolver.presentation.myrequest.OpenedMyRequestScreen
 import com.issuesolver.presentation.profile.enter_password.DeleteAccountScreen
@@ -28,24 +33,27 @@ import com.issuesolver.presentation.profile.profile.ProfileScreen
 
 
 @Composable
-fun MainNavGraph(navController: NavHostController, paddingValues: PaddingValues) {
+fun MainNavGraph(navController: NavHostController, paddingValues: PaddingValues,    snackbarManager: SnackbarManager
+
+) {
     NavHost(
         navController = navController,
         route = Graph.MAIN_SCREEN_PAGE,
         startDestination = BottomBarScreen.Profile.route
     ) {
-        composable(route = BottomBarScreen.Home.route) {
-            TestUI()
+        composable(
+            route=BottomBarScreen.Home.route
+        ) {
+            HomeScreen(navController = navController)
         }
         composable(route = BottomBarScreen.MyRequest.route) {
             MyRequestScreen(navController)
         }
         composable(route = BottomBarScreen.NewRequest.route) {
-            RequestScreen(navController, paddingValues)
+            RequestScreen(navController, paddingValues,snackbarManager)
         }
         composable(route = BottomBarScreen.Profile.route) {
             ProfileScreen(navController, paddingValues)
-
         }
         composable(route = DetailsScreen.ProfileNewPassword.route) {
             NewPasswordScreen(navController)
@@ -57,9 +65,8 @@ fun MainNavGraph(navController: NavHostController, paddingValues: PaddingValues)
             DeleteAccountScreen(navController)
         }
         composable(route = DetailsScreen.HomeFilterScreen.route) {
-//            FilterScreen()
+            FilterScreen(navController)
         }
-
         composable(route = DetailsScreen.RequestInfoScreen.route) {
             RequestInfoScreen(navController)
         }
@@ -98,8 +105,6 @@ sealed class DetailsScreen(val route: String) {
     object ProfileMyAccount : DetailsScreen(route = "PROFILE_MY_ACCOUNT")
     object ProfileDeleteAccount : DetailsScreen(route = "PROFILE_DELETE_ACCOUNT")
     object RequestInfoScreen : DetailsScreen(route = "REQUEST_INFO_SCREEN")
-
-
     object HomeFilterScreen : DetailsScreen(route = "Home_Filter_Screen")
 
 

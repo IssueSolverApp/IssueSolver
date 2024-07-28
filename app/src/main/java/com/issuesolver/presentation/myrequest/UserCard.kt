@@ -48,6 +48,11 @@ import com.issuesolver.common.StatusR
 import com.issuesolver.presentation.common.LoadingOverlay
 import com.issuesolver.presentation.navigation.AuthScreen
 import com.issuesolver.presentation.navigation.Graph
+import com.issuesolver.common.AlertDialogExample
+import com.issuesolver.common.PopUp
+import com.issuesolver.domain.entity.networkModel.profile.DeleteAccountRequest
+import com.issuesolver.presentation.profile.enter_password.DeleteAccountEvent
+import kotlin.math.roundToInt
 
 @Composable
 fun UserCard(
@@ -60,6 +65,26 @@ fun UserCard(
     likeSuccess: Boolean?,
     onClick: () -> Unit
 ) {
+    var showDialog by remember { mutableStateOf(false) }
+
+    if (showDialog) {
+
+//        AlertDialogExample(
+//            message = "Sorğular yalnız "Gözləmədə" statusunda silinə bilər.",
+//            onConfirmation = { showDialog = false }
+//        )
+
+        PopUp(
+            text = "Hesabınızı silmək istədiyinizə əminsiniz?",
+            button1 = "Bəli",
+            button2 = "Ləğv et",
+            onConfirmation = {
+                // deletee
+            },
+            onDismiss = { showDialog = false }
+        )
+    }
+
     var expanded by remember { mutableStateOf(false) }
     val fullText = description
     val additionalText = "daha çox göstər..."
@@ -144,7 +169,8 @@ fun UserCard(
                     modifier = Modifier
                         .clip(shape = CircleShape)
                         .background(color = Color(0xFFc8dcfc))
-                        .padding(8.dp),
+                        .padding(8.dp)
+                        .clickable(onClick = { }),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
@@ -161,7 +187,7 @@ fun UserCard(
                             color = Color(0xFF0169FE),
                             fontSize = 13.sp,
                             fontWeight = FontWeight.W400,
-                            modifier = Modifier.padding(start = 8.dp, end = 20.dp)
+                            modifier = Modifier.padding(start=8.dp,end=20.dp)
                         )
                     }
                 }
@@ -170,7 +196,10 @@ fun UserCard(
             Divider(
                 thickness = 0.5.dp,
                 color = Color(0xFFc3dcff),
-                modifier = Modifier.padding(top = 8.dp, bottom = 16.dp)
+                modifier = Modifier.padding(
+                    top = 8.dp,
+                    bottom = 16.dp
+                )
             )
 
             categoryName?.let {
@@ -182,7 +211,7 @@ fun UserCard(
                     modifier = Modifier
                         .clip(shape = RoundedCornerShape(50.dp))
                         .background(color = Color(0xFFF0F4F9))
-                        .padding(top = 8.dp, bottom = 8.dp, start = 11.dp, end = 11.dp)
+                        .padding(top=8.dp, bottom = 8.dp, start = 11.dp, end = 11.dp)
                 )
             }
 
@@ -220,12 +249,15 @@ fun UserCard(
             Divider(
                 thickness = 0.5.dp,
                 color = Color(0xFFc3dcff),
-                modifier = Modifier.padding(top = 16.dp)
+                modifier = Modifier.padding(
+                    top = 16.dp,
+                )
             )
 
             Row(
                 horizontalArrangement = Arrangement.SpaceBetween,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
             ) {
                 Row {
                     IconButton(onClick = {
@@ -261,6 +293,7 @@ fun UserCard(
                     IconButton(onClick = {
                         requestId?.let { viewModel.deleteRequestById(it) }
                     }) {
+                    IconButton(onClick = { showDialog = true }) {
                         Icon(
                             painter = painterResource(id = R.drawable.vector),
                             contentDescription = null
