@@ -4,10 +4,8 @@
     <style name="Theme.IssueSolver" parent="android:Theme.Material.Light.NoActionBar">
         <item name="android:windowSplashScreenAnimatedIcon">@drawable/transparent_picture_png</item>
         <item name="android:windowSplashScreenBackground">@android:color/transparent</item>
-        <item name="android:windowSplashScreenIconBackgroundColor">@android:color/transparent</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:navigationBarColor">@android:color/transparent</item>
-        <item name="android:windowSplashScreenAnimationDuration">1</item>
 
     </style>
 </resources>
