@@ -2,8 +2,8 @@ package com.issuesolver.data.repository.di
 
 
 
-import com.issuesolver.data.repository.home.FilterInterface
-import com.issuesolver.data.repository.home.FilterRepositoryImpl
+import com.issuesolver.data.network.home.FilterService
+import com.issuesolver.data.repository.home.FilterRepository
 import com.issuesolver.data.repository.home.RequestInterface
 import com.issuesolver.data.repository.home.RequestRepositoryImpl
 import com.issuesolver.data.repository.login.ConfirmOtpRepositoryImpl
@@ -50,6 +50,7 @@ import com.issuesolver.data.repository.profile.UpdatePasswordRepositoryImpl
 import com.issuesolver.data.repository.profile.UpdatePasswordRepositoryInterFace
 import dagger.Binds
 import dagger.Module
+import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
@@ -120,9 +121,9 @@ abstract class RepositoryModule {
     @Singleton
     abstract fun provideRequestRepository(repository: RequestRepositoryImpl): RequestInterface
 
-    @Binds
-    @Singleton
-    abstract fun provideFilterRepository(repository: FilterRepositoryImpl): FilterInterface
+//    @Binds
+//    @Singleton
+//    abstract fun provideFilterRepository(repository: FilterRepositoryImpl): FilterInterface
 
     @Binds
     @Singleton
@@ -154,6 +155,7 @@ abstract class RepositoryModule {
     @Binds
     @Singleton
     abstract fun provideDeleteRequestByIdRepository(repository: DeleteRequestByIdImpl): DeleteRequestByIdInterface
+
 
 
 }

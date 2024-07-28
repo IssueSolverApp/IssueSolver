@@ -21,11 +21,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.unit.toSize
 import com.issuesolver.R
-import com.issuesolver.presentation.home.home.HomeViewModel
+import com.issuesolver.presentation.home.home.FilterViewModel
 
 
 @Composable
-fun CategoryDropDown (category: String, placeHolder: String, viewModel: HomeViewModel) {
+fun CategoryDropDown (category: String, placeHolder: String, viewModel: FilterViewModel, selectedCategory: (String) -> Unit) {
     var expanded by remember { mutableStateOf(false) }
     var selectedText by remember { mutableStateOf("") }
     var textFieldSize by remember { mutableStateOf(Size.Zero) }
@@ -85,7 +85,9 @@ fun CategoryDropDown (category: String, placeHolder: String, viewModel: HomeView
                     onClick = {
                         selectedText = label.categoryName
                         expanded = false
-                        viewModel.selectCategory(label.categoryName)
+                        //viewModel.selectCategory(label.categoryName)
+                        selectedCategory(label.categoryName)
+
                     }
                 )
             }

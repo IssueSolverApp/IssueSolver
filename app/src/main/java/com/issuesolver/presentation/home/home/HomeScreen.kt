@@ -23,10 +23,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -50,18 +53,61 @@ import kotlinx.coroutines.delay
 @Composable
 fun HomeScreen(
     navController: NavController,
+    viewModel: FilterViewModel = hiltViewModel(),
+    testViewModel: TestViewModel = hiltViewModel(),
+//    status:String,
+//    category:String,
+//    organization:String,
+//    days:String
     paddingValues: PaddingValues,
     viewModel: HomeViewModel = hiltViewModel(),
     ) {
-
-    val selectedStatus by viewModel.selectedStatus.collectAsState()
-    val selectedCategory by viewModel.selectedCategory.collectAsState()
-    val selectedOrganization by viewModel.selectedOrganization.collectAsState()
-    val selectedDays by viewModel.selectedDays.collectAsState()
-
-    LaunchedEffect(selectedStatus, selectedCategory, selectedOrganization, selectedDays) {
-        viewModel.fetchFilteredRequests(selectedStatus, selectedCategory, selectedOrganization, selectedDays)
+    val context = LocalContext.current
+    val filterPreferences = remember {
+        getFilterPreferences(context)
     }
+
+    val categoryName = filterPreferences["categoryName"] ?: ""
+    val organizationName = filterPreferences["organizationName"] ?: ""
+    val days = filterPreferences["days"] ?: ""
+    val status = filterPreferences["status"] ?: ""
+
+//    val status = navController.currentBackStackEntry?.arguments?.getString("status") ?: ""
+//    val category = navController.currentBackStackEntry?.arguments?.getString("category") ?: ""
+//    val organization = navController.currentBackStackEntry?.arguments?.getString("organization") ?: ""
+//    val days = navController.currentBackStackEntry?.arguments?.getString("days") ?: ""
+
+
+
+    LaunchedEffect(status, categoryName, organizationName, days) {
+        testViewModel.filter(status,categoryName, organizationName, days)
+
+        clearFilterPreferences(context)
+    }
+
+
+
+    val requestResults = testViewModel.filterResults.collectAsLazyPagingItems()
+    //val filterResults = testViewModel.filterResults.collectAsLazyPagingItems()
+    //testViewModel.filter("", "", "", "")
+//---------------------------------------------
+    val selectedStatus by testViewModel.selectedStatus.collectAsState()
+    //var status by remember { mutableStateOf(selectedStatus )  }
+
+    //println(filterResults)
+    //val requestResults = testViewModel.requestResults.collectAsLazyPagingItems()
+
+    testViewModel.request()
+
+//
+//        val selectedStatus by viewModel.selectedStatus.collectAsState()
+//        val selectedCategory by viewModel.selectedCategory.collectAsState()
+//        val selectedOrganization by viewModel.selectedOrganization.collectAsState()
+//        val selectedDays by viewModel.selectedDays.collectAsState()
+
+//        LaunchedEffect(Unit) {
+//            viewModel.fetchFilteredRequests2()
+//        }
 //    val snackbarHostState = remember { SnackbarHostState() }
 //    val success = navController.currentBackStackEntry
 //        ?.savedStateHandle
@@ -73,6 +119,15 @@ fun HomeScreen(
 //            navController.currentBackStackEntry?.savedStateHandle?.remove<Boolean>("requestSuccess")
 //        }
 //    }
+    //val selectedStatus by testViewModel.selectedStatus.collectAsState()
+    //val moviePagingItems: LazyPagingItems<FilterData> = viewModel.requestsState.collectAsLazyPagingItems()
+    val uiState by testViewModel.uiState.collectAsState()
+
+//    LaunchedEffect(Unit) {
+//        testViewModel.setFilterParams(TestViewModel.FilterParams()) //Baxılır
+//
+//    }
+
 
     Box(
         modifier = Modifier
@@ -137,12 +192,11 @@ fun HomeScreen(
                 color = Color(0xFF2981FF),
                 modifier = Modifier.padding(bottom = 18.dp)
             )
-            val moviePagingItems: LazyPagingItems<FilterData> = viewModel.requestsState.collectAsLazyPagingItems()
             LazyColumn(
                 verticalArrangement = Arrangement.spacedBy(8.dp),
             ) {
-                items(moviePagingItems.itemCount) { index ->
-                    moviePagingItems[index]?.let { filterData ->
+                items(requestResults.itemCount) { index ->
+                    requestResults[index]?.let { filterData ->
                         RequestsCard(
                             fullName = filterData.fullName,
                             status = filterData.status,
@@ -151,7 +205,7 @@ fun HomeScreen(
                         )
                     }
                 }
-                moviePagingItems.apply {
+                requestResults.apply {
                     when {
                         loadState.refresh is LoadState.Loading -> {
                             items(5) {
@@ -163,13 +217,13 @@ fun HomeScreen(
                             }
                         }
                         loadState.refresh is LoadState.Error -> {
-                            val e = moviePagingItems.loadState.refresh as LoadState.Error
+                            val e = requestResults.loadState.refresh as LoadState.Error
                             item {
                                 Text(text = "Error: ${e.error.localizedMessage}")
                             }
                         }
                         loadState.append is LoadState.Error -> {
-                            val e = moviePagingItems.loadState.append as LoadState.Error
+                            val e = requestResults.loadState.append as LoadState.Error
                             item {
                                 Text(text = "Error: ${e.error.localizedMessage}")
                             }

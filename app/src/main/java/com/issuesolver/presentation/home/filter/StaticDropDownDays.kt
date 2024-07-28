@@ -21,11 +21,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.unit.toSize
 import com.issuesolver.R
-import com.issuesolver.presentation.home.home.HomeViewModel
+import com.issuesolver.presentation.home.home.FilterViewModel
 
 
 @Composable
-fun StaticDropDownDays(category: String, placeHolder: String, list:List<String>,viewModel: HomeViewModel) {
+fun StaticDropDownDays(category: String, placeHolder: String, list:List<String>,viewModel: FilterViewModel, selectedCategory: (String) -> Unit) {
     var expanded by remember { mutableStateOf(false) }
     var selectedText by remember { mutableStateOf("") }
     var textFieldSize by remember { mutableStateOf(Size.Zero) }
@@ -78,7 +78,8 @@ fun StaticDropDownDays(category: String, placeHolder: String, list:List<String>,
                     onClick = {
                         selectedText = label
                         expanded = false
-                        viewModel.selectDays(label)
+                       // viewModel.selectDays(label)
+                        selectedCategory(label)
                     }
                 )
             }

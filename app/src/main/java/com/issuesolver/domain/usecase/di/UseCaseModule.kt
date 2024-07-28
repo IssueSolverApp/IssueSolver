@@ -2,8 +2,10 @@ package com.issuesolver.domain.usecase.di
 
 import android.app.Application
 import android.content.SharedPreferences
-import com.issuesolver.data.repository.home.FilterInterface
+import com.issuesolver.data.network.home.FilterService
+import com.issuesolver.data.repository.home.FilterRepository
 import com.issuesolver.data.repository.home.RequestInterface
+import com.issuesolver.data.repository.home.TestFilterRepository
 import com.issuesolver.data.repository.login.ConfirmOtpRepositoryInterface
 import com.issuesolver.data.repository.login.OtpTrustRepositoryInterface
 
@@ -28,8 +30,9 @@ import com.issuesolver.data.repository.profile.UpdatePasswordRepositoryInterFace
 import com.issuesolver.domain.usecase.login.backend.OtpTrustUseCase
 import com.issuesolver.domain.usecase.login.backend.RegisterUseCase
 import com.issuesolver.data.repository.newrequestrepo.NewRequestRepositoryInterface
-import com.issuesolver.domain.usecase.home.backend.FilterUseCase
+import com.issuesolver.domain.usecase.home.backend.GetFilteredResultsUseCase
 import com.issuesolver.domain.usecase.home.backend.RequestUseCase
+import com.issuesolver.domain.usecase.home.backend.TestUseCase
 import com.issuesolver.domain.usecase.login.backend.ConfirmOtpUseCase
 import com.issuesolver.domain.usecase.login.backend.ResendOtpUseCase
 import com.issuesolver.domain.usecase.login.backend.ResetPasswordUseCase
@@ -195,10 +198,10 @@ class UseCaseModule {
     fun provideRequestInterface(requestInterface: RequestInterface) =
         RequestUseCase(requestInterface)
 
-    @Provides
-    @Singleton
-    fun provideFilterUseCase(filterInterface: FilterInterface) =
-        FilterUseCase(filterInterface)
+//    @Provides
+//    @Singleton
+//    fun provideFilterUseCase(filterInterface: FilterInterface) =
+//        FilterUseCase(filterInterface)
 
     @Provides
     @Singleton
@@ -235,4 +238,33 @@ class UseCaseModule {
     fun provideDeleteRequestByIdUseCase(myRequest: DeleteRequestByIdInterface) =
         DeleteRequestByIdUseCase(myRequest)
 
+
+    @Provides
+    @Singleton
+    fun provideGetFilteredResultsUseCase(filterRepository: FilterRepository): GetFilteredResultsUseCase {
+        return GetFilteredResultsUseCase(filterRepository)
+    }
+
+
+
+
+    //-----------------------------------------------
+    @Provides
+    fun provideFilterRepository(filterService: FilterService): FilterRepository {
+        return FilterRepository(filterService)
+    }
+
+
+    //---------------------
+    @Provides
+    fun provideTestRepositoryRepository(filterService: FilterService): TestFilterRepository {
+        return TestFilterRepository(filterService)
+    }
+
+
+    @Provides
+    @Singleton
+    fun provideTestUseCase(filterRepository: TestFilterRepository): TestUseCase {
+        return TestUseCase(filterRepository)
+    }
 }
