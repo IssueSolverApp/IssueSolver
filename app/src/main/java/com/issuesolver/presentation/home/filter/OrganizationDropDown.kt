@@ -30,10 +30,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.unit.toSize
 import com.issuesolver.R
-import com.issuesolver.presentation.home.home.HomeViewModel
+import com.issuesolver.presentation.home.home.FilterViewModel
 
 @Composable
-fun OrganizationDropDown(category: String, placeHolder: String, viewModel: HomeViewModel) {
+fun OrganizationDropDown(category: String, placeHolder: String, viewModel: FilterViewModel, selectedCategory: (String) -> Unit) {
     var expanded by remember { mutableStateOf(false) }
     var selectedText by remember { mutableStateOf("") }
     var textFieldSize by remember { mutableStateOf(Size.Zero) }
@@ -93,7 +93,8 @@ fun OrganizationDropDown(category: String, placeHolder: String, viewModel: HomeV
                     onClick = {
                         selectedText = label.name
                         expanded = false
-                        viewModel.selectOrganization(label.name)
+                        //viewModel.selectOrganization(label.name)
+                        selectedCategory(label.name)
                     }
                 )
             }

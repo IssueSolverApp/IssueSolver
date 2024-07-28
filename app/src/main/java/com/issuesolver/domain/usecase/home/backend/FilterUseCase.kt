@@ -1,9 +1,12 @@
 package com.issuesolver.domain.usecase.home.backend
 
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.google.gson.Gson
 import com.issuesolver.common.Resource
-import com.issuesolver.data.repository.home.FilterInterface
+import com.issuesolver.data.pagination.FilterPagingSource
+import com.issuesolver.data.repository.home.FilterRepository
 import com.issuesolver.data.repository.home.RequestInterface
 import com.issuesolver.domain.entity.networkModel.home.FilterData
 import com.issuesolver.domain.entity.networkModel.home.FilterResponseModel
@@ -55,7 +58,7 @@ import javax.inject.Inject
 //        }
 //    }
 //}
-
+/*
 class FilterUseCase @Inject constructor(
     private val filter: FilterInterface
 ) {
@@ -66,5 +69,23 @@ class FilterUseCase @Inject constructor(
         days: String
     ): Flow<PagingData<FilterData>> {
         return filter.filter(status, categoryName, organizationName, days).flow
+    }
+}*/
+
+
+class GetFilteredResultsUseCase@Inject constructor(private val filterRepository: FilterRepository) {
+
+    fun execute(
+        status: String,
+        categoryName: String,
+        organizationName: String,
+        days: String
+    ): Pager<Int, FilterData> {
+        return Pager(
+            config = PagingConfig(pageSize = 20),
+            pagingSourceFactory = {
+                FilterPagingSource(filterRepository, status, categoryName, organizationName, days)
+            }
+        )
     }
 }

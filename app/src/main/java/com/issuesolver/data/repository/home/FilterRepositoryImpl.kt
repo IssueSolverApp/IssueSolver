@@ -49,7 +49,7 @@ import javax.inject.Inject
 //            days)
 //    }
 //}
-
+/*
 interface FilterInterface {
     fun filter(status: String, categoryName: String, organizationName: String, days: String): Pager<Int, FilterData>
 }
@@ -63,5 +63,19 @@ class FilterRepositoryImpl @Inject constructor(
             config = PagingConfig(pageSize = 10),
             pagingSourceFactory = { FilterPagingSource(filterService, status, categoryName, organizationName, days) }
         )
+    }
+}*/
+
+class FilterRepository(private val filterService: FilterService) {
+
+    suspend fun getFilteredResults(
+        status: String,
+        categoryName: String,
+        organizationName: String,
+        days: String,
+        page: Int,
+        size: Int
+    ): Response<FilterResponseModel> {
+        return filterService.filter(status, categoryName, organizationName, days, page, size)
     }
 }

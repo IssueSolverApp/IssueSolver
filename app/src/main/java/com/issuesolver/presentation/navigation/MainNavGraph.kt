@@ -42,9 +42,18 @@ fun MainNavGraph(navController: NavHostController, paddingValues: PaddingValues,
         startDestination = BottomBarScreen.Profile.route
     ) {
         composable(
-            route=BottomBarScreen.Home.route
+            route=BottomBarScreen.Home.route //+ "/{category}/{organization}/{status}/{days}"
         ) {
-            HomeScreen(navController = navController)
+            val category = it.arguments?.getString("category") ?: ""
+            val organization = it.arguments?.getString("organization") ?: ""
+            val status = it.arguments?.getString("status") ?: ""
+            val days = it.arguments?.getString("days") ?: ""
+            HomeScreen(navController = navController
+//                category = category,
+//                organization = organization,
+//                status = status,
+//                days = days
+            )
         }
         composable(route = BottomBarScreen.MyRequest.route) {
             MyRequestScreen(navController)

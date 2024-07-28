@@ -21,7 +21,7 @@ class HomePagingSource(private val requestService: RequestService): PagingSource
                 val data = response.body()?.data ?: emptyList()
                 LoadResult.Page(
                     data = data,
-                    prevKey = if (page == 1) null else page - 1,
+                    prevKey = null,
                     nextKey = if (data.isEmpty()) null else page + 1
                 )
             } else {
