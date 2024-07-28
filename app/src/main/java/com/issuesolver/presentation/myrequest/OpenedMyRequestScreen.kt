@@ -26,6 +26,12 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -35,13 +41,55 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.issuesolver.R
+import com.issuesolver.common.StatusR
 
 
 @Composable
-fun OpenedMyRequestScreen(navController:NavController){
+fun OpenedMyRequestScreen(navController:NavController,  id: String,   viewModel: MyRequestViewModel= hiltViewModel()){
+
+
+    LaunchedEffect(Unit) {
+        viewModel.getRequestById(id.toInt()) // Асинхронный запрос данных
+    }
+    val requestById by viewModel.requestById.collectAsState()
+
+    // Инициализация isLiked после получения данных
+    var isLiked by rememberSaveable { mutableStateOf(requestById?.likeSuccess ?: false) }
+
+    // Обновление isLiked, когда requestById меняется
+    LaunchedEffect(requestById) {
+        requestById?.let {
+            isLiked = it.likeSuccess!!
+        }
+    }
+
+    val deleteRequest by viewModel.deleteRequest.collectAsState()
+
+    when (deleteRequest.status) {
+        StatusR.LOADING -> {
+
+        }
+
+        StatusR.SUCCESS -> {
+//            isLiked=true
+//            LaunchedEffect(Unit) {
+//                viewModel.getMovies() // Асинхронный запрос данных
+//            }
+
+        }
+
+        StatusR.ERROR -> {
+
+        }
+
+        else -> {
+
+        }
+    }
 
     Scaffold(
         modifier = Modifier
@@ -113,14 +161,16 @@ fun OpenedMyRequestScreen(navController:NavController){
                                                 .size(32.dp)
                                         )
 
-                                        Text(
-                                            text = "Aynur Qəmbərova",
-                                            style = MaterialTheme.typography.bodyMedium,
-                                            color = Color(0xFF2981FF),
-                                            modifier = Modifier.padding(start = 6.dp),
-                                            fontSize = 15.sp,
-                                            fontWeight = FontWeight.W400
-                                        )
+                                        requestById?.fullName?.let {
+                                            Text(
+                                                text = it,
+                                                style = MaterialTheme.typography.bodyMedium,
+                                                color = Color(0xFF2981FF),
+                                                modifier = Modifier.padding(start = 6.dp),
+                                                fontSize = 15.sp,
+                                                fontWeight = FontWeight.W400
+                                            )
+                                        }
                                     }
 
                                     Row(
@@ -139,25 +189,29 @@ fun OpenedMyRequestScreen(navController:NavController){
                                                 .padding(start = 20.dp)
                                                 .size(8.dp)
                                         )
-                                        Text(
-                                            text = "Gözləmədə",
-                                            color = Color(0xFF0169FE),
-                                            fontSize = 13.sp,
-                                            fontWeight = FontWeight.W400,
-                                            modifier = Modifier.padding(start = 8.dp, end = 20.dp)
-                                        )
+                                        requestById?.status?.let {
+                                            Text(
+                                                text = it,
+                                                color = Color(0xFF0169FE),
+                                                fontSize = 13.sp,
+                                                fontWeight = FontWeight.W400,
+                                                modifier = Modifier.padding(start = 8.dp, end = 20.dp)
+                                            )
+                                        }
                                     }
 
 
                                 }
 
-                                Text(
-                                    text = "Daxili İşlər Nazirliyi",
-                                    color = Color(0xFF002252),
-                                    fontSize = 15.sp,
-                                    fontWeight = FontWeight.W500,
-                                    modifier = Modifier.padding(top = 8.dp, bottom = 39.dp)
-                                )
+                                requestById?.organizationName?.let {
+                                    Text(
+                                        text = it,
+                                        color = Color(0xFF002252),
+                                        fontSize = 15.sp,
+                                        fontWeight = FontWeight.W500,
+                                        modifier = Modifier.padding(top = 8.dp, bottom = 39.dp)
+                                    )
+                                }
 
                                 Divider(
                                     thickness = 0.5.dp,
@@ -169,35 +223,38 @@ fun OpenedMyRequestScreen(navController:NavController){
                                 )
 
 
-                                Text(
-                                    text = "Küçə heyvanlarına qarşı zorbalıq",
-                                    color = Color(0xFF8C8C8C),
-                                    fontSize = 13.sp,
-                                    fontWeight = FontWeight.W400,
-                                    modifier = Modifier
-                                        .clip(shape = RoundedCornerShape(50.dp))
-                                        .background(color = Color(0xFFF0F4F9))
-                                        .padding(
-                                            top = 8.dp,
-                                            bottom = 8.dp,
-                                            start = 11.dp,
-                                            end = 11.dp
-                                        )
-                                )
+                                requestById?.category?.categoryName?.let {
+                                    Text(
+                                        text = it,
+                                        color = Color(0xFF8C8C8C),
+                                        fontSize = 13.sp,
+                                        fontWeight = FontWeight.W400,
+                                        modifier = Modifier
+                                            .clip(shape = RoundedCornerShape(50.dp))
+                                            .background(color = Color(0xFFF0F4F9))
+                                            .padding(
+                                                top = 8.dp,
+                                                bottom = 8.dp,
+                                                start = 11.dp,
+                                                end = 11.dp
+                                            )
+                                    )
+                                }
 
 
-                                Text(
-                                    text = "Office ipsum you must be muted. Teeth recap latest didn't at. Innovation hill as wider assassin heads-up stronger give. Who's cloud low out email later charts. Believe our territories good client incentivization decisions pole product with. Pushback like be reach incompetent. Need bake ditching another loss to. Algorithm now pants items future-proof needle elephant i'm synergize old. Optimize meat room dog board invested devil reach. Horse building more prioritize meat per stakeholders.\n" +
-                                            "building",
-                                    color = Color(0xFF6E6E6E),
-                                    fontSize = 15.sp,
-                                    fontWeight = FontWeight.W500,
-                                    modifier = Modifier
-                                        .padding(
-                                            top = 8.dp,
+                                requestById?.description?.let {
+                                    Text(
+                                        text = it,
+                                        color = Color(0xFF6E6E6E),
+                                        fontSize = 15.sp,
+                                        fontWeight = FontWeight.W500,
+                                        modifier = Modifier
+                                            .padding(
+                                                top = 8.dp,
 
-                                        )
-                                )
+                                                )
+                                    )
+                                }
                                 Row (
                                     modifier = Modifier.padding(top=16.dp, bottom = 12.dp)
                                 ){
@@ -208,14 +265,16 @@ fun OpenedMyRequestScreen(navController:NavController){
                                             .size(20.dp)
                                     )
 
-                                    Text(
-                                        text = "Lorem ipsum dolor sit amet, consectetur efficitur.",
-                                        style = MaterialTheme.typography.bodyMedium,
-                                        color = Color(0xFF2981FF),
-                                        modifier = Modifier.padding(start = 6.dp),
-                                        fontSize = 13.sp,
-                                        fontWeight = FontWeight.W400
-                                    )
+                                    requestById?.address?.let {
+                                        Text(
+                                            text = it,
+                                            style = MaterialTheme.typography.bodyMedium,
+                                            color = Color(0xFF2981FF),
+                                            modifier = Modifier.padding(start = 6.dp),
+                                            fontSize = 13.sp,
+                                            fontWeight = FontWeight.W400
+                                        )
+                                    }
 
                                 }
                                 Row {
@@ -227,14 +286,16 @@ fun OpenedMyRequestScreen(navController:NavController){
                                             .size(20.dp)
                                     )
 
-                                    Text(
-                                        text = "01.08.2024, 14:30",
-                                        style = MaterialTheme.typography.bodyMedium,
-                                        color = Color(0xFF002252),
-                                        modifier = Modifier.padding(start = 6.dp),
-                                        fontSize = 13.sp,
-                                        fontWeight = FontWeight.W400
-                                    )
+                                    requestById?.createDate?.let {
+                                        Text(
+                                            text = it,
+                                            style = MaterialTheme.typography.bodyMedium,
+                                            color = Color(0xFF002252),
+                                            modifier = Modifier.padding(start = 6.dp),
+                                            fontSize = 13.sp,
+                                            fontWeight = FontWeight.W400
+                                        )
+                                    }
                                 }
 
 
@@ -258,20 +319,33 @@ fun OpenedMyRequestScreen(navController:NavController){
                                             verticalArrangement = Arrangement.Center,
                                             horizontalAlignment = Alignment.CenterHorizontally
                                         ) {
-                                            IconButton(onClick = { }) {
+                                            IconButton(onClick = {
+                                                if (isLiked!!) {
+                                                    viewModel.removeLike(requestId = id.toInt())
+                                                } else {
+                                                    viewModel.sendLike(requestId = id.toInt())
+                                                }
+                                                isLiked = !isLiked!!
+
+                                             }) {
+                                                val icon = if (isLiked!!) R.drawable.heart_clicked else R.drawable.heart_default
+
                                                 Icon(
-                                                    painter = painterResource(id = R.drawable.heart_default),
+                                                    painter = painterResource(id = icon),
                                                     contentDescription = null,
-                                                    Modifier.size(20.dp)
+                                                    Modifier.size(20.dp),
+                                                    tint = androidx.compose.ui.graphics.Color.Red
                                                 )
                                             }
-                                            Text(
-                                                text = "723",
-                                                color = Color(0xFF002252),
-                                                modifier = Modifier.padding(top = 4.dp),
-                                                fontSize = 10.sp,
-                                                fontWeight = FontWeight.W500
-                                            )
+                                            requestById?.likeCount?.let {
+                                                Text(
+                                                    text = it.toString(),
+                                                    color = Color(0xFF002252),
+                                                    modifier = Modifier.padding(top = 4.dp),
+                                                    fontSize = 10.sp,
+                                                    fontWeight = FontWeight.W500
+                                                )
+                                            }
 
                                         }
 
@@ -288,19 +362,24 @@ fun OpenedMyRequestScreen(navController:NavController){
 
                                                 )
                                             }
+                                            requestById?.commentCount?.let {
                                             Text(
-                                                text = "723",
+                                                text = it.toString(),
                                                 color = Color(0xFF002252),
                                                 modifier = Modifier.padding(top = 4.dp),
                                                 fontSize = 10.sp,
                                                 fontWeight = FontWeight.W500
                                             )
+                                            }
 
                                         }
 
                                     }
                                     Row {
-                                        IconButton(onClick = {  }) {
+                                        IconButton(onClick = {
+                                            id.toInt()?.let { viewModel.deleteRequestById(it) }
+                                            navController.popBackStack()
+                                        }) {
                                             Icon(
                                                 painter = painterResource(id = R.drawable.vector),
                                                 contentDescription = null,
@@ -323,10 +402,315 @@ fun OpenedMyRequestScreen(navController:NavController){
 
     )
 }
-@Preview(showBackground = true)
-@Composable
-fun PreviewOpenedMyRequestScreen() {
-    val navController = rememberNavController()
-    OpenedMyRequestScreen(navController)
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun PreviewOpenedMyRequestScreen() {
+//    val navController = rememberNavController()
+//    OpenedMyRequestScreen(navController)
+//}
 
+//
+//
+//@Composable
+//fun OpenedMyRequestScreen(navController: NavController, id: String, viewModel: MyRequestViewModel = hiltViewModel()) {
+//    LaunchedEffect(Unit) {
+//        viewModel.getRequestById(id.toInt())
+//    }
+//    val requestById by viewModel.requestById.collectAsState()
+//    val likeStates by viewModel.likeStates.collectAsState()
+//
+//    var isLiked by rememberSaveable { mutableStateOf(false) }
+//
+//    LaunchedEffect(requestById) {
+//        requestById?.let {
+//            isLiked = likeStates[it.requestId] ?: it.likeSuccess ?: false
+//        }
+//    }
+//
+//    Scaffold(
+//        modifier = Modifier
+//            .navigationBarsPadding()
+//            .statusBarsPadding(),
+//        bottomBar = {},
+//        content = { padding ->
+//            Box(
+//                modifier = Modifier
+//                    .fillMaxSize()
+//                    .imePadding()
+//                    .padding(top = 15.dp, start = 20.dp, end = 20.dp, bottom = 20.dp)
+//            ) {
+//                Column(
+//                    modifier = Modifier
+//                        .fillMaxSize()
+//                        .imePadding()
+//                ) {
+//                    Column {
+//                        Box(
+//                            modifier = Modifier
+//                                .size(40.dp)
+//                                .clip(RoundedCornerShape(100.dp))
+//                                .background(Color.White)
+//                                .clickable {
+//                                    navController.popBackStack()
+//                                },
+//                            contentAlignment = Alignment.Center
+//                        ) {
+//                            Image(
+//                                painter = painterResource(R.drawable.backarray),
+//                                contentDescription = "Back",
+//                                modifier = Modifier.size(24.dp)
+//                            )
+//                        }
+//
+//                        Card(
+//                            modifier = Modifier
+//                                .fillMaxWidth()
+//                                .wrapContentHeight(),
+//                            colors = CardDefaults.cardColors(
+//                                containerColor = Color.White
+//                            )
+//                        ) {
+//                            Column(
+//                                modifier = Modifier
+//                                    .wrapContentHeight()
+//                                    .padding(16.dp)
+//                            ) {
+//                                // Other UI elements here
+//
+//
+//                                Row(
+//                                    verticalAlignment = Alignment.CenterVertically,
+//                                    horizontalArrangement = Arrangement.SpaceBetween,
+//                                    modifier = Modifier
+//                                        .fillMaxWidth()
+//
+//                                ) {
+//
+//                                    Row(verticalAlignment = Alignment.CenterVertically) {
+//                                        Image(
+//                                            painter = painterResource(id = R.drawable.et_profile_male), // Replace with your drawable resource
+//                                            contentDescription = "Profile Image",
+//                                            modifier = Modifier
+//                                                .size(32.dp)
+//                                        )
+//
+//                                        requestById?.fullName?.let {
+//                                            Text(
+//                                                text = it,
+//                                                style = MaterialTheme.typography.bodyMedium,
+//                                                color = Color(0xFF2981FF),
+//                                                modifier = Modifier.padding(start = 6.dp),
+//                                                fontSize = 15.sp,
+//                                                fontWeight = FontWeight.W400
+//                                            )
+//                                        }
+//                                    }
+//
+//                                    Row(
+//                                        modifier = Modifier
+//                                            .clip(shape = CircleShape)
+//                                            .background(color = Color(0xFFc8dcfc))
+//                                            .padding(8.dp)
+//                                            .clickable(onClick = { }),
+//                                        horizontalArrangement = Arrangement.SpaceBetween,
+//                                        verticalAlignment = Alignment.CenterVertically
+//                                    ) {
+//                                        Image(
+//                                            painter = painterResource(R.drawable.ellipse_9),
+//                                            contentDescription = "ellipse_9",
+//                                            modifier = Modifier
+//                                                .padding(start = 20.dp)
+//                                                .size(8.dp)
+//                                        )
+//                                        requestById?.status?.let {
+//                                            Text(
+//                                                text = it,
+//                                                color = Color(0xFF0169FE),
+//                                                fontSize = 13.sp,
+//                                                fontWeight = FontWeight.W400,
+//                                                modifier = Modifier.padding(start = 8.dp, end = 20.dp)
+//                                            )
+//                                        }
+//                                    }
+//
+//
+//                                }
+//
+//                                requestById?.organizationName?.let {
+//                                    Text(
+//                                        text = it,
+//                                        color = Color(0xFF002252),
+//                                        fontSize = 15.sp,
+//                                        fontWeight = FontWeight.W500,
+//                                        modifier = Modifier.padding(top = 8.dp, bottom = 39.dp)
+//                                    )
+//                                }
+//
+//                                Divider(
+//                                    thickness = 0.5.dp,
+//                                    color = Color(0xFFc3dcff),
+//                                    modifier = Modifier.padding(
+//                                        top = 8.dp,
+//                                        bottom = 16.dp
+//                                    )
+//                                )
+//
+//
+//                                requestById?.category?.categoryName?.let {
+//                                    Text(
+//                                        text = it,
+//                                        color = Color(0xFF8C8C8C),
+//                                        fontSize = 13.sp,
+//                                        fontWeight = FontWeight.W400,
+//                                        modifier = Modifier
+//                                            .clip(shape = RoundedCornerShape(50.dp))
+//                                            .background(color = Color(0xFFF0F4F9))
+//                                            .padding(
+//                                                top = 8.dp,
+//                                                bottom = 8.dp,
+//                                                start = 11.dp,
+//                                                end = 11.dp
+//                                            )
+//                                    )
+//                                }
+//
+//
+//                                requestById?.description?.let {
+//                                    Text(
+//                                        text = it,
+//                                        color = Color(0xFF6E6E6E),
+//                                        fontSize = 15.sp,
+//                                        fontWeight = FontWeight.W500,
+//                                        modifier = Modifier
+//                                            .padding(
+//                                                top = 8.dp,
+//
+//                                                )
+//                                    )
+//                                }
+//                                Row (
+//                                    modifier = Modifier.padding(top=16.dp, bottom = 12.dp)
+//                                ){
+//                                    Image(
+//                                        painter = painterResource(id = R.drawable.location_icon),
+//                                        contentDescription = "location_icon",
+//                                        modifier = Modifier
+//                                            .size(20.dp)
+//                                    )
+//
+//                                    requestById?.address?.let {
+//                                        Text(
+//                                            text = it,
+//                                            style = MaterialTheme.typography.bodyMedium,
+//                                            color = Color(0xFF2981FF),
+//                                            modifier = Modifier.padding(start = 6.dp),
+//                                            fontSize = 13.sp,
+//                                            fontWeight = FontWeight.W400
+//                                        )
+//                                    }
+//
+//                                }
+//                                Row {
+//
+//                                    Image(
+//                                        painter = painterResource(id = R.drawable.calendar),
+//                                        contentDescription = "calendar",
+//                                        modifier = Modifier
+//                                            .size(20.dp)
+//                                    )
+//
+//                                    requestById?.createDate?.let {
+//                                        Text(
+//                                            text = it,
+//                                            style = MaterialTheme.typography.bodyMedium,
+//                                            color = Color(0xFF002252),
+//                                            modifier = Modifier.padding(start = 6.dp),
+//                                            fontSize = 13.sp,
+//                                            fontWeight = FontWeight.W400
+//                                        )
+//                                    }
+//                                }
+//
+//
+//
+//
+//                                Divider(
+//                                    thickness = 0.5.dp,
+//                                    color = Color(0xFFc3dcff),
+//                                    modifier = Modifier.padding(
+//                                        top = 16.dp, bottom = 12.dp
+//                                    )
+//                                )
+//
+//                                Row(
+//                                    horizontalArrangement = Arrangement.SpaceBetween,
+//                                    modifier = Modifier
+//                                        .fillMaxWidth()
+//                                ) {
+//                                    Row {
+//                                        Row {
+//                                            IconButton(onClick = {
+//                                                if (isLiked) {
+//                                                    viewModel.removeLike(requestId = id.toInt())
+//                                                } else {
+//                                                    viewModel.sendLike(requestId = id.toInt())
+//                                                }
+//                                                isLiked = !isLiked
+//                                            }) {
+//                                                val icon = if (isLiked) R.drawable.heart_clicked else R.drawable.heart_default
+//                                                Icon(
+//                                                    painter = painterResource(id = icon),
+//                                                    contentDescription = null,
+//                                                    Modifier.size(20.dp),
+//                                                    tint = androidx.compose.ui.graphics.Color.Red
+//                                                )
+//                                            }
+//                                            // Other buttons here
+//                                        }
+//
+//                                        Column(
+//                                            verticalArrangement = Arrangement.Center,
+//                                            horizontalAlignment = Alignment.CenterHorizontally
+//                                        ) {
+//
+//                                            IconButton(onClick = {  }) {
+//                                                Icon(
+//                                                    painter = painterResource(id = R.drawable.coment),
+//                                                    contentDescription = null,
+//                                                    Modifier.size(20.dp)
+//
+//                                                )
+//                                            }
+//                                            requestById?.commentCount?.let {
+//                                                Text(
+//                                                    text = it.toString(),
+//                                                    color = Color(0xFF002252),
+//                                                    modifier = Modifier.padding(top = 4.dp),
+//                                                    fontSize = 10.sp,
+//                                                    fontWeight = FontWeight.W500
+//                                                )
+//                                            }
+//
+//                                        }
+//
+//                                    }
+//                                    Row {
+//                                        IconButton(onClick = {  }) {
+//                                            Icon(
+//                                                painter = painterResource(id = R.drawable.vector),
+//                                                contentDescription = null,
+//                                            )
+//                                        }
+//                                    }
+//                                }
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//    )
+//}
+//
+//
+//

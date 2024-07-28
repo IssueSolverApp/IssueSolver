@@ -1,14 +1,18 @@
 package com.issuesolver.presentation.myrequest
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -53,7 +57,8 @@ fun UserCard(
     categoryName: String?,
     viewModel: MyRequestViewModel,
     requestId: Int?,
-    likeSuccess: Boolean?
+    likeSuccess: Boolean?,
+    onClick: () -> Unit
 ) {
     var expanded by remember { mutableStateOf(false) }
     val fullText = description
@@ -68,12 +73,42 @@ fun UserCard(
         fullText
     }
     val likeStates by viewModel.likeStates.collectAsState()
-    val favoriteState = likeStates[requestId] ?: likeSuccess ?: false
+    var favoriteState = likeStates[requestId] ?: likeSuccess
+//    if (favoriteState!=likeSuccess){
+//        favoriteState=likeSuccess
+//    }
+
+    val isLike by viewModel.isLiked.collectAsState()
+    var isLiked by rememberSaveable { mutableStateOf(likeSuccess) }
+
+
+    when (isLike.status) {
+        StatusR.LOADING -> {
+
+        }
+
+        StatusR.SUCCESS -> {
+
+        }
+
+        StatusR.ERROR -> {
+
+        }
+
+        else -> {
+
+        }
+    }
+
+
+
+
 
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .wrapContentHeight(),
+            .wrapContentHeight()
+            .clickable(onClick = onClick),
         colors = CardDefaults.cardColors(
             containerColor = androidx.compose.ui.graphics.Color.White
         )
@@ -193,13 +228,20 @@ fun UserCard(
             ) {
                 Row {
                     IconButton(onClick = {
-                        if (favoriteState) {
+//                        if(favoriteState!=likeSuccess){
+//
+//                        }
+                        if (isLiked!!) {
                             viewModel.removeLike(requestId = requestId)
+//                            favoriteState=false
                         } else {
                             viewModel.sendLike(requestId = requestId)
+//                            favoriteState=true
                         }
+                        isLiked = !isLiked!!
+
                     }) {
-                        val icon = if (favoriteState) R.drawable.heart_clicked else R.drawable.heart_default
+                        val icon = if (isLiked!!) R.drawable.heart_clicked else R.drawable.heart_default
                         Icon(
                             painter = painterResource(id = icon),
                             contentDescription = null,
@@ -232,4 +274,166 @@ fun UserCard(
 //@Composable
 //fun PreviewUserCard() {
 //    UserCard()
+//}
+
+
+//
+//@Composable
+//fun UserCard(
+//    fullName: String?,
+//    status: String?,
+//    description: String?,
+//    categoryName: String?,
+//    viewModel: MyRequestViewModel,
+//    requestId: Int?,
+//    likeSuccess: Boolean?,
+//    onClick: () -> Unit
+//) {
+//    var expanded by remember { mutableStateOf(false) }
+//    val fullText = description
+//    val additionalText = "daha çox göstər..."
+//    val approximateCharacterPerLine = 50
+//    val maxLines = 3
+//
+//    val maxTextLength = (approximateCharacterPerLine * maxLines) - additionalText.length
+//    val shortText = if (fullText!!.length > maxTextLength) {
+//        fullText.take(maxTextLength) + "..."
+//    } else {
+//        fullText
+//    }
+//    val likeStates by viewModel.likeStates.collectAsState()
+//    var favoriteState = likeStates[requestId] ?: likeSuccess
+//    val isLike by viewModel.isLiked.collectAsState()
+//    var isLiked by rememberSaveable { mutableStateOf(likeSuccess) }
+//
+//    when (isLike.status) {
+//        StatusR.LOADING -> {
+//            // Handle loading state
+//        }
+//        StatusR.SUCCESS -> {
+//            isLiked = true
+//        }
+//        StatusR.ERROR -> {
+//            // Handle error state
+//        }
+//        else -> {
+//            // Handle other states
+//        }
+//    }
+//
+//    Card(
+//        modifier = Modifier
+//            .fillMaxWidth()
+//            .wrapContentHeight()
+//            .clickable(onClick = onClick),
+//        colors = CardDefaults.cardColors(
+//            containerColor = androidx.compose.ui.graphics.Color.White
+//        )
+//    ) {
+//        Column(modifier = Modifier
+//            .wrapContentHeight()
+//            .padding(16.dp)
+//        ) {
+//            Row(
+//                verticalAlignment = Alignment.CenterVertically,
+//                horizontalArrangement = Arrangement.SpaceBetween,
+//                modifier = Modifier.fillMaxWidth()
+//            ) {
+//                Row(verticalAlignment = Alignment.CenterVertically) {
+//                    Image(
+//                        painter = painterResource(id = R.drawable.et_profile_male),
+//                        contentDescription = "Profile Image",
+//                        modifier = Modifier.size(32.dp)
+//                    )
+//                    Text(
+//                        text = fullName ?: "",
+//                        style = MaterialTheme.typography.bodyMedium,
+//                        color = Color(0xFF2981FF),
+//                        modifier = Modifier.padding(start = 6.dp),
+//                        fontSize = 15.sp,
+//                        fontWeight = FontWeight.W400
+//                    )
+//                }
+//
+//                Row(
+//                    modifier = Modifier
+//                        .clip(shape = CircleShape)
+//                        .background(color = Color(0xFFF5F5F5))
+//                        .padding(8.dp),
+//                    verticalAlignment = Alignment.CenterVertically
+//                ) {
+//                    IconButton(onClick = {
+//                        requestId?.let { id ->
+//                            if (isLiked == true) {
+//                                viewModel.removeLike(id)
+//                            } else {
+//                                viewModel.sendLike(id)
+//                            }
+//                        }
+//                        isLiked = isLiked != true
+//                    }) {
+//                        val icon = if (isLiked == true) R.drawable.heart_clicked else R.drawable.heart_default
+//                        Icon(
+//                            painter = painterResource(id = icon),
+//                            contentDescription = null,
+//                            Modifier.size(20.dp),
+//                            tint = androidx.compose.ui.graphics.Color.Red
+//                        )
+//                    }
+//                }
+//            }
+//
+//            Spacer(modifier = Modifier.height(10.dp))
+//
+//            Row(verticalAlignment = Alignment.CenterVertically) {
+//                Text(
+//                    text = status ?: "",
+//                    color = Color(0xFF424242),
+//                    style = MaterialTheme.typography.bodyMedium,
+//                    fontSize = 13.sp
+//                )
+//                Spacer(modifier = Modifier.width(4.dp))
+//                Text(
+//                    text = categoryName ?: "",
+//                    color = Color(0xFF6D6D6D),
+//                    style = MaterialTheme.typography.bodyMedium,
+//                    fontSize = 13.sp
+//                )
+//            }
+//
+//            Spacer(modifier = Modifier.height(6.dp))
+//
+//            Column {
+//                val displayText = if (expanded) {
+//                    fullText
+//                } else {
+//                    shortText
+//                }
+//                Text(
+//                    text = buildAnnotatedString {
+//                        append(displayText)
+//                        if (fullText.length > maxTextLength) {
+//                            if (expanded) {
+//                                append(" ")
+//                                withStyle(
+//                                    style = SpanStyle(
+//                                        color = Color(0xFF6D6D6D),
+//                                        fontWeight = FontWeight.Bold
+//                                    )
+//                                ) {
+//                                    append(additionalText)
+//                                }
+//                            }
+//                        }
+//                    },
+//                    color = Color(0xFF6D6D6D),
+//                    style = MaterialTheme.typography.bodyMedium,
+//                    fontSize = 13.sp,
+//                    modifier = Modifier.clickable {
+//                        expanded = !expanded
+//                    }
+//                )
+//            }
+//        }
+//    }
 //}

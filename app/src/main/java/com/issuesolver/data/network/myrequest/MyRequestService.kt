@@ -5,6 +5,7 @@ import com.issuesolver.domain.entity.networkModel.home.LikeResponse
 import com.issuesolver.domain.entity.networkModel.login.RegisterRequestModel
 import com.issuesolver.domain.entity.networkModel.myrequestmodel.CommentRequest
 import com.issuesolver.domain.entity.networkModel.myrequestmodel.CommentResponse
+import com.issuesolver.domain.entity.networkModel.myrequestmodel.RequestByIdResponseModel
 import com.issuesolver.domain.entity.networkModel.organization.GetOrganizationResponseModel
 import retrofit2.Response
 import retrofit2.http.Body
@@ -24,7 +25,7 @@ interface MyRequestService {
 
 
     @GET("request/by-id/{requestId}")
-    suspend fun requestById(@Path("requestId") requestId: Int): Response<FilterResponseModel>
+    suspend fun requestById(@Path("requestId") requestId: Int?): Response<RequestByIdResponseModel>
 
 
     @POST("api/v1/likes/post")

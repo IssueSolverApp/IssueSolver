@@ -3,17 +3,30 @@ package com.issuesolver.presentation.myrequest
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.issuesolver.domain.entity.networkModel.home.FilterData
+import com.issuesolver.presentation.navigation.DetailsScreen
 
 @Composable
-fun MyRequestScreen(viewModel: MyRequestViewModel = hiltViewModel()) {
+fun MyRequestScreen(navController: NavController,
+    viewModel: MyRequestViewModel = hiltViewModel()
+) {
+
+//    LaunchedEffect {
+//        viewModel.getMovies()
+//    }
+
+    LaunchedEffect(Unit) {
+         viewModel.getMovies() // Асинхронный запрос данных
+    }
 
     //val lazyPagingItems = viewModel.myRequests.collectAsLazyPagingItems()
 
@@ -31,7 +44,12 @@ fun MyRequestScreen(viewModel: MyRequestViewModel = hiltViewModel()) {
                     categoryName = filterData.category.categoryName,
                     viewModel = viewModel,
                     requestId = filterData.requestId,
-                    likeSuccess=filterData.likeSuccess
+                    likeSuccess=filterData.likeSuccess,
+                    onClick = {
+
+                        //navController.navigate("requestDetail/${filterData.requestId}")
+                        navController.navigate(DetailsScreen.RequestById.route+ "/${filterData.requestId}")
+                    }
                 )
             }
         }

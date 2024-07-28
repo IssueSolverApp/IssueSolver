@@ -13,7 +13,7 @@ import javax.inject.Inject
 class GetRequestByIdUseCase@Inject constructor(private val myRequest: GetRequestByIdRepositoryInterface)  {
 
 
-    suspend operator fun invoke( requestId: Int) = flow {
+    suspend operator fun invoke( requestId: Int?) = flow {
 
         emit(Resource.Loading())
         try {

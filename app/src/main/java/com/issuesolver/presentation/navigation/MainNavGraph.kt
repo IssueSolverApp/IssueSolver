@@ -20,6 +20,7 @@ import com.issuesolver.presentation.home.filter.FilterScreen
 import com.issuesolver.presentation.newrequest.RequestScreen
 import com.issuesolver.presentation.home.home.HomeScreen
 import com.issuesolver.presentation.myrequest.MyRequestScreen
+import com.issuesolver.presentation.myrequest.OpenedMyRequestScreen
 import com.issuesolver.presentation.profile.enter_password.DeleteAccountScreen
 import com.issuesolver.presentation.profile.my_account.MyAccountScreen
 import com.issuesolver.presentation.profile.new_password.NewPasswordScreen
@@ -37,7 +38,7 @@ fun MainNavGraph(navController: NavHostController, paddingValues: PaddingValues)
             TestUI()
         }
         composable(route = BottomBarScreen.MyRequest.route) {
-            MyRequestScreen()
+            MyRequestScreen(navController)
         }
         composable(route = BottomBarScreen.NewRequest.route) {
             RequestScreen(navController, paddingValues)
@@ -61,6 +62,13 @@ fun MainNavGraph(navController: NavHostController, paddingValues: PaddingValues)
 
         composable(route = DetailsScreen.RequestInfoScreen.route) {
             RequestInfoScreen(navController)
+        }
+
+        composable(route = DetailsScreen.RequestById.route + "/{requestId}") {
+            val id = it.arguments?.getString("requestId")
+            //val likeSuccess = it.arguments?.getString("likeSuccess")
+           // val email = navBackStack.arguments?.getString("id")
+            id?.let { it1 ->  OpenedMyRequestScreen(navController, id= it1) }
         }
 
     }
@@ -93,6 +101,9 @@ sealed class DetailsScreen(val route: String) {
 
 
     object HomeFilterScreen : DetailsScreen(route = "Home_Filter_Screen")
+
+
+    object RequestById : DetailsScreen(route = "Request_By_Id")
 
 
 }
