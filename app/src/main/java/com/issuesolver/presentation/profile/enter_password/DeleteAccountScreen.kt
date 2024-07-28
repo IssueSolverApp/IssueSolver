@@ -58,6 +58,8 @@ import com.issuesolver.presentation.bottombar.AnimatedNavigationBar
 import com.issuesolver.presentation.common.AuthButton
 import com.issuesolver.presentation.common.ErrorText
 import com.issuesolver.presentation.common.LoadingOverlay
+import com.issuesolver.presentation.navigation.AuthScreen
+import com.issuesolver.presentation.navigation.DetailsScreen
 
 @Composable
 fun DeleteAccountScreen(
@@ -265,6 +267,7 @@ fun DeleteAccountScreen(
                                 uiState.password
                                 )
                         )
+                        navController.navigate(AuthScreen.Login.route)
                     },
                     onDismiss = { showDialog = false }
                 )
