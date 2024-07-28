@@ -45,6 +45,7 @@ import androidx.navigation.NavController
 import com.issuesolver.R
 import com.issuesolver.common.PopUp
 import com.issuesolver.presentation.bottombar.AnimatedNavigationBar
+import com.issuesolver.presentation.navigation.AuthScreen
 import com.issuesolver.presentation.navigation.DetailsScreen
 import com.issuesolver.presentation.navigation.Graph
 
@@ -66,7 +67,7 @@ fun ProfileScreen(
             dismiss = "İmtina",
             confirm = "Çıxış",
             onConfirmation = {
-                navController.navigate(Graph.AUTHENTICATION)
+                navController.navigate(AuthScreen.Login.route)
             },
             onDismiss = { showDialog = false }
         )
