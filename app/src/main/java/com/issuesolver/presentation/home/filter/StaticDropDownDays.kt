@@ -32,7 +32,7 @@ fun StaticDropDownDays(category: String, placeHolder: String, list:List<String>,
 
     val icon = if (expanded) R.drawable.vector__3_ else R.drawable.vector__2_
 
-    Column(Modifier.padding(start = 20.dp, end = 20.dp, top = 16.dp)) {
+    Column(Modifier.padding(top = 16.dp)) {
         Text(
             text = placeHolder,
             fontSize = 15.sp,

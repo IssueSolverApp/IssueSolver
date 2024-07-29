@@ -1,7 +1,6 @@
 package com.issuesolver.presentation.home.filter
 
 import BottomBarScreen
-import android.content.Context
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,8 +13,6 @@ import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -30,7 +27,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import androidx.paging.compose.collectAsLazyPagingItems
 import com.issuesolver.presentation.common.AuthButton
 import com.issuesolver.presentation.home.home.FilterViewModel
 import com.issuesolver.presentation.home.home.TestViewModel
@@ -82,7 +78,7 @@ fun FilterScreen(
             .statusBarsPadding()
             .navigationBarsPadding()
             .imePadding()
-            .padding(top = 22.dp, bottom = 16.dp)
+            .padding(top = 22.dp, bottom = 16.dp,start=20.dp,end=20.dp)
     ) {
         Column(
             modifier = Modifier

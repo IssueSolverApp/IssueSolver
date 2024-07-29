@@ -7,8 +7,10 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
@@ -136,6 +138,7 @@ fun OpenedMyRequestScreen(navController:NavController,  id: String,   viewModel:
                                 modifier = Modifier.size(24.dp)
                             )
                         }
+                        Spacer(modifier = Modifier.height(15.dp))
 
                         Card(
                             modifier = Modifier
@@ -343,14 +346,13 @@ fun OpenedMyRequestScreen(navController:NavController,  id: String,   viewModel:
                                                     painter = painterResource(id = icon),
                                                     contentDescription = null,
                                                     Modifier.size(20.dp),
-                                                    tint = androidx.compose.ui.graphics.Color.Red
+                                                    tint = if (favoriteState!!) Color.Red else Color(0xFF002252)
                                                 )
                                             }
                                             requestById?.likeCount?.let {
                                                 Text(
                                                     text = it.toString(),
                                                     color = Color(0xFF002252),
-                                                    modifier = Modifier.padding(top = 4.dp),
                                                     fontSize = 10.sp,
                                                     fontWeight = FontWeight.W500
                                                 )
@@ -375,7 +377,6 @@ fun OpenedMyRequestScreen(navController:NavController,  id: String,   viewModel:
                                             Text(
                                                 text = it.toString(),
                                                 color = Color(0xFF002252),
-                                                modifier = Modifier.padding(top = 4.dp),
                                                 fontSize = 10.sp,
                                                 fontWeight = FontWeight.W500
                                             )

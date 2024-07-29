@@ -276,7 +276,7 @@ fun UserCard(
                         Icon(
                             painter = painterResource(id = icon),
                             contentDescription = null,
-                            tint = androidx.compose.ui.graphics.Color.Red
+                            tint = if (favoriteState!!) Color.Red else Color(0xFF002252)
                         )
                     }
 

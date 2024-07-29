@@ -39,7 +39,6 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.paging.LoadState
-import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.issuesolver.R
 import com.issuesolver.common.PlaceholderShimmerCard
@@ -53,14 +52,14 @@ import kotlinx.coroutines.delay
 @Composable
 fun HomeScreen(
     navController: NavController,
+    paddingValues: PaddingValues,
     viewModel: FilterViewModel = hiltViewModel(),
     testViewModel: TestViewModel = hiltViewModel(),
 //    status:String,
 //    category:String,
 //    organization:String,
 //    days:String
-    paddingValues: PaddingValues,
-    viewModel: HomeViewModel = hiltViewModel(),
+
     ) {
     val context = LocalContext.current
     val filterPreferences = remember {

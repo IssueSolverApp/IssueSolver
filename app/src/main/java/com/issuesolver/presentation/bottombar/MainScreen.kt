@@ -45,7 +45,6 @@ fun MainScreen(navController: NavHostController = rememberNavController(), snack
 
     Scaffold(
         modifier = Modifier
-            .statusBarsPadding()
             .navigationBarsPadding(),
 
         snackbarHost = { TopSnackbarHost(snackbarHostState) },
