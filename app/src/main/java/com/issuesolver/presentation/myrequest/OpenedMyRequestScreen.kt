@@ -64,7 +64,6 @@ fun OpenedMyRequestScreen(navController:NavController,  id: String,   viewModel:
     }
     val requestById by viewModel.requestById.collectAsState()
 
-    var showLoading by remember { mutableStateOf(false) }
 
     // Инициализация isLiked после получения данных
     var isLiked by rememberSaveable { mutableStateOf(requestById?.likeSuccess ?: false) }
@@ -78,12 +77,11 @@ fun OpenedMyRequestScreen(navController:NavController,  id: String,   viewModel:
     val likeStates by viewModel.likeStates.collectAsState()
     var favoriteState = likeStates[id.toInt()] ?: requestById?.likeSuccess?: false
 
-    val deleteRequest by viewModel.deleteRequest.collectAsState()
+    val requestByIdState by viewModel.requestByIdState.collectAsState()
 
-    when (deleteRequest.status) {
+    when (requestByIdState?.status) {
         StatusR.LOADING -> {
             Log.d("LoginPage", "Loading state triggered")
-            showLoading=true
 
         }
 
@@ -414,10 +412,6 @@ fun OpenedMyRequestScreen(navController:NavController,  id: String,   viewModel:
 
                 }
 
-            }
-
-            if(showLoading){
-                LoadingOverlay()
             }
 
         }
