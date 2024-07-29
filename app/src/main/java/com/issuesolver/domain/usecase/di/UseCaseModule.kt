@@ -1,7 +1,12 @@
 package com.issuesolver.domain.usecase.di
 
 import android.app.Application
+import android.content.Context
 import android.content.SharedPreferences
+import androidx.activity.ComponentActivity
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
+import com.issuesolver.R
 import com.issuesolver.data.network.home.FilterService
 import com.issuesolver.data.repository.home.FilterRepository
 import com.issuesolver.data.repository.home.RequestInterface
@@ -66,6 +71,7 @@ import com.issuesolver.domain.usecase.profile.local.PreviousPasswordUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
@@ -267,4 +273,13 @@ class UseCaseModule {
     fun provideTestUseCase(filterRepository: TestFilterRepository): TestUseCase {
         return TestUseCase(filterRepository)
     }
+
+
+
+//    @Provides
+//    fun provideNavController(@ApplicationContext context: Context): NavController {
+//        val activity = context as? ComponentActivity
+//        return activity?.findNavController(R.id.nav_host_fragment)
+//            ?: throw IllegalStateException("NavController not found")
+//    }
 }

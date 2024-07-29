@@ -118,8 +118,24 @@ class ApiModule {
 
     @Provides
     @Singleton
-    fun provideAuthAuthenticator(sharedPreferences: SharedPreferences): AuthAuthenticator {
-        return AuthAuthenticator(sharedPreferences)
+    fun provideContext(@ApplicationContext context: Context): Context {
+        return context
+    }
+//    @Provides
+//    @Singleton
+//    fun provideAuthAuthenticator(sharedPreferences: SharedPreferences): AuthAuthenticator {
+//        return AuthAuthenticator(sharedPreferences)
+//    }
+
+
+
+    @Provides
+    @Singleton
+    fun provideAuthAuthenticator(
+        sharedPreferences: SharedPreferences,
+        @ApplicationContext context: Context
+    ): AuthAuthenticator {
+        return AuthAuthenticator(sharedPreferences, context)
     }
 
 }

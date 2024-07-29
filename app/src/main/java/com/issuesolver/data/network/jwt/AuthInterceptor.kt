@@ -1,12 +1,18 @@
 package com.issuesolver.data.network.jwt
 
+import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.util.Log
+import androidx.navigation.NavController
 import com.google.gson.JsonObject
 import com.issuesolver.data.network.auth.LoginService
 import com.issuesolver.domain.entity.networkModel.login.LoginResponse
 import com.issuesolver.domain.entity.networkModel.login.RefreshTokenRequest
 import com.issuesolver.domain.entity.networkModel.login.RefreshTokenResponse
+import com.issuesolver.presentation.MainActivity
+import com.issuesolver.presentation.navigation.AuthScreen
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.runBlocking
 import okhttp3.Authenticator
 import okhttp3.Interceptor
@@ -91,9 +97,11 @@ class AuthAuthenticator @Inject constructor(
 
 
 class AuthAuthenticator @Inject constructor(
-    private val sharedPreferences: SharedPreferences
+    private val sharedPreferences: SharedPreferences,
+    @ApplicationContext private val context: Context
 ) : Authenticator {
 
+    //private lateinit var navigation: NavController = NavController(sharedPreferences)
     override fun authenticate(route: Route?, response: Response): Request? {
         val refreshToken = sharedPreferences.getString("refresh_token", null)
         if (refreshToken == null) {
@@ -108,6 +116,11 @@ class AuthAuthenticator @Inject constructor(
                 // Логирование неуспешного ответа
                 Log.e("AuthAuthenticator", "Failed to refresh token: ${newTokenResponse.errorBody()?.string()}")
                 sharedPreferences.edit().clear().apply()
+                //navigation.navigate(AuthScreen.Login.route)
+                val navIntent = Intent(context, MainActivity::class.java).apply {
+                    flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                }
+                context.startActivity(navIntent)
                 null
             } else {
                 val newAccessToken = newTokenResponse.body()?.data?.token
