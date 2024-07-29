@@ -27,3 +27,20 @@ object Graph {
     const val AUTHENTICATION = "auth_graph"
     const val MAIN_SCREEN_PAGE = "main_screen_graph"
 }
+
+//
+//@Composable
+//fun RootNavigationGraph() {
+//    val navController = rememberNavController()
+//
+//    NavHost(
+//        navController = navController,
+//        route = Graph.ROOT,
+//        startDestination = Graph.AUTHENTICATION
+//    ) {
+//        authNavGraph(navController)
+//        composable(route = Graph.MAIN_SCREEN_PAGE) {
+//            MainScreen(navController)
+//        }
+//    }
+//}
