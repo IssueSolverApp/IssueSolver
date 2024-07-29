@@ -21,6 +21,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -76,6 +77,15 @@ fun UserCard(
             onDismiss = { showDialog = false }
         )
     }
+
+    var showSheet by remember { mutableStateOf(false) }
+
+    if (showSheet) {
+        BottomSheet() {
+            showSheet = false
+        }
+    }
+
 
     var expanded by remember { mutableStateOf(false) }
     val fullText = description
@@ -280,7 +290,9 @@ fun UserCard(
                         )
                     }
 
-                    IconButton(onClick = { /* Comment action */ }) {
+                    IconButton(onClick = {
+                        showSheet = true
+                    }) {
                         Icon(
                             painter = painterResource(id = R.drawable.coment),
                             contentDescription = null

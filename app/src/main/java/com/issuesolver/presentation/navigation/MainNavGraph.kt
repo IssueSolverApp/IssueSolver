@@ -44,7 +44,7 @@ fun MainNavGraph(navController: NavHostController, paddingValues: PaddingValues,
         composable(
             route=BottomBarScreen.Home.route
         ) {
-            HomeScreen(navController, paddingValues)
+            HomeScreen(navController, paddingValues = paddingValues)
         }
         composable(route = BottomBarScreen.MyRequest.route) {
             MyRequestScreen(navController, paddingValues)
