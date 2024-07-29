@@ -60,7 +60,6 @@ fun HomeScreen(
 //    organization:String,
 //    days:String
     paddingValues: PaddingValues,
-    viewModel: HomeViewModel = hiltViewModel(),
     ) {
     val context = LocalContext.current
     val filterPreferences = remember {
