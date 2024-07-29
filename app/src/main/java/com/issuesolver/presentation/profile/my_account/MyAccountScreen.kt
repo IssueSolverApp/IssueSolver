@@ -81,7 +81,7 @@ fun MyAccountScreen(
         }
 
         StatusR.ERROR -> {
-            Toast.makeText(LocalView.current.context, "Kodun ishlemir X(", Toast.LENGTH_SHORT).show()
+//            Toast.makeText(LocalView.current.context, "Kodun ishlemir X(", Toast.LENGTH_SHORT).show()
 
 
         }

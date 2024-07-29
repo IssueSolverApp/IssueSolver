@@ -87,14 +87,14 @@ fun NewPasswordScreen(
         }
 
         StatusR.ERROR -> {
-            Toast.makeText(LocalView.current.context, "Kodun ishlemir X(", Toast.LENGTH_SHORT).show()
+//            Toast.makeText(LocalView.current.context, "Kodun ishlemir X(", Toast.LENGTH_SHORT).show()
 
 
         }
         StatusR.SUCCESS -> {
             navController.popBackStack()
             viewModel.clearState()
-            Toast.makeText(LocalView.current.context, "Password Changed <3", Toast.LENGTH_SHORT).show()
+//            Toast.makeText(LocalView.current.context, "Password Changed <3", Toast.LENGTH_SHORT).show()
 //            viewModel.clearLoginState()
         }
         else-> {
