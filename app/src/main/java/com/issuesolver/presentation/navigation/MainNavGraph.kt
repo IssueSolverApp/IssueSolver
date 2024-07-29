@@ -3,6 +3,7 @@ package com.issuesolver.presentation.navigation
 import BottomBarScreen
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.lifecycle.ViewModel
@@ -17,10 +18,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
 import com.issuesolver.TestUI
-import com.issuesolver.common.SnackbarManager
 import com.issuesolver.presentation.bottombar.ButtonData
 import com.issuesolver.presentation.newrequest.RequestInfoScreen
 import com.issuesolver.presentation.home.filter.FilterScreen
+import com.issuesolver.presentation.home.home.DetailedRequestScreen
 import com.issuesolver.presentation.newrequest.RequestScreen
 import com.issuesolver.presentation.home.home.HomeScreen
 import com.issuesolver.presentation.myrequest.MyRequestScreen
@@ -33,13 +34,13 @@ import com.issuesolver.presentation.profile.profile.ProfileScreen
 
 
 @Composable
-fun MainNavGraph(navController: NavHostController, paddingValues: PaddingValues, snackbarManager: SnackbarManager
+fun MainNavGraph(navController: NavHostController, paddingValues: PaddingValues,
 
 ) {
     NavHost(
         navController = navController,
         route = Graph.MAIN_SCREEN_PAGE,
-        startDestination = BottomBarScreen.Profile.route
+        startDestination = BottomBarScreen.Home.route
     ) {
         composable(
             route=BottomBarScreen.Home.route
@@ -50,7 +51,8 @@ fun MainNavGraph(navController: NavHostController, paddingValues: PaddingValues,
             MyRequestScreen(navController, paddingValues)
         }
         composable(route = BottomBarScreen.NewRequest.route) {
-            RequestScreen(navController, paddingValues,snackbarManager)
+
+            RequestScreen(navController, paddingValues)
         }
         composable(route = BottomBarScreen.Profile.route) {
             ProfileScreen(navController, paddingValues)
@@ -76,6 +78,13 @@ fun MainNavGraph(navController: NavHostController, paddingValues: PaddingValues,
             //val likeSuccess = it.arguments?.getString("likeSuccess")
            // val email = navBackStack.arguments?.getString("id")
             id?.let { it1 ->  OpenedMyRequestScreen(navController, id= it1) }
+        }
+
+        composable(route = DetailsScreen.DetailsById.route + "/{requestId}") {
+            val id = it.arguments?.getString("requestId")
+            //val likeSuccess = it.arguments?.getString("likeSuccess")
+            // val email = navBackStack.arguments?.getString("id")
+            id?.let { it1 ->  DetailedRequestScreen(navController, id= it1) }
         }
 
         authNavGraph(navController = navController)
@@ -111,6 +120,8 @@ sealed class DetailsScreen(val route: String) {
 
 
     object RequestById : DetailsScreen(route = "Request_By_Id")
+    object DetailsById : DetailsScreen(route = "Details_By_Id")
+
 
 
 }

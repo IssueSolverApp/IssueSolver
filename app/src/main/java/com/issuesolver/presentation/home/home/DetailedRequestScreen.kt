@@ -1,4 +1,4 @@
-package com.issuesolver.presentation.myrequest
+package com.issuesolver.presentation.home.home
 
 import android.util.Log
 import androidx.compose.foundation.Image
@@ -42,21 +42,18 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.issuesolver.R
 import com.issuesolver.common.StatusR
 import com.issuesolver.presentation.common.LoadingOverlay
-import com.issuesolver.presentation.home.home.StatusColors
-import com.issuesolver.presentation.home.home.statusColorMap
+import com.issuesolver.presentation.myrequest.MyRequestViewModel
 
 
 @Composable
-fun OpenedMyRequestScreen(navController:NavController,  id: String,   viewModel: MyRequestViewModel= hiltViewModel()){
+fun DetailedRequestScreen(navController:NavController,  id: String,   viewModel: TestViewModel = hiltViewModel()){
 
 
     LaunchedEffect(Unit) {
@@ -64,11 +61,10 @@ fun OpenedMyRequestScreen(navController:NavController,  id: String,   viewModel:
     }
     val requestById by viewModel.requestById.collectAsState()
 
+    var showLoading by remember { mutableStateOf(false) }
 
-    // Инициализация isLiked после получения данных
     var isLiked by rememberSaveable { mutableStateOf(requestById?.likeSuccess ?: false) }
 
-    // Обновление isLiked, когда requestById меняется
     LaunchedEffect(requestById) {
         requestById?.let {
             isLiked = it.likeSuccess!!
@@ -77,30 +73,6 @@ fun OpenedMyRequestScreen(navController:NavController,  id: String,   viewModel:
     val likeStates by viewModel.likeStates.collectAsState()
     var favoriteState = likeStates[id.toInt()] ?: requestById?.likeSuccess?: false
 
-    val requestByIdState by viewModel.requestByIdState.collectAsState()
-
-    when (requestByIdState?.status) {
-        StatusR.LOADING -> {
-            Log.d("LoginPage", "Loading state triggered")
-
-        }
-
-        StatusR.SUCCESS -> {
-//            isLiked=true
-//            LaunchedEffect(Unit) {
-//                viewModel.getMovies() // Асинхронный запрос данных
-//            }
-
-        }
-
-        StatusR.ERROR -> {
-
-        }
-
-        else -> {
-
-        }
-    }
 
     val statusColors = statusColorMap[ requestById?.status] ?: StatusColors(androidx.compose.ui.graphics.Color.Transparent,
         androidx.compose.ui.graphics.Color.Transparent)
@@ -331,7 +303,7 @@ fun OpenedMyRequestScreen(navController:NavController,  id: String,   viewModel:
                                     modifier = Modifier
                                         .fillMaxWidth()
                                 ) {
-                                    Row {
+
                                         Column(
                                             verticalArrangement = Arrangement.Center,
                                             horizontalAlignment = Alignment.CenterHorizontally
@@ -344,7 +316,7 @@ fun OpenedMyRequestScreen(navController:NavController,  id: String,   viewModel:
                                                 }
                                                 favoriteState = !favoriteState!!
 
-                                             }) {
+                                            }) {
                                                 val icon = if (favoriteState!!) R.drawable.heart_clicked else R.drawable.heart_default
 
                                                 Icon(
@@ -379,28 +351,18 @@ fun OpenedMyRequestScreen(navController:NavController,  id: String,   viewModel:
                                                 )
                                             }
                                             requestById?.commentCount?.let {
-                                            Text(
-                                                text = it.toString(),
-                                                color = Color(0xFF002252),
-                                                fontSize = 10.sp,
-                                                fontWeight = FontWeight.W500
-                                            )
+                                                Text(
+                                                    text = it.toString(),
+                                                    color = Color(0xFF002252),
+                                                    fontSize = 10.sp,
+                                                    fontWeight = FontWeight.W500
+                                                )
                                             }
 
                                         }
 
                                     }
-                                    Row {
-                                        IconButton(onClick = {
-                                            id.toInt()?.let { viewModel.deleteRequestById(it) }
-                                            navController.popBackStack()
-                                        }) {
-                                            Icon(
-                                                painter = painterResource(id = R.drawable.vector),
-                                                contentDescription = null,
-                                            )
-                                        }
-                                    }
+
                                 }
 
                             }
@@ -412,6 +374,10 @@ fun OpenedMyRequestScreen(navController:NavController,  id: String,   viewModel:
 
                 }
 
+
+
+            if(showLoading){
+                LoadingOverlay()
             }
 
         }

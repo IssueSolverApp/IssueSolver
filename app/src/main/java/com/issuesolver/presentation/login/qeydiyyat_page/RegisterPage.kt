@@ -78,9 +78,13 @@ fun RegisterPage(navController: NavController, viewModel: RegisterViewModel = hi
 
     val registerState by viewModel.registerState.collectAsState()
 
+    var showLoading by remember { mutableStateOf(false) }
+
     when (registerState?.status) {
         StatusR.LOADING -> {
-            LoadingOverlay()        }
+            Log.d("LoginPage", "Loading state triggered")
+            showLoading=true
+        }
 
         StatusR.SUCCESS -> {
             navController.navigate(AuthScreen.RegisterOtp.route + "/${uiState.email}")
@@ -120,7 +124,7 @@ fun RegisterPage(navController: NavController, viewModel: RegisterViewModel = hi
                         fontSize = 28.sp,
                         fontWeight = FontWeight.SemiBold,
                         textAlign = TextAlign.Start,
-                        color = Color.Black,
+                        color = Color(0xFF2981FF)
                     )
                     Text(
                         "Zəhmət olmasa, şəxsi məlumatlarınızı daxil edin.",
@@ -474,5 +478,10 @@ fun RegisterPage(navController: NavController, viewModel: RegisterViewModel = hi
                 }
             }
         }
+
+        if(showLoading){
+            LoadingOverlay()
+        }
+
     })
 }

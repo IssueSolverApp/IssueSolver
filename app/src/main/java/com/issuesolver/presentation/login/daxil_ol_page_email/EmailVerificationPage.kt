@@ -96,7 +96,7 @@ fun EmailVerificationPage(
                         fontSize = 28.sp,
                         fontWeight = FontWeight.SemiBold,
                         textAlign = TextAlign.Start,
-                        color = Color.Black,
+                        color = Color(0xFF2981FF),
                         modifier = Modifier
                             .padding(top = 24.dp),
                     )

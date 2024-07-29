@@ -6,7 +6,6 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.issuesolver.common.Resource
-import com.issuesolver.common.SnackbarManager
 import com.issuesolver.common.State
 import com.issuesolver.domain.entity.networkModel.NewRequest
 import com.issuesolver.domain.entity.networkModel.category.CategoryData

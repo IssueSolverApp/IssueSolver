@@ -1,5 +1,7 @@
 package com.issuesolver.presentation.splash
 
+import BottomBarScreen
+import android.content.SharedPreferences
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.Image
 import androidx.compose.material3.Text
@@ -12,21 +14,30 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.animation.core.*
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.issuesolver.R
 import com.issuesolver.presentation.navigation.AuthScreen
+import com.issuesolver.presentation.navigation.Graph
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @Composable
-fun Splash(navController: NavHostController) {
+fun Splash(navController: NavHostController, viewModel: SplashViewModel = hiltViewModel()) {
     val animatableX = remember { Animatable(0f) }  // Initial animation state
     val scope = rememberCoroutineScope()
     var boxWidth by remember { mutableStateOf(0f) }
+    val navigateTo by viewModel.navigateTo.observeAsState()
+
+
+     val token = viewModel.getToken()
+
+
 
     LaunchedEffect(Unit) {
         scope.launch {
@@ -38,11 +49,22 @@ fun Splash(navController: NavHostController) {
                 )
             )
             delay(500)
-            navController.navigate(AuthScreen.Login.route) {
-                popUpTo(navController.graph.startDestinationId)
-                launchSingleTop = true
+            if (token!=null && token!=""){
+                navController.navigate(Graph.MAIN_SCREEN_PAGE)
+            }else{
+                navController.navigate(AuthScreen.Login.route)
             }
-        }
+
+            //
+
+//            navigateTo?.let { route ->
+//                navController.navigate(route) {
+//                    popUpTo(navController.graph.startDestinationId)
+//                    launchSingleTop = true
+//                }
+//            //
+//        }
+    }
     }
 
     Box(

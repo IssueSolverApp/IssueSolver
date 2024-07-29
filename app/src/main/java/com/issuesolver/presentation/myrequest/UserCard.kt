@@ -67,9 +67,9 @@ fun UserCard(
 //        )
 
         PopUp(
-            text = "Hesabınızı silmək istədiyinizə əminsiniz?",
+            text = "Sorğunuzu ləğv etməyə əminsiniz?",
             confirm = "Bəli",
-            dismiss = "Ləğv et",
+            dismiss = "Xeyr",
             onConfirmation = {
                 // deletee
             },
@@ -276,7 +276,7 @@ fun UserCard(
                         Icon(
                             painter = painterResource(id = icon),
                             contentDescription = null,
-                            tint = androidx.compose.ui.graphics.Color.Red
+                            tint = if (favoriteState!!) Color.Red else Color(0xFF002252)
                         )
                     }
 

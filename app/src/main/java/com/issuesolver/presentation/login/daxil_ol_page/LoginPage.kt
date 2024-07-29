@@ -2,6 +2,7 @@ package com.issuesolver.presentation.login.daxil_ol_page
 
 import BottomBarScreen
 import android.annotation.SuppressLint
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -60,11 +61,13 @@ fun LoginPage(
 
     val loginState by viewModel.signInState.collectAsState()
 
+    var showLoading by remember { mutableStateOf(false) }
+
     when(loginState?.status){
 
         StatusR.LOADING -> {
-
-            LoadingOverlay()
+            Log.d("LoginPage", "Loading state triggered")
+            showLoading=true
 
         }
 
@@ -92,7 +95,10 @@ fun LoginPage(
             scrollState.scrollBy(keyboardHeight.toFloat())
         }
     }
+
     Scaffold(content = { padding ->
+
+
         Box(
             modifier = Modifier
                 .fillMaxSize()
@@ -115,7 +121,7 @@ fun LoginPage(
                         fontSize = 28.sp,
                         fontWeight = FontWeight.SemiBold,
                         textAlign = TextAlign.Start,
-                        color = Color.Black
+                        color = Color(0xFF2981FF)
                     )
                     Text(
                         "Zəhmət olmasa, giriş üçün məlumatlarınızı daxil edin.",
@@ -133,7 +139,8 @@ fun LoginPage(
                     color = Color(0xFF2981FF)
                 )
                 Column(
-                    Modifier.padding(top = 28.dp)
+                    Modifier
+                        .padding(top = 28.dp)
                         .verticalScroll(rememberScrollState())
 
                 ) {
@@ -327,6 +334,9 @@ fun LoginPage(
                     }
                 }
             }
+        }
+        if(showLoading){
+            LoadingOverlay()
         }
     }
     )

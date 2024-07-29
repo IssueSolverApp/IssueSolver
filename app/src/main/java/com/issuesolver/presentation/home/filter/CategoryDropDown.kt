@@ -35,7 +35,7 @@ fun CategoryDropDown (category: String, placeHolder: String, viewModel: FilterVi
 
     val categoryList by viewModel.category.collectAsState()
 
-    Column(Modifier.padding(start = 20.dp, end = 20.dp, top = 16.dp)) {
+    Column(Modifier.padding( top = 16.dp)) {
         Text(
             text = placeHolder,
             fontSize = 15.sp,

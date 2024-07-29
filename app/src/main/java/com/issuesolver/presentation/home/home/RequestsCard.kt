@@ -33,9 +33,11 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -56,19 +58,51 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.issuesolver.R
 import com.issuesolver.common.AlertDialogExample
+import com.issuesolver.common.PopUp
+import com.issuesolver.common.StatusR
+import com.issuesolver.presentation.myrequest.MyRequestViewModel
+import com.issuesolver.presentation.navigation.DetailsScreen
 import kotlin.math.roundToInt
 
 @Composable
 fun RequestsCard(
     fullName: String?,
-             status: String?,
-             description: String?,
-             categoryName:String?
-) {
+    status: String?,
+    description: String?,
+    categoryName:String?,
+    viewModel: TestViewModel,
+    requestId: Int?,
+    likeSuccess: Boolean?,
+    onClick: () -> Unit,
+    ) {
+    var showDialog by remember { mutableStateOf(false) }
+
+    if (showDialog) {
+
+//        AlertDialogExample(
+//            message = "Sorğular yalnız "Gözləmədə" statusunda silinə bilər.",
+//            onConfirmation = { showDialog = false }
+//        )
+
+        PopUp(
+            text = "Sorğunuzu ləğv etməyə əminsiniz?",
+            confirm = "Bəli",
+            dismiss = "Xeyr",
+            onConfirmation = {
+                // deletee
+            },
+            onDismiss = { showDialog = false }
+        )
+    }
+
+
     var expanded by remember { mutableStateOf(false) }
-    val fullText =description
+    val fullText = description
+    val fullName = fullName
+
     val additionalText = "daha çox göstər..."
     val approximateCharacterPerLine = 50
     val maxLines = 3
@@ -80,22 +114,56 @@ fun RequestsCard(
         fullText
     }
 
-    val statusColors = statusColorMap[status] ?: StatusColors(androidx.compose.ui.graphics.Color.Transparent,
-        androidx.compose.ui.graphics.Color.Transparent)
+    val statusColors = statusColorMap[status] ?: StatusColors(
+        androidx.compose.ui.graphics.Color.Transparent,
+        androidx.compose.ui.graphics.Color.Transparent
+    )
+
+
+    val likeStates by viewModel.likeStates.collectAsState()
+    var favoriteState = likeStates[requestId] ?: likeSuccess
+
+
+    val isLike by viewModel.isLiked.collectAsState()
+    var isLiked by rememberSaveable { mutableStateOf(likeSuccess) }
+
+
+    when (isLike.status) {
+        StatusR.LOADING -> {
+
+        }
+
+        StatusR.SUCCESS -> {
+
+
+        }
+
+        StatusR.ERROR -> {
+
+        }
+
+        else -> {
+
+        }
+    }
+
 
 
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .wrapContentHeight(),
+            .wrapContentHeight()
+            .clickable(onClick = onClick),
         colors = CardDefaults.cardColors(
             containerColor = androidx.compose.ui.graphics.Color.White
         )
     ) {
 
-        Column(modifier = Modifier
-            .wrapContentHeight()
-            .padding(16.dp)) {
+        Column(
+            modifier = Modifier
+                .wrapContentHeight()
+                .padding(16.dp)
+        ) {
 
             Row(
                 verticalAlignment = Alignment.CenterVertically,
@@ -114,14 +182,15 @@ fun RequestsCard(
                     )
 
                     Text(
-                        text = "Aynur Qəmbərova",
+                        text = fullName ?: "",
                         style = MaterialTheme.typography.bodyMedium,
                         color = Color(0xFF2981FF),
-                        modifier = Modifier.padding(start=6.dp),
+                        modifier = Modifier.padding(start = 6.dp),
                         fontSize = 15.sp,
                         fontWeight = FontWeight.W400
-                        )
+                    )
                 }
+
 
                 Row(
                     modifier = Modifier
@@ -148,112 +217,138 @@ fun RequestsCard(
                             color = statusColors.textColor,
                             fontSize = 13.sp,
                             fontWeight = FontWeight.W400,
-                            modifier = Modifier.padding(start=8.dp,end=20.dp)
+                            modifier = Modifier.padding(start = 8.dp, end = 20.dp)
                         )
                     }
                 }
 
-
             }
 
-            Divider(
-                thickness = 0.5.dp,
-                color = Color(0xFFc3dcff),
-                modifier = Modifier.padding(
-                    top = 8.dp,
-                    bottom = 16.dp
-                )
+
+        Divider(
+            thickness = 0.5.dp,
+            color = Color(0xFFc3dcff),
+            modifier = Modifier.padding(
+                top = 8.dp,
+                bottom = 16.dp
             )
+        )
 
 //                    Spacer(modifier = Modifier.width(5.dp))
 
-            categoryName?.let {
-                Text(
-                    text = it,
-                    color = Color(0xFF8C8C8C),
-                    fontSize = 13.sp,
-                    fontWeight = FontWeight.W400,
-                    modifier = Modifier
-                        .clip(shape = RoundedCornerShape(50.dp))
-                        .background(color = Color(0xFFF0F4F9))
-                        .padding(top=8.dp, bottom = 8.dp, start = 11.dp, end = 11.dp)
-                )
-            }
+        categoryName?.let {
+            Text(
+                text = it,
+                color = Color(0xFF8C8C8C),
+                fontSize = 13.sp,
+                fontWeight = FontWeight.W400,
+                modifier = Modifier
+                    .clip(shape = RoundedCornerShape(50.dp))
+                    .background(color = Color(0xFFF0F4F9))
+                    .padding(top = 8.dp, bottom = 8.dp, start = 11.dp, end = 11.dp)
+            )
+        }
 
 
 
 
-            Column(modifier = Modifier.padding(top = 8.dp)) {
-                val textToShow = if (expanded) fullText else shortText
-                val annotatedString = buildAnnotatedString {
-                    append(textToShow)
-                    if (!expanded && fullText.length > maxTextLength) {
-                        withStyle(
-                            style = SpanStyle(
-                                color = Color(0xFF2981FF),
-                                fontWeight = FontWeight.W500
-                            )
-                        ) {
-                            append("  daha çox göstər")
-                        }
+        Column(modifier = Modifier.padding(top = 8.dp)) {
+            val textToShow = if (expanded) fullText else shortText
+            val annotatedString = buildAnnotatedString {
+                append(textToShow)
+                if (!expanded && fullText.length > maxTextLength) {
+                    withStyle(
+                        style = SpanStyle(
+                            color = Color(0xFF2981FF),
+                            fontWeight = FontWeight.W500
+                        ),
+                    ) {
+                        append("  daha çox göstər")
                     }
                 }
-
-                ClickableText(
-                    text = annotatedString,
-                    onClick = { offset ->
-                        if (annotatedString.getStringAnnotations(tag = "read_more", start = offset, end = offset).isNotEmpty()) {
-                            expanded = !expanded
-                        }
-                    },
-                    style = TextStyle(
-                        color = Color(0xFF6E6E6E),
-                        fontSize = 15.sp,
-                        fontWeight = FontWeight.Medium
-                    )
-                )
             }
 
-
-
-            Divider(
-                thickness = 0.5.dp,
-                color = Color(0xFFc3dcff),
-                modifier = Modifier.padding(
-                    top = 16.dp,
+            ClickableText(
+                text = annotatedString,
+                onClick = { offset ->
+                    if (annotatedString.getStringAnnotations(
+                            tag = "read_more",
+                            start = offset,
+                            end = offset
+                        ).isNotEmpty()
+                    ) {
+                        expanded = !expanded
+                    }
+                },
+                style = TextStyle(
+                    color = Color(0xFF6E6E6E),
+                    fontSize = 15.sp,
+                    fontWeight = FontWeight.Medium
                 )
             )
+        }
 
-            Row(
-                horizontalArrangement = Arrangement.SpaceBetween,
-                modifier = Modifier
-                    .fillMaxWidth()
-            ) {
-                Row {
-                    IconButton(onClick = { /* Like action */ }) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.heart_default),
-                            contentDescription = null
-                        )
-                    }
 
-                    IconButton(onClick = { /* Like action */ }) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.coment),
-                            contentDescription = null
-                        )
+
+        Divider(
+            thickness = 0.5.dp,
+            color = Color(0xFFc3dcff),
+            modifier = Modifier.padding(
+                top = 16.dp,
+            )
+        )
+
+        Row(
+            horizontalArrangement = Arrangement.SpaceBetween,
+            modifier = Modifier
+                .fillMaxWidth()
+        ) {
+            Row {
+                IconButton(onClick = {
+//                        if(favoriteState!=likeSuccess){
+//
+//                        }
+                    if (favoriteState!!) {
+                        viewModel.removeLike(requestId = requestId)
+//                            favoriteState=false
+
+                    } else {
+                        viewModel.sendLike(requestId = requestId)
+//                            favoriteState=true
                     }
+                    favoriteState = !favoriteState!!
+
+                }) {
+                    val icon =
+                        if (favoriteState!!) R.drawable.heart_clicked else R.drawable.heart_default
+                    Icon(
+                        painter = painterResource(id = icon),
+                        contentDescription = null,
+                        tint = if (favoriteState!!) androidx.compose.ui.graphics.Color.Red else Color(
+                            0xFF002252
+                        )
+                    )
+                }
+
+                IconButton(onClick = { /* Comment action */ }) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.coment),
+                        contentDescription = null
+                    )
                 }
             }
-
         }
 
     }
+    }
+}
+
+
     //}
 
 
 
-}
+
 //@Preview(showBackground = true, backgroundColor = 0xF0F4F9)
 //@Composable
 //fun PreviewUserCard() {
