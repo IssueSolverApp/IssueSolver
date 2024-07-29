@@ -1,24 +1,39 @@
 package com.issuesolver.presentation.myrequest
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.BottomSheetScaffoldState
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextFieldColors
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
@@ -30,10 +45,16 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.issuesolver.R
 import kotlinx.coroutines.launch
 
@@ -48,7 +69,7 @@ fun CustomDragHandle() {
             .fillMaxWidth()
             .height(4.dp) // Высота DragHandle
             .background(Color.Blue) // Ваш цвет
-            .padding(vertical = 8.dp)
+
 
     )
 }
@@ -57,8 +78,18 @@ fun CustomDragHandle() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BottomSheet(onDismiss: () -> Unit) {
+fun BottomSheet(
+    onDismiss: () -> Unit
+) {
     val modalBottomSheetState = rememberModalBottomSheetState()
+    val coroutineScope = rememberCoroutineScope()
+    var textFieldValue by remember { mutableStateOf("") }
+
+    LaunchedEffect(key1 = true) {
+        coroutineScope.launch {
+            modalBottomSheetState.show()
+        }
+    }
 
     ModalBottomSheet(
         onDismissRequest = { onDismiss() },
@@ -66,8 +97,9 @@ fun BottomSheet(onDismiss: () -> Unit) {
         dragHandle = { BottomSheetDefaults.ScrimColor.red },
         modifier = Modifier.fillMaxSize()
     ) {
-        Box(modifier = Modifier.fillMaxSize()) {
-            // Иконка для перетаскивания
+        Box(modifier = Modifier.fillMaxSize()
+            .navigationBarsPadding()
+        ) {
             Icon(
                 painter = painterResource(id = R.drawable.tab), // Замените на вашу иконку
                 contentDescription = null,
@@ -79,16 +111,79 @@ fun BottomSheet(onDismiss: () -> Unit) {
                 tint = Color(0xFFDEDEDE)// Размер иконки
             )
 
-            Column(modifier = Modifier
-                .padding(top = 24.dp)
-                .align(Alignment.TopCenter)) {
+            Column(modifier = Modifier.fillMaxSize()) {
+                LazyColumn(modifier = Modifier.weight(1f)) {
+                    items(20) { index ->
+                        CommentItem()
+                    }
+                }
+
+                Row(
+                    modifier = Modifier.padding(start = 20.dp, end = 20.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+
+                    )  {
+                    OutlinedTextField(
+                        value = "",
+                        onValueChange = { },
+                        placeholder = {
+                            Text(
+                                "Rəyinizi yazın",
+                                color =Color(0xFF0269FB).copy(alpha = 0.65f),
+                                fontSize = 15.sp,
+                            )
+
+                        },
+                        singleLine = true,
+                        keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 12.dp, bottom = 12.dp)
+                            .border(
+                                0.5.dp,
+                                Color(0xFF0269FB).copy(alpha = 0.28f),
+                                CircleShape
+                            )
+                            .clip(CircleShape)
+                                .weight(1f)
+                        ,
+                        colors = TextFieldDefaults.colors(
+                            errorContainerColor = Color(0xFFdfedff),
+                            focusedContainerColor = Color(0xFFdfedff),
+                            disabledContainerColor = Color(0xFFdfedff),
+                            unfocusedContainerColor = Color(0xFFcdfedff),
+                            focusedIndicatorColor = Color.Transparent,
+                            disabledIndicatorColor=Color.Transparent,
+                            unfocusedIndicatorColor =Color.Transparent,
+                            cursorColor = Color(0xFF0269FB),
+
+                            )
+                    )
+
+                        Image(
+                            painter = painterResource(R.drawable.up_icon),
+                            contentDescription = "up_icon",
+                            modifier = Modifier
+                                .size(60.dp)
+                                .padding(start = 10.dp)
+                        )
+                    }
+
+                }
+
 
 
             }
 
-                // CountryList()
-
         }
+
     }
+
+
+
+@Preview(showBackground = true)
+@Composable
+fun PreviewBottomSheet() {
+    BottomSheet(onDismiss = {})
 }
 

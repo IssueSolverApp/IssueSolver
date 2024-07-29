@@ -39,6 +39,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.paging.LoadState
+import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.issuesolver.R
 import com.issuesolver.common.PlaceholderShimmerCard
@@ -59,7 +60,6 @@ fun HomeScreen(
 //    organization:String,
 //    days:String
 
-    paddingValues: PaddingValues,
     ) {
     val context = LocalContext.current
     val filterPreferences = remember {
@@ -170,6 +170,7 @@ fun HomeScreen(
                             color = Color(0xFF2981FF),
                         )
                     }
+                    Row() {
                         Image(
                             painter = painterResource(R.drawable.group),
                             contentDescription = "filter",
@@ -179,8 +180,10 @@ fun HomeScreen(
                                     navController.navigate(DetailsScreen.HomeFilterScreen.route)
                                 }
                         )
-
-
+                        Image(
+                            painter = painterResource(R.drawable.group__1_),
+                            contentDescription = "notifications" )
+                    }
                 }
             }
             Divider(
@@ -198,12 +201,11 @@ fun HomeScreen(
                             status = filterData.status,
                             description = filterData.description,
                             categoryName = filterData.category?.categoryName,
-                            viewModel = viewModel,
+                            viewModel=viewModel,
                             requestId = filterData.requestId,
-                            likeSuccess=filterData.likeSuccess,
+                            likeSuccess = filterData.likeSuccess,
                             onClick = {
 
-                                //navController.navigate("requestDetail/${filterData.requestId}")
                                 navController.navigate(DetailsScreen.DetailsById.route+ "/${filterData.requestId}")
                             }
                         )
