@@ -1,6 +1,7 @@
 package com.issuesolver.presentation.profile.new_password
 
 import BottomBarScreen
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -75,12 +76,14 @@ fun NewPasswordScreen(
 
     val uiState by viewModel.uiState.collectAsState()
     val deleteAccountState by viewModel.profileState.collectAsState()
+    var showLoading by remember { mutableStateOf(false) }
+
     when(deleteAccountState?.status){
 
         StatusR.LOADING -> {
 
-            LoadingOverlay()
-
+            Log.d("LoginPage", "Loading state triggered")
+            showLoading=true
         }
 
         StatusR.ERROR -> {
@@ -399,6 +402,10 @@ fun NewPasswordScreen(
                         modifier = Modifier.fillMaxWidth()
                     )
                 }
+            }
+
+            if(showLoading){
+                LoadingOverlay()
             }
         }
     )

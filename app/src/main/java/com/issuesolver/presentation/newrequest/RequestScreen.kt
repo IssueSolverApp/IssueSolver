@@ -60,7 +60,7 @@ fun RequestScreen(
 
     LaunchedEffect(Unit) {
         scope.launch {
-            delay(2000)
+            delay(1500)
             snackbarHostState.currentSnackbarData?.dismiss()
         }
     }

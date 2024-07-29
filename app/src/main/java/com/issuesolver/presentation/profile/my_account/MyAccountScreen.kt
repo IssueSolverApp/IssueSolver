@@ -1,6 +1,7 @@
 package com.issuesolver.presentation.profile.my_account
 
 import BottomBarScreen
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -30,6 +31,9 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -66,12 +70,14 @@ fun MyAccountScreen(
 
     val uiState by viewModel.uiState.collectAsState()
     val updateFullNameState by viewModel.profileState2.collectAsState()
+    var showLoading by remember { mutableStateOf(false) }
+
     when(updateFullNameState?.status){
 
         StatusR.LOADING -> {
 
-            LoadingOverlay()
-
+            Log.d("LoginPage", "Loading state triggered")
+            showLoading=true
         }
 
         StatusR.ERROR -> {
@@ -283,6 +289,10 @@ fun MyAccountScreen(
                 )
             }
         }
+
+            if(showLoading){
+                LoadingOverlay()
+            }
     }
     )
 }

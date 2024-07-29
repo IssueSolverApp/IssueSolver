@@ -19,9 +19,7 @@ import androidx.compose.ui.unit.dp
 fun LoadingOverlay() {
     Box(
         modifier = Modifier
-            .fillMaxSize()
-            .background(Color.Gray.copy(alpha = 0.5f))
-            .blur(16.dp),
+            .fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
         CircularProgressIndicator(

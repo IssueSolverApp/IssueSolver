@@ -1,6 +1,7 @@
 package com.issuesolver.presentation.profile.enter_password
 
 import BottomBarScreen
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -74,11 +75,13 @@ fun DeleteAccountScreen(
     var showPassword1 by remember { mutableStateOf(value = false) }
     val uiState by viewModel.uiState.collectAsState()
     val deleteAccountState by viewModel.profileState.collectAsState()
+    var showLoading by remember { mutableStateOf(false) }
+
     when(deleteAccountState?.status){
 
         StatusR.LOADING -> {
-            LoadingOverlay()
-        }
+            Log.d("LoginPage", "Loading state triggered")
+            showLoading=true        }
 
         StatusR.ERROR -> {
             Toast.makeText(LocalView.current.context, "Kodun ishlemir X(", Toast.LENGTH_SHORT).show()
@@ -273,6 +276,10 @@ fun DeleteAccountScreen(
                 )
             }
         }
+
+            if(showLoading){
+                LoadingOverlay()
+            }
     }
     )
 }

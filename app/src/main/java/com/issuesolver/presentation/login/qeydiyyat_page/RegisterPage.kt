@@ -78,9 +78,13 @@ fun RegisterPage(navController: NavController, viewModel: RegisterViewModel = hi
 
     val registerState by viewModel.registerState.collectAsState()
 
+    var showLoading by remember { mutableStateOf(false) }
+
     when (registerState?.status) {
         StatusR.LOADING -> {
-            LoadingOverlay()        }
+            Log.d("LoginPage", "Loading state triggered")
+            showLoading=true
+        }
 
         StatusR.SUCCESS -> {
             navController.navigate(AuthScreen.RegisterOtp.route + "/${uiState.email}")
@@ -474,5 +478,10 @@ fun RegisterPage(navController: NavController, viewModel: RegisterViewModel = hi
                 }
             }
         }
+
+        if(showLoading){
+            LoadingOverlay()
+        }
+
     })
 }

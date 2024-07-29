@@ -78,6 +78,8 @@ fun RegisterOtpCodePage(
     var otpValue by remember { mutableStateOf(TextFieldValue("")) }
     var isOtpFilled by remember { mutableStateOf(false) }
     val focusRequester = remember { FocusRequester() }
+    var showLoading by remember { mutableStateOf(false) }
+
     val keyboardController = LocalSoftwareKeyboardController.current
 
     LaunchedEffect(Unit) {
@@ -107,7 +109,9 @@ fun RegisterOtpCodePage(
 
     when (confirmOtpState.status) {
         StatusR.LOADING -> {
-            LoadingOverlay()        }
+            Log.d("LoginPage", "Loading state triggered")
+            showLoading=true
+        }
 
         StatusR.SUCCESS -> {
             navController.navigate(AuthScreen.Login.route)
@@ -285,6 +289,10 @@ fun RegisterOtpCodePage(
                     color = MaterialTheme.colorScheme.primary
                 )
             }
+        }
+
+        if(showLoading){
+            LoadingOverlay()
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.issuesolver.presentation.myrequest
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -32,6 +33,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -48,6 +50,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.issuesolver.R
 import com.issuesolver.common.StatusR
+import com.issuesolver.presentation.common.LoadingOverlay
 import com.issuesolver.presentation.home.home.StatusColors
 import com.issuesolver.presentation.home.home.statusColorMap
 
@@ -60,6 +63,8 @@ fun OpenedMyRequestScreen(navController:NavController,  id: String,   viewModel:
         viewModel.getRequestById(id.toInt()) // Асинхронный запрос данных
     }
     val requestById by viewModel.requestById.collectAsState()
+
+    var showLoading by remember { mutableStateOf(false) }
 
     // Инициализация isLiked после получения данных
     var isLiked by rememberSaveable { mutableStateOf(requestById?.likeSuccess ?: false) }
@@ -77,6 +82,8 @@ fun OpenedMyRequestScreen(navController:NavController,  id: String,   viewModel:
 
     when (deleteRequest.status) {
         StatusR.LOADING -> {
+            Log.d("LoginPage", "Loading state triggered")
+            showLoading=true
 
         }
 
@@ -408,6 +415,11 @@ fun OpenedMyRequestScreen(navController:NavController,  id: String,   viewModel:
                 }
 
             }
+
+            if(showLoading){
+                LoadingOverlay()
+            }
+
         }
 
     )
