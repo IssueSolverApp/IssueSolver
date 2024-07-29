@@ -170,7 +170,6 @@ fun HomeScreen(
                             color = Color(0xFF2981FF),
                         )
                     }
-                    Row() {
                         Image(
                             painter = painterResource(R.drawable.group),
                             contentDescription = "filter",
@@ -180,10 +179,8 @@ fun HomeScreen(
                                     navController.navigate(DetailsScreen.HomeFilterScreen.route)
                                 }
                         )
-                        Image(
-                            painter = painterResource(R.drawable.group__1_),
-                            contentDescription = "notifications" )
-                    }
+
+
                 }
             }
             Divider(

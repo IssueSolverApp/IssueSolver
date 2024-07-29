@@ -91,7 +91,7 @@ fun FilterScreen(
                 fontSize = 28.sp,
                 fontWeight = FontWeight.W600,
                 textAlign = TextAlign.Start,
-                color = Color.Black,
+                color = Color(0xFF2981FF),
                 modifier = Modifier.padding(bottom = 20.dp)
 
             )

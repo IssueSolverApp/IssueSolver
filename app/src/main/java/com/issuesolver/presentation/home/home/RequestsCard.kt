@@ -69,6 +69,8 @@ fun RequestsCard(
 ) {
     var expanded by remember { mutableStateOf(false) }
     val fullText =description
+    val fullName =fullName
+
     val additionalText = "daha çox göstər..."
     val approximateCharacterPerLine = 50
     val maxLines = 3
@@ -113,14 +115,16 @@ fun RequestsCard(
                             .size(32.dp)
                     )
 
-                    Text(
-                        text = "Aynur Qəmbərova",
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = Color(0xFF2981FF),
-                        modifier = Modifier.padding(start=6.dp),
-                        fontSize = 15.sp,
-                        fontWeight = FontWeight.W400
+                    if (fullName != null) {
+                        Text(
+                            text = fullName,
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = Color(0xFF2981FF),
+                            modifier = Modifier.padding(start=6.dp),
+                            fontSize = 15.sp,
+                            fontWeight = FontWeight.W400
                         )
+                    }
                 }
 
                 Row(

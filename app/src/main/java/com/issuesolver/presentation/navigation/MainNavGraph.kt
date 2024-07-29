@@ -39,7 +39,7 @@ fun MainNavGraph(navController: NavHostController, paddingValues: PaddingValues,
     NavHost(
         navController = navController,
         route = Graph.MAIN_SCREEN_PAGE,
-        startDestination = BottomBarScreen.Profile.route
+        startDestination = BottomBarScreen.Home.route
     ) {
         composable(
             route=BottomBarScreen.Home.route

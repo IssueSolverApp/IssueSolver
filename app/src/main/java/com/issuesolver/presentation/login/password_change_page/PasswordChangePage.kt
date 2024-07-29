@@ -100,7 +100,7 @@ fun PasswordChangePage(
                         fontSize = 28.sp,
                         fontWeight = FontWeight.SemiBold,
                         textAlign = TextAlign.Start,
-                        color = Color.Black,
+                        color = Color(0xFF2981FF)
                         )
                     Text(
                         "Daxil olmaq üçün yeni şifrə təyin edin.",

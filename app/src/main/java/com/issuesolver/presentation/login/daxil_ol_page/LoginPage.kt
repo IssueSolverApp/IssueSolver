@@ -115,7 +115,7 @@ fun LoginPage(
                         fontSize = 28.sp,
                         fontWeight = FontWeight.SemiBold,
                         textAlign = TextAlign.Start,
-                        color = Color.Black
+                        color = Color(0xFF2981FF)
                     )
                     Text(
                         "Zəhmət olmasa, giriş üçün məlumatlarınızı daxil edin.",
