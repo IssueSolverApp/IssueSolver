@@ -53,8 +53,7 @@ import kotlinx.coroutines.delay
 fun HomeScreen(
     navController: NavController,
     paddingValues: PaddingValues,
-    viewModel: FilterViewModel = hiltViewModel(),
-    testViewModel: TestViewModel = hiltViewModel(),
+    viewModel: TestViewModel = hiltViewModel(),
 //    status:String,
 //    category:String,
 //    organization:String,
@@ -79,24 +78,24 @@ fun HomeScreen(
 
 
     LaunchedEffect(status, categoryName, organizationName, days) {
-        testViewModel.filter(status,categoryName, organizationName, days)
+        viewModel.filter(status,categoryName, organizationName, days)
 
         clearFilterPreferences(context)
     }
 
 
 
-    val requestResults = testViewModel.filterResults.collectAsLazyPagingItems()
+    val requestResults = viewModel.filterResults.collectAsLazyPagingItems()
     //val filterResults = testViewModel.filterResults.collectAsLazyPagingItems()
     //testViewModel.filter("", "", "", "")
 //---------------------------------------------
-    val selectedStatus by testViewModel.selectedStatus.collectAsState()
+    val selectedStatus by viewModel.selectedStatus.collectAsState()
     //var status by remember { mutableStateOf(selectedStatus )  }
 
     //println(filterResults)
     //val requestResults = testViewModel.requestResults.collectAsLazyPagingItems()
 
-    testViewModel.request()
+    viewModel.request()
 
 //
 //        val selectedStatus by viewModel.selectedStatus.collectAsState()
@@ -120,7 +119,7 @@ fun HomeScreen(
 //    }
     //val selectedStatus by testViewModel.selectedStatus.collectAsState()
     //val moviePagingItems: LazyPagingItems<FilterData> = viewModel.requestsState.collectAsLazyPagingItems()
-    val uiState by testViewModel.uiState.collectAsState()
+    val uiState by viewModel.uiState.collectAsState()
 
 //    LaunchedEffect(Unit) {
 //        testViewModel.setFilterParams(TestViewModel.FilterParams()) //Baxılır
@@ -197,7 +196,15 @@ fun HomeScreen(
                             fullName = filterData.fullName,
                             status = filterData.status,
                             description = filterData.description,
-                            categoryName = filterData.category?.categoryName
+                            categoryName = filterData.category?.categoryName,
+                            viewModel = viewModel,
+                            requestId = filterData.requestId,
+                            likeSuccess=filterData.likeSuccess,
+                            onClick = {
+
+                                //navController.navigate("requestDetail/${filterData.requestId}")
+                                navController.navigate(DetailsScreen.DetailsById.route+ "/${filterData.requestId}")
+                            }
                         )
                     }
                 }

@@ -21,6 +21,7 @@ import com.issuesolver.TestUI
 import com.issuesolver.presentation.bottombar.ButtonData
 import com.issuesolver.presentation.newrequest.RequestInfoScreen
 import com.issuesolver.presentation.home.filter.FilterScreen
+import com.issuesolver.presentation.home.home.DetailedRequestScreen
 import com.issuesolver.presentation.newrequest.RequestScreen
 import com.issuesolver.presentation.home.home.HomeScreen
 import com.issuesolver.presentation.myrequest.MyRequestScreen
@@ -79,6 +80,13 @@ fun MainNavGraph(navController: NavHostController, paddingValues: PaddingValues,
             id?.let { it1 ->  OpenedMyRequestScreen(navController, id= it1) }
         }
 
+        composable(route = DetailsScreen.DetailsById.route + "/{requestId}") {
+            val id = it.arguments?.getString("requestId")
+            //val likeSuccess = it.arguments?.getString("likeSuccess")
+            // val email = navBackStack.arguments?.getString("id")
+            id?.let { it1 ->  DetailedRequestScreen(navController, id= it1) }
+        }
+
         authNavGraph(navController = navController)
 
     }
@@ -112,6 +120,8 @@ sealed class DetailsScreen(val route: String) {
 
 
     object RequestById : DetailsScreen(route = "Request_By_Id")
+    object DetailsById : DetailsScreen(route = "Details_By_Id")
+
 
 
 }
