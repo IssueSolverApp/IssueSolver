@@ -49,6 +49,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.issuesolver.R
+import com.issuesolver.common.AlertDialogExample
+import com.issuesolver.common.PopUp
 import com.issuesolver.common.StatusR
 import com.issuesolver.presentation.common.LoadingOverlay
 import com.issuesolver.presentation.home.home.StatusColors
@@ -104,6 +106,28 @@ fun OpenedMyRequestScreen(navController:NavController,  id: String,   viewModel:
 
     val statusColors = statusColorMap[ requestById?.status] ?: StatusColors(androidx.compose.ui.graphics.Color.Transparent,
         androidx.compose.ui.graphics.Color.Transparent)
+
+    var showDialog by remember { mutableStateOf(false) }
+    if (showDialog) {
+        if(requestById?.status != "Gözləmədə") {
+
+            AlertDialogExample(
+                message = "Sorğular yalnız \"Gözləmədə\" statusunda silinə bilər.",
+                onConfirmation = { showDialog = false }
+            )
+        } else
+            PopUp(
+                text = "Sorğunuzu silməyə əminsiniz?",
+                confirm = "Bəli",
+                dismiss = "Xeyr",
+                onConfirmation = {
+                    id.toInt()?.let { viewModel.deleteRequestById(it) }
+                    navController.popBackStack()
+                },
+                onDismiss = { showDialog = false }
+            )
+    }
+
 
     Scaffold(
         modifier = Modifier
@@ -392,8 +416,7 @@ fun OpenedMyRequestScreen(navController:NavController,  id: String,   viewModel:
                                     }
                                     Row {
                                         IconButton(onClick = {
-                                            id.toInt()?.let { viewModel.deleteRequestById(it) }
-                                            navController.popBackStack()
+                                            showDialog = true
                                         }) {
                                             Icon(
                                                 painter = painterResource(id = R.drawable.vector),

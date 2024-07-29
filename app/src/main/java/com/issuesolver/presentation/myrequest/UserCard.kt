@@ -41,6 +41,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.issuesolver.R
+import com.issuesolver.common.AlertDialogExample
 import com.issuesolver.common.StatusR
 import com.issuesolver.common.PopUp
 import com.issuesolver.presentation.home.home.StatusColors
@@ -60,23 +61,7 @@ fun UserCard(
 ) {
     var showDialog by remember { mutableStateOf(false) }
 
-    if (showDialog) {
 
-//        AlertDialogExample(
-//            message = "Sorğular yalnız "Gözləmədə" statusunda silinə bilər.",
-//            onConfirmation = { showDialog = false }
-//        )
-
-        PopUp(
-            text = "Sorğunuzu ləğv etməyə əminsiniz?",
-            confirm = "Bəli",
-            dismiss = "Xeyr",
-            onConfirmation = {
-                // deletee
-            },
-            onDismiss = { showDialog = false }
-        )
-    }
 
     var showSheet by remember { mutableStateOf(false) }
 
@@ -134,7 +119,25 @@ fun UserCard(
 
 
 
+    if (showDialog) {
+        if(status != "Gözləmədə") {
 
+            AlertDialogExample(
+                message = "Sorğular yalnız \"Gözləmədə\" statusunda silinə bilər.",
+                onConfirmation = { showDialog = false }
+            )
+        } else
+            PopUp(
+                text = "Sorğunuzu silməyə əminsiniz?",
+                confirm = "Bəli",
+                dismiss = "Xeyr",
+                onConfirmation = {
+                    requestId?.let { viewModel.deleteRequestById(it) }
+                    showDialog = false
+                },
+                onDismiss = { showDialog = false }
+            )
+    }
 
     Card(
         modifier = Modifier
@@ -302,7 +305,7 @@ fun UserCard(
                 Row {
                     IconButton(onClick = {
                         showDialog = true
-                        requestId?.let { viewModel.deleteRequestById(it) }
+
                     }) {
                         Icon(
                             painter = painterResource(id = R.drawable.vector),
