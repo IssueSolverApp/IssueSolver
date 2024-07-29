@@ -18,10 +18,16 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Divider
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -32,9 +38,10 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
-import com.issuesolver.common.SnackbarManager
+import com.issuesolver.common.SnackBar
 import com.issuesolver.common.StatusR
 import com.issuesolver.presentation.common.LoadingOverlay
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 
@@ -43,11 +50,21 @@ import kotlinx.coroutines.launch
 fun RequestScreen(
     navController: NavController,
     paddingValues: PaddingValues,
-    snackbarManager: SnackbarManager,
     viewModel: RequestScreenViewModel = hiltViewModel(),
 
 
 ) {
+
+    val snackbarHostState = remember { SnackbarHostState() }
+    val scope = rememberCoroutineScope()
+
+    LaunchedEffect(Unit) {
+        scope.launch {
+            delay(2000)
+            snackbarHostState.currentSnackbarData?.dismiss()
+        }
+    }
+
 
 
     val isFormValid by viewModel.isFormValid.collectAsState()
@@ -68,15 +85,13 @@ fun RequestScreen(
         }
 
         StatusR.SUCCESS -> {
-            viewModel.viewModelScope.launch {
-                snackbarManager.showMessage("Sorğunuz uğurla paylaşıldı")
-                viewModel.resetFields()
 
-//                        navController.navigate(BottomBarScreen.Home.route) {
-//                            popUpTo(BottomBarScreen.Home.route) { inclusive = true }
-//
-//                }
+            viewModel.viewModelScope.launch {
+                snackbarHostState.showSnackbar("Sorğunuz uğurla paylaşıldı")
+                navController.navigate(BottomBarScreen.Home.route)
+                viewModel.resetFields()
             }
+
 
 
 //            navController.currentBackStackEntry?.savedStateHandle?.set("requestSuccess", true)
@@ -91,6 +106,8 @@ fun RequestScreen(
     }
 
 //    Scaffold { padding ->
+
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -104,6 +121,11 @@ fun RequestScreen(
                 .imePadding()
                 .verticalScroll(rememberScrollState())
         ) {
+
+            SnackbarHost(snackbarHostState) { data ->
+                SnackBar("Sorğunuz uğurla paylaşıldı", snackbarHostState)
+            }
+
             Navigation(navController)
 
             Divider(
@@ -113,6 +135,7 @@ fun RequestScreen(
                     bottom = 12.dp
                 )
             )
+
 
             AddLocation(viewModel)
 
