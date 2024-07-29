@@ -59,7 +59,7 @@ fun HomeScreen(
 //    organization:String,
 //    days:String
 
-    paddingValues: PaddingValues,
+
     ) {
     val context = LocalContext.current
     val filterPreferences = remember {
