@@ -42,6 +42,7 @@ import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.issuesolver.R
 import com.issuesolver.common.PlaceholderShimmerCard
+import com.issuesolver.common.PlaceholderShimmerCard2
 import com.issuesolver.common.SnackBar
 import com.issuesolver.domain.entity.networkModel.home.FilterData
 import com.issuesolver.presentation.myrequest.UserCard

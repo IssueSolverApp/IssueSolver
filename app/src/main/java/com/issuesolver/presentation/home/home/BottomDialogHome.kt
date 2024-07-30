@@ -4,6 +4,7 @@ import com.issuesolver.presentation.myrequest.CommentItem
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -63,12 +64,17 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.issuesolver.R
+import com.issuesolver.common.PlaceholderShimmerCard
+import com.issuesolver.common.PlaceholderShimmerCard2
+import com.issuesolver.common.StatusR
 import com.issuesolver.domain.entity.networkModel.home.FilterData
 import com.issuesolver.domain.entity.networkModel.myrequestmodel.CommentData
+import com.issuesolver.domain.entity.networkModel.myrequestmodel.CommentRequest
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
@@ -102,6 +108,9 @@ fun BottomSheetHome(
 ) {
     val modalBottomSheetState = rememberModalBottomSheetState(false)
     val coroutineScope = rememberCoroutineScope()
+    var textFieldValue by remember { mutableStateOf("") }
+
+    var sendReq by remember { mutableStateOf(false) }
 
     viewModel.loadComments(id)
     val comments: LazyPagingItems<CommentData> = viewModel.comments.collectAsLazyPagingItems()
@@ -111,6 +120,39 @@ fun BottomSheetHome(
             modalBottomSheetState.show()
         }
     }
+
+
+    LaunchedEffect(sendReq) {
+        if (sendReq && id != null && textFieldValue.isNotBlank()) {
+            viewModel.sendComment(id, CommentRequest(textFieldValue))
+            sendReq = false // Сброс значения после отправки комментария
+            textFieldValue = "" // Очистка текстового поля после отправки
+            viewModel.loadComments(id) // Перезагрузка комментариев
+        }
+    }
+    val commentState by viewModel.commentState.collectAsState()
+
+    when(commentState?.status){
+
+        StatusR.LOADING -> {
+
+
+        }
+
+        StatusR.ERROR -> {
+
+
+        }
+        StatusR.SUCCESS -> {
+
+        }
+        else-> {
+
+        }
+
+
+    }
+
 
     ModalBottomSheet(
         onDismissRequest = { onDismiss() },
@@ -166,11 +208,38 @@ fun BottomSheetHome(
                                 )
                             }
                         }
-                    }
+                        comments.apply {
+                            when {
+                                loadState.refresh is LoadState.Loading -> {
+                                    items(5) {
+                                        PlaceholderShimmerCard2()
+                                    }
+                                }
 
+                                loadState.append is LoadState.Loading -> {
+                                    item {
+                                    }
+                                }
+
+                                loadState.refresh is LoadState.Error -> {
+                                    val e = comments.loadState.refresh as LoadState.Error
+                                    item {
+                                        Text(text = "Error: ${e.error.localizedMessage}")
+                                    }
+                                }
+
+                                loadState.append is LoadState.Error -> {
+                                    val e = comments.loadState.append as LoadState.Error
+                                    item {
+                                        Text(text = "Error: ${e.error.localizedMessage}")
+                                    }
+                                }
+                            }
+                        }
+
+                    }
                 }
             }
-
 
             Column (modifier = Modifier
                 .align(Alignment.BottomEnd)
@@ -188,8 +257,8 @@ fun BottomSheetHome(
                         .padding(horizontal = 20.dp, vertical = 12.dp)
                 ) {
                     OutlinedTextField(
-                        value = "",
-                        onValueChange = { /* Handle text change */ },
+                        value = textFieldValue,
+                        onValueChange = {textFieldValue=it },
                         placeholder = {
                             Text(
                                 "Rəyinizi yazın",
@@ -217,6 +286,11 @@ fun BottomSheetHome(
                         modifier = Modifier
                             .size(60.dp)
                             .padding(start = 10.dp)
+                            .clickable {
+                                if (id != null && textFieldValue.isNotBlank()) {
+                                    sendReq = true // Триггер отправки комментария
+                                }
+                            }
                     )
                 }
             }

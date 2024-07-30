@@ -1,6 +1,7 @@
 package com.issuesolver.presentation.home.home
 
 import android.os.Parcelable
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
@@ -184,9 +185,14 @@ class TestViewModel @Inject constructor(private val filterUseCase: TestUseCase,
         }
     }
 
+
+
+
+    // Стандартный поток PagingData, который будет содержать комментарии
     private var _comments: Flow<PagingData<CommentData>>? = null
     val comments: Flow<PagingData<CommentData>> get() = _comments!!
 
+    // Функция для загрузки комментариев по идентификатору запроса
     fun loadComments(requestId: Int?) {
         viewModelScope.launch {
             _comments = getCommentUseCase.invoke(requestId)
@@ -195,21 +201,31 @@ class TestViewModel @Inject constructor(private val filterUseCase: TestUseCase,
 
 
 
+    private val _commentState: MutableStateFlow<State> = MutableStateFlow(State.loading())
+    val commentState: StateFlow<State> = _commentState
+
     private val _commentResponse = MutableStateFlow<CommentResponse>(CommentResponse())
     val commentResponse: StateFlow<CommentResponse> get() = _commentResponse
 
-    fun sendComment(requestId: Int, commentText: CommentRequest) {
+    fun sendComment(requestId: Int?, commentText: CommentRequest) {
         viewModelScope.launch {
             sendCommentUseCase(requestId, commentText).collect { response ->
-                _commentResponse.value = response.data!!
+                response.data?.let {
+                    _commentResponse.value = it
+
+//                    val currentComments = _comments
+//                    val updatedComments = currentComments.insertItemAtStart(it.commentData)
+//                    _comments.value = updatedComments
+//                    _commentState.value = State.success()
+
+                } ?: run {
+                    // Логирование или обработка случая, когда response.data является null
+                    Log.e("MyRequestViewModel", "Response data is null")
+                }
             }
         }
+
     }
-
-
-
-
-
 }
 
 
