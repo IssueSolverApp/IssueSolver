@@ -26,6 +26,7 @@ import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.BottomSheetScaffoldState
 import androidx.compose.material3.Button
+import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -77,10 +78,13 @@ fun CustomDragHandle() {
         modifier = Modifier
             .fillMaxWidth()
             .height(4.dp) // Высота DragHandle
-            .background(Color.Blue) // Ваш цвет
+            .background(Color.White)// Ваш цвет
+            .statusBarsPadding()
+        ,
 
 
-    )
+
+        )
 }
 
 
@@ -91,11 +95,9 @@ fun BottomSheet(
     onDismiss: () -> Unit,
     viewModel: MyRequestViewModel,
     id:Int?
-) {
-    val modalBottomSheetState = rememberModalBottomSheetState()
+)  {
+    val modalBottomSheetState = rememberModalBottomSheetState(true)
     val coroutineScope = rememberCoroutineScope()
-    var textFieldValue by remember { mutableStateOf("") }
-
 
     viewModel.loadComments(id)
     val comments: LazyPagingItems<CommentData> = viewModel.comments.collectAsLazyPagingItems()
@@ -109,100 +111,115 @@ fun BottomSheet(
     ModalBottomSheet(
         onDismissRequest = { onDismiss() },
         sheetState = modalBottomSheetState,
-        dragHandle = { BottomSheetDefaults.ScrimColor.red },
-        modifier = Modifier.fillMaxSize()
+        dragHandle = { com.issuesolver.presentation.home.home.CustomDragHandle() },
+        modifier = Modifier.fillMaxSize().padding(top=5.dp)
+
     ) {
-        Box(modifier = Modifier
-            .fillMaxSize()
-            .navigationBarsPadding()
-            .background(Color.White)
-
-        ) {
-            Icon(
-                painter = painterResource(id = R.drawable.tab), // Замените на вашу иконку
-                contentDescription = null,
+        Box(modifier = Modifier.fillMaxSize()) {
+            Column(
                 modifier = Modifier
-                    .align(Alignment.TopCenter)
-                    .padding(top = 8.dp) // Отступ сверху
-                    .height(4.dp)
-                    .width(44.dp),
-                tint = Color(0xFFDEDEDE)// Размер иконки
-            )
+                    .navigationBarsPadding()
+                    .background(Color.White)
+            ) {
 
-            Column(modifier = Modifier.fillMaxSize()) {
-                LazyColumn(modifier = Modifier.weight(1f)) {
-                    items(comments.itemCount) { index ->
-                        comments[index]?.let {
-                            CommentItem(
-                                it.commentText,
-                                it.createDate,
-                                it.fullName,
-                                it.authority
-                            )
+                Column {
+                    Icon(
+                        painter = painterResource(id = R.drawable.tab),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .align(Alignment.CenterHorizontally)
+                            .height(4.dp)
+                            .width(44.dp),
+                        tint = Color(0xFFDEDEDE)
+                    )
+
+                    Text(
+                        text = "Rəylər",
+                        color = Color(0xFF333333),
+                        fontSize = 15.sp,
+                        fontWeight = FontWeight.W600,
+                        modifier = Modifier
+                            .align(Alignment.CenterHorizontally)
+                            .padding(top = 20.dp, bottom = 20.dp)
+                    )
+                    Divider(
+                        thickness = 1.dp,
+                        color = Color(0xFFF0F4F9)
+                    )
+
+
+                    LazyColumn(
+                        modifier = Modifier
+                            .weight(1f)
+                    ) {
+                        items(comments.itemCount) { index ->
+                            comments[index]?.let {
+                                CommentItem(
+                                    it.commentText,
+                                    it.createDate,
+                                    it.fullName,
+                                    it.authority
+                                )
+                            }
                         }
-
                     }
+
                 }
-                Spacer(Modifier.weight(1f))  // This spacer will push the contents up if the LazyColumn isn't full
+            }
+
+
+            Column (modifier = Modifier
+                .align(Alignment.BottomEnd)
+                .background(Color.White)
+            ){
+
+                Divider(
+                    thickness = 0.7.dp,
+                    color = Color(0xFF2981FF).copy(alpha = 0.28f)
+                )
 
 
                 Row(
-                    modifier = Modifier.padding(start = 20.dp, end = 20.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-
-                    )  {
+                    modifier = Modifier
+                        .padding(horizontal = 20.dp, vertical = 12.dp)
+                ) {
                     OutlinedTextField(
                         value = "",
-                        onValueChange = { },
+                        onValueChange = { /* Handle text change */ },
                         placeholder = {
                             Text(
                                 "Rəyinizi yazın",
-                                color =Color(0xFF0269FB).copy(alpha = 0.65f),
-                                fontSize = 15.sp,
+                                color = Color(0xFF2981FF).copy(alpha = 0.65f),
+                                fontSize = 15.sp
                             )
-
                         },
                         singleLine = true,
                         keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done),
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = 12.dp, bottom = 12.dp)
-                            .border(
-                                0.5.dp,
-                                Color(0xFF0269FB).copy(alpha = 0.28f),
-                                CircleShape
-                            )
-                            .clip(CircleShape)
                             .weight(1f)
-                        ,
-                        colors = TextFieldDefaults.colors(
-                            errorContainerColor = Color(0xFFdfedff),
-                            focusedContainerColor = Color(0xFFdfedff),
-                            disabledContainerColor = Color(0xFFdfedff),
-                            unfocusedContainerColor = Color(0xFFcdfedff),
-                            focusedIndicatorColor = Color.Transparent,
-                            disabledIndicatorColor=Color.Transparent,
-                            unfocusedIndicatorColor =Color.Transparent,
-                            cursorColor = Color(0xFF0269FB),
-
-                            )
+                            .clip(CircleShape)
+                            .border(0.5.dp, Color(0xFF2981FF).copy(alpha = 0.28f), CircleShape),
+                        colors = TextFieldDefaults.outlinedTextFieldColors(
+                            containerColor = Color(0xFFdfedff),
+                            focusedBorderColor = Color.Transparent,
+                            unfocusedBorderColor = Color.Transparent,
+                            cursorColor = Color(0xFF0269FB)
+                        )
                     )
 
-                        Image(
-                            painter = painterResource(R.drawable.up_icon),
-                            contentDescription = "up_icon",
-                            modifier = Modifier
-                                .size(60.dp)
-                                .padding(start = 10.dp)
-                        )
-                    }
-
+                    Image(
+                        painter = painterResource(R.drawable.up_icon),
+                        contentDescription = "up_icon",
+                        modifier = Modifier
+                            .size(60.dp)
+                            .padding(start = 10.dp)
+                    )
                 }
-
-
             }
 
         }
-
     }
+}
+
+
 

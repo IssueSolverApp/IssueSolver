@@ -110,7 +110,6 @@ fun RegisterOtpCodePage(
     when (confirmOtpState.status) {
         StatusR.LOADING -> {
             Log.d("LoginPage", "Loading state triggered")
-            showLoading=true
         }
 
         StatusR.SUCCESS -> {
@@ -291,8 +290,5 @@ fun RegisterOtpCodePage(
             }
         }
 
-        if(showLoading){
-            LoadingOverlay()
-        }
     }
 }

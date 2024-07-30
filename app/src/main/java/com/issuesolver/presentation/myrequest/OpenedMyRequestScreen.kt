@@ -321,7 +321,7 @@ fun OpenedMyRequestScreen(navController:NavController,  id: String,   viewModel:
                                         Text(
                                             text = it,
                                             style = MaterialTheme.typography.bodyMedium,
-                                            color = Color(0xFF2981FF),
+                                            color = Color(0xFF002252),
                                             modifier = Modifier.padding(start = 6.dp),
                                             fontSize = 13.sp,
                                             fontWeight = FontWeight.W400
