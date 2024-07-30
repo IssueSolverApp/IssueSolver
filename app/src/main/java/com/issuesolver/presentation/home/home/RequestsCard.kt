@@ -61,6 +61,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.issuesolver.R
 import com.issuesolver.common.AlertDialogExample
+import com.issuesolver.common.AlertDialogExample2
 import com.issuesolver.common.PopUp
 import com.issuesolver.common.StatusR
 import com.issuesolver.presentation.myrequest.MyRequestViewModel
@@ -82,8 +83,8 @@ fun RequestsCard(
 
     if (showDialog) {
 
-//        AlertDialogExample(
-//            message = "Sorğular yalnız "Gözləmədə" statusunda silinə bilər.",
+//        AlertDialogExample2(
+//            message = "Sorğular yalnız \"Gözləmədə\" statusunda silinə bilər.",
 //            onConfirmation = { showDialog = false }
 //        )
 

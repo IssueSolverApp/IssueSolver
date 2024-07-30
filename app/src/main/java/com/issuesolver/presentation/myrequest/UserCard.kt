@@ -45,6 +45,7 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.issuesolver.R
 import com.issuesolver.common.AlertDialogExample
+import com.issuesolver.common.AlertDialogExample2
 import com.issuesolver.common.StatusR
 import com.issuesolver.common.PopUp
 import com.issuesolver.domain.entity.networkModel.myrequestmodel.CommentData
@@ -133,7 +134,7 @@ fun UserCard(
     if (showDialog) {
         if(status != "Gözləmədə") {
 
-            AlertDialogExample(
+            AlertDialogExample2(
                 message = "Sorğular yalnız \"Gözləmədə\" statusunda silinə bilər.",
                 onConfirmation = { showDialog = false }
             )
