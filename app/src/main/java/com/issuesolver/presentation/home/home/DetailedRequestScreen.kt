@@ -49,6 +49,7 @@ import androidx.navigation.NavController
 import com.issuesolver.R
 import com.issuesolver.common.StatusR
 import com.issuesolver.presentation.common.LoadingOverlay
+import com.issuesolver.presentation.myrequest.BottomSheet
 import com.issuesolver.presentation.myrequest.MyRequestViewModel
 
 
@@ -64,6 +65,18 @@ fun DetailedRequestScreen(navController:NavController,  id: String,   viewModel:
     var showLoading by remember { mutableStateOf(false) }
 
     var isLiked by rememberSaveable { mutableStateOf(requestById?.likeSuccess ?: false) }
+
+    var showSheet by remember { mutableStateOf(false) }
+
+    if (showSheet) {
+        BottomSheetHome ({
+            showSheet = false
+        },
+            //comments,
+            viewModel,
+            id.toInt()
+        )
+    }
 
     LaunchedEffect(requestById) {
         requestById?.let {
@@ -299,7 +312,6 @@ fun DetailedRequestScreen(navController:NavController,  id: String,   viewModel:
                                 )
 
                                 Row(
-                                    horizontalArrangement = Arrangement.SpaceBetween,
                                     modifier = Modifier
                                         .fillMaxWidth()
                                 ) {
@@ -342,7 +354,10 @@ fun DetailedRequestScreen(navController:NavController,  id: String,   viewModel:
                                             horizontalAlignment = Alignment.CenterHorizontally
                                         ) {
 
-                                            IconButton(onClick = {  }) {
+                                            IconButton(onClick = {
+                                                showSheet = true
+
+                                            }) {
                                                 Icon(
                                                     painter = painterResource(id = R.drawable.coment),
                                                     contentDescription = null,

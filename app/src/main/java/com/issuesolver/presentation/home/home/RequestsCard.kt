@@ -147,6 +147,19 @@ fun RequestsCard(
         }
     }
 
+    var showSheet by remember { mutableStateOf(false) }
+
+    if (showSheet) {
+        BottomSheetHome ({
+            showSheet = false
+        },
+            //comments,
+            viewModel,
+            requestId
+        )
+    }
+
+
 
 
     Card(
@@ -330,7 +343,10 @@ fun RequestsCard(
                     )
                 }
 
-                IconButton(onClick = { /* Comment action */ }) {
+                IconButton(onClick = {
+                    showSheet = true
+
+                }) {
                     Icon(
                         painter = painterResource(id = R.drawable.coment),
                         contentDescription = null

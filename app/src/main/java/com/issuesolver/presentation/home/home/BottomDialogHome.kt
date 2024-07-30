@@ -1,5 +1,6 @@
-package com.issuesolver.presentation.myrequest
+package com.issuesolver.presentation.home.home
 
+import com.issuesolver.presentation.myrequest.CommentItem
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -86,9 +87,9 @@ fun CustomDragHandle() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BottomSheet(
+fun BottomSheetHome(
     onDismiss: () -> Unit,
-    viewModel: MyRequestViewModel,
+    viewModel: TestViewModel,
     id:Int?
 ) {
     val modalBottomSheetState = rememberModalBottomSheetState()
@@ -110,6 +111,7 @@ fun BottomSheet(
         sheetState = modalBottomSheetState,
         dragHandle = { BottomSheetDefaults.ScrimColor.red },
         modifier = Modifier.fillMaxSize()
+
     ) {
         Box(modifier = Modifier
             .fillMaxSize()
@@ -185,21 +187,21 @@ fun BottomSheet(
                             )
                     )
 
-                        Image(
-                            painter = painterResource(R.drawable.up_icon),
-                            contentDescription = "up_icon",
-                            modifier = Modifier
-                                .size(60.dp)
-                                .padding(start = 10.dp)
-                        )
-                    }
-
+                    Image(
+                        painter = painterResource(R.drawable.up_icon),
+                        contentDescription = "up_icon",
+                        modifier = Modifier
+                            .size(60.dp)
+                            .padding(start = 10.dp)
+                    )
                 }
 
-
             }
+
 
         }
 
     }
+
+}
 

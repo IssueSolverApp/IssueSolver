@@ -127,6 +127,18 @@ fun OpenedMyRequestScreen(navController:NavController,  id: String,   viewModel:
             )
     }
 
+    var showSheet by remember { mutableStateOf(false) }
+
+    if (showSheet) {
+        BottomSheet ({
+            showSheet = false
+        },
+            //comments,
+            viewModel,
+            id.toInt()
+        )
+    }
+
 
     Scaffold(
         modifier = Modifier
@@ -393,7 +405,10 @@ fun OpenedMyRequestScreen(navController:NavController,  id: String,   viewModel:
                                             horizontalAlignment = Alignment.CenterHorizontally
                                         ) {
 
-                                            IconButton(onClick = {  }) {
+                                            IconButton(onClick = {
+                                                showSheet = true
+
+                                            }) {
                                                 Icon(
                                                     painter = painterResource(id = R.drawable.coment),
                                                     contentDescription = null,

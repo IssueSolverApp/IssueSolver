@@ -8,11 +8,16 @@ import androidx.paging.cachedIn
 import com.issuesolver.common.Resource
 import com.issuesolver.common.State
 import com.issuesolver.domain.entity.networkModel.home.FilterData
+import com.issuesolver.domain.entity.networkModel.myrequestmodel.CommentData
+import com.issuesolver.domain.entity.networkModel.myrequestmodel.CommentRequest
+import com.issuesolver.domain.entity.networkModel.myrequestmodel.CommentResponse
 import com.issuesolver.domain.usecase.home.backend.RequestUseCase
 import com.issuesolver.domain.usecase.home.backend.TestUseCase
+import com.issuesolver.domain.usecase.myrequestusecase.GetCommentsUseCase
 import com.issuesolver.domain.usecase.myrequestusecase.GetRequestByIdUseCase
 import com.issuesolver.domain.usecase.myrequestusecase.LikeUseCase
 import com.issuesolver.domain.usecase.myrequestusecase.RemoveLikeUseCase
+import com.issuesolver.domain.usecase.myrequestusecase.SendCommentUceCase
 import com.issuesolver.presentation.login.qeydiyyat_page.RegisterPageState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.android.parcel.Parcelize
@@ -31,7 +36,9 @@ class TestViewModel @Inject constructor(private val filterUseCase: TestUseCase,
                                         private val requestUseCase: RequestUseCase,
                                         private val likeUseCase: LikeUseCase,
                                         private val removeLikeUseCase: RemoveLikeUseCase,
-                                        private val getRequestByIdUseCase: GetRequestByIdUseCase
+                                        private val getRequestByIdUseCase: GetRequestByIdUseCase,
+                                        private val getCommentUseCase: GetCommentsUseCase,
+                                        private val sendCommentUseCase: SendCommentUceCase,
     ) : ViewModel() {
     private val _filterParams = MutableStateFlow(FilterParams())
     val filterParams: StateFlow<FilterParams> = _filterParams
@@ -176,6 +183,29 @@ class TestViewModel @Inject constructor(private val filterUseCase: TestUseCase,
             }
         }
     }
+
+    private var _comments: Flow<PagingData<CommentData>>? = null
+    val comments: Flow<PagingData<CommentData>> get() = _comments!!
+
+    fun loadComments(requestId: Int?) {
+        viewModelScope.launch {
+            _comments = getCommentUseCase.invoke(requestId)
+        }
+    }
+
+
+
+    private val _commentResponse = MutableStateFlow<CommentResponse>(CommentResponse())
+    val commentResponse: StateFlow<CommentResponse> get() = _commentResponse
+
+    fun sendComment(requestId: Int, commentText: CommentRequest) {
+        viewModelScope.launch {
+            sendCommentUseCase(requestId, commentText).collect { response ->
+                _commentResponse.value = response.data!!
+            }
+        }
+    }
+
 
 
 
