@@ -67,7 +67,9 @@ fun ProfileScreen(
             dismiss = "İmtina",
             confirm = "Çıxış",
             onConfirmation = {
-                navController.navigate(AuthScreen.Login.route)
+//                navController.navigate(AuthScreen.Login.route)
+                             viewModel.logout()
+
             },
             onDismiss = { showDialog = false }
         )

@@ -1,6 +1,9 @@
 package com.issuesolver.presentation.profile.profile
 
 
+import android.content.Context
+import android.content.Intent
+import android.content.SharedPreferences
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.issuesolver.common.Resource
@@ -8,7 +11,9 @@ import com.issuesolver.common.State
 import com.issuesolver.domain.entity.networkModel.profile.UpdateFullNameRequest
 import com.issuesolver.domain.usecase.profile.backend.GetMeUseCase
 import com.issuesolver.domain.usecase.profile.backend.UpdateFullNameUseCase
+import com.issuesolver.presentation.MainActivity
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -19,8 +24,10 @@ import javax.inject.Inject
 class ProfileScreenViewModel @Inject constructor(
     private val getMeUseCase: GetMeUseCase,
     private val updateFullNameUseCase: UpdateFullNameUseCase,
+    private val sharedPreferences: SharedPreferences,
+    @ApplicationContext private val context: Context
 
-    ) : ViewModel() {
+) : ViewModel() {
 
     private val _uiState = MutableStateFlow(ProfileScreenState())
     val uiState: StateFlow<ProfileScreenState> = _uiState.asStateFlow()
@@ -78,6 +85,17 @@ class ProfileScreenViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+
+    fun logout(){
+
+        sharedPreferences.edit().clear().apply()
+        //navigation.navigate(AuthScreen.Login.route)
+        val navIntent = Intent(context, MainActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        }
+        context.startActivity(navIntent)
     }
 
 
