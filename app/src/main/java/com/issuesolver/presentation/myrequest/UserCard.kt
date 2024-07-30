@@ -187,7 +187,7 @@ fun UserCard(
                         color = Color(0xFF2981FF),
                         modifier = Modifier.padding(start = 6.dp),
                         fontSize = 15.sp,
-                        fontWeight = FontWeight.SemiBold
+                        fontWeight = FontWeight.Medium
                     )
                 }
 

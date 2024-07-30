@@ -64,7 +64,9 @@ fun DetailedRequestScreen(navController:NavController,  id: String,   viewModel:
 
     var showLoading by remember { mutableStateOf(false) }
 
-    var isLiked by rememberSaveable { mutableStateOf(requestById?.likeSuccess ?: false) }
+    var favoriteState by rememberSaveable { mutableStateOf(requestById?.likeSuccess ?: false) }
+
+
 
     var showSheet by remember { mutableStateOf(false) }
 
@@ -80,11 +82,11 @@ fun DetailedRequestScreen(navController:NavController,  id: String,   viewModel:
 
     LaunchedEffect(requestById) {
         requestById?.let {
-            isLiked = it.likeSuccess!!
+            favoriteState = it.likeSuccess!!
         }
     }
     val likeStates by viewModel.likeStates.collectAsState()
-    var favoriteState = likeStates[id.toInt()] ?: requestById?.likeSuccess?: false
+//    var favoriteState = likeStates[id.toInt()] ?: requestById?.likeSuccess?: false
 
 
     val statusColors = statusColorMap[ requestById?.status] ?: StatusColors(androidx.compose.ui.graphics.Color.Transparent,
@@ -167,7 +169,7 @@ fun DetailedRequestScreen(navController:NavController,  id: String,   viewModel:
                                                 color = Color(0xFF2981FF),
                                                 modifier = Modifier.padding(start = 6.dp),
                                                 fontSize = 15.sp,
-                                                fontWeight = FontWeight.SemiBold
+                                                fontWeight = FontWeight.Medium
                                             )
                                         }
                                     }
@@ -269,7 +271,7 @@ fun DetailedRequestScreen(navController:NavController,  id: String,   viewModel:
                                         Text(
                                             text = it,
                                             style = MaterialTheme.typography.bodyMedium,
-                                            color = Color(0xFF002252),
+                                            color = Color(0xFF2981FF),
                                             modifier = Modifier.padding(start = 6.dp),
                                             fontSize = 13.sp,
                                             fontWeight = FontWeight.W400
@@ -336,14 +338,19 @@ fun DetailedRequestScreen(navController:NavController,  id: String,   viewModel:
                                                     tint = if (favoriteState!!) Color.Red else Color(0xFF002252)
                                                 )
                                             }
-                                            requestById?.likeCount?.let {
                                                 Text(
-                                                    text = it.toString(),
+                                                    text = "${
+                                                        if (favoriteState!!) {
+                                                            requestById?.likeCount?.plus(1)
+                                                        } else 
+                                                            requestById?.likeCount
+
+                                                    }",
                                                     color = Color(0xFF002252),
                                                     fontSize = 10.sp,
                                                     fontWeight = FontWeight.W500
                                                 )
-                                            }
+
 
                                         }
 

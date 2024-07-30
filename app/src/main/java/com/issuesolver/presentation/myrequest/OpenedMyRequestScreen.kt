@@ -68,17 +68,20 @@ fun OpenedMyRequestScreen(navController:NavController,  id: String,   viewModel:
 
 
     // Инициализация isLiked после получения данных
-    var isLiked by rememberSaveable { mutableStateOf(requestById?.likeSuccess ?: false) }
+    var favoriteState by rememberSaveable { mutableStateOf(requestById?.likeSuccess ?: false) }
+    var likeCount by rememberSaveable { mutableStateOf(requestById?.likeCount ?: 0) }
 
     // Обновление isLiked, когда requestById меняется
     LaunchedEffect(requestById) {
         requestById?.let {
-            isLiked = it.likeSuccess!!
+            favoriteState = it.likeSuccess ?: false
+            likeCount = it.likeCount ?: 0
+
         }
     }
 
-    val likeStates by viewModel.likeStates.collectAsState()
-    var favoriteState = likeStates[id.toInt()] ?: requestById?.likeSuccess?: false
+//    val likeStates by viewModel.likeStates.collectAsState()
+//    var favoriteState = likeStates[id.toInt()] ?: requestById?.likeSuccess?: false
     val icon = if (favoriteState!!) R.drawable.heart_clicked else R.drawable.heart_default
 
     val requestByIdState by viewModel.requestByIdState.collectAsState()
@@ -219,7 +222,7 @@ fun OpenedMyRequestScreen(navController:NavController,  id: String,   viewModel:
                                                 color = Color(0xFF2981FF),
                                                 modifier = Modifier.padding(start = 6.dp),
                                                 fontSize = 15.sp,
-                                                fontWeight = FontWeight.SemiBold
+                                                fontWeight = FontWeight.Medium
                                             )
                                         }
                                     }
@@ -321,7 +324,7 @@ fun OpenedMyRequestScreen(navController:NavController,  id: String,   viewModel:
                                         Text(
                                             text = it,
                                             style = MaterialTheme.typography.bodyMedium,
-                                            color = Color(0xFF002252),
+                                            color = Color(0xFF2981FF),
                                             modifier = Modifier.padding(start = 6.dp),
                                             fontSize = 13.sp,
                                             fontWeight = FontWeight.W400
@@ -374,8 +377,10 @@ fun OpenedMyRequestScreen(navController:NavController,  id: String,   viewModel:
                                             IconButton(onClick = {
                                                 if (favoriteState!!) {
                                                     viewModel.removeLike(requestId = id.toInt())
+                                                    likeCount -= 1 // Decrement like count when unliked
                                                 } else {
                                                     viewModel.sendLike(requestId = id.toInt())
+                                                    likeCount += 1 // Increment like count when liked
                                                 }
                                                 favoriteState = !favoriteState!!
 
@@ -389,14 +394,19 @@ fun OpenedMyRequestScreen(navController:NavController,  id: String,   viewModel:
                                                     tint = if (favoriteState!!) Color.Red else Color(0xFF002252)
                                                 )
                                             }
-                                            requestById?.likeCount?.let {
                                                 Text(
-                                                    text = it.toString(),
+                                                    text = "${
+                                                        if (favoriteState!!) {
+                                                            requestById?.likeCount?.plus(1)
+                                                        } else
+                                                            requestById?.likeCount
+
+                                                    }",
                                                     color = Color(0xFF002252),
                                                     fontSize = 10.sp,
                                                     fontWeight = FontWeight.W500
                                                 )
-                                            }
+
 
                                         }
 

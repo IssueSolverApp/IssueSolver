@@ -137,6 +137,8 @@ class TestViewModel @Inject constructor(private val filterUseCase: TestUseCase,
                         _likeStates.update { it.toMutableMap().apply { put(requestId ?: -1, true) } }
                         _isLiked.emit(State.success())
                     }
+
+                    else -> {}
                 }
             }
         }
@@ -155,10 +157,13 @@ class TestViewModel @Inject constructor(private val filterUseCase: TestUseCase,
                     is Resource.Success -> {
                         _likeStates.update { it.toMutableMap().apply { put(requestId ?: -1, false) } }
                     }
+
+                    else -> {}
                 }
             }
         }
     }
+
     private var _requestByIdState: MutableStateFlow<State?> = MutableStateFlow(null)
     val requestByIdState: StateFlow<State?> = _requestByIdState.asStateFlow()
 
@@ -180,6 +185,8 @@ class TestViewModel @Inject constructor(private val filterUseCase: TestUseCase,
                         requestById.value = resource.data?.data
 
                     }
+
+                    else -> {}
                 }
             }
         }

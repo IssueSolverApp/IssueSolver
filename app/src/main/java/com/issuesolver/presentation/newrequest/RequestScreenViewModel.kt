@@ -77,7 +77,7 @@ class RequestScreenViewModel @Inject constructor(
             _selectedCategory,
             _description
         ) { location, organization, category, description ->
-            location.length>5 && category.isNotEmpty() && description.length>10 && organization.isNotEmpty()
+            location.length>4 && category.isNotEmpty() && description.length>9 && organization.isNotEmpty()
         }.onEach { isValid ->
             _isFormValid.value = isValid
         }.launchIn(viewModelScope)

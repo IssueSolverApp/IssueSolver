@@ -204,7 +204,7 @@ fun RequestsCard(
                         color = Color(0xFF2981FF),
                         modifier = Modifier.padding(start = 6.dp),
                         fontSize = 15.sp,
-                        fontWeight = FontWeight.SemiBold
+                        fontWeight = FontWeight.Medium
                     )
                 }
 
@@ -323,10 +323,12 @@ fun RequestsCard(
 //                        }
                     if (favoriteState!!) {
                         viewModel.removeLike(requestId = requestId)
+
 //                            favoriteState=false
 
                     } else {
                         viewModel.sendLike(requestId = requestId)
+
 //                            favoriteState=true
                     }
                     favoriteState = !favoriteState!!
