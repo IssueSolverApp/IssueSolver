@@ -61,6 +61,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.issuesolver.R
 import com.issuesolver.common.AlertDialogExample
+import com.issuesolver.common.AlertDialogExample2
 import com.issuesolver.common.PopUp
 import com.issuesolver.common.StatusR
 import com.issuesolver.presentation.myrequest.MyRequestViewModel
@@ -82,8 +83,8 @@ fun RequestsCard(
 
     if (showDialog) {
 
-//        AlertDialogExample(
-//            message = "Sorğular yalnız "Gözləmədə" statusunda silinə bilər.",
+//        AlertDialogExample2(
+//            message = "Sorğular yalnız \"Gözləmədə\" statusunda silinə bilər.",
 //            onConfirmation = { showDialog = false }
 //        )
 
@@ -104,7 +105,7 @@ fun RequestsCard(
     val fullName = fullName
 
     val additionalText = "daha çox göstər..."
-    val approximateCharacterPerLine = 50
+    val approximateCharacterPerLine = 45
     val maxLines = 3
 
     val maxTextLength = (approximateCharacterPerLine * maxLines) - additionalText.length
@@ -147,13 +148,30 @@ fun RequestsCard(
         }
     }
 
+    var showSheet by remember { mutableStateOf(false) }
+
+    if (showSheet) {
+        BottomSheetHome ({
+            showSheet = false
+        },
+            //comments,
+            viewModel,
+            requestId
+        )
+    }
+
+
 
 
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .wrapContentHeight()
-            .clickable(onClick = onClick),
+            .clickable(
+                onClick = onClick,
+                interactionSource = remember { MutableInteractionSource() },
+                indication = null
+            ),
         colors = CardDefaults.cardColors(
             containerColor = androidx.compose.ui.graphics.Color.White
         )
@@ -183,11 +201,10 @@ fun RequestsCard(
 
                     Text(
                         text = fullName ?: "",
-                        style = MaterialTheme.typography.bodyMedium,
                         color = Color(0xFF2981FF),
                         modifier = Modifier.padding(start = 6.dp),
                         fontSize = 15.sp,
-                        fontWeight = FontWeight.W400
+                        fontWeight = FontWeight.SemiBold
                     )
                 }
 
@@ -251,7 +268,6 @@ fun RequestsCard(
 
 
 
-
         Column(modifier = Modifier.padding(top = 8.dp)) {
             val textToShow = if (expanded) fullText else shortText
             val annotatedString = buildAnnotatedString {
@@ -260,7 +276,7 @@ fun RequestsCard(
                     withStyle(
                         style = SpanStyle(
                             color = Color(0xFF2981FF),
-                            fontWeight = FontWeight.W500
+                            fontWeight = FontWeight.W400
                         ),
                     ) {
                         append("  daha çox göstər")
@@ -268,24 +284,21 @@ fun RequestsCard(
                 }
             }
 
-            ClickableText(
+            Text(
+                modifier = Modifier
+                    .clickable(
+                        onClick = onClick,
+                        interactionSource = remember { MutableInteractionSource() },
+                        indication = null
+                    ),
                 text = annotatedString,
-                onClick = { offset ->
-                    if (annotatedString.getStringAnnotations(
-                            tag = "read_more",
-                            start = offset,
-                            end = offset
-                        ).isNotEmpty()
-                    ) {
-                        expanded = !expanded
-                    }
-                },
                 style = TextStyle(
                     color = Color(0xFF6E6E6E),
                     fontSize = 15.sp,
-                    fontWeight = FontWeight.Medium
+                    fontWeight = FontWeight.W400,)
                 )
-            )
+
+
         }
 
 
@@ -330,7 +343,10 @@ fun RequestsCard(
                     )
                 }
 
-                IconButton(onClick = { /* Comment action */ }) {
+                IconButton(onClick = {
+                    showSheet = true
+
+                }) {
                     Icon(
                         painter = painterResource(id = R.drawable.coment),
                         contentDescription = null

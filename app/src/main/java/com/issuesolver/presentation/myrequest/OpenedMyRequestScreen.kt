@@ -76,8 +76,10 @@ fun OpenedMyRequestScreen(navController:NavController,  id: String,   viewModel:
             isLiked = it.likeSuccess!!
         }
     }
+
     val likeStates by viewModel.likeStates.collectAsState()
     var favoriteState = likeStates[id.toInt()] ?: requestById?.likeSuccess?: false
+    val icon = if (favoriteState!!) R.drawable.heart_clicked else R.drawable.heart_default
 
     val requestByIdState by viewModel.requestByIdState.collectAsState()
 
@@ -125,6 +127,18 @@ fun OpenedMyRequestScreen(navController:NavController,  id: String,   viewModel:
                 },
                 onDismiss = { showDialog = false }
             )
+    }
+
+    var showSheet by remember { mutableStateOf(false) }
+
+    if (showSheet) {
+        BottomSheet ({
+            showSheet = false
+        },
+            //comments,
+            viewModel,
+            id.toInt()
+        )
     }
 
 
@@ -202,11 +216,10 @@ fun OpenedMyRequestScreen(navController:NavController,  id: String,   viewModel:
                                         requestById?.fullName?.let {
                                             Text(
                                                 text = it,
-                                                style = MaterialTheme.typography.bodyMedium,
                                                 color = Color(0xFF2981FF),
                                                 modifier = Modifier.padding(start = 6.dp),
                                                 fontSize = 15.sp,
-                                                fontWeight = FontWeight.W400
+                                                fontWeight = FontWeight.SemiBold
                                             )
                                         }
                                     }
@@ -248,8 +261,8 @@ fun OpenedMyRequestScreen(navController:NavController,  id: String,   viewModel:
                                         text = it,
                                         color = Color(0xFF002252),
                                         fontSize = 15.sp,
-                                        fontWeight = FontWeight.W500,
-                                        modifier = Modifier.padding(top = 8.dp, bottom = 39.dp)
+                                        fontWeight = FontWeight.SemiBold,
+                                        modifier = Modifier.padding(top = 8.dp, bottom = 30.dp)
                                     )
                                 }
 
@@ -257,7 +270,6 @@ fun OpenedMyRequestScreen(navController:NavController,  id: String,   viewModel:
                                     thickness = 0.5.dp,
                                     color = Color(0xFFc3dcff),
                                     modifier = Modifier.padding(
-                                        top = 8.dp,
                                         bottom = 16.dp
                                     )
                                 )
@@ -309,7 +321,7 @@ fun OpenedMyRequestScreen(navController:NavController,  id: String,   viewModel:
                                         Text(
                                             text = it,
                                             style = MaterialTheme.typography.bodyMedium,
-                                            color = Color(0xFF2981FF),
+                                            color = Color(0xFF002252),
                                             modifier = Modifier.padding(start = 6.dp),
                                             fontSize = 13.sp,
                                             fontWeight = FontWeight.W400
@@ -345,7 +357,7 @@ fun OpenedMyRequestScreen(navController:NavController,  id: String,   viewModel:
                                     thickness = 0.5.dp,
                                     color = Color(0xFFc3dcff),
                                     modifier = Modifier.padding(
-                                        top = 16.dp, bottom = 12.dp
+                                        top = 16.dp
                                     )
                                 )
 
@@ -393,7 +405,10 @@ fun OpenedMyRequestScreen(navController:NavController,  id: String,   viewModel:
                                             horizontalAlignment = Alignment.CenterHorizontally
                                         ) {
 
-                                            IconButton(onClick = {  }) {
+                                            IconButton(onClick = {
+                                                showSheet = true
+
+                                            }) {
                                                 Icon(
                                                     painter = painterResource(id = R.drawable.coment),
                                                     contentDescription = null,

@@ -49,6 +49,7 @@ import androidx.navigation.NavController
 import com.issuesolver.R
 import com.issuesolver.common.StatusR
 import com.issuesolver.presentation.common.LoadingOverlay
+import com.issuesolver.presentation.myrequest.BottomSheet
 import com.issuesolver.presentation.myrequest.MyRequestViewModel
 
 
@@ -64,6 +65,18 @@ fun DetailedRequestScreen(navController:NavController,  id: String,   viewModel:
     var showLoading by remember { mutableStateOf(false) }
 
     var isLiked by rememberSaveable { mutableStateOf(requestById?.likeSuccess ?: false) }
+
+    var showSheet by remember { mutableStateOf(false) }
+
+    if (showSheet) {
+        BottomSheetHome ({
+            showSheet = false
+        },
+            //comments,
+            viewModel,
+            id.toInt()
+        )
+    }
 
     LaunchedEffect(requestById) {
         requestById?.let {
@@ -151,11 +164,10 @@ fun DetailedRequestScreen(navController:NavController,  id: String,   viewModel:
                                         requestById?.fullName?.let {
                                             Text(
                                                 text = it,
-                                                style = MaterialTheme.typography.bodyMedium,
                                                 color = Color(0xFF2981FF),
                                                 modifier = Modifier.padding(start = 6.dp),
                                                 fontSize = 15.sp,
-                                                fontWeight = FontWeight.W400
+                                                fontWeight = FontWeight.SemiBold
                                             )
                                         }
                                     }
@@ -197,8 +209,8 @@ fun DetailedRequestScreen(navController:NavController,  id: String,   viewModel:
                                         text = it,
                                         color = Color(0xFF002252),
                                         fontSize = 15.sp,
-                                        fontWeight = FontWeight.W500,
-                                        modifier = Modifier.padding(top = 8.dp, bottom = 39.dp)
+                                        fontWeight = FontWeight.SemiBold,
+                                        modifier = Modifier.padding(top = 8.dp, bottom = 30.dp)
                                     )
                                 }
 
@@ -206,7 +218,6 @@ fun DetailedRequestScreen(navController:NavController,  id: String,   viewModel:
                                     thickness = 0.5.dp,
                                     color = Color(0xFFc3dcff),
                                     modifier = Modifier.padding(
-                                        top = 8.dp,
                                         bottom = 16.dp
                                     )
                                 )
@@ -258,7 +269,7 @@ fun DetailedRequestScreen(navController:NavController,  id: String,   viewModel:
                                         Text(
                                             text = it,
                                             style = MaterialTheme.typography.bodyMedium,
-                                            color = Color(0xFF2981FF),
+                                            color = Color(0xFF002252),
                                             modifier = Modifier.padding(start = 6.dp),
                                             fontSize = 13.sp,
                                             fontWeight = FontWeight.W400
@@ -294,12 +305,11 @@ fun DetailedRequestScreen(navController:NavController,  id: String,   viewModel:
                                     thickness = 0.5.dp,
                                     color = Color(0xFFc3dcff),
                                     modifier = Modifier.padding(
-                                        top = 16.dp, bottom = 12.dp
+                                        top = 16.dp
                                     )
                                 )
 
                                 Row(
-                                    horizontalArrangement = Arrangement.SpaceBetween,
                                     modifier = Modifier
                                         .fillMaxWidth()
                                 ) {
@@ -342,7 +352,10 @@ fun DetailedRequestScreen(navController:NavController,  id: String,   viewModel:
                                             horizontalAlignment = Alignment.CenterHorizontally
                                         ) {
 
-                                            IconButton(onClick = {  }) {
+                                            IconButton(onClick = {
+                                                showSheet = true
+
+                                            }) {
                                                 Icon(
                                                     painter = painterResource(id = R.drawable.coment),
                                                     contentDescription = null,

@@ -1,10 +1,9 @@
-package com.issuesolver.presentation.myrequest
+package com.issuesolver.presentation.home.home
 
-import android.util.Log
+import com.issuesolver.presentation.myrequest.CommentItem
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,16 +13,19 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.BottomSheetScaffoldState
@@ -65,12 +67,8 @@ import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.issuesolver.R
-import com.issuesolver.common.StatusR
 import com.issuesolver.domain.entity.networkModel.home.FilterData
 import com.issuesolver.domain.entity.networkModel.myrequestmodel.CommentData
-import com.issuesolver.domain.entity.networkModel.myrequestmodel.CommentRequest
-import com.issuesolver.presentation.navigation.AuthScreen
-import com.issuesolver.presentation.navigation.Graph
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
@@ -85,29 +83,25 @@ fun CustomDragHandle() {
             .fillMaxWidth()
             .height(4.dp) // Высота DragHandle
             .background(Color.White)// Ваш цвет
-            .statusBarsPadding()
         ,
 
 
 
-        )
+
+    )
 }
 
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BottomSheet(
+fun BottomSheetHome(
     onDismiss: () -> Unit,
-    viewModel: MyRequestViewModel,
-    id:Int?
+    viewModel: TestViewModel,
+    id: Int?
 ) {
-    val modalBottomSheetState = rememberModalBottomSheetState()
+    val modalBottomSheetState = rememberModalBottomSheetState(false)
     val coroutineScope = rememberCoroutineScope()
-    var textFieldValue by remember { mutableStateOf("") }
-
-    var sendReq by remember { mutableStateOf(false) }
-
 
     viewModel.loadComments(id)
     val comments: LazyPagingItems<CommentData> = viewModel.comments.collectAsLazyPagingItems()
@@ -118,50 +112,11 @@ fun BottomSheet(
         }
     }
 
-//    LaunchedEffect(sendReq) {
-//        viewModel.sendComment(id, CommentRequest(commentText = textFieldValue))
-//    }
-//    LaunchedEffect(id) {
-//        if (id != null) {
-//            viewModel.loadComments(id)
-//        }
-//    }
-    LaunchedEffect(sendReq) {
-        if (sendReq && id != null && textFieldValue.isNotBlank()) {
-            viewModel.sendComment(id, CommentRequest(textFieldValue))
-            sendReq = false // Сброс значения после отправки комментария
-            textFieldValue = "" // Очистка текстового поля после отправки
-            viewModel.loadComments(id) // Перезагрузка комментариев
-        }
-    }
-    val commentState by viewModel.commentState.collectAsState()
-
-    when(commentState?.status){
-
-        StatusR.LOADING -> {
-
-
-        }
-
-        StatusR.ERROR -> {
-
-
-        }
-        StatusR.SUCCESS -> {
-
-        }
-        else-> {
-
-        }
-
-
-    }
-
     ModalBottomSheet(
         onDismissRequest = { onDismiss() },
         sheetState = modalBottomSheetState,
-        dragHandle = { com.issuesolver.presentation.home.home.CustomDragHandle() },
-        modifier = Modifier.fillMaxSize().padding(top=5.dp)
+        dragHandle = { CustomDragHandle() },
+        modifier = Modifier.fillMaxSize().padding(top=5.dp).imePadding().navigationBarsPadding()
 
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
@@ -233,8 +188,6 @@ fun BottomSheet(
                         .padding(horizontal = 20.dp, vertical = 12.dp)
                 ) {
                     OutlinedTextField(
-                        value = textFieldValue,
-                        onValueChange = {textFieldValue=it },
                         value = "",
                         onValueChange = { /* Handle text change */ },
                         placeholder = {
@@ -258,25 +211,17 @@ fun BottomSheet(
                         )
                     )
 
-                        Image(
-                            painter = painterResource(R.drawable.up_icon),
-                            contentDescription = "up_icon",
-                            modifier = Modifier
-                                .size(60.dp)
-                                .padding(start = 10.dp)
-                                .clickable {
-                                    if (id != null && textFieldValue.isNotBlank()) {
-                                        sendReq = true // Триггер отправки комментария
-                                    }
-                                }
-                        )
-                    }
-
+                    Image(
+                        painter = painterResource(R.drawable.up_icon),
+                        contentDescription = "up_icon",
+                        modifier = Modifier
+                            .size(60.dp)
+                            .padding(start = 10.dp)
+                    )
                 }
+            }
 
         }
     }
 }
-
-
 
