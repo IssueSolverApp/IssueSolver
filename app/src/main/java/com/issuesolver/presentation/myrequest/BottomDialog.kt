@@ -96,7 +96,7 @@ fun BottomSheet(
     viewModel: MyRequestViewModel,
     id:Int?
 )  {
-    val modalBottomSheetState = rememberModalBottomSheetState(true)
+    val modalBottomSheetState = rememberModalBottomSheetState(false)
     val coroutineScope = rememberCoroutineScope()
 
     viewModel.loadComments(id)

@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -82,7 +83,6 @@ fun CustomDragHandle() {
             .fillMaxWidth()
             .height(4.dp) // Высота DragHandle
             .background(Color.White)// Ваш цвет
-            .statusBarsPadding()
         ,
 
 
@@ -100,7 +100,7 @@ fun BottomSheetHome(
     viewModel: TestViewModel,
     id: Int?
 ) {
-    val modalBottomSheetState = rememberModalBottomSheetState(true)
+    val modalBottomSheetState = rememberModalBottomSheetState(false)
     val coroutineScope = rememberCoroutineScope()
 
     viewModel.loadComments(id)
@@ -116,7 +116,7 @@ fun BottomSheetHome(
         onDismissRequest = { onDismiss() },
         sheetState = modalBottomSheetState,
         dragHandle = { CustomDragHandle() },
-        modifier = Modifier.fillMaxSize().padding(top=5.dp)
+        modifier = Modifier.fillMaxSize().padding(top=5.dp).imePadding().navigationBarsPadding()
 
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
