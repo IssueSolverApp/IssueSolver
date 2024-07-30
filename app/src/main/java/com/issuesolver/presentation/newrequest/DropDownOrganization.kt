@@ -1,5 +1,6 @@
 package com.issuesolver.presentation.newrequest
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -84,6 +85,8 @@ fun DropDownOrganization(category: String, placeHolder: String, viewModel: Reque
             onDismissRequest = { expanded = false },
             modifier = Modifier
                 .width(with(LocalDensity.current) { textFieldSize.width.toDp() })
+            .background(Color.White),
+
         ) {
             categoryList?.forEach { label ->
 

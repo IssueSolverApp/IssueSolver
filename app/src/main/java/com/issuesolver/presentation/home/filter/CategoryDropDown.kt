@@ -1,5 +1,6 @@
 package com.issuesolver.presentation.home.filter
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.DropdownMenu
@@ -77,7 +78,9 @@ fun CategoryDropDown (category: String, placeHolder: String, viewModel: FilterVi
             onDismissRequest = { expanded = false },
             modifier = Modifier
                 .width(with(LocalDensity.current) { textFieldSize.width.toDp() })
-        ) {
+                .background(Color.White),
+
+            ) {
             categoryList?.forEach { label ->
 
                 DropdownMenuItem(
