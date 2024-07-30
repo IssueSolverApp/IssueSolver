@@ -87,7 +87,9 @@ fun LoginPage(
 //            navController.navigate(Graph.ROOT){
 //                popUpTo(AuthScreen.Otp.route) { inclusive = true }
 //            }
-            navController.navigate(AuthScreen.Otp.route)
+            //navController.navigate(AuthScreen.Otp.route)
+            navController.navigate(AuthScreen.RegisterOtp.route + "/${uiState.email}")
+
 
         }
         else -> {
