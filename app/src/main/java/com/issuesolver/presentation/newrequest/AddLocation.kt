@@ -128,7 +128,7 @@ fun AddLocation(viewModel: RequestScreenViewModel) {
                 .then(
                 if (isError) Modifier.border(
                     1.dp,
-                    Color.Red,
+                    Color(0xFFEF5648),
                     RoundedCornerShape(12.dp)
                 )
                 else Modifier.border(

@@ -1,5 +1,6 @@
 package com.issuesolver.presentation.home.filter
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -85,7 +86,9 @@ fun OrganizationDropDown(category: String, placeHolder: String, viewModel: Filte
             onDismissRequest = { expanded = false },
             modifier = Modifier
                 .width(with(LocalDensity.current) { textFieldSize.width.toDp() })
-        ) {
+                .background(Color.White),
+
+            ) {
             categoryList?.forEach { label ->
 
                 DropdownMenuItem(
