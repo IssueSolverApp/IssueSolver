@@ -122,7 +122,6 @@ fun OpenedMyRequestScreen(navController:NavController,  id: String,   viewModel:
                 dismiss = "Xeyr",
                 onConfirmation = {
                     id.toInt()?.let { viewModel.deleteRequestById(it) }
-                    navController.popBackStack()
                 },
                 onDismiss = { showDialog = false }
             )

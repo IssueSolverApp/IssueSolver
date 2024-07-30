@@ -57,6 +57,8 @@ fun RequestScreen(
 
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
+    val scrollState = rememberScrollState()
+
 
     LaunchedEffect(Unit) {
         scope.launch {
@@ -86,10 +88,11 @@ fun RequestScreen(
 
         StatusR.SUCCESS -> {
 
-            viewModel.viewModelScope.launch {
+            scope.launch {
+                scrollState.animateScrollTo(0)  // Make sure this executes correctly
+                viewModel.resetFields()
                 snackbarHostState.showSnackbar("Sorğunuz uğurla paylaşıldı")
                 navController.navigate(BottomBarScreen.Home.route)
-                viewModel.resetFields()
             }
 
 
