@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -142,6 +143,8 @@ fun BottomSheet(
 
                     }
                 }
+                Spacer(Modifier.weight(1f))  // This spacer will push the contents up if the LazyColumn isn't full
+
 
                 Row(
                     modifier = Modifier.padding(start = 20.dp, end = 20.dp),

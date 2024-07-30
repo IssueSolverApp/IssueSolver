@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -26,6 +27,7 @@ import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.BottomSheetScaffoldState
 import androidx.compose.material3.Button
+import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -77,7 +79,9 @@ fun CustomDragHandle() {
         modifier = Modifier
             .fillMaxWidth()
             .height(4.dp) // Высота DragHandle
-            .background(Color.Blue) // Ваш цвет
+            .background(Color.White) // Ваш цвет
+
+
 
 
     )
@@ -90,12 +94,10 @@ fun CustomDragHandle() {
 fun BottomSheetHome(
     onDismiss: () -> Unit,
     viewModel: TestViewModel,
-    id:Int?
+    id: Int?
 ) {
     val modalBottomSheetState = rememberModalBottomSheetState()
     val coroutineScope = rememberCoroutineScope()
-    var textFieldValue by remember { mutableStateOf("") }
-
 
     viewModel.loadComments(id)
     val comments: LazyPagingItems<CommentData> = viewModel.comments.collectAsLazyPagingItems()
@@ -109,29 +111,46 @@ fun BottomSheetHome(
     ModalBottomSheet(
         onDismissRequest = { onDismiss() },
         sheetState = modalBottomSheetState,
-        dragHandle = { BottomSheetDefaults.ScrimColor.red },
-        modifier = Modifier.fillMaxSize()
+        dragHandle = { CustomDragHandle() },  // Ensure this is a correctly set up composable for your drag handle
+        modifier = Modifier.fillMaxSize(),
 
     ) {
-        Box(modifier = Modifier
-            .fillMaxSize()
-            .navigationBarsPadding()
-            .background(Color.White)
-
-        ) {
-            Icon(
-                painter = painterResource(id = R.drawable.tab), // Замените на вашу иконку
-                contentDescription = null,
+        Box(modifier = Modifier.fillMaxSize()) {
+            Column(
                 modifier = Modifier
-                    .align(Alignment.TopCenter)
-                    .padding(top = 8.dp) // Отступ сверху
-                    .height(4.dp)
-                    .width(44.dp),
-                tint = Color(0xFFDEDEDE)// Размер иконки
-            )
+                    .fillMaxSize()
+                    .navigationBarsPadding()
+                    .background(Color.White)
+            ) {
 
-            Column(modifier = Modifier.fillMaxSize()) {
-                LazyColumn(modifier = Modifier.weight(1f)) {
+
+                Icon(
+                    painter = painterResource(id = R.drawable.tab),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .align(Alignment.CenterHorizontally)
+                        .padding(top = 8.dp)
+                        .height(4.dp)
+                        .width(44.dp),
+                    tint = Color(0xFFDEDEDE)
+                )
+
+                Text(
+                    text = "Rəylər",
+                    color = Color(0xFF333333),
+                    fontSize = 15.sp,
+                    fontWeight = FontWeight.W600,
+                    modifier = Modifier
+                        .align(Alignment.CenterHorizontally)
+                        .padding(top = 24.dp, bottom = 22.dp)
+                )
+                Divider(
+                    thickness = 1.dp,
+                    color = Color(0xFFF0F4F9)
+                )
+                LazyColumn(
+                    modifier = Modifier.weight(1f)
+                ) {
                     items(comments.itemCount) { index ->
                         comments[index]?.let {
                             CommentItem(
@@ -141,50 +160,38 @@ fun BottomSheetHome(
                                 it.authority
                             )
                         }
-
                     }
                 }
 
-                Row(
-                    modifier = Modifier.padding(start = 20.dp, end = 20.dp),
-                    verticalAlignment = Alignment.CenterVertically,
 
-                    )  {
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 20.dp, vertical = 12.dp)
+                ) {
                     OutlinedTextField(
                         value = "",
-                        onValueChange = { },
+                        onValueChange = { /* Handle text change */ },
                         placeholder = {
                             Text(
                                 "Rəyinizi yazın",
-                                color =Color(0xFF0269FB).copy(alpha = 0.65f),
-                                fontSize = 15.sp,
+                                color = Color(0xFF0269FB).copy(alpha = 0.65f),
+                                fontSize = 15.sp
                             )
-
                         },
                         singleLine = true,
                         keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done),
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = 12.dp, bottom = 12.dp)
-                            .border(
-                                0.5.dp,
-                                Color(0xFF0269FB).copy(alpha = 0.28f),
-                                CircleShape
-                            )
-                            .clip(CircleShape)
                             .weight(1f)
-                        ,
-                        colors = TextFieldDefaults.colors(
-                            errorContainerColor = Color(0xFFdfedff),
-                            focusedContainerColor = Color(0xFFdfedff),
-                            disabledContainerColor = Color(0xFFdfedff),
-                            unfocusedContainerColor = Color(0xFFcdfedff),
-                            focusedIndicatorColor = Color.Transparent,
-                            disabledIndicatorColor=Color.Transparent,
-                            unfocusedIndicatorColor =Color.Transparent,
-                            cursorColor = Color(0xFF0269FB),
-
-                            )
+                            .clip(CircleShape)
+                            .border(0.5.dp, Color(0xFF0269FB).copy(alpha = 0.28f), CircleShape),
+                        colors = TextFieldDefaults.outlinedTextFieldColors(
+                            containerColor = Color(0xFFdfedff),
+                            focusedBorderColor = Color.Transparent,
+                            unfocusedBorderColor = Color.Transparent,
+                            cursorColor = Color(0xFF0269FB)
+                        )
                     )
 
                     Image(
@@ -195,13 +202,8 @@ fun BottomSheetHome(
                             .padding(start = 10.dp)
                     )
                 }
-
             }
-
-
         }
-
     }
-
 }
 
