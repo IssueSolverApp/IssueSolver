@@ -48,14 +48,14 @@ class CommentsPagingSource@Inject constructor(
     private val requestId: Int?
 ) : PagingSource<Int, CommentData>() {
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, CommentData> {
-        val page = params.key ?: 1
+        val page = params.key ?: 0
         return try {
             val response = repository.getComments(requestId, page, params.loadSize)
             if (response.isSuccessful) {
                 val comments = response.body()?.data ?: emptyList()
                 LoadResult.Page(
                     data = comments,
-                    prevKey = if (page == 0) null else page - 1,
+                    prevKey = null,//if (page == 0) null else page - 1,
                     nextKey = if (comments.isEmpty()) null else page + 1
                 )
             } else {

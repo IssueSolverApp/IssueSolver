@@ -63,7 +63,7 @@ fun UserCard(
     requestId: Int?,
     likeSuccess: Boolean?,
     onClick: () -> Unit,
-    comments: LazyPagingItems<CommentData>
+    //comments: LazyPagingItems<CommentData>
 ) {
     var showDialog by remember { mutableStateOf(false) }
 
@@ -76,9 +76,9 @@ fun UserCard(
         BottomSheet ({
             showSheet = false
         },
-            comments,
-//            viewModel,
-//            requestId
+            //comments,
+            viewModel,
+            requestId
         )
     }
 
@@ -306,7 +306,7 @@ fun UserCard(
 
                     IconButton(onClick = {
                         showSheet = true
-                        //viewModel.loadComments(202)
+                        //viewModel.loadComments(requestId)
                     }) {
                         Icon(
                             painter = painterResource(id = R.drawable.coment),

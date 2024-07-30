@@ -88,30 +88,16 @@ fun CustomDragHandle() {
 @Composable
 fun BottomSheet(
     onDismiss: () -> Unit,
-    //viewModel: MyRequestViewModel,
-    //requestId: Int?,
-    comments: LazyPagingItems<CommentData>
-    //comments: LazyPagingItems<CommentData>
+    viewModel: MyRequestViewModel,
+    id:Int?
 ) {
     val modalBottomSheetState = rememberModalBottomSheetState()
     val coroutineScope = rememberCoroutineScope()
     var textFieldValue by remember { mutableStateOf("") }
 
-    val viewModel: MyRequestViewModel = hiltViewModel()
 
-    //viewModel.loadComments(requestId = requestId)
-//    val comments: LazyPagingItems<CommentData> = viewModel.comments.collectAsLazyPagingItems()
-
-//    LaunchedEffect(requestId) {
-//        viewModel.loadComments(requestId)
-//    }
-//    LaunchedEffect(requestId) {
-//        viewModel.setRequestId(requestId) // Замените requestId на нужное значение
-//    }
-
-   // viewModel.loadComments(requestId)
-    //val comments: LazyPagingItems<CommentData> = viewModel.comments.collectAsLazyPagingItems()
-    //val comments = viewModel.commentss.collectAsLazyPagingItems()
+    viewModel.loadComments(id)
+    val comments: LazyPagingItems<CommentData> = viewModel.comments.collectAsLazyPagingItems()
 
     LaunchedEffect(key1 = true) {
         coroutineScope.launch {
@@ -209,18 +195,9 @@ fun BottomSheet(
                 }
 
 
-
             }
 
         }
 
     }
-
-
-//
-//@Preview(showBackground = true)
-//@Composable
-//fun PreviewBottomSheet() {
-//    BottomSheet(onDismiss = {})
-//}
 

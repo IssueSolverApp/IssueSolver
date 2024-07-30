@@ -9,6 +9,8 @@ import com.issuesolver.common.Resource
 import com.issuesolver.common.State
 import com.issuesolver.domain.entity.networkModel.home.FilterData
 import com.issuesolver.domain.entity.networkModel.myrequestmodel.CommentData
+import com.issuesolver.domain.entity.networkModel.myrequestmodel.CommentRequest
+import com.issuesolver.domain.entity.networkModel.myrequestmodel.CommentResponse
 import com.issuesolver.domain.entity.networkModel.myrequestmodel.RequestByIdResponseModel
 import com.issuesolver.domain.entity.networkModel.organization.OrganizationData
 import com.issuesolver.domain.usecase.myrequestusecase.DeleteRequestByIdUseCase
@@ -17,6 +19,7 @@ import com.issuesolver.domain.usecase.myrequestusecase.GetRequestByIdUseCase
 import com.issuesolver.domain.usecase.myrequestusecase.LikeUseCase
 import com.issuesolver.domain.usecase.myrequestusecase.MyRequestUseCase
 import com.issuesolver.domain.usecase.myrequestusecase.RemoveLikeUseCase
+import com.issuesolver.domain.usecase.myrequestusecase.SendCommentUceCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -35,9 +38,10 @@ class MyRequestViewModel @Inject constructor(
     private val removeLikeUseCase: RemoveLikeUseCase,
     private val deleteRequestByIdUseCase: DeleteRequestByIdUseCase,
     private val getRequestByIdUseCase: GetRequestByIdUseCase,
-    private val getCommentUseCase: GetCommentsUseCase
+    private val getCommentUseCase: GetCommentsUseCase,
+    private val sendCommentUseCase: SendCommentUceCase,
 
-) : ViewModel() {
+    ) : ViewModel() {
 
     val myRequests = myRequestUseCase().cachedIn(viewModelScope)
 
@@ -153,9 +157,9 @@ class MyRequestViewModel @Inject constructor(
         }
     }
 
-    init {
-        loadComments(202)
-    }
+//    init {
+//        loadComments(202)
+//    }
     // Стандартный поток PagingData, который будет содержать комментарии
     private var _comments: Flow<PagingData<CommentData>>? = null
     val comments: Flow<PagingData<CommentData>> get() = _comments!!
@@ -168,16 +172,40 @@ class MyRequestViewModel @Inject constructor(
     }
 
 
-    private val _requestId = MutableStateFlow<Int?>(null)
-    val requestId: StateFlow<Int?> = _requestId
 
-    val commentss: Flow<PagingData<CommentData>> = _requestId.flatMapLatest { id ->
-        getCommentUseCase(id)
-    }.cachedIn(viewModelScope)
+    private val _commentResponse = MutableStateFlow<CommentResponse>(CommentResponse())
+    val commentResponse: StateFlow<CommentResponse> get() = _commentResponse
 
-    fun setRequestId(id: Int?) {
-        _requestId.value = id
+    fun sendComment(requestId: Int, commentText: CommentRequest) {
+        viewModelScope.launch {
+            sendCommentUseCase(requestId, commentText).collect { response ->
+                _commentResponse.value = response.data!!
+            }
+        }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+//
+//    private val _requestId = MutableStateFlow<Int?>(null)
+//    val requestId: StateFlow<Int?> = _requestId
+//
+//    val commentss: Flow<PagingData<CommentData>> = _requestId.flatMapLatest { id ->
+//        getCommentUseCase(id)
+//    }.cachedIn(viewModelScope)
+//
+//    fun setRequestId(id: Int?) {
+//        _requestId.value = id
+//    }
 
 //    init {
 //        loadComments(202)

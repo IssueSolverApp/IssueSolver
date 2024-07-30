@@ -69,12 +69,28 @@ fun CommentItem(commentText: String?,
                 modifier = Modifier.weight(1f)
 
             ) {
-                Image(
-                    painter = painterResource(R.drawable.government3_icon),
-                    contentDescription = "government3_icon",
-                    modifier = Modifier
-                        .size(32.dp)
-                )
+                authority?.let {
+
+                        Image(
+                            painter =
+                            if(it=="USER") {
+                                painterResource(R.drawable.et_profile_male)
+                            }else{ painterResource(R.drawable.government3_icon) },
+                            contentDescription = "government3_icon",
+                            modifier = Modifier
+                                .size(32.dp)
+                        )
+
+
+                }
+//                Image(
+//                    painter = painterResource(R.drawable.government3_icon),
+//                    contentDescription = "government3_icon",
+//                    modifier = Modifier
+//                        .size(32.dp)
+//                )
+
+
                 fullName?.let {
                     Text(
                         text = it,

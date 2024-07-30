@@ -102,8 +102,11 @@ fun MyRequestScreen(navController: NavController,
                                 //navController.navigate("requestDetail/${filterData.requestId}")
                                 navController.navigate(DetailsScreen.RequestById.route+ "/${filterData.requestId}")
                             },
-                            comments
+                            //comments
                         )
+                        LaunchedEffect(key1 = filterData.requestId) {
+                            viewModel.loadComments(filterData.requestId)
+                        }
                     }
                 }
                 moviePagingItems.apply {
@@ -131,6 +134,7 @@ fun MyRequestScreen(navController: NavController,
                         }
                     }
                 }
+
             }
         }
     }

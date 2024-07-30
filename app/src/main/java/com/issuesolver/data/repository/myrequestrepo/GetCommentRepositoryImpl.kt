@@ -30,6 +30,6 @@ class CommentRepositoryImpl @Inject constructor(
     private val apiService: MyRequestService // Ваш сервис Retrofit
 ) : CommentRepository {
     override suspend fun getComments(requestId: Int?, page: Int, size: Int): Response<CommentResponse> {
-        return apiService.getComments(page, size, requestId)
+        return apiService.getComments(requestId, page, size )
     }
 }
