@@ -1,8 +1,11 @@
 package com.issuesolver.presentation.newrequest
 
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -33,6 +36,7 @@ import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.unit.toSize
+import androidx.compose.ui.platform.LocalContext
 
 //@Composable
 //fun AddLocation(viewModel: RequestScreenViewModel) {
@@ -100,6 +104,8 @@ import androidx.compose.ui.unit.toSize
 
 @Composable
 fun AddLocation(viewModel: RequestScreenViewModel) {
+    val context = LocalContext.current
+
 
     val location by viewModel.location.collectAsState()
     var isError by remember { mutableStateOf(false) }
@@ -163,6 +169,12 @@ fun AddLocation(viewModel: RequestScreenViewModel) {
                 text = "Sorğu necə paylaşılır?",
                 fontSize = 15.sp,
                 color = Color(0xFF2981FF),
+                modifier = Modifier
+                    .clickable(onClick = {
+                    val openURL = Intent(Intent.ACTION_VIEW, Uri.parse("https://youtu.be/aCYCtvndvNU?si=bTpUzJ9c6rhKJ6Ft"))
+                    context.startActivity(openURL) },
+                interactionSource = remember { MutableInteractionSource() },
+                indication = null),
             )
             Text(
                 text = "Min:5-Max:50 simvol",
