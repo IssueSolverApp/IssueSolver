@@ -4,7 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.issuesolver.common.Resource
 import com.issuesolver.common.State
+import com.issuesolver.common.StateSignIn
 import com.issuesolver.domain.entity.networkModel.login.LoginRequest
+import com.issuesolver.domain.usecase.login.backend.ResourceSignIn
 import com.issuesolver.domain.usecase.login.backend.SignInUseCase
 import com.issuesolver.domain.usecase.login.local.ValidatePasswordUseCase
 import com.issuesolver.domain.usecase.login.local.LoginUseCase
@@ -26,22 +28,25 @@ class LoginPageViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(LoginPageState())
     val uiState: StateFlow<LoginPageState> = _uiState.asStateFlow()
 
-    private val _signInState: MutableStateFlow<State?> =  MutableStateFlow(null)
-    val signInState: StateFlow<State?> = _signInState
+    private val _signInState: MutableStateFlow<StateSignIn?> =  MutableStateFlow(null)
+    val signInState: StateFlow<StateSignIn?> = _signInState
 
     fun signIn(request: LoginRequest) {
         viewModelScope.launch {
             signInUseCase(request).collect { resource ->
                 when(resource){
-                    is Resource.Loading -> {
-                        _signInState.emit(State.loading())
+                    is ResourceSignIn.Loading -> {
+                        _signInState.emit(StateSignIn.loading())
                     }
-                    is Resource.Success -> {
-                        _signInState.emit(State.success())
+                    is ResourceSignIn.Success -> {
+                        _signInState.emit(StateSignIn.success())
                     }
-                    is Resource.Error -> {
-                        _signInState.emit(State.error(resource.message))
+                    is ResourceSignIn.Error -> {
+                        _signInState.emit(StateSignIn.error(resource.message))
                         _uiState.value = uiState.value.copy(emailError = resource.message)
+                    }
+                    is ResourceSignIn.Conflict ->{
+                        _signInState.emit(StateSignIn.conflict(resource.message))
                     }
                 }
             }

@@ -2,7 +2,6 @@ package com.issuesolver.domain.usecase.login.backend
 
 import android.content.SharedPreferences
 import com.google.gson.Gson
-import com.issuesolver.common.Resource
 import com.issuesolver.data.repository.login.SignInRepositoryInterface
 import com.issuesolver.domain.entity.networkModel.login.LoginRequest
 import com.issuesolver.domain.entity.networkModel.login.LoginResponse
@@ -17,26 +16,31 @@ class SignInUseCase @Inject constructor(
 ) {
 
     suspend operator fun invoke(signIn: LoginRequest) = flow {
-        emit(Resource.Loading())
+        emit(ResourceSignIn.Loading())
         try {
             val response = signInRepositoryInterface.signIn(signIn)
             if (response.isSuccessful) {
                 response.body()?.let {
                     saveTokens(it.data?.accessToken, it.data?.refreshToken)
-                    emit(Resource.Success(response.body()))
-                } ?: emit(Resource.Error("Response body is null"))
+                    emit(ResourceSignIn.Success(response.body()))
+                } ?: emit(ResourceSignIn.Error("Response body is null"))
             } else {
                 val errorResponse = response.errorBody()?.string()?.let {
                     parseErrorResponse(it)
                 }
-                emit(Resource.Error(errorResponse?.message ?: "Unknown Error"))
+                if (response.code() == 409) {
+                    emit(ResourceSignIn.Conflict("409"))
+                } else {
+                    emit(ResourceSignIn.Error(errorResponse?.message ?: "Unknown Error"))
+                }
+
             }
         } catch (e: IOException) {
-            emit(Resource.Error("Network Error: ${e.localizedMessage}"))
+            emit(ResourceSignIn.Error("Network Error: ${e.localizedMessage}"))
         } catch (e: HttpException) {
-            emit(Resource.Error("HTTP Error: ${e.localizedMessage}"))
+            emit(ResourceSignIn.Error("HTTP Error: ${e.localizedMessage}"))
         } catch (e: Exception) {
-            emit(Resource.Error("Unexpected Error: ${e.localizedMessage}"))
+            emit(ResourceSignIn.Error("Unexpected Error: ${e.localizedMessage}"))
         }
     }
 
@@ -58,4 +62,17 @@ class SignInUseCase @Inject constructor(
             null
         }
     }
+}
+
+
+sealed class ResourceSignIn <T>(var data: T? = null, var message: String? = null,){
+
+    class Success<T>(data: T) : ResourceSignIn<T>(data = data)
+
+    class Error<T>(message: String) : ResourceSignIn<T>(message = message)
+
+    class Loading<T>() : ResourceSignIn<T>()
+
+    class Conflict<T>(message: String): ResourceSignIn<T>(message = message)
+
 }

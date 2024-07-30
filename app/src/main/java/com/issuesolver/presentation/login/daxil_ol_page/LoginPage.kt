@@ -32,6 +32,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.issuesolver.R
 import com.issuesolver.common.StatusR
+import com.issuesolver.common.StatusSignIn
 import com.issuesolver.domain.entity.networkModel.login.LoginRequest
 import com.issuesolver.presentation.common.AuthButton
 import com.issuesolver.presentation.common.ErrorText
@@ -65,24 +66,31 @@ fun LoginPage(
 
     when(loginState?.status){
 
-        StatusR.LOADING -> {
+        StatusSignIn.LOADING -> {
             Log.d("LoginPage", "Loading state triggered")
             showLoading=true
 
         }
 
-        StatusR.ERROR -> {
+        StatusSignIn.ERROR -> {
 
 
         }
-        StatusR.SUCCESS -> {
+        StatusSignIn.SUCCESS -> {
             navController.navigate(Graph.MAIN_SCREEN_PAGE){
                 popUpTo(AuthScreen.Login.route) { inclusive = true }
             }
 //            Toast.makeText(LocalView.current.context, "Login Success", Toast.LENGTH_SHORT).show()
 //            viewModel.clearLoginState()
         }
-        else-> {
+        StatusSignIn.CONFLICT -> {
+//            navController.navigate(Graph.ROOT){
+//                popUpTo(AuthScreen.Otp.route) { inclusive = true }
+//            }
+            navController.navigate(AuthScreen.Otp.route)
+
+        }
+        else -> {
 
         }
 
