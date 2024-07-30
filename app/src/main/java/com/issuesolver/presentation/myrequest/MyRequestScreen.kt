@@ -42,12 +42,19 @@ fun MyRequestScreen(navController: NavController,
 
     LaunchedEffect(Unit) {
          viewModel.getMovies() // Асинхронный запрос данных
+        //viewModel.setRequestId(202)
     }
+
+
+        viewModel.loadComments(202) // Замените requestId на нужное значение
+
+    val comments = viewModel.comments.collectAsLazyPagingItems()
 
     //val lazyPagingItems = viewModel.myRequests.collectAsLazyPagingItems()
 
     //val moviesState = viewModel.moviesState.collectAsLazyPagingItems()
     val moviePagingItems: LazyPagingItems<FilterData> = viewModel.moviesState.collectAsLazyPagingItems()
+
 
     Box(
         modifier = Modifier
@@ -94,7 +101,8 @@ fun MyRequestScreen(navController: NavController,
 
                                 //navController.navigate("requestDetail/${filterData.requestId}")
                                 navController.navigate(DetailsScreen.RequestById.route+ "/${filterData.requestId}")
-                            }
+                            },
+                            comments
                         )
                     }
                 }

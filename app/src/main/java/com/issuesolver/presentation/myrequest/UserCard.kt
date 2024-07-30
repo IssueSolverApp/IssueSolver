@@ -40,12 +40,17 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.paging.PagingData
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
 import com.issuesolver.R
 import com.issuesolver.common.AlertDialogExample
 import com.issuesolver.common.StatusR
 import com.issuesolver.common.PopUp
+import com.issuesolver.domain.entity.networkModel.myrequestmodel.CommentData
 import com.issuesolver.presentation.home.home.StatusColors
 import com.issuesolver.presentation.home.home.statusColorMap
+import kotlinx.coroutines.flow.Flow
 
 
 @Composable
@@ -57,18 +62,24 @@ fun UserCard(
     viewModel: MyRequestViewModel,
     requestId: Int?,
     likeSuccess: Boolean?,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    comments: LazyPagingItems<CommentData>
 ) {
     var showDialog by remember { mutableStateOf(false) }
 
-
+    //viewModel.loadComments(requestId = requestId)
+    //val comments: LazyPagingItems<CommentData> = viewModel.commentss.collectAsLazyPagingItems()
 
     var showSheet by remember { mutableStateOf(false) }
 
     if (showSheet) {
-        BottomSheet() {
+        BottomSheet ({
             showSheet = false
-        }
+        },
+            comments,
+//            viewModel,
+//            requestId
+        )
     }
 
 
@@ -295,6 +306,7 @@ fun UserCard(
 
                     IconButton(onClick = {
                         showSheet = true
+                        //viewModel.loadComments(202)
                     }) {
                         Icon(
                             painter = painterResource(id = R.drawable.coment),

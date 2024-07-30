@@ -44,10 +44,11 @@ interface MyRequestService {
     ): Response<CommentResponse>
 
 
-    @GET("api/v1/comments")
+    @GET("api/v1/comments/request/{requestId}")
     suspend fun getComments(
         @Query("page") page: Int,
         @Query("size") size: Int,
+        @Path("requestId") requestId : Int?
     ): Response<CommentResponse>
 
 

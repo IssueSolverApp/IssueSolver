@@ -18,8 +18,8 @@ import com.issuesolver.data.repository.login.RegisterRepositoryInterface
 import com.issuesolver.data.repository.login.ResendOtpRepositoryInterface
 import com.issuesolver.data.repository.login.ResetPasswordRepositoryInterface
 import com.issuesolver.data.repository.login.SignInRepositoryInterface
+import com.issuesolver.data.repository.myrequestrepo.CommentRepository
 import com.issuesolver.data.repository.myrequestrepo.DeleteRequestByIdInterface
-import com.issuesolver.data.repository.myrequestrepo.GetCommentRepositoryInterface
 import com.issuesolver.data.repository.myrequestrepo.GetRequestByIdRepositoryInterface
 import com.issuesolver.data.repository.myrequestrepo.LikeRepositoryInterface
 import com.issuesolver.data.repository.myrequestrepo.MyRequestRepositoryInterface
@@ -49,7 +49,7 @@ import com.issuesolver.domain.usecase.login.local.ValidateNewPasswordUseCase
 import com.issuesolver.domain.usecase.login.local.ValidatePasswordUseCase
 import com.issuesolver.domain.usecase.login.local.ValidateRepeatedPasswordUseCase
 import com.issuesolver.domain.usecase.myrequestusecase.DeleteRequestByIdUseCase
-import com.issuesolver.domain.usecase.myrequestusecase.GetCommentUseCase
+import com.issuesolver.domain.usecase.myrequestusecase.GetCommentsUseCase
 import com.issuesolver.domain.usecase.myrequestusecase.GetRequestByIdUseCase
 import com.issuesolver.domain.usecase.myrequestusecase.LikeUseCase
 import com.issuesolver.domain.usecase.myrequestusecase.MyRequestUseCase
@@ -236,8 +236,8 @@ class UseCaseModule {
 
     @Provides
     @Singleton
-    fun provideGetCommentUseCase(myRequest: GetCommentRepositoryInterface) =
-        GetCommentUseCase(myRequest)
+    fun provideGetCommentUseCase(myRequest: CommentRepository) =
+        GetCommentsUseCase(myRequest)
 
     @Provides
     @Singleton

@@ -27,7 +27,10 @@ import androidx.compose.ui.unit.sp
 import com.issuesolver.R
 
 @Composable
-fun CommentItem(){
+fun CommentItem(commentText: String?,
+                createDate: String?,
+                fullName: String? ,
+                authority: String?){
 
     Column(modifier = Modifier
         .drawWithContent {
@@ -72,38 +75,44 @@ fun CommentItem(){
                     modifier = Modifier
                         .size(32.dp)
                 )
-                Text(
-                    text = "Nəriman Nərimanov rayonu İcra Hakimiyyəti",
-                    color = Color(0xFF2981FF),
-                    fontSize = 15.sp,
-                    fontWeight = FontWeight.W600,
-                    modifier = Modifier.padding(start=8.dp)
+                fullName?.let {
+                    Text(
+                        text = it,
+                        color = Color(0xFF2981FF),
+                        fontSize = 15.sp,
+                        fontWeight = FontWeight.W600,
+                        modifier = Modifier.padding(start=8.dp)
 
-                )
+                    )
+                }
 
             }
 
+            createDate?.let {
+                Text(
+                    text = it,
+                    color = Color(0xFF9D9D9D),
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight.W400,
+                    modifier = Modifier.padding(start=7.dp)
+                )
+            }
+        }
+
+        commentText?.let {
             Text(
-                text = "09.12.2012",
-                color = Color(0xFF9D9D9D),
-                fontSize = 12.sp,
-                fontWeight = FontWeight.W400,
-                modifier = Modifier.padding(start=7.dp)
+                text = it,
+                color = Color.Black,
+                fontSize = 15.sp,
+                fontWeight = FontWeight.W500,
+                modifier = Modifier.padding(top=12.dp)
             )
         }
 
-        Text(
-            text = "Figma ipsum component variant main layer. Hand style component italic scrolling text strikethrough. Ellipse editor share content pencil share figjam community scale.",
-            color = Color.Black,
-            fontSize = 15.sp,
-            fontWeight = FontWeight.W500,
-            modifier = Modifier.padding(top=12.dp)
-        )
-
     }
 }
-@Preview(showBackground = true)
-@Composable
-fun PreviewCommentItem() {
-    CommentItem()
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun PreviewCommentItem() {
+//    CommentItem()
+//}

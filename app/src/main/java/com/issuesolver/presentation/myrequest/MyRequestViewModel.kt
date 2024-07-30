@@ -8,18 +8,22 @@ import androidx.paging.filter
 import com.issuesolver.common.Resource
 import com.issuesolver.common.State
 import com.issuesolver.domain.entity.networkModel.home.FilterData
+import com.issuesolver.domain.entity.networkModel.myrequestmodel.CommentData
 import com.issuesolver.domain.entity.networkModel.myrequestmodel.RequestByIdResponseModel
 import com.issuesolver.domain.entity.networkModel.organization.OrganizationData
 import com.issuesolver.domain.usecase.myrequestusecase.DeleteRequestByIdUseCase
+import com.issuesolver.domain.usecase.myrequestusecase.GetCommentsUseCase
 import com.issuesolver.domain.usecase.myrequestusecase.GetRequestByIdUseCase
 import com.issuesolver.domain.usecase.myrequestusecase.LikeUseCase
 import com.issuesolver.domain.usecase.myrequestusecase.MyRequestUseCase
 import com.issuesolver.domain.usecase.myrequestusecase.RemoveLikeUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -30,7 +34,9 @@ class MyRequestViewModel @Inject constructor(
     private val likeUseCase: LikeUseCase,
     private val removeLikeUseCase: RemoveLikeUseCase,
     private val deleteRequestByIdUseCase: DeleteRequestByIdUseCase,
-    private val getRequestByIdUseCase: GetRequestByIdUseCase
+    private val getRequestByIdUseCase: GetRequestByIdUseCase,
+    private val getCommentUseCase: GetCommentsUseCase
+
 ) : ViewModel() {
 
     val myRequests = myRequestUseCase().cachedIn(viewModelScope)
@@ -146,6 +152,36 @@ class MyRequestViewModel @Inject constructor(
             }
         }
     }
+
+    init {
+        loadComments(202)
+    }
+    // Стандартный поток PagingData, который будет содержать комментарии
+    private var _comments: Flow<PagingData<CommentData>>? = null
+    val comments: Flow<PagingData<CommentData>> get() = _comments!!
+
+    // Функция для загрузки комментариев по идентификатору запроса
+    fun loadComments(requestId: Int?) {
+        viewModelScope.launch {
+            _comments = getCommentUseCase.invoke(requestId)
+        }
+    }
+
+
+    private val _requestId = MutableStateFlow<Int?>(null)
+    val requestId: StateFlow<Int?> = _requestId
+
+    val commentss: Flow<PagingData<CommentData>> = _requestId.flatMapLatest { id ->
+        getCommentUseCase(id)
+    }.cachedIn(viewModelScope)
+
+    fun setRequestId(id: Int?) {
+        _requestId.value = id
+    }
+
+//    init {
+//        loadComments(202)
+//    }
 
 
 }

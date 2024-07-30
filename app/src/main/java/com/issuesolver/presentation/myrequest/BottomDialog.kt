@@ -38,6 +38,7 @@ import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -55,7 +56,14 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.paging.PagingData
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
 import com.issuesolver.R
+import com.issuesolver.domain.entity.networkModel.home.FilterData
+import com.issuesolver.domain.entity.networkModel.myrequestmodel.CommentData
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
 
@@ -79,11 +87,31 @@ fun CustomDragHandle() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BottomSheet(
-    onDismiss: () -> Unit
+    onDismiss: () -> Unit,
+    //viewModel: MyRequestViewModel,
+    //requestId: Int?,
+    comments: LazyPagingItems<CommentData>
+    //comments: LazyPagingItems<CommentData>
 ) {
     val modalBottomSheetState = rememberModalBottomSheetState()
     val coroutineScope = rememberCoroutineScope()
     var textFieldValue by remember { mutableStateOf("") }
+
+    val viewModel: MyRequestViewModel = hiltViewModel()
+
+    //viewModel.loadComments(requestId = requestId)
+//    val comments: LazyPagingItems<CommentData> = viewModel.comments.collectAsLazyPagingItems()
+
+//    LaunchedEffect(requestId) {
+//        viewModel.loadComments(requestId)
+//    }
+//    LaunchedEffect(requestId) {
+//        viewModel.setRequestId(requestId) // Замените requestId на нужное значение
+//    }
+
+   // viewModel.loadComments(requestId)
+    //val comments: LazyPagingItems<CommentData> = viewModel.comments.collectAsLazyPagingItems()
+    //val comments = viewModel.commentss.collectAsLazyPagingItems()
 
     LaunchedEffect(key1 = true) {
         coroutineScope.launch {
@@ -97,7 +125,8 @@ fun BottomSheet(
         dragHandle = { BottomSheetDefaults.ScrimColor.red },
         modifier = Modifier.fillMaxSize()
     ) {
-        Box(modifier = Modifier.fillMaxSize()
+        Box(modifier = Modifier
+            .fillMaxSize()
             .navigationBarsPadding()
         ) {
             Icon(
@@ -113,8 +142,16 @@ fun BottomSheet(
 
             Column(modifier = Modifier.fillMaxSize()) {
                 LazyColumn(modifier = Modifier.weight(1f)) {
-                    items(20) { index ->
-                        CommentItem()
+                    items(comments.itemCount) { index ->
+                        comments[index]?.let {
+                            CommentItem(
+                                it.commentText,
+                                it.createDate,
+                                it.fullName,
+                                it.authority
+                            )
+                        }
+
                     }
                 }
 
@@ -145,7 +182,7 @@ fun BottomSheet(
                                 CircleShape
                             )
                             .clip(CircleShape)
-                                .weight(1f)
+                            .weight(1f)
                         ,
                         colors = TextFieldDefaults.colors(
                             errorContainerColor = Color(0xFFdfedff),
@@ -180,10 +217,10 @@ fun BottomSheet(
     }
 
 
-
-@Preview(showBackground = true)
-@Composable
-fun PreviewBottomSheet() {
-    BottomSheet(onDismiss = {})
-}
+//
+//@Preview(showBackground = true)
+//@Composable
+//fun PreviewBottomSheet() {
+//    BottomSheet(onDismiss = {})
+//}
 
