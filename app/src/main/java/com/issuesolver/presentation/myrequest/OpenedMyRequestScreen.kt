@@ -76,8 +76,10 @@ fun OpenedMyRequestScreen(navController:NavController,  id: String,   viewModel:
             isLiked = it.likeSuccess!!
         }
     }
+
     val likeStates by viewModel.likeStates.collectAsState()
     var favoriteState = likeStates[id.toInt()] ?: requestById?.likeSuccess?: false
+    val icon = if (favoriteState!!) R.drawable.heart_clicked else R.drawable.heart_default
 
     val requestByIdState by viewModel.requestByIdState.collectAsState()
 
@@ -259,8 +261,8 @@ fun OpenedMyRequestScreen(navController:NavController,  id: String,   viewModel:
                                         text = it,
                                         color = Color(0xFF002252),
                                         fontSize = 15.sp,
-                                        fontWeight = FontWeight.Medium,
-                                        modifier = Modifier.padding(top = 8.dp, bottom = 39.dp)
+                                        fontWeight = FontWeight.SemiBold,
+                                        modifier = Modifier.padding(top = 8.dp, bottom = 30.dp)
                                     )
                                 }
 

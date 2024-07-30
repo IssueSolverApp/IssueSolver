@@ -209,8 +209,8 @@ fun DetailedRequestScreen(navController:NavController,  id: String,   viewModel:
                                         text = it,
                                         color = Color(0xFF002252),
                                         fontSize = 15.sp,
-                                        fontWeight = FontWeight.Medium,
-                                        modifier = Modifier.padding(top = 8.dp, bottom = 39.dp)
+                                        fontWeight = FontWeight.SemiBold,
+                                        modifier = Modifier.padding(top = 8.dp, bottom = 30.dp)
                                     )
                                 }
 
