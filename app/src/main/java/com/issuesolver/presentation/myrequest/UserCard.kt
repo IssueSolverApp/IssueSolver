@@ -3,6 +3,7 @@ package com.issuesolver.presentation.myrequest
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -51,6 +52,7 @@ import com.issuesolver.common.PopUp
 import com.issuesolver.domain.entity.networkModel.myrequestmodel.CommentData
 import com.issuesolver.presentation.home.home.StatusColors
 import com.issuesolver.presentation.home.home.statusColorMap
+import com.issuesolver.presentation.navigation.AuthScreen
 import kotlinx.coroutines.flow.Flow
 
 
@@ -87,7 +89,7 @@ fun UserCard(
     var expanded by remember { mutableStateOf(false) }
     val fullText = description
     val additionalText = "daha çox göstər..."
-    val approximateCharacterPerLine = 50
+    val approximateCharacterPerLine = 45
     val maxLines = 3
 
     val maxTextLength = (approximateCharacterPerLine * maxLines) - additionalText.length
@@ -155,7 +157,11 @@ fun UserCard(
         modifier = Modifier
             .fillMaxWidth()
             .wrapContentHeight()
-            .clickable(onClick = onClick),
+            .clickable(
+                onClick = onClick,
+                interactionSource = remember { MutableInteractionSource() },
+                indication = null
+            ),
         colors = CardDefaults.cardColors(
             containerColor = androidx.compose.ui.graphics.Color.White
         )
@@ -178,11 +184,10 @@ fun UserCard(
                     )
                     Text(
                         text = fullName ?: "",
-                        style = MaterialTheme.typography.bodyMedium,
                         color = Color(0xFF2981FF),
                         modifier = Modifier.padding(start = 6.dp),
                         fontSize = 15.sp,
-                        fontWeight = FontWeight.W400
+                        fontWeight = FontWeight.SemiBold
                     )
                 }
 
@@ -246,7 +251,7 @@ fun UserCard(
                         withStyle(
                             style = SpanStyle(
                                 color = Color(0xFF2981FF),
-                                fontWeight = FontWeight.W500
+                                fontWeight = FontWeight.W400,
                             )
                         ) {
                             append("  daha çox göstər")
@@ -254,17 +259,18 @@ fun UserCard(
                     }
                 }
 
-                ClickableText(
+                Text(
                     text = annotatedString,
-                    onClick = { offset ->
-                        if (annotatedString.getStringAnnotations(tag = "read_more", start = offset, end = offset).isNotEmpty()) {
-                            expanded = !expanded
-                        }
-                    },
                     style = TextStyle(
                         color = Color(0xFF6E6E6E),
                         fontSize = 15.sp,
-                        fontWeight = FontWeight.Medium
+                        fontWeight = FontWeight.W400
+                    ),
+                    modifier = Modifier
+                            .clickable(
+                                onClick = onClick,
+                                interactionSource = remember { MutableInteractionSource() },
+                        indication = null
                     )
                 )
             }
