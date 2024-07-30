@@ -12,7 +12,7 @@ import javax.inject.Inject
 
 class SendCommentUceCase@Inject constructor(private val myRequest: SendCommentRepositoryInterface) {
 
-    suspend operator fun invoke( requestId: Int, commentText: CommentRequest) = flow {
+    suspend operator fun invoke( requestId: Int?, commentText: CommentRequest) = flow {
 
         emit(Resource.Loading())
         try {

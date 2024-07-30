@@ -39,7 +39,7 @@ interface MyRequestService {
 
     @POST("api/v1/comments/post")
     suspend fun sendComment(
-        @Query("requestId") requestId: Int,
+        @Query("requestId") requestId: Int?,
         @Body commentText: CommentRequest
     ): Response<CommentResponse>
 

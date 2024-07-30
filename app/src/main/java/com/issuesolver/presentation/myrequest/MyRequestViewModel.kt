@@ -1,5 +1,6 @@
 package com.issuesolver.presentation.myrequest
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
@@ -173,13 +174,27 @@ class MyRequestViewModel @Inject constructor(
 
 
 
+    private val _commentState: MutableStateFlow<State> = MutableStateFlow(State.loading())
+    val commentState: StateFlow<State> = _commentState
+
     private val _commentResponse = MutableStateFlow<CommentResponse>(CommentResponse())
     val commentResponse: StateFlow<CommentResponse> get() = _commentResponse
 
-    fun sendComment(requestId: Int, commentText: CommentRequest) {
+    fun sendComment(requestId: Int?, commentText: CommentRequest) {
         viewModelScope.launch {
             sendCommentUseCase(requestId, commentText).collect { response ->
-                _commentResponse.value = response.data!!
+                response.data?.let {
+                    _commentResponse.value = it
+
+//                    val currentComments = _comments
+//                    val updatedComments = currentComments.insertItemAtStart(it.commentData)
+//                    _comments.value = updatedComments
+//                    _commentState.value = State.success()
+
+                } ?: run {
+                    // Логирование или обработка случая, когда response.data является null
+                    Log.e("MyRequestViewModel", "Response data is null")
+                }
             }
         }
     }

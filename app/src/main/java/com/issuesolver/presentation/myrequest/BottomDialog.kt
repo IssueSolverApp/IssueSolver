@@ -1,8 +1,10 @@
 package com.issuesolver.presentation.myrequest
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -61,8 +63,12 @@ import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.issuesolver.R
+import com.issuesolver.common.StatusR
 import com.issuesolver.domain.entity.networkModel.home.FilterData
 import com.issuesolver.domain.entity.networkModel.myrequestmodel.CommentData
+import com.issuesolver.domain.entity.networkModel.myrequestmodel.CommentRequest
+import com.issuesolver.presentation.navigation.AuthScreen
+import com.issuesolver.presentation.navigation.Graph
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
@@ -95,6 +101,8 @@ fun BottomSheet(
     val coroutineScope = rememberCoroutineScope()
     var textFieldValue by remember { mutableStateOf("") }
 
+    var sendReq by remember { mutableStateOf(false) }
+
 
     viewModel.loadComments(id)
     val comments: LazyPagingItems<CommentData> = viewModel.comments.collectAsLazyPagingItems()
@@ -103,6 +111,45 @@ fun BottomSheet(
         coroutineScope.launch {
             modalBottomSheetState.show()
         }
+    }
+
+//    LaunchedEffect(sendReq) {
+//        viewModel.sendComment(id, CommentRequest(commentText = textFieldValue))
+//    }
+//    LaunchedEffect(id) {
+//        if (id != null) {
+//            viewModel.loadComments(id)
+//        }
+//    }
+    LaunchedEffect(sendReq) {
+        if (sendReq && id != null && textFieldValue.isNotBlank()) {
+            viewModel.sendComment(id, CommentRequest(textFieldValue))
+            sendReq = false // Сброс значения после отправки комментария
+            textFieldValue = "" // Очистка текстового поля после отправки
+            viewModel.loadComments(id) // Перезагрузка комментариев
+        }
+    }
+    val commentState by viewModel.commentState.collectAsState()
+
+    when(commentState?.status){
+
+        StatusR.LOADING -> {
+
+
+        }
+
+        StatusR.ERROR -> {
+
+
+        }
+        StatusR.SUCCESS -> {
+
+        }
+        else-> {
+
+        }
+
+
     }
 
     ModalBottomSheet(
@@ -147,8 +194,8 @@ fun BottomSheet(
 
                     )  {
                     OutlinedTextField(
-                        value = "",
-                        onValueChange = { },
+                        value = textFieldValue,
+                        onValueChange = {textFieldValue=it },
                         placeholder = {
                             Text(
                                 "Rəyinizi yazın",
@@ -189,6 +236,11 @@ fun BottomSheet(
                             modifier = Modifier
                                 .size(60.dp)
                                 .padding(start = 10.dp)
+                                .clickable {
+                                    if (id != null && textFieldValue.isNotBlank()) {
+                                        sendReq = true // Триггер отправки комментария
+                                    }
+                                }
                         )
                     }
 
