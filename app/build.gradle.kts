@@ -55,7 +55,13 @@ android {
 
 dependencies {
 
+    implementation(libs.androidx.paging.common.android)
+    val paging_version = "3.3.1"
 
+    implementation("androidx.paging:paging-runtime:$paging_version")
+    implementation("androidx.paging:paging-compose:3.3.1")
+
+    implementation("androidx.datastore:datastore-preferences:1.1.1")
 
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
@@ -65,24 +71,24 @@ dependencies {
 
     implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
 
-
     implementation("com.google.dagger:hilt-android:2.46")
     implementation("androidx.annotation:annotation:1.7.1")
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.1")
     implementation(libs.androidx.lifecycle.runtime.compose.android)
     implementation(libs.androidx.constraintlayout.compose)
+    implementation(libs.androidx.runtime.livedata)
+    implementation(libs.androidx.room.runtime.android)
     kapt("com.google.dagger:hilt-android-compiler:2.46")
 
-
     implementation ("androidx.compose.ui:ui-text-google-fonts:1.6.7")
+    implementation("androidx.core:core-splashscreen:1.0.0")
     implementation ("androidx.compose.material:material-icons-extended:1.6.8")
 
     implementation ("androidx.navigation:navigation-compose:2.7.7")
 
-
-
     implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
 
+    implementation("com.google.accompanist:accompanist-systemuicontroller:0.28.0")
 
 
     implementation(libs.androidx.core.ktx)
