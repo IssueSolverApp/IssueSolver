@@ -68,21 +68,21 @@ fun OpenedMyRequestScreen(navController:NavController,  id: String,   viewModel:
 
 
     // Инициализация isLiked после получения данных
-    var favoriteState by rememberSaveable { mutableStateOf(requestById?.likeSuccess ?: false) }
-    var likeCount by rememberSaveable { mutableStateOf(requestById?.likeCount ?: 0) }
+    var isLiked by rememberSaveable { mutableStateOf(requestById?.likeSuccess ?: false) }
 
     // Обновление isLiked, когда requestById меняется
     LaunchedEffect(requestById) {
         requestById?.let {
-            favoriteState = it.likeSuccess ?: false
-            likeCount = it.likeCount ?: 0
-
+            isLiked = it.likeSuccess!!
         }
     }
 
-//    val likeStates by viewModel.likeStates.collectAsState()
-//    var favoriteState = likeStates[id.toInt()] ?: requestById?.likeSuccess?: false
+    val likeStates by viewModel.likeStates.collectAsState()
+    var favoriteState = likeStates[id.toInt()] ?: requestById?.likeSuccess?: false
     val icon = if (favoriteState!!) R.drawable.heart_clicked else R.drawable.heart_default
+
+    val like by viewModel.liked.collectAsState(initial = requestById?.likeSuccess)
+    var isLike by rememberSaveable { mutableStateOf(like) }
 
     val requestByIdState by viewModel.requestByIdState.collectAsState()
 
@@ -222,7 +222,7 @@ fun OpenedMyRequestScreen(navController:NavController,  id: String,   viewModel:
                                                 color = Color(0xFF2981FF),
                                                 modifier = Modifier.padding(start = 6.dp),
                                                 fontSize = 15.sp,
-                                                fontWeight = FontWeight.Medium
+                                                fontWeight = FontWeight.SemiBold
                                             )
                                         }
                                     }
@@ -324,7 +324,7 @@ fun OpenedMyRequestScreen(navController:NavController,  id: String,   viewModel:
                                         Text(
                                             text = it,
                                             style = MaterialTheme.typography.bodyMedium,
-                                            color = Color(0xFF2981FF),
+                                            color = Color(0xFF002252),
                                             modifier = Modifier.padding(start = 6.dp),
                                             fontSize = 13.sp,
                                             fontWeight = FontWeight.W400
@@ -377,10 +377,10 @@ fun OpenedMyRequestScreen(navController:NavController,  id: String,   viewModel:
                                             IconButton(onClick = {
                                                 if (favoriteState!!) {
                                                     viewModel.removeLike(requestId = id.toInt())
-                                                    likeCount -= 1 // Decrement like count when unliked
+                                                    //likeCount -= 1 // Decrement like count when unliked
                                                 } else {
                                                     viewModel.sendLike(requestId = id.toInt())
-                                                    likeCount += 1 // Increment like count when liked
+                                                    //likeCount += 1 // Increment like count when liked
                                                 }
                                                 favoriteState = !favoriteState!!
 

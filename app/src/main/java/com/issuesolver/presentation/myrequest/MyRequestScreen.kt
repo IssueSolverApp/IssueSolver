@@ -15,6 +15,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
@@ -89,21 +94,26 @@ fun MyRequestScreen(navController: NavController,
             ) {
                 items(moviePagingItems.itemCount) { index ->
                     moviePagingItems[index]?.let { filterData ->
-                        UserCard(
-                            fullName = filterData.fullName,
-                            status = filterData.status,
-                            description = filterData.description,
-                            categoryName = filterData.category.categoryName,
-                            viewModel = viewModel,
-                            requestId = filterData.requestId,
-                            likeSuccess=filterData.likeSuccess,
-                            onClick = {
+                        val like by viewModel.liked.collectAsState(initial = filterData.likeSuccess)
+                        var isLiked by remember { mutableStateOf(like) }
 
-                                //navController.navigate("requestDetail/${filterData.requestId}")
-                                navController.navigate(DetailsScreen.RequestById.route+ "/${filterData.requestId}")
-                            },
-                            //comments
-                        )
+                            UserCard(
+                                fullName = filterData.fullName,
+                                status = filterData.status,
+                                description = filterData.description,
+                                categoryName = filterData.category.categoryName,
+                                viewModel = viewModel,
+                                requestId = filterData.requestId,
+                                likeSuccess=filterData.likeSuccess,
+                                onClick = {
+                                    //navController.navigate("requestDetail/${filterData.requestId}")
+                                    navController.navigate(DetailsScreen.RequestById.route+ "/${filterData.requestId}")
+                                },
+
+                                //filterData
+                                //comments
+                            )
+
                         LaunchedEffect(key1 = filterData.requestId) {
                             viewModel.loadComments(filterData.requestId)
                         }

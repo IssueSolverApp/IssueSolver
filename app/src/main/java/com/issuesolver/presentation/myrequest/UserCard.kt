@@ -66,6 +66,8 @@ fun UserCard(
     requestId: Int?,
     likeSuccess: Boolean?,
     onClick: () -> Unit,
+//    isLiked: Boolean,
+
     //comments: LazyPagingItems<CommentData>
 ) {
     var showDialog by remember { mutableStateOf(false) }
@@ -104,12 +106,19 @@ fun UserCard(
 
     val likeStates by viewModel.likeStates.collectAsState()
     var favoriteState = likeStates[requestId] ?: likeSuccess
+
+
+//    val like by viewModel.liked.collectAsState(initial = likeSuccess)
+    var liked by remember { mutableStateOf(likeSuccess) }
+
+
+
 //    if (favoriteState!=likeSuccess){
 //        favoriteState=likeSuccess
 //    }
 
     val isLike by viewModel.isLiked.collectAsState()
-    var isLiked by rememberSaveable { mutableStateOf(likeSuccess) }
+    //var isLiked by rememberSaveable { mutableStateOf(likeSuccess) }
 
 
     when (isLike.status) {
@@ -118,7 +127,7 @@ fun UserCard(
         }
 
         StatusR.SUCCESS -> {
-
+            liked==true
 
         }
 
@@ -239,7 +248,7 @@ fun UserCard(
                     modifier = Modifier
                         .clip(shape = RoundedCornerShape(50.dp))
                         .background(color = Color(0xFFF0F4F9))
-                        .padding(top=8.dp, bottom = 8.dp, start = 11.dp, end = 11.dp)
+                        .padding(top = 8.dp, bottom = 8.dp, start = 11.dp, end = 11.dp)
                 )
             }
 
@@ -293,21 +302,21 @@ fun UserCard(
 //                        if(favoriteState!=likeSuccess){
 //
 //                        }
-                        if (favoriteState!!) {
+                        if (liked!!) {
                             viewModel.removeLike(requestId = requestId)
 //                            favoriteState=false
                         } else {
                             viewModel.sendLike(requestId = requestId)
 //                            favoriteState=true
                         }
-                        favoriteState = !favoriteState!!
+                        liked = !liked!!
 
                     }) {
-                        val icon = if (favoriteState!!) R.drawable.heart_clicked else R.drawable.heart_default
+                        val icon = if (liked!!) R.drawable.heart_clicked else R.drawable.heart_default
                         Icon(
                             painter = painterResource(id = icon),
                             contentDescription = null,
-                            tint = if (favoriteState!!) Color.Red else Color(0xFF002252)
+                            tint = if (liked!!) Color.Red else Color(0xFF002252)
                         )
                     }
 

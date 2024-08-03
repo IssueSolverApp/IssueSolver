@@ -23,7 +23,9 @@ import com.issuesolver.domain.usecase.myrequestusecase.RemoveLikeUseCase
 import com.issuesolver.domain.usecase.myrequestusecase.SendCommentUceCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -67,6 +69,46 @@ class MyRequestViewModel @Inject constructor(
     private val _isLiked: MutableStateFlow<State> = MutableStateFlow(State.loading())
     val isLiked: StateFlow<State> = _isLiked
 
+
+     private var _liked: MutableSharedFlow<Boolean> = MutableSharedFlow()
+    val liked: SharedFlow<Boolean> = _liked
+
+
+    private val _items = MutableStateFlow<List<FilterData>>(emptyList())
+    val items: StateFlow<List<FilterData>> = _items
+    fun toggleLike(itemId: Int) {
+        val item = _items.value.find { it.requestId == itemId } ?: return
+
+        viewModelScope.launch {
+            val result = if (item.likeSuccess!!) {
+                likeUseCase.invoke(itemId)
+            } else {
+                removeLikeUseCase.invoke(itemId)
+            }
+
+            result.collect{
+                when (it) {
+                    is Resource.Loading -> {
+
+                    }
+                    is Resource.Error -> {
+
+                    }
+                    is Resource.Success -> {
+                        _items.value = _items.value.map { item ->
+                            if (item.requestId == itemId) {
+                                item.copy(likeSuccess = !item.likeSuccess!!)
+                            } else {
+                                item
+                            }
+                        }
+                    }
+                }
+            }
+
+        }
+    }
+
     fun sendLike(requestId: Int?) {
         viewModelScope.launch {
             likeUseCase.invoke(requestId).collect { resource ->
@@ -76,10 +118,12 @@ class MyRequestViewModel @Inject constructor(
                     }
                     is Resource.Error -> {
                         // Handle error state if needed
+                        _liked.emit(value = false)
                     }
                     is Resource.Success -> {
                         _likeStates.update { it.toMutableMap().apply { put(requestId ?: -1, true) } }
                         _isLiked.emit(State.success())
+                        _liked.emit(value = true)
                     }
                 }
             }
@@ -95,9 +139,11 @@ class MyRequestViewModel @Inject constructor(
                     }
                     is Resource.Error -> {
                         // Handle error state if needed
+                        _liked.emit(value = true)
                     }
                     is Resource.Success -> {
                         _likeStates.update { it.toMutableMap().apply { put(requestId ?: -1, false) } }
+                        _liked.emit(value = false)
                     }
                 }
             }

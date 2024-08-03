@@ -122,11 +122,13 @@ fun RequestsCard(
 
 
     val likeStates by viewModel.likeStates.collectAsState()
+    var isLiked by rememberSaveable { mutableStateOf(likeStates) }
+
     var favoriteState = likeStates[requestId] ?: likeSuccess
 
 
     val isLike by viewModel.isLiked.collectAsState()
-    var isLiked by rememberSaveable { mutableStateOf(likeSuccess) }
+    //var isLiked by rememberSaveable { mutableStateOf(likeSuccess) }
 
 
     when (isLike.status) {
