@@ -1,14 +1,21 @@
 package com.issuesolver.presentation.home.filter
 
 import BottomBarScreen
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -19,14 +26,17 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.issuesolver.R
 import com.issuesolver.presentation.common.AuthButton
 import com.issuesolver.presentation.home.home.FilterViewModel
 import com.issuesolver.presentation.home.home.TestViewModel
@@ -59,11 +69,16 @@ fun FilterScreen(
 
 
     var categoryName by remember { mutableStateOf("") }
-
     var organizationName by remember { mutableStateOf( "") }
     var days by remember { mutableStateOf( "")  }
     var status by remember { mutableStateOf("") }
 
+    fun clearAllFilters() {
+        categoryName = ""
+        organizationName = ""
+        days = ""
+        status = ""
+    }
 
 
     //val filterResults = testViewModel.filterResults.collectAsLazyPagingItems()
@@ -78,13 +93,48 @@ fun FilterScreen(
             .statusBarsPadding()
             .navigationBarsPadding()
             .imePadding()
-            .padding(top = 22.dp, bottom = 16.dp,start=20.dp,end=20.dp)
+            .padding(top = 22.dp, bottom = 16.dp, start = 20.dp, end = 20.dp)
     ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .imePadding()
         ) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween,
+                modifier = Modifier
+                    .fillMaxWidth()
+
+            ) {
+
+            Box(
+                modifier = Modifier
+                    .size(40.dp)
+                    .clip(RoundedCornerShape(100.dp))
+                    .background(Color.White)
+                    .clickable {
+                        navController.popBackStack()
+                    },
+                contentAlignment = Alignment.Center
+            ) {
+                Image(
+                    painter = painterResource(R.drawable.backarray),
+                    contentDescription = "Back",
+                    modifier = Modifier.size(24.dp)
+                )
+            }
+                Text( "Təmizlə",
+                    style = MaterialTheme.typography.headlineMedium,
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.W400,
+                    textAlign = TextAlign.Start,
+                    color = Color(0xFF4D96FF),
+                    modifier = Modifier.padding(end=5.dp)
+                        .clickable { clearAllFilters()  }
+
+                )
+            }
             Text(
                 "Filter",
                 style = MaterialTheme.typography.headlineMedium,
@@ -92,7 +142,7 @@ fun FilterScreen(
                 fontWeight = FontWeight.W600,
                 textAlign = TextAlign.Start,
                 color = Color(0xFF2981FF),
-                modifier = Modifier.padding(bottom = 20.dp)
+                modifier = Modifier.padding(bottom = 20.dp,top=20.dp)
 
             )
             Divider(

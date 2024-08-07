@@ -40,6 +40,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
@@ -65,7 +66,6 @@ fun CustomDragHandle() {
             .fillMaxWidth()
             .height(4.dp) // Высота DragHandle
             .background(Color.White)// Ваш цвет
-            .statusBarsPadding()
         ,
 
 
@@ -82,7 +82,7 @@ fun BottomSheet(
     viewModel: MyRequestViewModel,
     id:Int?
 ) {
-    val modalBottomSheetState = rememberModalBottomSheetState()
+    val modalBottomSheetState = rememberModalBottomSheetState(true)
     val coroutineScope = rememberCoroutineScope()
     var textFieldValue by remember { mutableStateOf("") }
 
@@ -94,7 +94,7 @@ fun BottomSheet(
 
     LaunchedEffect(key1 = true) {
         coroutineScope.launch {
-            modalBottomSheetState.show()
+            modalBottomSheetState.expand()
         }
     }
 
@@ -175,48 +175,62 @@ fun BottomSheet(
                         color = Color(0xFFF0F4F9)
                     )
 
-
-                    LazyColumn(
-                        modifier = Modifier
-                            .weight(1f)
-                    ) {
-                        items(comments.itemCount) { index ->
-                            comments[index]?.let {
-                                CommentItem(
-                                    it.commentText,
-                                    it.createDate,
-                                    it.fullName,
-                                    it.authority
-                                )
-                            }
+                    if (comments.itemCount == 0 && comments.loadState.refresh is LoadState.NotLoading && comments.loadState.append.endOfPaginationReached) {
+                        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                            Text("Hələlik rəy yoxdur",
+                                style = TextStyle(
+                                    color = Color(0xFF6E6E6E),
+                                    fontSize = 15.sp,
+                                    fontWeight = FontWeight.W400,)
+                            )
                         }
+                    } else {
 
-                        comments.apply {
-                            when {
-                                loadState.refresh is LoadState.Loading -> {
-                                    items(5) {
-                                        PlaceholderShimmerCard2()
-                                    }
-                                }
-                                loadState.append is LoadState.Loading -> {
-                                    item {
-                                    }
-                                }
-                                loadState.refresh is LoadState.Error -> {
-                                    val e = comments.loadState.refresh as LoadState.Error
-                                    item {
-                                        Text(text = "Error: ${e.error.localizedMessage}")
-                                    }
-                                }
-                                loadState.append is LoadState.Error -> {
-                                    val e = comments.loadState.append as LoadState.Error
-                                    item {
-                                        Text(text = "Error: ${e.error.localizedMessage}")
-                                    }
+                        LazyColumn(
+                            modifier = Modifier
+                                .weight(1f)
+                        ) {
+                            items(comments.itemCount) { index ->
+                                comments[index]?.let {
+                                    CommentItem(
+                                        it.commentText,
+                                        it.createDate,
+                                        it.fullName,
+                                        it.authority
+                                    )
                                 }
                             }
-                        }
 
+                            comments.apply {
+                                when {
+                                    loadState.refresh is LoadState.Loading -> {
+                                        items(5) {
+                                            PlaceholderShimmerCard2()
+                                        }
+                                    }
+
+                                    loadState.append is LoadState.Loading -> {
+                                        item {
+                                        }
+                                    }
+
+                                    loadState.refresh is LoadState.Error -> {
+                                        val e = comments.loadState.refresh as LoadState.Error
+                                        item {
+                                            Text(text = "Error: ${e.error.localizedMessage}")
+                                        }
+                                    }
+
+                                    loadState.append is LoadState.Error -> {
+                                        val e = comments.loadState.append as LoadState.Error
+                                        item {
+                                            Text(text = "Error: ${e.error.localizedMessage}")
+                                        }
+                                    }
+                                }
+                            }
+
+                        }
                     }
 
                 }

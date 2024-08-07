@@ -7,10 +7,13 @@ import android.view.WindowManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.issuesolver.presentation.bottombar.MainScreen
+import com.issuesolver.presentation.home.filter.FilterScreen
+import com.issuesolver.presentation.home.home.HomeScreen
 import com.issuesolver.presentation.navigation.Graph
 import com.issuesolver.presentation.navigation.RootNavigationGraph
 import com.issuesolver.presentation.navigation.authNavGraph
@@ -45,6 +48,8 @@ class MainActivity : ComponentActivity() {
 
                         MainScreen()
                     }
+
+//                    HomeScreen(navController = rememberNavController(), paddingValues= PaddingValues())
             }
         }
 

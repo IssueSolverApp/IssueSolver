@@ -31,6 +31,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -207,6 +208,18 @@ fun HomeScreen(
                                 navController.navigate(DetailsScreen.DetailsById.route+ "/${filterData.requestId}")
                             }
                         )
+                    }
+                }
+                if (requestResults.itemCount == 0 && requestResults.loadState.refresh is LoadState.NotLoading && requestResults.loadState.append.endOfPaginationReached) {
+                    item {
+                        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                            Text("Müraciətlər yoxdur.",
+                                style = TextStyle(
+                                    color = Color(0xFF6E6E6E),
+                                    fontSize = 15.sp,
+                                    fontWeight = FontWeight.W400,)
+                            )
+                        }
                     }
                 }
                 requestResults.apply {

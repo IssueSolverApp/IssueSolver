@@ -38,6 +38,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.SheetValue.Hidden
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldColors
 import androidx.compose.material3.TextFieldDefaults
@@ -57,6 +58,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -87,8 +89,8 @@ fun CustomDragHandle() {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .height(4.dp) // Высота DragHandle
-            .background(Color.White)// Ваш цвет
+            .height(4.dp)
+            .background(Color.White)
         ,
 
 
@@ -106,7 +108,7 @@ fun BottomSheetHome(
     viewModel: TestViewModel,
     id: Int?
 ) {
-    val modalBottomSheetState = rememberModalBottomSheetState(false)
+    val modalBottomSheetState = rememberModalBottomSheetState(true)
     val coroutineScope = rememberCoroutineScope()
     var textFieldValue by remember { mutableStateOf("") }
 
@@ -117,7 +119,7 @@ fun BottomSheetHome(
 
     LaunchedEffect(key1 = true) {
         coroutineScope.launch {
-            modalBottomSheetState.show()
+            modalBottomSheetState.expand()
         }
     }
 
@@ -155,10 +157,14 @@ fun BottomSheetHome(
 
 
     ModalBottomSheet(
-        onDismissRequest = { onDismiss() },
+        onDismissRequest = { onDismiss()  },
         sheetState = modalBottomSheetState,
         dragHandle = { CustomDragHandle() },
-        modifier = Modifier.fillMaxSize().padding(top=5.dp).imePadding().navigationBarsPadding()
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(top = 5.dp)
+            .imePadding()
+            .navigationBarsPadding()
 
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
@@ -194,49 +200,60 @@ fun BottomSheetHome(
                     )
 
 
-                    LazyColumn(
-                        modifier = Modifier
-                            .weight(1f)
-                    ) {
-                        items(comments.itemCount) { index ->
-                            comments[index]?.let {
-                                CommentItem(
-                                    it.commentText,
-                                    it.createDate,
-                                    it.fullName,
-                                    it.authority
-                                )
-                            }
+                    if (comments.itemCount == 0 && comments.loadState.refresh is LoadState.NotLoading && comments.loadState.append.endOfPaginationReached) {
+                        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                            Text("Hələlik rəy yoxdur",
+                                style = TextStyle(
+                                    color = Color(0xFF6E6E6E),
+                                    fontSize = 15.sp,
+                                    fontWeight = FontWeight.W400,)
+                            )
                         }
-                        comments.apply {
-                            when {
-                                loadState.refresh is LoadState.Loading -> {
-                                    items(5) {
-                                        PlaceholderShimmerCard2()
-                                    }
-                                }
-
-                                loadState.append is LoadState.Loading -> {
-                                    item {
-                                    }
-                                }
-
-                                loadState.refresh is LoadState.Error -> {
-                                    val e = comments.loadState.refresh as LoadState.Error
-                                    item {
-                                        Text(text = "Error: ${e.error.localizedMessage}")
-                                    }
-                                }
-
-                                loadState.append is LoadState.Error -> {
-                                    val e = comments.loadState.append as LoadState.Error
-                                    item {
-                                        Text(text = "Error: ${e.error.localizedMessage}")
-                                    }
+                    } else {
+                        LazyColumn(
+                            modifier = Modifier
+                                .weight(1f)
+                        ) {
+                            items(comments.itemCount) { index ->
+                                comments[index]?.let {
+                                    CommentItem(
+                                        it.commentText,
+                                        it.createDate,
+                                        it.fullName,
+                                        it.authority
+                                    )
                                 }
                             }
-                        }
+                            comments.apply {
+                                when {
+                                    loadState.refresh is LoadState.Loading -> {
+                                        items(5) {
+                                            PlaceholderShimmerCard2()
+                                        }
+                                    }
 
+                                    loadState.append is LoadState.Loading -> {
+                                        item {
+                                        }
+                                    }
+
+                                    loadState.refresh is LoadState.Error -> {
+                                        val e = comments.loadState.refresh as LoadState.Error
+                                        item {
+                                            Text(text = "Error: ${e.error.localizedMessage}")
+                                        }
+                                    }
+
+                                    loadState.append is LoadState.Error -> {
+                                        val e = comments.loadState.append as LoadState.Error
+                                        item {
+                                            Text(text = "Error: ${e.error.localizedMessage}")
+                                        }
+                                    }
+                                }
+                            }
+
+                        }
                     }
                 }
             }

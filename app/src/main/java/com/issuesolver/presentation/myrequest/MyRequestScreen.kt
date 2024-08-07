@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
@@ -20,8 +21,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -116,6 +119,20 @@ fun MyRequestScreen(navController: NavController,
 
                         LaunchedEffect(key1 = filterData.requestId) {
                             viewModel.loadComments(filterData.requestId)
+                        }
+                    }
+                }
+                if (moviePagingItems.itemCount == 0 && moviePagingItems.loadState.refresh is LoadState.NotLoading && moviePagingItems.loadState.append.endOfPaginationReached) {
+                    item {
+                        Box(modifier = Modifier.fillMaxSize(),
+                            contentAlignment = Alignment.Center,
+                            ) {
+                            Text("Sorğunuz yoxdur.",
+                                style = TextStyle(
+                                    color = Color(0xFF6E6E6E),
+                                    fontSize = 15.sp,
+                                    fontWeight = FontWeight.W400,)
+                            )
                         }
                     }
                 }
