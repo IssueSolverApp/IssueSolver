@@ -102,7 +102,7 @@ fun FilterScreen(
                 fontWeight = FontWeight.W600,
                 textAlign = TextAlign.Start,
                 color = Color(0xFF2981FF),
-                modifier = Modifier.padding(bottom = 20.dp,top=24.dp)
+                modifier = Modifier.padding(bottom = 20.dp)
 
             )
             Divider(

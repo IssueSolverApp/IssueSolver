@@ -89,6 +89,7 @@ fun NewPasswordScreen(
         StatusR.ERROR -> {
 //            Toast.makeText(LocalView.current.context, "Kodun ishlemir X(", Toast.LENGTH_SHORT).show()
 
+            showLoading=false
 
         }
         StatusR.SUCCESS -> {

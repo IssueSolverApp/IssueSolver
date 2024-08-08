@@ -93,6 +93,8 @@ fun RegisterPage(navController: NavController, viewModel: RegisterViewModel = hi
 
         StatusR.ERROR -> {
             Log.e("ERRORTAG", registerState?.message.toString())
+            showLoading=false
+
         }
 
         else -> {
