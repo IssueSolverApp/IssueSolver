@@ -79,7 +79,8 @@ fun DropDownCategory(category: String, placeHolder: String, viewModel: RequestSc
             onDismissRequest = { expanded = false },
             modifier = Modifier
                 .width(with(LocalDensity.current) { textFieldSize.width.toDp() })
-                .background(Color.White),
+                .background(Color.White)
+                .heightIn(max = 400.dp),
 
         ) {
             categoryList?.forEach { label ->

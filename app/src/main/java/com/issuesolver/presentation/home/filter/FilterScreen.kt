@@ -95,6 +95,22 @@ fun FilterScreen(
                 .fillMaxSize()
                 .imePadding()
         ) {
+            Box(
+                modifier = Modifier
+                    .size(40.dp)
+                    .clip(RoundedCornerShape(100.dp))
+                    .background(Color.White)
+                    .clickable {
+                        navController.popBackStack()
+                    },
+                contentAlignment = Alignment.Center
+            ) {
+                Image(
+                    painter = painterResource(R.drawable.backarray),
+                    contentDescription = "Back",
+                    modifier = Modifier.size(24.dp)
+                )
+            }
             Text(
                 "Filter",
                 style = MaterialTheme.typography.headlineMedium,
@@ -102,7 +118,7 @@ fun FilterScreen(
                 fontWeight = FontWeight.W600,
                 textAlign = TextAlign.Start,
                 color = Color(0xFF2981FF),
-                modifier = Modifier.padding(bottom = 20.dp)
+                modifier = Modifier.padding(bottom = 20.dp, top=24.dp)
 
             )
             Divider(

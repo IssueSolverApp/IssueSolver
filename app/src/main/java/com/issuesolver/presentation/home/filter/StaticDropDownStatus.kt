@@ -74,7 +74,8 @@ fun StaticDropDownStatus(category: String, placeHolder: String, list:List<String
             onDismissRequest = { expanded = false },
             modifier = Modifier
                 .width(with(LocalDensity.current) { textFieldSize.width.toDp() })
-                .background(Color.White),
+                .background(Color.White)
+                .heightIn(max = 400.dp),
 
             ) {
             list.forEach { label ->
