@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.issuesolver.R
-import com.issuesolver.presentation.navigation.DetailsScreen
+import com.issuesolver.presentation.navigation.NewRequestScreen
 
 @Composable
 fun Navigation(navController: NavController){
@@ -44,7 +44,7 @@ fun Navigation(navController: NavController){
                 contentDescription = "Example Image",
                 modifier = Modifier
                     .size(32.dp)
-                    .clickable { navController.navigate(DetailsScreen.RequestInfoScreen.route) }
+                    .clickable { navController.navigate(NewRequestScreen.RequestInfoScreen.route) }
                 //.padding(end = 20.dp, top = 20.dp)
             )
         }

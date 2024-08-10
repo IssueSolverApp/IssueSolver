@@ -1,5 +1,5 @@
 package com.issuesolver.presentation.profile.profile
-import BottomBarScreen
+
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
@@ -17,12 +17,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -44,9 +42,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.issuesolver.R
 import com.issuesolver.common.PopUp
-import com.issuesolver.presentation.bottombar.AnimatedNavigationBar
-import com.issuesolver.presentation.navigation.AuthScreen
-import com.issuesolver.presentation.navigation.DetailsScreen
 import com.issuesolver.presentation.navigation.Graph
 
 
@@ -141,7 +136,7 @@ fun ProfileScreen(
                         Image(
                             painter = painterResource(R.drawable.settings_ic),
                             contentDescription = "settings_ic",
-                            modifier = Modifier.clickable(onClick = { navController.navigate(DetailsScreen.ProfileMyAccount.route)},
+                            modifier = Modifier.clickable(onClick = { navController.navigate(Graph.ProfileMyAccountGraph)},
                                 interactionSource = remember { MutableInteractionSource() },
                                 indication = null)
                         )
@@ -152,7 +147,7 @@ fun ProfileScreen(
                             .background(color = Color.White)
                             .padding(top = 24.dp, start = 16.dp, end = 16.dp, bottom = 24.dp)
                             .fillMaxWidth()
-                            .clickable(onClick = {navController.navigate(DetailsScreen.ProfileNewPassword.route)},
+                            .clickable(onClick = {navController.navigate(Graph.ProfileNewPasswordGraph)},
                                 interactionSource = remember { MutableInteractionSource() },
                                 indication = null),
                         horizontalArrangement = Arrangement.SpaceBetween,
@@ -292,7 +287,7 @@ fun ProfileScreen(
                             .background(color = Color.White)
                             .padding(top = 24.dp, start = 16.dp, end = 16.dp, bottom = 24.dp)
                             .fillMaxWidth()
-                            .clickable(onClick = { navController.navigate(DetailsScreen.ProfileDeleteAccount.route) },
+                            .clickable(onClick = { navController.navigate(Graph.ProfileDeleteAccountGraph) },
                                 interactionSource = remember { MutableInteractionSource() },
                                 indication = null),
                         horizontalArrangement = Arrangement.SpaceBetween,

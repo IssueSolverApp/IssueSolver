@@ -47,7 +47,6 @@ import com.issuesolver.common.PlaceholderShimmerCard2
 import com.issuesolver.common.SnackBar
 import com.issuesolver.domain.entity.networkModel.home.FilterData
 import com.issuesolver.presentation.myrequest.UserCard
-import com.issuesolver.presentation.navigation.DetailsScreen
 import kotlinx.coroutines.delay
 
 
@@ -178,7 +177,7 @@ fun HomeScreen(
                             modifier = Modifier
                                 .padding(end = 14.dp)
                                 .clickable {
-                                    navController.navigate(DetailsScreen.HomeFilterScreen.route)
+                                    navController.navigate(com.issuesolver.presentation.navigation.HomeScreen.HomeFilterScreen.route)
                                 }
                         )
 
@@ -205,7 +204,7 @@ fun HomeScreen(
                             likeSuccess=filterData.likeSuccess,
                             onClick = {
 
-                                navController.navigate(DetailsScreen.DetailsById.route+ "/${filterData.requestId}")
+                                navController.navigate(com.issuesolver.presentation.navigation.HomeScreen.DetailsById.route+ "/${filterData.requestId}")
                             }
                         )
                     }

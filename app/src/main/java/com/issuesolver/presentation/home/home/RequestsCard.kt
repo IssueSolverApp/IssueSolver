@@ -65,7 +65,6 @@ import com.issuesolver.common.AlertDialogExample2
 import com.issuesolver.common.PopUp
 import com.issuesolver.common.StatusR
 import com.issuesolver.presentation.myrequest.MyRequestViewModel
-import com.issuesolver.presentation.navigation.DetailsScreen
 import kotlin.math.roundToInt
 
 @Composable

@@ -36,7 +36,6 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.issuesolver.common.PlaceholderShimmerCard
 import com.issuesolver.domain.entity.networkModel.home.FilterData
-import com.issuesolver.presentation.navigation.DetailsScreen
 
 @Composable
 fun MyRequestScreen(navController: NavController,
@@ -110,7 +109,7 @@ fun MyRequestScreen(navController: NavController,
                                 likeSuccess=filterData.likeSuccess,
                                 onClick = {
                                     //navController.navigate("requestDetail/${filterData.requestId}")
-                                    navController.navigate(DetailsScreen.RequestById.route+ "/${filterData.requestId}")
+                                    navController.navigate(com.issuesolver.presentation.navigation.MyRequestScreen.RequestById.route+ "/${filterData.requestId}")
                                 },
 
                                 //filterData

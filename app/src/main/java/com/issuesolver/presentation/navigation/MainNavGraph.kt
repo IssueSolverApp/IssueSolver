@@ -34,60 +34,68 @@ import com.issuesolver.presentation.profile.profile.ProfileScreen
 
 
 @Composable
-fun MainNavGraph(navController: NavHostController, paddingValues: PaddingValues,
+fun MainNavGraph(navController: NavHostController,homeNavController: NavHostController, paddingValues: PaddingValues,
 
 ) {
     NavHost(
-        navController = navController,
+        navController = homeNavController,
         route = Graph.MAIN_SCREEN_PAGE,
         startDestination = BottomBarScreen.Home.route
     ) {
         composable(
             route=BottomBarScreen.Home.route
         ) {
-            HomeScreen(navController, paddingValues = paddingValues)
+            HomeScreen(navController = navController, paddingValues = paddingValues)
         }
         composable(route = BottomBarScreen.MyRequest.route) {
-            MyRequestScreen(navController, paddingValues)
+            MyRequestScreen(navController = navController, paddingValues)
         }
         composable(route = BottomBarScreen.NewRequest.route) {
 
-            RequestScreen(navController, paddingValues)
+            RequestScreen(navController = navController, paddingValues)
         }
         composable(route = BottomBarScreen.Profile.route) {
-            ProfileScreen(navController, paddingValues)
+            ProfileScreen(navController = navController, paddingValues)
         }
-        composable(route = DetailsScreen.ProfileNewPassword.route) {
-            NewPasswordScreen(navController)
-        }
-        composable(route = DetailsScreen.ProfileMyAccount.route) {
-            MyAccountScreen(navController)
-        }
-        composable(route = DetailsScreen.ProfileDeleteAccount.route) {
-            DeleteAccountScreen(navController)
-        }
-        composable(route = DetailsScreen.HomeFilterScreen.route) {
-            FilterScreen(navController)
-        }
-        composable(route = DetailsScreen.RequestInfoScreen.route) {
-            RequestInfoScreen(navController)
-        }
+//        composable(route = DetailsScreen.ProfileNewPassword.route) {
+//            NewPasswordScreen(navController)
+//        }
+//        composable(route = DetailsScreen.ProfileMyAccount.route) {
+//            MyAccountScreen(navController)
+//        }
+//        composable(route = DetailsScreen.ProfileDeleteAccount.route) {
+//            DeleteAccountScreen(navController)
+//        }
+//        composable(route = DetailsScreen.HomeFilterScreen.route) {
+//            FilterScreen(navController)
+//        }
+//        composable(route = DetailsScreen.RequestInfoScreen.route) {
+//            RequestInfoScreen(navController)
+//        }
+//
+//        composable(route = DetailsScreen.RequestById.route + "/{requestId}") {
+//            val id = it.arguments?.getString("requestId")
+//            //val likeSuccess = it.arguments?.getString("likeSuccess")
+//           // val email = navBackStack.arguments?.getString("id")
+//            id?.let { it1 ->  OpenedMyRequestScreen(navController, id= it1) }
+//        }
+//
+//        composable(route = DetailsScreen.DetailsById.route + "/{requestId}") {
+//            val id = it.arguments?.getString("requestId")
+//            //val likeSuccess = it.arguments?.getString("likeSuccess")
+//            // val email = navBackStack.arguments?.getString("id")
+//            id?.let { it1 ->  DetailedRequestScreen(navController, id= it1) }
+//        }
+//
 
-        composable(route = DetailsScreen.RequestById.route + "/{requestId}") {
-            val id = it.arguments?.getString("requestId")
-            //val likeSuccess = it.arguments?.getString("likeSuccess")
-           // val email = navBackStack.arguments?.getString("id")
-            id?.let { it1 ->  OpenedMyRequestScreen(navController, id= it1) }
-        }
 
-        composable(route = DetailsScreen.DetailsById.route + "/{requestId}") {
-            val id = it.arguments?.getString("requestId")
-            //val likeSuccess = it.arguments?.getString("likeSuccess")
-            // val email = navBackStack.arguments?.getString("id")
-            id?.let { it1 ->  DetailedRequestScreen(navController, id= it1) }
-        }
 
-        authNavGraph(navController = navController)
+//        homeNavGraph(navController = navController)
+//        myRequestsNavGraph(navController = navController)
+//        newRequestsNavGraph(navController = navController)
+//        profileDeleteAccountNavGraph(navController = navController)
+//        profileNewPasswordNavGraph(navController = navController)
+//        profileMyAccountNavGraph(navController = navController)
 
     }
 }
@@ -111,20 +119,7 @@ fun MainNavGraph(navController: NavHostController, paddingValues: PaddingValues,
 //    }
 //}
 
-sealed class DetailsScreen(val route: String) {
-    object ProfileNewPassword : DetailsScreen(route = "PROFILE_NEW_PASSWORD")
-    object ProfileMyAccount : DetailsScreen(route = "PROFILE_MY_ACCOUNT")
-    object ProfileDeleteAccount : DetailsScreen(route = "PROFILE_DELETE_ACCOUNT")
-    object RequestInfoScreen : DetailsScreen(route = "REQUEST_INFO_SCREEN")
-    object HomeFilterScreen : DetailsScreen(route = "Home_Filter_Screen")
 
-
-    object RequestById : DetailsScreen(route = "Request_By_Id")
-    object DetailsById : DetailsScreen(route = "Details_By_Id")
-
-
-
-}
 
 //@Composable
 //inline fun <reified T : ViewModel> NavBackStackEntry.sharedViewModel(navController: NavController): T {

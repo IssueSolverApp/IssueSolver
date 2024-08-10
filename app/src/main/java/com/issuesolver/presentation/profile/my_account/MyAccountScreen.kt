@@ -56,7 +56,6 @@ import com.issuesolver.presentation.bottombar.AnimatedNavigationBar
 import com.issuesolver.presentation.common.AuthButton
 import com.issuesolver.presentation.common.ErrorText
 import com.issuesolver.presentation.common.LoadingOverlay
-import com.issuesolver.presentation.navigation.DetailsScreen
 import com.issuesolver.presentation.profile.enter_password.DeleteAccountEvent
 import com.issuesolver.presentation.profile.new_password.NewPasswordScreenEvent
 import com.issuesolver.presentation.profile.profile.ProfileScreenState

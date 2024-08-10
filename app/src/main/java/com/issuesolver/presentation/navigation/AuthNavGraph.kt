@@ -21,7 +21,7 @@ fun NavGraphBuilder.authNavGraph(navController: NavHostController) {
     ) {
 
         composable(route = AuthScreen.SPLASH.route) {
-            Splash(navController)
+            Splash(navController = navController)
         }
 
         composable(route = AuthScreen.Login.route) {
@@ -37,7 +37,7 @@ fun NavGraphBuilder.authNavGraph(navController: NavHostController) {
             PasswordChangePage(navController = navController)
         }
         composable(route = AuthScreen.Register.route) {
-            RegisterPage(navController)
+            RegisterPage(navController = navController)
         }
         composable(route = AuthScreen.RegisterOtp.route+ "/{id}") {navBackStack ->
             val email = navBackStack.arguments?.getString("id")
@@ -83,12 +83,3 @@ fun NavGraphBuilder.authNavGraph(navController: NavHostController) {
 //        }
 //    }
 //}
-sealed class AuthScreen(val route: String) {
-        object SPLASH : AuthScreen(route = "SPLASH")
-    object Login : AuthScreen(route = "LOGIN")
-    object EmailVerification : AuthScreen(route = "EMAIL_VERIFICATION")
-    object Otp : AuthScreen(route = "OTP")
-    object PasswordChange : AuthScreen(route = "PASSWORD_CHANGE")
-    object Register : AuthScreen(route = "REGISTER")
-    object RegisterOtp : AuthScreen(route = "REGISTER_OTP")
-}

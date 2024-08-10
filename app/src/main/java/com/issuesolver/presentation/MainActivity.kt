@@ -1,13 +1,17 @@
 package com.issuesolver.presentation
 
+import android.animation.ObjectAnimator
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.WindowManager
+import android.view.animation.LinearInterpolator
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.core.animation.doOnEnd
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -32,6 +36,21 @@ class MainActivity : ComponentActivity() {
 
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
 
+        installSplashScreen().setOnExitAnimationListener { splashScreenViewProvider ->
+            val slideAnimation = ObjectAnimator.ofFloat(
+                splashScreenViewProvider.iconView,
+                "translationX",
+                0f,  // Start position
+                resources.displayMetrics.widthPixels.toFloat()  // End position
+            ).apply {
+                interpolator = LinearInterpolator()
+                duration = 1000  // Duration in milliseconds
+                doOnEnd {
+                    splashScreenViewProvider.remove()
+                }
+            }
+            slideAnimation.start()
+        }
         setContent {
                 IssueSolverTheme {
 
