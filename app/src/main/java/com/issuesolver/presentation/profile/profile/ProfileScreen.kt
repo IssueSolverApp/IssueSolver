@@ -136,7 +136,7 @@ fun ProfileScreen(
                         Image(
                             painter = painterResource(R.drawable.settings_ic),
                             contentDescription = "settings_ic",
-                            modifier = Modifier.clickable(onClick = { navController.navigate(Graph.ProfileMyAccountGraph)},
+                            modifier = Modifier.clickable(onClick = { navController.navigate(com.issuesolver.presentation.navigation.ProfileScreen.ProfileMyAccount.route)},
                                 interactionSource = remember { MutableInteractionSource() },
                                 indication = null)
                         )

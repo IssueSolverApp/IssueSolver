@@ -56,6 +56,9 @@ class MainActivity : ComponentActivity() {
 
 //                    RootNavigationGraph()
 
+                    val navController = rememberNavController()
+
+
                     val accessToken = sharedPreferences.getString("access_token", null)
 
                     if (accessToken.isNullOrEmpty()) {
@@ -65,7 +68,7 @@ class MainActivity : ComponentActivity() {
                     } else {
                         // Если токен есть, запускаем основной экран
 
-                        MainScreen()
+                        MainScreen(navController = navController)
                     }
 
 //                    HomeScreen(navController = rememberNavController(), paddingValues= PaddingValues())

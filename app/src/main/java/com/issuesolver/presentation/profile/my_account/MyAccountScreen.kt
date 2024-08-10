@@ -88,7 +88,7 @@ fun MyAccountScreen(
         }
         StatusR.SUCCESS -> {
 //            Toast.makeText(LocalView.current.context, "Full Name Changed <3", Toast.LENGTH_SHORT).show()
-            navController.popBackStack()
+            navController.navigateUp()
             viewModel.clearState()
 
 //            viewModel.clearLoginState()

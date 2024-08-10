@@ -24,15 +24,10 @@ fun MainScreen(
     homeNavController: NavHostController = rememberNavController()
 
 ) {
-    val navBackStackEntry by homeNavController.currentBackStackEntryAsState()
-    val currentRoute by remember(navBackStackEntry) {
-        derivedStateOf {
-            navBackStackEntry?.destination?.route
-        }
-    }
 
     Scaffold(
 
+        modifier = Modifier.navigationBarsPadding(),
         bottomBar = {
             AnimatedNavigationBar(navController = homeNavController)        }
     ) {padding->

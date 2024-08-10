@@ -65,6 +65,10 @@ fun AnimatedNavigationBar(navController: NavController) {
     val currentDestination = navBackStackEntry?.destination
 
     var selectedItem by rememberSaveable { mutableIntStateOf(0) }
+
+    selectedItem = buttons.indexOfFirst { it.route == currentDestination?.route }.takeIf { it != -1 } ?: selectedItem
+
+
     var barSize by remember { mutableStateOf(IntSize(0, 0)) }
     val offsetStep = remember(barSize) {
         barSize.width.toFloat() / (buttons.size * 2)
@@ -138,21 +142,20 @@ fun AnimatedNavigationBar(navController: NavController) {
             horizontalArrangement = Arrangement.SpaceAround,
         ) {
             buttons.forEachIndexed { index, button ->
-                val isSelected = currentDestination?.hierarchy?.any {
-                    it.route == button.route
-                } == true
-                if (isSelected) selectedItem = index
-
                 NavigationBarItem(
-                    selected = isSelected,
-                    onClick = {  navController.navigate(button.route) {
-                        popUpTo(navController.graph.findStartDestination().id)
-                        launchSingleTop = true
-                        restoreState = true
-                    } },
+                    selected = index == selectedItem,
+                    onClick = {
+                        navController.navigate(button.route) {
+                            popUpTo(navController.graph.findStartDestination().id) {
+                                saveState = true
+                            }
+                            launchSingleTop = true
+                            restoreState = true
+                        }
+                    },
                     icon = {
                         val iconAlpha by animateFloatAsState(
-                            targetValue = if (isSelected) 0f else 1f,
+                            targetValue = if (index == selectedItem) 0f else 1f,
                             label = "Navbar item icon"
                         )
                         Image(
