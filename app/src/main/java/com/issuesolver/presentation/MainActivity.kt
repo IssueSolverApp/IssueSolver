@@ -36,21 +36,6 @@ class MainActivity : ComponentActivity() {
 
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
 
-        installSplashScreen().setOnExitAnimationListener { splashScreenViewProvider ->
-            val slideAnimation = ObjectAnimator.ofFloat(
-                splashScreenViewProvider.iconView,
-                "translationX",
-                0f,  // Start position
-                resources.displayMetrics.widthPixels.toFloat()  // End position
-            ).apply {
-                interpolator = LinearInterpolator()
-                duration = 1000  // Duration in milliseconds
-                doOnEnd {
-                    splashScreenViewProvider.remove()
-                }
-            }
-            slideAnimation.start()
-        }
         setContent {
                 IssueSolverTheme {
 
