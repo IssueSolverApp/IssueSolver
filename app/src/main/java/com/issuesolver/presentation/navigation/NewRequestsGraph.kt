@@ -12,7 +12,11 @@ fun NavGraphBuilder.newRequestsNavGraph(navController: NavHostController) {
         route = Graph.NewRequestsGraph,
         startDestination = NewRequestScreen.RequestInfoScreen.route
     ) {
-        composable(route = NewRequestScreen.RequestInfoScreen.route) {
+        composable(route = NewRequestScreen.RequestInfoScreen.route,
+            enterTransition = { slideInFromRight() },
+            exitTransition = { slideOutToLeft() },
+            popEnterTransition = { slideInFromLeft() },
+            popExitTransition = { slideOutToRight() }) {
             RequestInfoScreen(navController = navController)
         }
     }

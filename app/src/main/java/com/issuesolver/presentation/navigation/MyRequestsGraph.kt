@@ -12,7 +12,11 @@ fun NavGraphBuilder.myRequestsNavGraph(navController: NavHostController) {
         route = Graph.MyRequestsGraph,
         startDestination = MyRequestScreen.RequestById.route
     ) {
-        composable(route = MyRequestScreen.RequestById.route + "/{requestId}") {
+        composable(route = MyRequestScreen.RequestById.route + "/{requestId}",
+            enterTransition = { slideInFromRight() },
+            exitTransition = { slideOutToLeft() },
+            popEnterTransition = { slideInFromLeft() },
+            popExitTransition = { slideOutToRight() }) {
             val id = it.arguments?.getString("requestId")
             //val likeSuccess = it.arguments?.getString("likeSuccess")
            // val email = navBackStack.arguments?.getString("id")

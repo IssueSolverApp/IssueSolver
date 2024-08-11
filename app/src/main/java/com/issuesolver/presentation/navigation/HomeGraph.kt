@@ -14,11 +14,19 @@ fun NavGraphBuilder.homeNavGraph(navController: NavHostController) {
         route = Graph.HomeGraph,
         startDestination = HomeScreen.HomeFilterScreen.route
     ) {
-        composable(route = HomeScreen.HomeFilterScreen.route) {
+        composable(route = HomeScreen.HomeFilterScreen.route,
+            enterTransition = { slideInFromRight() },
+            exitTransition = { slideOutToLeft() },
+            popEnterTransition = { slideInFromLeft() },
+            popExitTransition = { slideOutToRight() }) {
             FilterScreen(navController = navController)
         }
 
-        composable(route = HomeScreen.DetailsById.route + "/{requestId}") {
+        composable(route = HomeScreen.DetailsById.route + "/{requestId}",
+            enterTransition = { slideInFromRight() },
+            exitTransition = { slideOutToLeft() },
+            popEnterTransition = { slideInFromLeft() },
+            popExitTransition = { slideOutToRight() }) {
             val id = it.arguments?.getString("requestId")
             //val likeSuccess = it.arguments?.getString("likeSuccess")
             // val email = navBackStack.arguments?.getString("id")

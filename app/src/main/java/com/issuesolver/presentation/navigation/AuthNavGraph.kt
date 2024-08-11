@@ -24,22 +24,46 @@ fun NavGraphBuilder.authNavGraph(navController: NavHostController) {
             Splash(navController = navController)
         }
 
-        composable(route = AuthScreen.Login.route) {
+        composable(route = AuthScreen.Login.route,
+            enterTransition = { slideInFromRight() },
+            exitTransition = { slideOutToLeft() },
+            popEnterTransition = { slideInFromLeft() },
+            popExitTransition = { slideOutToRight() }) {
             LoginPage(navController = navController)
         }
-        composable(route = AuthScreen.EmailVerification.route) {
+        composable(route = AuthScreen.EmailVerification.route,
+            enterTransition = { slideInFromRight() },
+            exitTransition = { slideOutToLeft() },
+            popEnterTransition = { slideInFromLeft() },
+            popExitTransition = { slideOutToRight() }) {
             EmailVerificationPage(navController = navController)
         }
-        composable(route = AuthScreen.Otp.route) {
+        composable(route = AuthScreen.Otp.route,
+            enterTransition = { slideInFromRight() },
+            exitTransition = { slideOutToLeft() },
+            popEnterTransition = { slideInFromLeft() },
+            popExitTransition = { slideOutToRight() }) {
             VerificationCodePage(navController = navController)
         }
-        composable(route = AuthScreen.PasswordChange.route) {
+        composable(route = AuthScreen.PasswordChange.route,
+            enterTransition = { slideInFromRight() },
+            exitTransition = { slideOutToLeft() },
+            popEnterTransition = { slideInFromLeft() },
+            popExitTransition = { slideOutToRight() }) {
             PasswordChangePage(navController = navController)
         }
-        composable(route = AuthScreen.Register.route) {
+        composable(route = AuthScreen.Register.route,
+            enterTransition = { slideInFromRight() },
+            exitTransition = { slideOutToLeft() },
+            popEnterTransition = { slideInFromLeft() },
+            popExitTransition = { slideOutToRight() }) {
             RegisterPage(navController = navController)
         }
-        composable(route = AuthScreen.RegisterOtp.route+ "/{id}") {navBackStack ->
+        composable(route = AuthScreen.RegisterOtp.route+ "/{id}",
+            enterTransition = { slideInFromRight() },
+            exitTransition = { slideOutToLeft() },
+            popEnterTransition = { slideInFromLeft() },
+            popExitTransition = { slideOutToRight() }) {navBackStack ->
             val email = navBackStack.arguments?.getString("id")
 
             RegisterOtpCodePage(navController = navController, email = email)

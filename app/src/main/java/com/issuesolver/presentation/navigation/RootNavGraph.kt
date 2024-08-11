@@ -22,9 +22,7 @@ fun RootNavigationGraph() {
         homeNavGraph(navController = navController)
         myRequestsNavGraph(navController = navController)
         newRequestsNavGraph(navController = navController)
-        profileDeleteAccountNavGraph(navController = navController)
-        profileNewPasswordNavGraph(navController = navController)
-        profileMyAccountNavGraph(navController = navController)
+        profileNavGraph(navController = navController)
     }
 }
 
