@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -81,116 +82,132 @@ fun FilterScreen(
 //    LaunchedEffect(categoryName) {
 //        testViewModel.setFilterParams(TestViewModel.FilterParams(status = categoryName)) //Baxılır
 //    }
-
-    Box(
+    Scaffold(
         modifier = Modifier
-            .fillMaxSize()
-            .statusBarsPadding()
             .navigationBarsPadding()
-            .imePadding()
-            .padding(top = 22.dp, bottom = 16.dp, start = 20.dp, end = 20.dp)
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .imePadding()
-        ) {
+            .statusBarsPadding(),
+        bottomBar = {
+        },
+
+        content = { padding ->
+
             Box(
                 modifier = Modifier
-                    .size(40.dp)
-                    .clip(RoundedCornerShape(100.dp))
-                    .background(Color.White)
-                    .clickable {
-                        navController.popBackStack()
-                    },
-                contentAlignment = Alignment.Center
+                    .fillMaxSize()
+                    .statusBarsPadding()
+                    .navigationBarsPadding()
+                    .imePadding()
+                    .padding(top = 22.dp, bottom = 16.dp, start = 20.dp, end = 20.dp)
             ) {
-                Image(
-                    painter = painterResource(R.drawable.backarray),
-                    contentDescription = "Back",
-                    modifier = Modifier.size(24.dp)
-                )
-            }
-            Text(
-                "Filter",
-                style = MaterialTheme.typography.headlineMedium,
-                fontSize = 28.sp,
-                fontWeight = FontWeight.W600,
-                textAlign = TextAlign.Start,
-                color = Color(0xFF2981FF),
-                modifier = Modifier.padding(bottom = 20.dp, top=24.dp)
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .imePadding()
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .size(40.dp)
+                            .clip(RoundedCornerShape(100.dp))
+                            .background(Color.White)
+                            .clickable {
+                                navController.popBackStack()
+                            },
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Image(
+                            painter = painterResource(R.drawable.backarray),
+                            contentDescription = "Back",
+                            modifier = Modifier.size(24.dp)
+                        )
+                    }
+                    Text(
+                        "Filter",
+                        style = MaterialTheme.typography.headlineMedium,
+                        fontSize = 28.sp,
+                        fontWeight = FontWeight.W600,
+                        textAlign = TextAlign.Start,
+                        color = Color(0xFF2981FF),
+                        modifier = Modifier.padding(bottom = 20.dp, top = 24.dp)
 
-            )
-            Divider(
-                thickness = 0.5.dp,
-                color = Color(0xFF2981FF),
-                modifier = Modifier.padding(end = 7.dp, bottom = 12.dp)
-            )
-            Column(
-            ) {
-                CategoryDropDown(
-                    category = "Kateqoriya",
-                    placeHolder = "Problemin Kateqoriyası",
-                    viewModel = viewModel,
-                    selectedCategory = { selectedCategory ->
-                        categoryName = selectedCategory
-                    }
-                )
-                OrganizationDropDown(
-                    category = "Qurum",
-                    placeHolder = "Problemin yönləndiriləcəyi qurum",
-                    viewModel = viewModel,
-                    selectedCategory = { selectedCategory ->
-                        organizationName = selectedCategory
-                    }
-                )
-                StaticDropDownStatus(
-                    category ="Status",
-                    placeHolder ="Problemin statusu",
-                    list = listStatus,
-                    viewModel=testViewModel,
-                    selectedCategory = { selectedCategory ->
-                        status = selectedCategory
-                    }
+                    )
+                    Divider(
+                        thickness = 0.5.dp,
+                        color = Color(0xFF2981FF),
+                        modifier = Modifier.padding(end = 7.dp, bottom = 12.dp)
+                    )
+                    Column(
+                    ) {
+                        CategoryDropDown(
+                            category = "Kateqoriya",
+                            placeHolder = "Problemin Kateqoriyası",
+                            viewModel = viewModel,
+                            selectedCategory = { selectedCategory ->
+                                categoryName = selectedCategory
+                            }
+                        )
+                        OrganizationDropDown(
+                            category = "Qurum",
+                            placeHolder = "Problemin yönləndiriləcəyi qurum",
+                            viewModel = viewModel,
+                            selectedCategory = { selectedCategory ->
+                                organizationName = selectedCategory
+                            }
+                        )
+                        StaticDropDownStatus(
+                            category = "Status",
+                            placeHolder = "Problemin statusu",
+                            list = listStatus,
+                            viewModel = testViewModel,
+                            selectedCategory = { selectedCategory ->
+                                status = selectedCategory
+                            }
 
-                )
-                StaticDropDownDays(
-                    category ="Tarix",
-                    placeHolder ="Problemin tarixi",
-                    list = listDays,
-                    viewModel=viewModel,
-                    selectedCategory = { selectedCategory ->
-                        days = selectedCategory
+                        )
+                        StaticDropDownDays(
+                            category = "Tarix",
+                            placeHolder = "Problemin tarixi",
+                            list = listDays,
+                            viewModel = viewModel,
+                            selectedCategory = { selectedCategory ->
+                                days = selectedCategory
+                            }
+                        )
                     }
-                )
-            }
-        }
-        Column(
-            modifier = Modifier.align(Alignment.BottomCenter)
-        ) {
-            AuthButton(
-                text = "Axtarış et",
-                onClick = {
-                    //viewModel.applyFilters(status, categoryName, organizationName, days)
+                }
+                Column(
+                    modifier = Modifier.align(Alignment.BottomCenter)
+                ) {
+                    AuthButton(
+                        text = "Axtarış et",
+                        onClick = {
+                            //viewModel.applyFilters(status, categoryName, organizationName, days)
 //                    viewModel.fetchFilteredRequests(status = selectedStatus, categoryName = selectedCategory, organizationName = selectedOrganization, days = selectedDays)
-                    //viewModel.applyFilters2(selectedStatus, selectedCategory, selectedOrganization, selectedDays)
-                    //viewModel.applyFilters2("", categoryName, "", "")
+                            //viewModel.applyFilters2(selectedStatus, selectedCategory, selectedOrganization, selectedDays)
+                            //viewModel.applyFilters2("", categoryName, "", "")
 
 
-                    saveFilterPreferences(context, categoryName, organizationName, days, status)
+                            saveFilterPreferences(
+                                context,
+                                categoryName,
+                                organizationName,
+                                days,
+                                status
+                            )
 
 
 //                    testViewModel.filter(status, categoryName, organizationName, days )
 
-                        navController.navigate(BottomBarScreen.Home.route)
-                    //+ "/${status}"+ "/${categoryName}"+ "/${organizationName}"+ "/${days}"
+                            navController.navigate(BottomBarScreen.Home.route)
+                            //+ "/${status}"+ "/${categoryName}"+ "/${organizationName}"+ "/${days}"
 //                    navController.navigate(
 //                        "${BottomBarScreen.Home.route}/$categoryName/$organizationName/$status/$days"
 //                    )
-                },
-                modifier = Modifier.fillMaxWidth(),
-            )
+                        },
+                        modifier = Modifier.fillMaxWidth(),
+                    )
 
+                }
+            }
         }
-    }
+    )
 }

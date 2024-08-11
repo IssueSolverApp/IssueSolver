@@ -147,7 +147,7 @@ fun ProfileScreen(
                             .background(color = Color.White)
                             .padding(top = 24.dp, start = 16.dp, end = 16.dp, bottom = 24.dp)
                             .fillMaxWidth()
-                            .clickable(onClick = {navController.navigate(Graph.ProfileNewPasswordGraph)},
+                            .clickable(onClick = {navController.navigate(com.issuesolver.presentation.navigation.ProfileScreen.ProfileNewPassword.route)},
                                 interactionSource = remember { MutableInteractionSource() },
                                 indication = null),
                         horizontalArrangement = Arrangement.SpaceBetween,
@@ -287,7 +287,7 @@ fun ProfileScreen(
                             .background(color = Color.White)
                             .padding(top = 24.dp, start = 16.dp, end = 16.dp, bottom = 24.dp)
                             .fillMaxWidth()
-                            .clickable(onClick = { navController.navigate(Graph.ProfileDeleteAccountGraph) },
+                            .clickable(onClick = { navController.navigate(com.issuesolver.presentation.navigation.ProfileScreen.ProfileDeleteAccount.route) },
                                 interactionSource = remember { MutableInteractionSource() },
                                 indication = null),
                         horizontalArrangement = Arrangement.SpaceBetween,

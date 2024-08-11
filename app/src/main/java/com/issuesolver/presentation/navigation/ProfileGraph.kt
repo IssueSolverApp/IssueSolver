@@ -14,13 +14,25 @@ fun NavGraphBuilder.profileNavGraph(navController: NavHostController) {
         route = Graph.ProfileMyAccountGraph,
         startDestination = ProfileScreen.ProfileMyAccount.route
     ) {
-        composable(route = ProfileScreen.ProfileMyAccount.route) {
+        composable(route = ProfileScreen.ProfileMyAccount.route,
+            enterTransition = { slideInFromRight() },
+            exitTransition = { slideOutToLeft() },
+            popEnterTransition = { slideInFromLeft() },
+            popExitTransition = { slideOutToRight() }) {
             MyAccountScreen(navController = navController)
         }
-        composable(route = ProfileScreen.ProfileNewPassword.route) {
+        composable(route = ProfileScreen.ProfileNewPassword.route,
+            enterTransition = { slideInFromRight() },
+            exitTransition = { slideOutToLeft() },
+            popEnterTransition = { slideInFromLeft() },
+            popExitTransition = { slideOutToRight() }) {
             NewPasswordScreen(navController = navController)
         }
-        composable(route = ProfileScreen.ProfileDeleteAccount.route) {
+        composable(route = ProfileScreen.ProfileDeleteAccount.route,
+            enterTransition = { slideInFromRight() },
+            exitTransition = { slideOutToLeft() },
+            popEnterTransition = { slideInFromLeft() },
+            popExitTransition = { slideOutToRight() }) {
             DeleteAccountScreen(navController = navController)
         }
     }
