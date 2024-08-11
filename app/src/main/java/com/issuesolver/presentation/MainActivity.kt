@@ -38,28 +38,19 @@ class MainActivity : ComponentActivity() {
 
         setContent {
                 IssueSolverTheme {
-
-//                    RootNavigationGraph()
-
                     val navController = rememberNavController()
 
-                    MainScreen(navController = navController)
+//                    MainScreen(navController = navController)
 
 
+                    val accessToken = sharedPreferences.getString("access_token", null)
 
-//                    val accessToken = sharedPreferences.getString("access_token", null)
-//
-//                    if (accessToken.isNullOrEmpty()) {
-//                        // Если токен отсутствует, показываем экран логина
-//                         // Замените на ваш экран логина
-//                        RootNavigationGraph()
-//                    } else {
-//                        // Если токен есть, запускаем основной экран
-//
-//                        MainScreen(navController = navController)
-//                    }
+                    if (accessToken.isNullOrEmpty()) {
+                        RootNavigationGraph()
+                    } else {
+                        MainScreen(navController = navController)
+                    }
 
-//                    HomeScreen(navController = rememberNavController(), paddingValues= PaddingValues())
             }
         }
 

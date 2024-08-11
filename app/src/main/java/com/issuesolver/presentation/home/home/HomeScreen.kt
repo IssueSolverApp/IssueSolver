@@ -19,6 +19,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
+import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -61,7 +62,7 @@ fun HomeScreen(
 //    days:String
 
 
-    ) {
+) {
     val context = LocalContext.current
     val filterPreferences = remember {
         getFilterPreferences(context)
@@ -171,15 +172,15 @@ fun HomeScreen(
                             color = Color(0xFF2981FF),
                         )
                     }
-                        Image(
-                            painter = painterResource(R.drawable.group),
-                            contentDescription = "filter",
-                            modifier = Modifier
-                                .padding(end = 14.dp)
-                                .clickable {
-                                    navController.navigate(com.issuesolver.presentation.navigation.HomeScreen.HomeFilterScreen.route)
-                                }
-                        )
+                    Image(
+                        painter = painterResource(R.drawable.group),
+                        contentDescription = "filter",
+                        modifier = Modifier
+                            .padding(end = 14.dp)
+                            .clickable {
+                                navController.navigate(com.issuesolver.presentation.navigation.HomeScreen.HomeFilterScreen.route)
+                            }
+                    )
 
 
                 }
@@ -250,8 +251,3 @@ fun HomeScreen(
         }
     }
 }
-
-
-
-
-

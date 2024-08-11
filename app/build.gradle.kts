@@ -87,10 +87,8 @@ dependencies {
     implementation ("androidx.navigation:navigation-compose:2.7.7")
 
     implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
-
+    implementation(platform("androidx.compose:compose-bom:2024.06.00"))
     implementation("com.google.accompanist:accompanist-systemuicontroller:0.28.0")
-
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
