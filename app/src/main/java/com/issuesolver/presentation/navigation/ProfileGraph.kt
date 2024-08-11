@@ -11,7 +11,7 @@ import com.issuesolver.presentation.profile.new_password.NewPasswordScreen
 
 fun NavGraphBuilder.profileNavGraph(navController: NavHostController) {
     navigation(
-        route = Graph.ProfileMyAccountGraph,
+        route = Graph.ProfileGraph,
         startDestination = ProfileScreen.ProfileMyAccount.route
     ) {
         composable(route = ProfileScreen.ProfileMyAccount.route,

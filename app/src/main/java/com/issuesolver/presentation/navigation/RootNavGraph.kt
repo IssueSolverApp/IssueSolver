@@ -32,9 +32,7 @@ object Graph {
     const val MAIN_SCREEN_PAGE = "main_screen_graph"
     const val HomeGraph="homeGraph"
     const val MyRequestsGraph="myRequestsGraph"
-    const val ProfileDeleteAccountGraph="profileDeleteAccountGraph"
-    const val ProfileNewPasswordGraph="profileNewPasswordGraph"
-    const val ProfileMyAccountGraph="profileMyAccountGraph"
+    const val ProfileGraph="profileGraph"
     const val NewRequestsGraph="newRequestsGraph"
 
 }

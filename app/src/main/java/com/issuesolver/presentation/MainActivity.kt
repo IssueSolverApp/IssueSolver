@@ -43,18 +43,21 @@ class MainActivity : ComponentActivity() {
 
                     val navController = rememberNavController()
 
+                    MainScreen(navController = navController)
 
-                    val accessToken = sharedPreferences.getString("access_token", null)
 
-                    if (accessToken.isNullOrEmpty()) {
-                        // Если токен отсутствует, показываем экран логина
-                         // Замените на ваш экран логина
-                        RootNavigationGraph()
-                    } else {
-                        // Если токен есть, запускаем основной экран
 
-                        MainScreen(navController = navController)
-                    }
+//                    val accessToken = sharedPreferences.getString("access_token", null)
+//
+//                    if (accessToken.isNullOrEmpty()) {
+//                        // Если токен отсутствует, показываем экран логина
+//                         // Замените на ваш экран логина
+//                        RootNavigationGraph()
+//                    } else {
+//                        // Если токен есть, запускаем основной экран
+//
+//                        MainScreen(navController = navController)
+//                    }
 
 //                    HomeScreen(navController = rememberNavController(), paddingValues= PaddingValues())
             }

@@ -26,6 +26,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -46,6 +47,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
+import kotlinx.coroutines.launch
 
 
 @Composable
@@ -144,13 +146,15 @@ fun AnimatedNavigationBar(navController: NavController) {
             buttons.forEachIndexed { index, button ->
                 NavigationBarItem(
                     selected = index == selectedItem,
-                    onClick = {
-                        navController.navigate(button.route) {
-                            popUpTo(navController.graph.findStartDestination().id) {
-                                saveState = true
+                    onClick = debounceClick(500) {
+                        if (button.route != navController.currentDestination?.route) {
+                            navController.navigate(button.route) {
+                                popUpTo(navController.graph.findStartDestination().id) {
+                                    saveState = true
+                                }
+                                launchSingleTop = true
+                                restoreState = true
                             }
-                            launchSingleTop = true
-                            restoreState = true
                         }
                     },
                     icon = {
@@ -199,5 +203,24 @@ private fun Circle(
             contentDescription = button.title,
             tint = iconColor
         )
+    }
+}
+
+@Composable
+fun debounceClick(
+    delayMillis: Long = 500L,
+    onClick: () -> Unit
+): () -> Unit {
+    var lastClickTimestamp = remember { 0L }
+    val coroutineScope = rememberCoroutineScope()
+
+    return {
+        val currentClickTimestamp = System.currentTimeMillis()
+        if (currentClickTimestamp - lastClickTimestamp > delayMillis) {
+            lastClickTimestamp = currentClickTimestamp
+            coroutineScope.launch {
+                onClick()
+            }
+        }
     }
 }
