@@ -2,6 +2,7 @@ package com.issuesolver.presentation.bottombar
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -22,19 +23,18 @@ import com.issuesolver.presentation.navigation.MainNavGraph
 fun MainScreen(
     navController: NavHostController,
     homeNavController: NavHostController = rememberNavController()
-
 ) {
-
     Scaffold(
-
-        modifier = Modifier.navigationBarsPadding(),
+        modifier = Modifier
+            .navigationBarsPadding()
+            .statusBarsPadding(),
         bottomBar = {
-            AnimatedNavigationBar(navController = homeNavController)        }
+            AnimatedNavigationBar(navController = homeNavController)
+        }
     ) {padding->
         MainNavGraph(navController,homeNavController, paddingValues = padding)
     }
 }
-
 
 
 
