@@ -63,19 +63,3 @@ sealed class ProfileScreen(val route: String){
     object ProfileDeleteAccount : ProfileScreen(route = "PROFILE_DELETE_ACCOUNT")
 }
 
-//
-//@Composable
-//fun RootNavigationGraph() {
-//    val navController = rememberNavController()
-//
-//    NavHost(
-//        navController = navController,
-//        route = Graph.ROOT,
-//        startDestination = Graph.AUTHENTICATION
-//    ) {
-//        authNavGraph(navController)
-//        composable(route = Graph.MAIN_SCREEN_PAGE) {
-//            MainScreen(navController)
-//        }
-//    }
-//}

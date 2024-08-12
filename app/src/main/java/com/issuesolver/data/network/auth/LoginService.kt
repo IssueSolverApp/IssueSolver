@@ -20,9 +20,6 @@ interface LoginService {
     @POST("api/Auths/login")
     suspend fun login(@Body request: LoginRequest): Response<LoginResponse>
 
-//    @POST()
-//    suspend fun loginv2(@Url url: String = , @Body request: LoginRequest): Response<LoginResponse>
-
     @POST("api/Auths/register")
     suspend fun register(@Body request: RegisterRequestModel): Response<RegisterResponseModel>
 

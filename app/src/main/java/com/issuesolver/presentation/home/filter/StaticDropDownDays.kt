@@ -82,7 +82,6 @@ fun StaticDropDownDays(category: String, placeHolder: String, list:List<String>,
                     onClick = {
                         selectedText = label
                         expanded = false
-                       // viewModel.selectDays(label)
                         selectedCategory(label)
                     }
                 )

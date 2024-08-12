@@ -89,7 +89,6 @@ fun CategoryDropDown (category: String, placeHolder: String, viewModel: FilterVi
                     onClick = {
                         selectedText = label.categoryName
                         expanded = false
-                        //viewModel.selectCategory(label.categoryName)
                         selectedCategory(label.categoryName)
 
                     }

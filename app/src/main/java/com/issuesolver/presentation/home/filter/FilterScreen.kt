@@ -48,40 +48,15 @@ fun FilterScreen(
     viewModel: FilterViewModel = hiltViewModel(),
     testViewModel: TestViewModel = hiltViewModel()
     ){
-
     val listStatus = listOf("Gözləmədə", "Baxılır", "Əsassızdır", "Həlledildi", "Arxivdədir")
     val listDays = listOf("Son bir gün", "Son bir həftə", "Son bir ay")
-   /* val listCategories = viewModel.category.collectAsState(initial = emptyList()).value
-    val listOrganizations = viewModel.organization.collectAsState(initial = emptyList()).value
-
-    var status by remember { mutableStateOf(listStatus.firstOrNull()?.toString() ?: "")  }
-    var categoryName by remember { mutableStateOf(listCategories?.firstOrNull()?.toString() ?: "") }
-    var organizationName by remember { mutableStateOf(listOrganizations?.firstOrNull()?.toString() ?: "") }
-    var days by remember { mutableStateOf(listDays.firstOrNull()?.toString() ?: "")  }
-
-
-    val selectedStatus by viewModel.selectedStatus.collectAsState()
-    val selectedCategory by viewModel.selectedCategory.collectAsState()
-    val selectedOrganization by viewModel.selectedOrganization.collectAsState()
-    val selectedDays by viewModel.selectedDays.collectAsState()
-
-*/
     val context = LocalContext.current
-
-
     var categoryName by remember { mutableStateOf("") }
     var organizationName by remember { mutableStateOf( "") }
     var days by remember { mutableStateOf( "")  }
     var status by remember { mutableStateOf("") }
 
 
-
-
-    //val filterResults = testViewModel.filterResults.collectAsLazyPagingItems()
-//
-//    LaunchedEffect(categoryName) {
-//        testViewModel.setFilterParams(TestViewModel.FilterParams(status = categoryName)) //Baxılır
-//    }
     Scaffold(
         modifier = Modifier
             .navigationBarsPadding()
@@ -180,12 +155,6 @@ fun FilterScreen(
                     AuthButton(
                         text = "Axtarış et",
                         onClick = {
-                            //viewModel.applyFilters(status, categoryName, organizationName, days)
-//                    viewModel.fetchFilteredRequests(status = selectedStatus, categoryName = selectedCategory, organizationName = selectedOrganization, days = selectedDays)
-                            //viewModel.applyFilters2(selectedStatus, selectedCategory, selectedOrganization, selectedDays)
-                            //viewModel.applyFilters2("", categoryName, "", "")
-
-
                             saveFilterPreferences(
                                 context,
                                 categoryName,
@@ -193,15 +162,6 @@ fun FilterScreen(
                                 days,
                                 status
                             )
-
-
-//                    testViewModel.filter(status, categoryName, organizationName, days )
-
-                            navController.navigateUp()
-                            //+ "/${status}"+ "/${categoryName}"+ "/${organizationName}"+ "/${days}"
-//                    navController.navigate(
-//                        "${BottomBarScreen.Home.route}/$categoryName/$organizationName/$status/$days"
-//                    )
                         },
                         modifier = Modifier.fillMaxWidth(),
                     )

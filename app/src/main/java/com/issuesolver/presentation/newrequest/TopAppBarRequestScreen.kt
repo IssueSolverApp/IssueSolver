@@ -45,7 +45,6 @@ fun Navigation(navController: NavController){
                 modifier = Modifier
                     .size(32.dp)
                     .clickable { navController.navigate(NewRequestScreen.RequestInfoScreen.route) }
-                //.padding(end = 20.dp, top = 20.dp)
             )
         }
         Text(text = "Xahiş olunur, sorğu üçün məlumatları daxil edin",

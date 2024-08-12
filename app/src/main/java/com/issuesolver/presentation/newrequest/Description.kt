@@ -49,7 +49,6 @@ fun Description(viewModel: RequestScreenViewModel) {
             value = description,
             onValueChange = { newText ->
                 val textLength = newText.length
-                // Обновляем состояние только если текст в пределах максимальной длины
                 if (textLength <= maxLength) {
                     viewModel.updateDescription(newText)
                     isError = textLength < 10

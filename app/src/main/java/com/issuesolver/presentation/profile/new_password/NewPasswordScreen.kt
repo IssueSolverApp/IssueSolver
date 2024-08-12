@@ -87,7 +87,6 @@ fun NewPasswordScreen(
         }
 
         StatusR.ERROR -> {
-//            Toast.makeText(LocalView.current.context, "Kodun ishlemir X(", Toast.LENGTH_SHORT).show()
 
             showLoading=false
 
@@ -95,8 +94,6 @@ fun NewPasswordScreen(
         StatusR.SUCCESS -> {
             navController.popBackStack()
             viewModel.clearState()
-//            Toast.makeText(LocalView.current.context, "Password Changed <3", Toast.LENGTH_SHORT).show()
-//            viewModel.clearLoginState()
         }
         else-> {
 
@@ -161,9 +158,6 @@ fun NewPasswordScreen(
                             modifier = Modifier.padding(top = 8.dp, bottom = 16.dp),
                         )
                     }
-//                Spacer(
-//                    modifier = Modifier.height(8.dp)
-//                )
                     Divider(
                         thickness = 0.5.dp,
                         color = Color(0xFF2981FF)
@@ -200,7 +194,6 @@ fun NewPasswordScreen(
                                 .border(1.dp, Color.White, RoundedCornerShape(12.dp))
                                 .then(
                                     if (
-//                            isPasswordError
                                         false) Modifier.border(
                                         1.dp,
                                         Color.Red,
@@ -232,7 +225,6 @@ fun NewPasswordScreen(
                                     Icon(
                                         painter = icon,
                                         tint = if ( false
-//                                isPasswordError
                                         ) Color.Red else Color(0xFF2981FF),
                                         contentDescription = description
                                     )
@@ -266,7 +258,6 @@ fun NewPasswordScreen(
                                 .border(1.dp, Color.White, RoundedCornerShape(12.dp))
                                 .then(
                                     if (
-//                            isPasswordError
                                         false) Modifier.border(
                                         1.dp,
                                         Color.Red,
@@ -298,7 +289,6 @@ fun NewPasswordScreen(
                                     Icon(
                                         painter = icon,
                                         tint = if ( false
-//                                isPasswordError
                                         ) Color.Red else Color(0xFF2981FF),
                                         contentDescription = description
                                     )
@@ -334,7 +324,6 @@ fun NewPasswordScreen(
                                 .border(1.dp, Color.White, RoundedCornerShape(12.dp))
                                 .then(
                                     if (
-//                            isPasswordError
                                         false) Modifier.border(
                                         1.dp,
                                         Color.Red,
@@ -366,7 +355,6 @@ fun NewPasswordScreen(
                                     Icon(
                                         painter = icon,
                                         tint = if ( false
-//                                isPasswordError
                                         ) Color.Red else Color(0xFF2981FF),
                                         contentDescription = description
                                     )
@@ -375,7 +363,6 @@ fun NewPasswordScreen(
                         )
                         ErrorText(
                             errorMessage = uiState.currentPasswordError,
-//                        isVisible = isPasswordError
                         )
                         Spacer(modifier = Modifier.height(150.dp))
 

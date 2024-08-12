@@ -9,9 +9,3 @@ data class NewRequestResponseBody(
     val message: String? = null,
     val success: Boolean? = null
 ) : Parcelable
-
-//{
-//    "data": "string",
-//    "message": "string",
-//    "success": true
-//}

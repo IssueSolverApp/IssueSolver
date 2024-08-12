@@ -40,9 +40,6 @@ class MainActivity : ComponentActivity() {
                 IssueSolverTheme {
                     val navController = rememberNavController()
 
-//                    MainScreen(navController = navController)
-
-
                     val accessToken = sharedPreferences.getString("access_token", null)
 
                     if (accessToken.isNullOrEmpty()) {
@@ -53,21 +50,6 @@ class MainActivity : ComponentActivity() {
 
             }
         }
-
-
-
-//        setContent {
-//            val navController = rememberNavController()
-//            NavHost(
-//                navController = navController,
-//                startDestination = Graph.AUTHENTICATION
-//            ) {
-//                authNavGraph(navController)
-//                composable(route = Graph.MAIN_SCREEN_PAGE) {
-//                    MainScreen(navController)
-//                }
-//            }
-//        }
     }
 }
 

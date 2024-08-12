@@ -58,7 +58,6 @@ fun RequestInfoScreen(navController: NavController) {
             Text(
                 text = "Qaydalar",
                 fontSize = 28.sp,
-//                fontWeight = FontWeight.Bold,
                 color = Color(0xFF2981FF),
                 modifier = Modifier.padding(top = 15.dp)
             )
@@ -197,7 +196,3 @@ fun RequestInfoScreen(navController: NavController) {
 
 
 }
-
-
-
-//•

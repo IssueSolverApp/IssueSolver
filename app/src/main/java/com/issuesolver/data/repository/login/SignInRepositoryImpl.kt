@@ -18,7 +18,6 @@ class SignInRepositoryImpl @Inject constructor(
 ) : SignInRepositoryInterface {
 
     override suspend fun signIn(login: LoginRequest): Response<LoginResponse> {
-        //return loginService.login(login)
         val response = loginService.login(login)
         if (response.isSuccessful) {
             val loginResponse = response.body()
@@ -28,13 +27,5 @@ class SignInRepositoryImpl @Inject constructor(
         }
         return response
     }
-
-//    suspend fun refreshAccessToken(): Response<LoginResponse> {
-//        val refreshToken = sharedPreferences.getString("refreshToken", null)
-//        // Call your refresh token endpoint here
-//        // Example:
-//        return loginService.refreshToken(refreshToken)
-//
-//    }
 
 }

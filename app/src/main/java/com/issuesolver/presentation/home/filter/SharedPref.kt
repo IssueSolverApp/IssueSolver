@@ -10,6 +10,6 @@ fun saveFilterPreferences(context: Context, categoryName: String, organizationNa
         putString("organizationName", organizationName)
         putString("days", days)
         putString("status", status)
-        apply() // Асинхронное сохранение
+        apply()
     }
 }

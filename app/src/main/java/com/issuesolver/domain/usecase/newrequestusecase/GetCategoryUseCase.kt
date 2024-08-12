@@ -36,8 +36,6 @@ class GetCategoryUseCase @Inject constructor(private val getCategory: GetCategor
     }
 
     private fun parseErrorResponse(json: String): NewRequestResponseBody? {
-        // Use your preferred JSON library here (e.g., Gson)
-        // Assuming you're using Gson:
         return try {
             val gson = Gson()
             gson.fromJson(json, NewRequestResponseBody::class.java)

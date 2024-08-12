@@ -54,16 +54,6 @@ fun Splash(navController: NavHostController, viewModel: SplashViewModel = hiltVi
             }else{
                 navController.navigate(AuthScreen.Login.route)
             }
-
-            //
-
-//            navigateTo?.let { route ->
-//                navController.navigate(route) {
-//                    popUpTo(navController.graph.startDestinationId)
-//                    launchSingleTop = true
-//                }
-//            //
-//        }
     }
     }
 

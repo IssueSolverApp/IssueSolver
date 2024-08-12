@@ -10,9 +10,3 @@ data class NewRequest(
     val organizationName: String
 ):Parcelable
 
-
-//{
-//    "address": "string",
-//    "description": "string",
-//    "organizationName": "string"
-//}

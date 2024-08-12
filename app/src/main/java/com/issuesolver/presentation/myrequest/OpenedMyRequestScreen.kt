@@ -62,15 +62,10 @@ fun OpenedMyRequestScreen(navController:NavController,  id: String,   viewModel:
 
 
     LaunchedEffect(Unit) {
-        viewModel.getRequestById(id.toInt()) // Асинхронный запрос данных
+        viewModel.getRequestById(id.toInt())
     }
     val requestById by viewModel.requestById.collectAsState()
-
-
-    // Инициализация isLiked после получения данных
     var isLiked by rememberSaveable { mutableStateOf(requestById?.likeSuccess ?: false) }
-
-    // Обновление isLiked, когда requestById меняется
     LaunchedEffect(requestById) {
         requestById?.let {
             isLiked = it.likeSuccess!!
@@ -93,10 +88,6 @@ fun OpenedMyRequestScreen(navController:NavController,  id: String,   viewModel:
         }
 
         StatusR.SUCCESS -> {
-//            isLiked=true
-//            LaunchedEffect(Unit) {
-//                viewModel.getMovies() // Асинхронный запрос данных
-//            }
 
         }
 
@@ -138,7 +129,6 @@ fun OpenedMyRequestScreen(navController:NavController,  id: String,   viewModel:
         BottomSheet ({
             showSheet = false
         },
-            //comments,
             viewModel,
             id.toInt()
         )
@@ -377,10 +367,8 @@ fun OpenedMyRequestScreen(navController:NavController,  id: String,   viewModel:
                                             IconButton(onClick = {
                                                 if (favoriteState!!) {
                                                     viewModel.removeLike(requestId = id.toInt())
-                                                    //likeCount -= 1 // Decrement like count when unliked
                                                 } else {
                                                     viewModel.sendLike(requestId = id.toInt())
-                                                    //likeCount += 1 // Increment like count when liked
                                                 }
                                                 favoriteState = !favoriteState!!
 
@@ -465,315 +453,3 @@ fun OpenedMyRequestScreen(navController:NavController,  id: String,   viewModel:
 
     )
 }
-//@Preview(showBackground = true)
-//@Composable
-//fun PreviewOpenedMyRequestScreen() {
-//    val navController = rememberNavController()
-//    OpenedMyRequestScreen(navController)
-//}
-
-//
-//
-//@Composable
-//fun OpenedMyRequestScreen(navController: NavController, id: String, viewModel: MyRequestViewModel = hiltViewModel()) {
-//    LaunchedEffect(Unit) {
-//        viewModel.getRequestById(id.toInt())
-//    }
-//    val requestById by viewModel.requestById.collectAsState()
-//    val likeStates by viewModel.likeStates.collectAsState()
-//
-//    var isLiked by rememberSaveable { mutableStateOf(false) }
-//
-//    LaunchedEffect(requestById) {
-//        requestById?.let {
-//            isLiked = likeStates[it.requestId] ?: it.likeSuccess ?: false
-//        }
-//    }
-//
-//    Scaffold(
-//        modifier = Modifier
-//            .navigationBarsPadding()
-//            .statusBarsPadding(),
-//        bottomBar = {},
-//        content = { padding ->
-//            Box(
-//                modifier = Modifier
-//                    .fillMaxSize()
-//                    .imePadding()
-//                    .padding(top = 15.dp, start = 20.dp, end = 20.dp, bottom = 20.dp)
-//            ) {
-//                Column(
-//                    modifier = Modifier
-//                        .fillMaxSize()
-//                        .imePadding()
-//                ) {
-//                    Column {
-//                        Box(
-//                            modifier = Modifier
-//                                .size(40.dp)
-//                                .clip(RoundedCornerShape(100.dp))
-//                                .background(Color.White)
-//                                .clickable {
-//                                    navController.popBackStack()
-//                                },
-//                            contentAlignment = Alignment.Center
-//                        ) {
-//                            Image(
-//                                painter = painterResource(R.drawable.backarray),
-//                                contentDescription = "Back",
-//                                modifier = Modifier.size(24.dp)
-//                            )
-//                        }
-//
-//                        Card(
-//                            modifier = Modifier
-//                                .fillMaxWidth()
-//                                .wrapContentHeight(),
-//                            colors = CardDefaults.cardColors(
-//                                containerColor = Color.White
-//                            )
-//                        ) {
-//                            Column(
-//                                modifier = Modifier
-//                                    .wrapContentHeight()
-//                                    .padding(16.dp)
-//                            ) {
-//                                // Other UI elements here
-//
-//
-//                                Row(
-//                                    verticalAlignment = Alignment.CenterVertically,
-//                                    horizontalArrangement = Arrangement.SpaceBetween,
-//                                    modifier = Modifier
-//                                        .fillMaxWidth()
-//
-//                                ) {
-//
-//                                    Row(verticalAlignment = Alignment.CenterVertically) {
-//                                        Image(
-//                                            painter = painterResource(id = R.drawable.et_profile_male), // Replace with your drawable resource
-//                                            contentDescription = "Profile Image",
-//                                            modifier = Modifier
-//                                                .size(32.dp)
-//                                        )
-//
-//                                        requestById?.fullName?.let {
-//                                            Text(
-//                                                text = it,
-//                                                style = MaterialTheme.typography.bodyMedium,
-//                                                color = Color(0xFF2981FF),
-//                                                modifier = Modifier.padding(start = 6.dp),
-//                                                fontSize = 15.sp,
-//                                                fontWeight = FontWeight.W400
-//                                            )
-//                                        }
-//                                    }
-//
-//                                    Row(
-//                                        modifier = Modifier
-//                                            .clip(shape = CircleShape)
-//                                            .background(color = Color(0xFFc8dcfc))
-//                                            .padding(8.dp)
-//                                            .clickable(onClick = { }),
-//                                        horizontalArrangement = Arrangement.SpaceBetween,
-//                                        verticalAlignment = Alignment.CenterVertically
-//                                    ) {
-//                                        Image(
-//                                            painter = painterResource(R.drawable.ellipse_9),
-//                                            contentDescription = "ellipse_9",
-//                                            modifier = Modifier
-//                                                .padding(start = 20.dp)
-//                                                .size(8.dp)
-//                                        )
-//                                        requestById?.status?.let {
-//                                            Text(
-//                                                text = it,
-//                                                color = Color(0xFF0169FE),
-//                                                fontSize = 13.sp,
-//                                                fontWeight = FontWeight.W400,
-//                                                modifier = Modifier.padding(start = 8.dp, end = 20.dp)
-//                                            )
-//                                        }
-//                                    }
-//
-//
-//                                }
-//
-//                                requestById?.organizationName?.let {
-//                                    Text(
-//                                        text = it,
-//                                        color = Color(0xFF002252),
-//                                        fontSize = 15.sp,
-//                                        fontWeight = FontWeight.W500,
-//                                        modifier = Modifier.padding(top = 8.dp, bottom = 39.dp)
-//                                    )
-//                                }
-//
-//                                Divider(
-//                                    thickness = 0.5.dp,
-//                                    color = Color(0xFFc3dcff),
-//                                    modifier = Modifier.padding(
-//                                        top = 8.dp,
-//                                        bottom = 16.dp
-//                                    )
-//                                )
-//
-//
-//                                requestById?.category?.categoryName?.let {
-//                                    Text(
-//                                        text = it,
-//                                        color = Color(0xFF8C8C8C),
-//                                        fontSize = 13.sp,
-//                                        fontWeight = FontWeight.W400,
-//                                        modifier = Modifier
-//                                            .clip(shape = RoundedCornerShape(50.dp))
-//                                            .background(color = Color(0xFFF0F4F9))
-//                                            .padding(
-//                                                top = 8.dp,
-//                                                bottom = 8.dp,
-//                                                start = 11.dp,
-//                                                end = 11.dp
-//                                            )
-//                                    )
-//                                }
-//
-//
-//                                requestById?.description?.let {
-//                                    Text(
-//                                        text = it,
-//                                        color = Color(0xFF6E6E6E),
-//                                        fontSize = 15.sp,
-//                                        fontWeight = FontWeight.W500,
-//                                        modifier = Modifier
-//                                            .padding(
-//                                                top = 8.dp,
-//
-//                                                )
-//                                    )
-//                                }
-//                                Row (
-//                                    modifier = Modifier.padding(top=16.dp, bottom = 12.dp)
-//                                ){
-//                                    Image(
-//                                        painter = painterResource(id = R.drawable.location_icon),
-//                                        contentDescription = "location_icon",
-//                                        modifier = Modifier
-//                                            .size(20.dp)
-//                                    )
-//
-//                                    requestById?.address?.let {
-//                                        Text(
-//                                            text = it,
-//                                            style = MaterialTheme.typography.bodyMedium,
-//                                            color = Color(0xFF2981FF),
-//                                            modifier = Modifier.padding(start = 6.dp),
-//                                            fontSize = 13.sp,
-//                                            fontWeight = FontWeight.W400
-//                                        )
-//                                    }
-//
-//                                }
-//                                Row {
-//
-//                                    Image(
-//                                        painter = painterResource(id = R.drawable.calendar),
-//                                        contentDescription = "calendar",
-//                                        modifier = Modifier
-//                                            .size(20.dp)
-//                                    )
-//
-//                                    requestById?.createDate?.let {
-//                                        Text(
-//                                            text = it,
-//                                            style = MaterialTheme.typography.bodyMedium,
-//                                            color = Color(0xFF002252),
-//                                            modifier = Modifier.padding(start = 6.dp),
-//                                            fontSize = 13.sp,
-//                                            fontWeight = FontWeight.W400
-//                                        )
-//                                    }
-//                                }
-//
-//
-//
-//
-//                                Divider(
-//                                    thickness = 0.5.dp,
-//                                    color = Color(0xFFc3dcff),
-//                                    modifier = Modifier.padding(
-//                                        top = 16.dp, bottom = 12.dp
-//                                    )
-//                                )
-//
-//                                Row(
-//                                    horizontalArrangement = Arrangement.SpaceBetween,
-//                                    modifier = Modifier
-//                                        .fillMaxWidth()
-//                                ) {
-//                                    Row {
-//                                        Row {
-//                                            IconButton(onClick = {
-//                                                if (isLiked) {
-//                                                    viewModel.removeLike(requestId = id.toInt())
-//                                                } else {
-//                                                    viewModel.sendLike(requestId = id.toInt())
-//                                                }
-//                                                isLiked = !isLiked
-//                                            }) {
-//                                                val icon = if (isLiked) R.drawable.heart_clicked else R.drawable.heart_default
-//                                                Icon(
-//                                                    painter = painterResource(id = icon),
-//                                                    contentDescription = null,
-//                                                    Modifier.size(20.dp),
-//                                                    tint = androidx.compose.ui.graphics.Color.Red
-//                                                )
-//                                            }
-//                                            // Other buttons here
-//                                        }
-//
-//                                        Column(
-//                                            verticalArrangement = Arrangement.Center,
-//                                            horizontalAlignment = Alignment.CenterHorizontally
-//                                        ) {
-//
-//                                            IconButton(onClick = {  }) {
-//                                                Icon(
-//                                                    painter = painterResource(id = R.drawable.coment),
-//                                                    contentDescription = null,
-//                                                    Modifier.size(20.dp)
-//
-//                                                )
-//                                            }
-//                                            requestById?.commentCount?.let {
-//                                                Text(
-//                                                    text = it.toString(),
-//                                                    color = Color(0xFF002252),
-//                                                    modifier = Modifier.padding(top = 4.dp),
-//                                                    fontSize = 10.sp,
-//                                                    fontWeight = FontWeight.W500
-//                                                )
-//                                            }
-//
-//                                        }
-//
-//                                    }
-//                                    Row {
-//                                        IconButton(onClick = {  }) {
-//                                            Icon(
-//                                                painter = painterResource(id = R.drawable.vector),
-//                                                contentDescription = null,
-//                                            )
-//                                        }
-//                                    }
-//                                }
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//    )
-//}
-//
-//
-//

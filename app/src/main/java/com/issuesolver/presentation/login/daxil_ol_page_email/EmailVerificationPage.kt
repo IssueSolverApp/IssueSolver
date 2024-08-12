@@ -75,7 +75,6 @@ fun EmailVerificationPage(
                 Column() {
                     Box(
                         modifier = Modifier
-//                            .padding(top = 20.dp)
                             .size(40.dp)
                             .clip(RoundedCornerShape(100.dp))
                             .background(Color.White)
@@ -110,14 +109,11 @@ fun EmailVerificationPage(
                             .padding(top = 10.dp, bottom = 20.dp),
                     )
                 }
-//                Spacer(
-//                    modifier = Modifier.height(8.dp)
-//                )
                 Divider(
                     thickness = 0.5.dp,
                     color = Color(0xFF2981FF)
                 )
-//                Spacer(modifier = Modifier.height(8.dp))
+
                 Column(
                     Modifier.padding(top = 32.dp)
                         .verticalScroll(rememberScrollState())
@@ -164,7 +160,6 @@ fun EmailVerificationPage(
                     )
                     ErrorText(
                         errorMessage = uiState.emailError,
-//                        isVisible = isEmailError
                     )
                 }
             }

@@ -62,9 +62,7 @@ fun ProfileScreen(
             dismiss = "İmtina",
             confirm = "Çıxış",
             onConfirmation = {
-//                navController.navigate(AuthScreen.Login.route)
                              viewModel.logout()
-
             },
             onDismiss = { showDialog = false }
         )
@@ -74,13 +72,6 @@ fun ProfileScreen(
     val context = LocalContext.current
 
 
-//    Scaffold(
-//        modifier = Modifier
-//            .navigationBarsPadding(),
-//        bottomBar = {
-//            AnimatedNavigationBar(navController)
-//        },
-//        content = { padding ->
             Box(
                 modifier = Modifier
                     .padding(paddingValues)
@@ -163,7 +154,6 @@ fun ProfileScreen(
                                 fontWeight = FontWeight.SemiBold,
                                 fontSize = 15.sp,
                                 color = Color.Black,
-//                        textAlign = TextAlign.Start,
                                 modifier = Modifier.padding(start=12.dp)
                             )
                         }
@@ -306,7 +296,6 @@ fun ProfileScreen(
                     }
                 }
             }
-//        })
 }
 
 

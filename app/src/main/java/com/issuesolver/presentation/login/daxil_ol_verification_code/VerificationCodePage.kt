@@ -101,7 +101,6 @@ fun VerificationCodePage(
                 if (showDialog) {
                     AlertDialogExample(
                         message = it,
-//                        onDismiss = { showDialog = false },
                         onConfirmation = { showDialog = false }
                     )
                 }
@@ -223,7 +222,6 @@ fun VerificationCodePage(
                                 modifier = Modifier
                                     .focusRequester(focusRequester),
                                 otpText = otpValue.text,
-//                                shouldCursorBlink = false,
                                 isOtpValueError=isOtpValueError,
                                 onOtpModified = { value, otpFilled ->
                                     otpValue =
@@ -238,7 +236,6 @@ fun VerificationCodePage(
                     }
                     ErrorText(
                         errorMessage = uiState.otpValueError,
-//                        isVisible = isEmailError
                     )
                 }
             }
@@ -362,10 +359,7 @@ fun CharacterBox(
             .background(backgroundColor, RoundedCornerShape(12.dp))
             .border(
                 1.dp,
-//                if (isFocused)
-//                    Color(0xFF2981FF)
                     borderColor,
-//                else Color.White,
                 RoundedCornerShape(12.dp)
             )
     ) {

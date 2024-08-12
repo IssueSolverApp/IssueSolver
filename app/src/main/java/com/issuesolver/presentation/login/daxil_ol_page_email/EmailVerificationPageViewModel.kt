@@ -32,7 +32,6 @@ class EmailVerificationPageViewModel @Inject constructor(
     fun forgetPassword(request: ResendOtpModel) {
         viewModelScope.launch {
             forgetPasswordUseCase(request).collect{resource->
-                //_forgetPasswordState.value=resource
 
                 when(resource){
                     is Resource.Loading->{

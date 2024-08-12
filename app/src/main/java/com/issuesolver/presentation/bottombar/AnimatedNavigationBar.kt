@@ -101,7 +101,7 @@ fun AnimatedNavigationBar(navController: NavController) {
         },
         label = "circle offset"
     ) {
-        IntOffset(it.toInt() - circleRadiusPx, -10)  // Smaller upward movement
+        IntOffset(it.toInt() - circleRadiusPx, -10)
     }
     val barShape = remember(cutoutOffset) {
         BarShape(
@@ -122,11 +122,8 @@ fun AnimatedNavigationBar(navController: NavController) {
                         circleOffset.x,
                         circleOffset.y - 5.dp.roundToPx()
                     )
-                } // Manually move up
-                .zIndex(1f)
-//                .padding(bottom = 10.dp)  // Add padding to push it upward from the navbar
-
-            ,
+                }
+                .zIndex(1f),
             color = circleColor,
             radius = circleRadius,
             button = buttons[selectedItem],
@@ -188,7 +185,7 @@ private fun Circle(
     button: BottomBarScreen,
     iconColor: Color,
 ) {
-    val iconPainter = painterResource(id = button.iconId)  // Fetch the Painter here
+    val iconPainter = painterResource(id = button.iconId)
 
     Box(
         contentAlignment = Alignment.Center,

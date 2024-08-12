@@ -62,9 +62,6 @@ class TestViewModel @Inject constructor(private val filterUseCase: TestUseCase,
         }
     }
 
-//    val filterResults: Flow<PagingData<FilterData>> = filterParams.flatMapLatest { params ->
-//        filterUseCase(params.status, params.categoryName, params.organizationName, params.days)
-//    }.cachedIn(viewModelScope)
 
     fun setFilterParams(params: FilterParams) {
         _filterParams.value = params
@@ -75,7 +72,7 @@ class TestViewModel @Inject constructor(private val filterUseCase: TestUseCase,
     val uiState: StateFlow<Params> = _uiState.asStateFlow()
 
     data class FilterParams(
-        val status: String = "", //Baxılır
+        val status: String = "",
         val categoryName: String = "",
         val organizationName: String = "",
         val days: String = ""
@@ -128,10 +125,8 @@ class TestViewModel @Inject constructor(private val filterUseCase: TestUseCase,
             likeUseCase.invoke(requestId).collect { resource ->
                 when (resource) {
                     is Resource.Loading -> {
-                        // Handle loading state if needed
                     }
                     is Resource.Error -> {
-                        // Handle error state if needed
                     }
                     is Resource.Success -> {
                         _likeStates.update { it.toMutableMap().apply { put(requestId ?: -1, true) } }
@@ -149,10 +144,8 @@ class TestViewModel @Inject constructor(private val filterUseCase: TestUseCase,
             removeLikeUseCase.invoke(requestId).collect { resource ->
                 when (resource) {
                     is Resource.Loading -> {
-                        // Handle loading state if needed
                     }
                     is Resource.Error -> {
-                        // Handle error state if needed
                     }
                     is Resource.Success -> {
                         _likeStates.update { it.toMutableMap().apply { put(requestId ?: -1, false) } }
@@ -193,13 +186,9 @@ class TestViewModel @Inject constructor(private val filterUseCase: TestUseCase,
     }
 
 
-
-
-    // Стандартный поток PagingData, который будет содержать комментарии
     private var _comments: Flow<PagingData<CommentData>>? = null
     val comments: Flow<PagingData<CommentData>> get() = _comments!!
 
-    // Функция для загрузки комментариев по идентификатору запроса
     fun loadComments(requestId: Int?) {
         viewModelScope.launch {
             _comments = getCommentUseCase.invoke(requestId)
@@ -220,13 +209,8 @@ class TestViewModel @Inject constructor(private val filterUseCase: TestUseCase,
                 response.data?.let {
                     _commentResponse.value = it
 
-//                    val currentComments = _comments
-//                    val updatedComments = currentComments.insertItemAtStart(it.commentData)
-//                    _comments.value = updatedComments
-//                    _commentState.value = State.success()
 
                 } ?: run {
-                    // Логирование или обработка случая, когда response.data является null
                     Log.e("MyRequestViewModel", "Response data is null")
                 }
             }

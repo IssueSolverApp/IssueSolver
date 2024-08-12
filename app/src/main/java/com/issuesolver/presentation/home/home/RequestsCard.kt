@@ -82,10 +82,6 @@ fun RequestsCard(
 
     if (showDialog) {
 
-//        AlertDialogExample2(
-//            message = "Sorğular yalnız \"Gözləmədə\" statusunda silinə bilər.",
-//            onConfirmation = { showDialog = false }
-//        )
 
         PopUp(
             text = "Sorğunuzu ləğv etməyə əminsiniz?",
@@ -127,7 +123,6 @@ fun RequestsCard(
 
 
     val isLike by viewModel.isLiked.collectAsState()
-    //var isLiked by rememberSaveable { mutableStateOf(likeSuccess) }
 
 
     when (isLike.status) {
@@ -155,7 +150,6 @@ fun RequestsCard(
         BottomSheetHome ({
             showSheet = false
         },
-            //comments,
             viewModel,
             requestId
         )
@@ -252,8 +246,6 @@ fun RequestsCard(
             )
         )
 
-//                    Spacer(modifier = Modifier.width(5.dp))
-
         categoryName?.let {
             Text(
                 text = it,
@@ -319,18 +311,13 @@ fun RequestsCard(
         ) {
             Row {
                 IconButton(onClick = {
-//                        if(favoriteState!=likeSuccess){
-//
-//                        }
                     if (favoriteState!!) {
                         viewModel.removeLike(requestId = requestId)
 
-//                            favoriteState=false
 
                     } else {
                         viewModel.sendLike(requestId = requestId)
 
-//                            favoriteState=true
                     }
                     favoriteState = !favoriteState!!
 
@@ -363,13 +350,3 @@ fun RequestsCard(
 }
 
 
-    //}
-
-
-
-
-//@Preview(showBackground = true, backgroundColor = 0xF0F4F9)
-//@Composable
-//fun PreviewUserCard() {
-//    UserCard()
-//}

@@ -25,8 +25,4 @@ interface NewRequestService {
     suspend fun getOrganization(): Response<GetOrganizationResponseModel>
 
 
-
-
-    //api/Organizations/getlist
-
 }

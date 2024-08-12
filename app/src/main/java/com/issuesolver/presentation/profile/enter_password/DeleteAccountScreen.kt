@@ -89,7 +89,6 @@ fun DeleteAccountScreen(
             navController.popBackStack()
             viewModel.clearState()
             Toast.makeText(LocalView.current.context, "Account Deleted !!!!", Toast.LENGTH_SHORT).show()
-//            viewModel.clearLoginState()
         }
         else-> {
 
@@ -109,7 +108,6 @@ fun DeleteAccountScreen(
         content = { padding ->
         Box(
             modifier = Modifier
-//                .padding(padding)
                 .fillMaxSize()
                 .imePadding()
                 .padding(top = 24.dp, start = 20.dp, end = 20.dp, bottom = 16.dp)
@@ -189,7 +187,6 @@ fun DeleteAccountScreen(
                             .border(1.dp, Color.White, RoundedCornerShape(12.dp))
                             .then(
                                 if (
-//                            isPasswordError
                                     false) Modifier.border(
                                     1.dp,
                                     Color.Red,
@@ -222,7 +219,6 @@ fun DeleteAccountScreen(
                                 Icon(
                                     painter = icon,
                                     tint = if (false
-//                                isPasswordError
                                     ) Color.Red else Color(0xFF2981FF),
                                     contentDescription = description
                                 )
@@ -231,7 +227,6 @@ fun DeleteAccountScreen(
                     )
                     ErrorText(
                         errorMessage = uiState.passwordError,
-//                        isVisible = isPasswordError
                     )
                 }
             }
@@ -243,17 +238,6 @@ fun DeleteAccountScreen(
                     text = "Hesabı sil",
                     onClick = { showDialog = true },
                     enabled = uiState.isInputValid,
-
-
-
-//                        viewModel.handleEvent(DeleteAccountEvent.Submit)
-//                        viewModel.deleteAccount(
-//                            DeleteAccountRequest(
-//                                uiState.password
-//                                )
-//                        )
-//                    }
-
                     modifier = Modifier.fillMaxWidth()
                 )
             }

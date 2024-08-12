@@ -16,7 +16,7 @@ fun getFilterPreferences(context: Context): Map<String, String?> {
 fun clearFilterPreferences(context: Context) {
     val filterPrefs = context.getSharedPreferences("filter_prefs", Context.MODE_PRIVATE)
     with(filterPrefs.edit()) {
-        clear() // Очистить только фильтры
-        apply() // Асинхронное сохранение
+        clear()
+        apply()
     }
 }

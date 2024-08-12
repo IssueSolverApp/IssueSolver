@@ -20,7 +20,7 @@ class TestPagingSource(
                 val data = response.body()?.data!!
                 LoadResult.Page(
                     data = data,
-                    prevKey = null, //if (page == 1) null else page - 1
+                    prevKey = null,
                     nextKey = if (data.isEmpty()) null else page + 1
                 )
             } else {

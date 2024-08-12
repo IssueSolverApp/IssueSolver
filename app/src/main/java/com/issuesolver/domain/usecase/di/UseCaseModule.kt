@@ -204,11 +204,6 @@ class UseCaseModule {
     fun provideRequestInterface(requestInterface: RequestInterface) =
         RequestUseCase(requestInterface)
 
-//    @Provides
-//    @Singleton
-//    fun provideFilterUseCase(filterInterface: FilterInterface) =
-//        FilterUseCase(filterInterface)
-
     @Provides
     @Singleton
     fun provideMyRequestUseCase(myRequest: MyRequestRepositoryInterface) =
@@ -274,12 +269,4 @@ class UseCaseModule {
         return TestUseCase(filterRepository)
     }
 
-
-
-//    @Provides
-//    fun provideNavController(@ApplicationContext context: Context): NavController {
-//        val activity = context as? ComponentActivity
-//        return activity?.findNavController(R.id.nav_host_fragment)
-//            ?: throw IllegalStateException("NavController not found")
-//    }
 }

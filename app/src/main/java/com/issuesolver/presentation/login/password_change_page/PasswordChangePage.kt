@@ -90,7 +90,6 @@ fun PasswordChangePage(
                 modifier = Modifier
                     .fillMaxSize()
                     .imePadding()
-//                    .verticalScroll(scrollState)
             ) {
                 Column(
                 ) {
@@ -185,7 +184,6 @@ fun PasswordChangePage(
                     )
                     ErrorText(
                         errorMessage = uiState.newpasswordError,
-//                        isVisible = isPasswordError
                     )
                     Spacer(modifier = Modifier.height(20.dp))
                     Text(
@@ -254,7 +252,6 @@ fun PasswordChangePage(
                     )
                     ErrorText(
                         errorMessage = uiState.repeatedPasswordError,
-//                        isVisible = isPasswordError
                     )
                 }
                 Spacer(modifier = Modifier.height(150.dp))

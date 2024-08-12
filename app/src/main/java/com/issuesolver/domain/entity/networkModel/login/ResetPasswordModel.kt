@@ -9,6 +9,3 @@ data class ResetPasswordModel(
     val confirmPassword: String?=null
 
 ): Parcelable
-
-//"password": "string",
-//"confirmPassword": "string"

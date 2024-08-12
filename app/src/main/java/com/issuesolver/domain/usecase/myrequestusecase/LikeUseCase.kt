@@ -33,8 +33,6 @@ class LikeUseCase@Inject constructor(private val myRequest: LikeRepositoryInterf
     }
 
     private fun parseErrorResponse(json: String): FilterResponseModel? {
-        // Use your preferred JSON library here (e.g., Gson)
-        // Assuming you're using Gson:
         return try {
             val gson = Gson()
             gson.fromJson(json, FilterResponseModel::class.java)

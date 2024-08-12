@@ -36,7 +36,6 @@ class ConfirmOtpViewModel @Inject constructor(
     fun confirmRegister(request: RequestOtp) {
         viewModelScope.launch {
             confirmOtpUseCase(request).collect {
-//                _confirmOtpState.value = it
                 when (it) {
                     is Resource.Loading -> {
                     }

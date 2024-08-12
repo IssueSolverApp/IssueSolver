@@ -53,8 +53,6 @@ class SignInUseCase @Inject constructor(
     }
 
     private fun parseErrorResponse(json: String): LoginResponse? {
-        // Use your preferred JSON library here (e.g., Gson)
-        // Assuming you're using Gson:
         return try {
             val gson = Gson()
             gson.fromJson(json, LoginResponse::class.java)

@@ -66,22 +66,14 @@ fun UserCard(
     requestId: Int?,
     likeSuccess: Boolean?,
     onClick: () -> Unit,
-//    isLiked: Boolean,
-
-    //comments: LazyPagingItems<CommentData>
-) {
+    ) {
     var showDialog by remember { mutableStateOf(false) }
-
-    //viewModel.loadComments(requestId = requestId)
-    //val comments: LazyPagingItems<CommentData> = viewModel.commentss.collectAsLazyPagingItems()
-
     var showSheet by remember { mutableStateOf(false) }
 
     if (showSheet) {
         BottomSheet ({
             showSheet = false
         },
-            //comments,
             viewModel,
             requestId
         )
@@ -106,19 +98,8 @@ fun UserCard(
 
     val likeStates by viewModel.likeStates.collectAsState()
     var favoriteState = likeStates[requestId] ?: likeSuccess
-
-
-//    val like by viewModel.liked.collectAsState(initial = likeSuccess)
     var liked by remember { mutableStateOf(likeSuccess) }
-
-
-
-//    if (favoriteState!=likeSuccess){
-//        favoriteState=likeSuccess
-//    }
-
     val isLike by viewModel.isLiked.collectAsState()
-    //var isLiked by rememberSaveable { mutableStateOf(likeSuccess) }
 
 
     when (isLike.status) {
@@ -299,15 +280,11 @@ fun UserCard(
             ) {
                 Row {
                     IconButton(onClick = {
-//                        if(favoriteState!=likeSuccess){
-//
-//                        }
+
                         if (liked!!) {
                             viewModel.removeLike(requestId = requestId)
-//                            favoriteState=false
                         } else {
                             viewModel.sendLike(requestId = requestId)
-//                            favoriteState=true
                         }
                         liked = !liked!!
 
@@ -322,7 +299,6 @@ fun UserCard(
 
                     IconButton(onClick = {
                         showSheet = true
-                        //viewModel.loadComments(requestId)
                     }) {
                         Icon(
                             painter = painterResource(id = R.drawable.coment),
@@ -345,170 +321,3 @@ fun UserCard(
         }
     }
 }
-//@Preview(showBackground = true, backgroundColor = 0xF0F4F9)
-//@Composable
-//fun PreviewUserCard() {
-//    UserCard()
-//}
-
-
-//
-//@Composable
-//fun UserCard(
-//    fullName: String?,
-//    status: String?,
-//    description: String?,
-//    categoryName: String?,
-//    viewModel: MyRequestViewModel,
-//    requestId: Int?,
-//    likeSuccess: Boolean?,
-//    onClick: () -> Unit
-//) {
-//    var expanded by remember { mutableStateOf(false) }
-//    val fullText = description
-//    val additionalText = "daha çox göstər..."
-//    val approximateCharacterPerLine = 50
-//    val maxLines = 3
-//
-//    val maxTextLength = (approximateCharacterPerLine * maxLines) - additionalText.length
-//    val shortText = if (fullText!!.length > maxTextLength) {
-//        fullText.take(maxTextLength) + "..."
-//    } else {
-//        fullText
-//    }
-//    val likeStates by viewModel.likeStates.collectAsState()
-//    var favoriteState = likeStates[requestId] ?: likeSuccess
-//    val isLike by viewModel.isLiked.collectAsState()
-//    var isLiked by rememberSaveable { mutableStateOf(likeSuccess) }
-//
-//    when (isLike.status) {
-//        StatusR.LOADING -> {
-//            // Handle loading state
-//        }
-//        StatusR.SUCCESS -> {
-//            isLiked = true
-//        }
-//        StatusR.ERROR -> {
-//            // Handle error state
-//        }
-//        else -> {
-//            // Handle other states
-//        }
-//    }
-//
-//    Card(
-//        modifier = Modifier
-//            .fillMaxWidth()
-//            .wrapContentHeight()
-//            .clickable(onClick = onClick),
-//        colors = CardDefaults.cardColors(
-//            containerColor = androidx.compose.ui.graphics.Color.White
-//        )
-//    ) {
-//        Column(modifier = Modifier
-//            .wrapContentHeight()
-//            .padding(16.dp)
-//        ) {
-//            Row(
-//                verticalAlignment = Alignment.CenterVertically,
-//                horizontalArrangement = Arrangement.SpaceBetween,
-//                modifier = Modifier.fillMaxWidth()
-//            ) {
-//                Row(verticalAlignment = Alignment.CenterVertically) {
-//                    Image(
-//                        painter = painterResource(id = R.drawable.et_profile_male),
-//                        contentDescription = "Profile Image",
-//                        modifier = Modifier.size(32.dp)
-//                    )
-//                    Text(
-//                        text = fullName ?: "",
-//                        style = MaterialTheme.typography.bodyMedium,
-//                        color = Color(0xFF2981FF),
-//                        modifier = Modifier.padding(start = 6.dp),
-//                        fontSize = 15.sp,
-//                        fontWeight = FontWeight.W400
-//                    )
-//                }
-//
-//                Row(
-//                    modifier = Modifier
-//                        .clip(shape = CircleShape)
-//                        .background(color = Color(0xFFF5F5F5))
-//                        .padding(8.dp),
-//                    verticalAlignment = Alignment.CenterVertically
-//                ) {
-//                    IconButton(onClick = {
-//                        requestId?.let { id ->
-//                            if (isLiked == true) {
-//                                viewModel.removeLike(id)
-//                            } else {
-//                                viewModel.sendLike(id)
-//                            }
-//                        }
-//                        isLiked = isLiked != true
-//                    }) {
-//                        val icon = if (isLiked == true) R.drawable.heart_clicked else R.drawable.heart_default
-//                        Icon(
-//                            painter = painterResource(id = icon),
-//                            contentDescription = null,
-//                            Modifier.size(20.dp),
-//                            tint = androidx.compose.ui.graphics.Color.Red
-//                        )
-//                    }
-//                }
-//            }
-//
-//            Spacer(modifier = Modifier.height(10.dp))
-//
-//            Row(verticalAlignment = Alignment.CenterVertically) {
-//                Text(
-//                    text = status ?: "",
-//                    color = Color(0xFF424242),
-//                    style = MaterialTheme.typography.bodyMedium,
-//                    fontSize = 13.sp
-//                )
-//                Spacer(modifier = Modifier.width(4.dp))
-//                Text(
-//                    text = categoryName ?: "",
-//                    color = Color(0xFF6D6D6D),
-//                    style = MaterialTheme.typography.bodyMedium,
-//                    fontSize = 13.sp
-//                )
-//            }
-//
-//            Spacer(modifier = Modifier.height(6.dp))
-//
-//            Column {
-//                val displayText = if (expanded) {
-//                    fullText
-//                } else {
-//                    shortText
-//                }
-//                Text(
-//                    text = buildAnnotatedString {
-//                        append(displayText)
-//                        if (fullText.length > maxTextLength) {
-//                            if (expanded) {
-//                                append(" ")
-//                                withStyle(
-//                                    style = SpanStyle(
-//                                        color = Color(0xFF6D6D6D),
-//                                        fontWeight = FontWeight.Bold
-//                                    )
-//                                ) {
-//                                    append(additionalText)
-//                                }
-//                            }
-//                        }
-//                    },
-//                    color = Color(0xFF6D6D6D),
-//                    style = MaterialTheme.typography.bodyMedium,
-//                    fontSize = 13.sp,
-//                    modifier = Modifier.clickable {
-//                        expanded = !expanded
-//                    }
-//                )
-//            }
-//        }
-//    }
-//}

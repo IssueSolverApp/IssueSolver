@@ -33,11 +33,8 @@ class RegisterViewModel @Inject constructor(
     val registerState: StateFlow<State?> = _registerState.asStateFlow()
 
     fun register(request: RegisterRequestModel) {
-        //Loading
         viewModelScope.launch {
             registerUseCase(request).collect { resource ->
-//                _registerState.value = resource
-//                _uiState.value = uiState.value.copy(emailError = resource.message)
 
                 when (resource) {
                     is Resource.Loading -> {
@@ -51,11 +48,7 @@ class RegisterViewModel @Inject constructor(
 
                     is Resource.Success -> {
                         _registerState.emit(State.success())
-//                        _uiState.emit(State.success())
-//                        burger.data.let {
-//                            //val result = it?.let { it1 -> mapper.map(it1) }
-//                            burgers.emit(it)
-//                        }
+
                     }
 
 
@@ -107,41 +100,7 @@ class RegisterViewModel @Inject constructor(
                 )
             }
 
-//            is RegisterPageEvent.PasswordChanged -> {
-//                val result = validateNewPasswordUseCase.execute(
-//                    event.password,
-//                    _uiState.value.repeatedPassword
-//                )
-//
-//                _uiState.value = _uiState.value.copy(
-//                    password = event.password,
-//                    passwordError = result.errorMessage,
-//                    isInputValid = result.successful &&
-//                            validateRepeatedPasswordUseCase.execute(
-//                                event.password, _uiState.value.repeatedPassword
-//                            ).successful &&
-//                            validateFullNameUseCase.execute(_uiState.value.fullName).successful &&
-//                            validateEmailUseCase.execute(_uiState.value.email).successful
-//                )
-//            }
-//
-//            is RegisterPageEvent.RepeatedPasswordChanged -> {
-//                val result = validateRepeatedPasswordUseCase.execute(
-//                    _uiState.value.password,
-//                    event.repeatedPassword
-//                )
-//                _uiState.value = _uiState.value.copy(
-//                    repeatedPassword = event.repeatedPassword,
-//                    repeatedPasswordError = result.errorMessage,
-//                    isInputValid = validateNewPasswordUseCase.execute(
-//                        _uiState.value.password,
-//                        event.repeatedPassword
-//                    ).successful &&
-//                            result.successful &&
-//                            validateFullNameUseCase.execute(_uiState.value.fullName).successful &&
-//                            validateEmailUseCase.execute(_uiState.value.email).successful
-//                )
-//            }
+
 
             is RegisterPageEvent.PasswordChanged -> {
                 val newPasswordValidation = validateNewPasswordUseCase.execute(

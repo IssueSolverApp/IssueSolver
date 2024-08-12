@@ -80,18 +80,13 @@ fun MyAccountScreen(
         }
 
         StatusR.ERROR -> {
-//            Toast.makeText(LocalView.current.context, "Kodun ishlemir X(", Toast.LENGTH_SHORT).show()
-
             showLoading=false
 
 
         }
         StatusR.SUCCESS -> {
-//            Toast.makeText(LocalView.current.context, "Full Name Changed <3", Toast.LENGTH_SHORT).show()
             navController.navigateUp()
             viewModel.clearState()
-
-//            viewModel.clearLoginState()
         }
         else-> {
 
@@ -166,7 +161,6 @@ fun MyAccountScreen(
                         fontSize = 15.sp,
                         color = if (
                             false
-//                            isFullNameError
                             ) Color.Red else Color.Black,
                         )
                     TextField(
@@ -180,7 +174,6 @@ fun MyAccountScreen(
                                 ("Ad, soyad"),
                                 color = if (
                                     false
-//                                    isFullNameError
                                     ) Color.Red else Color.Gray
                             )
                         },
@@ -191,7 +184,6 @@ fun MyAccountScreen(
                             .then(
                                 if (
                                     false
-//                                    isFullNameError
                                 ) Modifier.border(
                                     1.dp,
                                     Color.Red,
@@ -222,7 +214,6 @@ fun MyAccountScreen(
 
                     ErrorText(
                         errorMessage = uiState.fullNameError,
-//                        isVisible = isPasswordError
                     )
                 }
                 Column(Modifier.padding(top = 20.dp)) {
@@ -232,7 +223,6 @@ fun MyAccountScreen(
                         fontSize = 15.sp,
                         color = if (
                             false
-//                            isEmailError
                             ) Color.Red else Color.Black,
                     )
                     TextField(
@@ -259,10 +249,7 @@ fun MyAccountScreen(
                         colors = TextFieldDefaults.colors(
                             disabledTextColor = Color.Gray,
                             disabledContainerColor = Color(0xFFe0e4e8),
-//                            focusedIndicatorColor=Color.Red,
-//                            unfocusedIndicatorColor=Color.Red
                             disabledIndicatorColor=Color.Transparent
-//                            errorIndicatorColor
 
                             ),
                         enabled = false,

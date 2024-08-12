@@ -30,8 +30,6 @@ interface MyRequestService {
 
     @POST("api/v1/likes/post")
     suspend fun like(@Query("requestId") requestId: Int?): Response<LikeResponse>
-    //api/v1/likes/post
-    //requestId
 
     @DELETE("api/v1/likes")
     suspend fun removeLike(@Query("requestId") requestId: Int?): Response<LikeResponse>

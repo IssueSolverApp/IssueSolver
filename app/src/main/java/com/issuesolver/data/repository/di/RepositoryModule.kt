@@ -146,12 +146,6 @@ abstract class RepositoryModule {
     @Singleton
     abstract fun provideSendCommentRepository(repository: SendCommentRepositoryImpl): SendCommentRepositoryInterface
 
-
-//    @Binds
-//    @Singleton
-//    abstract fun provideGetCommentRepository(repository: GetCommentRepositoryImpl): GetCommentRepositoryInterface
-
-
     @Binds
     @Singleton
     abstract fun provideDeleteRequestByIdRepository(repository: DeleteRequestByIdImpl): DeleteRequestByIdInterface

@@ -36,7 +36,6 @@ class VerificationCodePageViewModel @Inject constructor(
     fun otpTrust(request: RequestOtp) {
         viewModelScope.launch {
             otpTrustUseCase(request).collect {
-//                _otpTrustState.value = it
                 when (it) {
                     is Resource.Loading -> {
                         _otpTrustState.emit(State.loading())
@@ -83,8 +82,5 @@ class VerificationCodePageViewModel @Inject constructor(
         _otpTrustState.value = null
     }
 
-//    fun clearResendOtpTrustState() {
-//        _resendOtpState.value = null
-//    }
 
 }

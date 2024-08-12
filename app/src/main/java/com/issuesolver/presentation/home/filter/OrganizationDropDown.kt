@@ -98,7 +98,6 @@ fun OrganizationDropDown(category: String, placeHolder: String, viewModel: Filte
                     onClick = {
                         selectedText = label.name
                         expanded = false
-                        //viewModel.selectOrganization(label.name)
                         selectedCategory(label.name)
                     }
                 )

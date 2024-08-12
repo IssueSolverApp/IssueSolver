@@ -117,11 +117,6 @@ fun HomeScreen(
             Column(
                 Modifier.padding(bottom = 16.dp)
             ) {
-
-//                SnackbarHost(hostState = snackbarHostState) { snackbarData ->
-//                    SnackBar(snackbarData = "Sorğunuz uğurla paylaşıldı")
-//                }
-
                 Row(
                     modifier = Modifier
                         .fillMaxWidth(),
@@ -186,14 +181,13 @@ fun HomeScreen(
 
                 requestResults.apply {
                     when {
-                        loadState.refresh is LoadState.Loading -> { // Display shimmer during loading
+                        loadState.refresh is LoadState.Loading -> {
                             items(5) {
                                 PlaceholderShimmerCard()
                             }
                         }
                         loadState.append is LoadState.Loading -> {
                             item {
-                                // Optional: Add a shimmer or loading indicator for more data being loaded
                             }
                         }
                         loadState.refresh is LoadState.Error -> {

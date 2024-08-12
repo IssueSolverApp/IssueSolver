@@ -36,7 +36,6 @@ class PasswordChangePageViewModel @Inject constructor(
     fun resetPassword(request: ResetPasswordModel) {
         viewModelScope.launch {
             resetPasswordUseCase(token!!, request).collect{
-                //_resetPassword.value = it
                 when(it){
                     is Resource.Success -> {
                         _resetPassword.emit(State.error(it.message))

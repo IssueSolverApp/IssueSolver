@@ -91,11 +91,6 @@ fun CustomDragHandle() {
             .fillMaxWidth()
             .height(4.dp)
             .background(Color.White)
-        ,
-
-
-
-
     )
 }
 
@@ -127,9 +122,9 @@ fun BottomSheetHome(
     LaunchedEffect(sendReq) {
         if (sendReq && id != null && textFieldValue.isNotBlank()) {
             viewModel.sendComment(id, CommentRequest(textFieldValue))
-            sendReq = false // Сброс значения после отправки комментария
-            textFieldValue = "" // Очистка текстового поля после отправки
-            viewModel.loadComments(id) // Перезагрузка комментариев
+            sendReq = false
+            textFieldValue = ""
+            viewModel.loadComments(id)
         }
     }
     val commentState by viewModel.commentState.collectAsState()
@@ -305,7 +300,7 @@ fun BottomSheetHome(
                             .padding(start = 10.dp)
                             .clickable {
                                 if (id != null && textFieldValue.isNotBlank()) {
-                                    sendReq = true // Триггер отправки комментария
+                                    sendReq = true
                                 }
                             }
                     )

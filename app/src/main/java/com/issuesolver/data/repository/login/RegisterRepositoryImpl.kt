@@ -16,21 +16,9 @@ class RegisterRepositoryImpl @Inject constructor(private val loginService: Login
 
         override suspend fun createUser(registerRequestModel: RegisterRequestModel): Response<RegisterResponseModel>{
 
-//            val response = loginService.register(registerRequestModel)
-//
-//            if (response.isSuccessful){
-//                val responseBody = response.body()?.toString()?: ""
-//                Resource.Success(responseBody)
-//            }
             return loginService.register(registerRequestModel)
 
         }
-            //emit(loginService.register(registerRequestModel))
-
-
-//        {
-//            return loginService.register(registerRequestModel)
-//        }
     }
 
 

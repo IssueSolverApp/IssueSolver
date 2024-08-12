@@ -55,7 +55,7 @@ fun MyRequestScreen(navController: NavController,
          viewModel.getMovies()
     }
 
-        viewModel.loadComments(202) // Замените requestId на нужное значение
+        viewModel.loadComments(202)
 
     val moviePagingItems: LazyPagingItems<FilterData> = viewModel.moviesState.collectAsLazyPagingItems()
     val pullToRefreshState = rememberPullToRefreshState()
@@ -70,7 +70,7 @@ fun MyRequestScreen(navController: NavController,
     LaunchedEffect(pullToRefreshState.isRefreshing) {
         if (pullToRefreshState.isRefreshing) {
             Log.d("MyRequestScreen", "Data refreshing")
-            viewModel.getMovies() // Trigger data refresh
+            viewModel.getMovies()
         }
     }
 
@@ -128,7 +128,6 @@ fun MyRequestScreen(navController: NavController,
                                 }
                             )
 
-                            // Load comments for each request
                             LaunchedEffect(key1 = filterData.requestId) {
                                 viewModel.loadComments(filterData.requestId)
                             }
@@ -136,7 +135,6 @@ fun MyRequestScreen(navController: NavController,
                     }
                 }
 
-                // Handling empty list state
                 if (moviePagingItems.itemCount == 0 &&
                     moviePagingItems.loadState.refresh is LoadState.NotLoading &&
                     moviePagingItems.loadState.append.endOfPaginationReached

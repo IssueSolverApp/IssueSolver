@@ -70,7 +70,6 @@ class RequestScreenViewModel @Inject constructor(
 //--------------------------------------------------------------------------------------------------
 
     init {
-        // Initialize your fields here
         combine(
             _location,
             _selectedOrganization,
@@ -161,7 +160,6 @@ class RequestScreenViewModel @Inject constructor(
 
 
     fun sendRequest() {
-        //Loading
         viewModelScope.launch {
             newRequestUseCase(
                 selectedCategory.value, NewRequest(
@@ -179,7 +177,6 @@ class RequestScreenViewModel @Inject constructor(
 
                     is Resource.Error -> {
                         _newRequestState.emit(State.error(resource.message))
-                        //_uiState.value = uiState.value.copy(emailError = resource.message)
                     }
 
                     is Resource.Success -> {
@@ -197,31 +194,4 @@ class RequestScreenViewModel @Inject constructor(
         _location.value = ""
         _description.value = ""
     }
-
-
-//    var text1 by mutableStateOf("")
-//    var text2 by mutableStateOf("")
-//
-//
-//    val isButtonEnabled: Boolean
-//        get() = text1.length >= 5 && text2.length >= 10
-//
-//    fun onLocationTextChanged(textFieldIndex: Int, newText: String) {
-//        if (newText.length <= 150) {
-//            when (textFieldIndex) {
-//                1 -> text1 = newText
-//            }
-//        }
-//    }
-//
-//
-//    fun onDescriptionTextChanged(textFieldIndex: Int, newText: String) {
-//        if (newText.length <= 500) {
-//            when (textFieldIndex) {
-//                1 -> text1 = newText
-//            }
-//        }
-//    }
-
-
 }

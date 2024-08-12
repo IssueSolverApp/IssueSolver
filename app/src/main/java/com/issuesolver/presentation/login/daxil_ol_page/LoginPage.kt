@@ -82,14 +82,8 @@ fun LoginPage(
             navController.navigate(Graph.MAIN_SCREEN_PAGE){
                 popUpTo(AuthScreen.Login.route) { inclusive = true }
             }
-//            Toast.makeText(LocalView.current.context, "Login Success", Toast.LENGTH_SHORT).show()
-//            viewModel.clearLoginState()
         }
         StatusSignIn.CONFLICT -> {
-//            navController.navigate(Graph.ROOT){
-//                popUpTo(AuthScreen.Otp.route) { inclusive = true }
-//            }
-            //navController.navigate(AuthScreen.Otp.route)
             navController.navigate(AuthScreen.RegisterOtp.route + "/${uiState.email}")
 
 
@@ -204,7 +198,6 @@ fun LoginPage(
                     )
                     ErrorText(
                         errorMessage = uiState.emailError,
-//                        isVisible = isEmailError
                     )
                     Spacer(modifier = Modifier.height(20.dp))
                     Text(
@@ -277,7 +270,6 @@ fun LoginPage(
                     )
                     ErrorText(
                         errorMessage = uiState.passwordError,
-//                        isVisible = isPasswordError
                     )
                     Text(
                         modifier = Modifier

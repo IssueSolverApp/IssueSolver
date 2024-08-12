@@ -6,16 +6,3 @@ data class GetCategoryResponseModel(
     val message: String,
     val success: Boolean
 )
-
-
-
-//{
-//    "data": [
-//    {
-//        "categoryId": 0,
-//        "categoryName": "string"
-//    }
-//    ],
-//    "message": "string",
-//    "success": true
-//}

@@ -35,7 +35,6 @@ class BarShape(
             moveTo(x = 0F, y = (size.height))
             if (cutoutLeftX > 0) {
                 val realLeftCornerDiameter = if (cutoutLeftX >= cornerRadiusPx) {
-                    // there is a space between rounded corner and cutout
                     cornerDiameter
                 } else {
                     cutoutLeftX * 2

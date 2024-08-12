@@ -145,7 +145,6 @@ fun RegisterOtpCodePage(
                 if (showDialog) {
                     AlertDialogExample(
                         message = it,
-//                        onDismiss = { showDialog = false },
                         onConfirmation = { showDialog = false }
                     )
                 }
@@ -241,7 +240,6 @@ fun RegisterOtpCodePage(
                                 modifier = Modifier
                                     .focusRequester(focusRequester),
                                 otpText = otpValue.text,
-//                                shouldCursorBlink = false,
                                 isOtpValueError = isOtpValueError,
                                 onOtpModified = { value, otpFilled ->
                                     otpValue =
@@ -257,7 +255,6 @@ fun RegisterOtpCodePage(
                     }
                     ErrorText(
                         errorMessage = uiState.otpValueError,
-//                        isVisible = isEmailError
                     )
                 }
             }

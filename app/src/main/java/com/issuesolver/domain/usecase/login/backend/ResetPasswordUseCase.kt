@@ -34,8 +34,7 @@ class ResetPasswordUseCase @Inject constructor(private val resetPassword: ResetP
     }
 
     private fun parseErrorResponse(json: String): RegisterResponseModel? {
-        // Use your preferred JSON library here (e.g., Gson)
-        // Assuming you're using Gson:
+
         return try {
             val gson = Gson()
             gson.fromJson(json, RegisterResponseModel::class.java)

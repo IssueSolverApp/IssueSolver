@@ -15,8 +15,6 @@ import androidx.compose.ui.platform.LocalDensity
 fun isKeyboardOpen(): Boolean {
     val view = LocalView.current
     val isKeyboardOpen = remember { mutableStateOf(false) }
-
-    // Check keyboard state on each recomposition
     SideEffect {
         val handler = Handler(Looper.getMainLooper())
         handler.post {
@@ -24,6 +22,5 @@ fun isKeyboardOpen(): Boolean {
             isKeyboardOpen.value = insets?.isVisible(WindowInsetsCompat.Type.ime()) ?: false
         }
     }
-
     return isKeyboardOpen.value
 }

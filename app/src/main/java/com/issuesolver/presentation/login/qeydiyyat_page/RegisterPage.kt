@@ -325,7 +325,6 @@ fun RegisterPage(navController: NavController, viewModel: RegisterViewModel = hi
                         )
                         ErrorText(
                             errorMessage = uiState.passwordError,
-//                        isVisible = isPasswordError
                         )
                     }
                     Column(Modifier.padding(top = 20.dp)) {
@@ -402,7 +401,6 @@ fun RegisterPage(navController: NavController, viewModel: RegisterViewModel = hi
                         )
                         ErrorText(
                             errorMessage = uiState.repeatedPasswordError,
-//                        isVisible = isPasswordError
                         )
                     }
                     Row(
@@ -454,7 +452,6 @@ fun RegisterPage(navController: NavController, viewModel: RegisterViewModel = hi
                                     confirmPassword = uiState.repeatedPassword
                                 )
                             )
-//                            navController.navigate(AuthScreen.RegisterOtp.route + "/${uiState.email}")
                         }
                     },
                     enabled = uiState.isInputValid,

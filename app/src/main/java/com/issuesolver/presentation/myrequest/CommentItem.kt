@@ -83,13 +83,6 @@ fun CommentItem(commentText: String?,
 
 
                 }
-//                Image(
-//                    painter = painterResource(R.drawable.government3_icon),
-//                    contentDescription = "government3_icon",
-//                    modifier = Modifier
-//                        .size(32.dp)
-//                )
-
 
                 fullName?.let {
                     Text(
@@ -127,8 +120,3 @@ fun CommentItem(commentText: String?,
 
     }
 }
-//@Preview(showBackground = true)
-//@Composable
-//fun PreviewCommentItem() {
-//    CommentItem()
-//}

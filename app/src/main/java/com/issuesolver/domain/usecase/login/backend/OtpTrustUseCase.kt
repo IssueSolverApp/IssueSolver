@@ -24,8 +24,6 @@ class OtpTrustUseCase @Inject constructor(
             val response = otpTrustRepository.otpTrust(otpModel)
             if (response.isSuccessful) {
                 val token = response.body()?.data
-//                saveToken(token.toString())
-//                emit(Resource.Success(response.body()?.message))
                 token?.let {
                     saveToken(it.toString())
                     emit(Resource.Success(response.body()?.message))
@@ -59,8 +57,6 @@ class OtpTrustUseCase @Inject constructor(
     }
 
     private fun parseErrorResponse(json: String): RegisterResponseModel? {
-        // Use your preferred JSON library here (e.g., Gson)
-        // Assuming you're using Gson:
         return try {
             val gson = Gson()
             gson.fromJson(json, RegisterResponseModel::class.java)

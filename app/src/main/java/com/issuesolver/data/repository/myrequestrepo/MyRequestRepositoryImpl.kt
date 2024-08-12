@@ -10,15 +10,6 @@ import com.issuesolver.domain.entity.networkModel.home.FilterResponseModel
 import retrofit2.Response
 import javax.inject.Inject
 
-//interface MyRequestRepositoryInterface{
-//    suspend fun myRequest(page:Int, size:Int): Response<FilterResponseModel>
-//}
-//
-//class MyRequestRepositoryImpl @Inject constructor(private val myRequestService: MyRequestService):MyRequestRepositoryInterface {
-//    override suspend fun myRequest(page: Int, size: Int): Response<FilterResponseModel> {
-//        return myRequestService.myRequest(page, size)
-//    }
-//}
 
 interface MyRequestRepositoryInterface {
     fun getMyRequests(): Pager<Int, FilterData>
