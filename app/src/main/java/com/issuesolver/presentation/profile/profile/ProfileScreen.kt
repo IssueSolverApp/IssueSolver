@@ -117,7 +117,7 @@ fun ProfileScreen(
                             )
                             Column {
                                 Text(
-                                    text=uiState.fullName ?: "No Name Available",
+                                    text=uiState.fullName ?: "",
                                     fontWeight = FontWeight.W600,
                                     fontSize = 20.sp,
                                     color = Color(0xFF2981FF),
@@ -125,7 +125,7 @@ fun ProfileScreen(
                                     modifier = Modifier.padding()
                                 )
                                 Text(
-                                    text=uiState.email ?: "No Email Available",
+                                    text=uiState.email ?: "",
                                     fontSize = 15.sp,
                                     color = Color(0xFF9D9D9D),
                                     textAlign = TextAlign.Start,
