@@ -1,6 +1,8 @@
 package com.issuesolver.presentation.bottombar
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material3.Scaffold
@@ -30,7 +32,9 @@ fun MainScreen(
             .statusBarsPadding(),
         bottomBar = {
             AnimatedNavigationBar(navController = homeNavController)
-        }
+        },
+        contentWindowInsets = WindowInsets(0, 0, 0, 0)
+
     ) {padding->
         MainNavGraph(navController,homeNavController, paddingValues = padding)
     }

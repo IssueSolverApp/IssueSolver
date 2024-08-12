@@ -251,7 +251,7 @@ fun RegisterPage(navController: NavController, viewModel: RegisterViewModel = hi
                         )
                         if (errorEmail != "null") {
                             ErrorText(
-                                errorMessage = errorEmail,
+                                errorMessage = uiState.emailError,
                             )
                         }
                     }

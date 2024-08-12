@@ -6,12 +6,14 @@ import android.widget.Toast
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -114,16 +116,19 @@ fun RequestScreen(
 
     Box(
         modifier = Modifier
-            .fillMaxSize()
-            .imePadding()
+            .consumeWindowInsets(paddingValues)
             .padding(paddingValues)
+            .systemBarsPadding()
+            .imePadding()
             .padding(top = 7.dp, start = 20.dp, end = 20.dp, bottom = 16.dp)
+            .fillMaxSize()
+
     ) {
 
         Column(
             Modifier
-                .imePadding()
                 .verticalScroll(rememberScrollState())
+
         ) {
 
             SnackbarHost(snackbarHostState) { data ->
@@ -156,9 +161,12 @@ fun RequestScreen(
             )
 
             Description(viewModel)
+        }
+
 
             Column(
                 modifier = Modifier
+                    .align(Alignment.BottomCenter)
             ) {
                 Button(
                     onClick = {
@@ -213,7 +221,7 @@ fun RequestScreen(
 
 
         //}
-    }
+
 }
 
 //
