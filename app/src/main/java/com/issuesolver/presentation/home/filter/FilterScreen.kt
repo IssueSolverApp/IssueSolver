@@ -197,7 +197,7 @@ fun FilterScreen(
 
 //                    testViewModel.filter(status, categoryName, organizationName, days )
 
-                            navController.navigate(BottomBarScreen.Home.route)
+                            navController.navigateUp()
                             //+ "/${status}"+ "/${categoryName}"+ "/${organizationName}"+ "/${days}"
 //                    navController.navigate(
 //                        "${BottomBarScreen.Home.route}/$categoryName/$organizationName/$status/$days"

@@ -41,6 +41,7 @@ import androidx.navigation.NavController
 import com.issuesolver.common.SnackBar
 import com.issuesolver.common.StatusR
 import com.issuesolver.presentation.common.LoadingOverlay
+import com.issuesolver.presentation.navigation.Graph
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -92,7 +93,7 @@ fun RequestScreen(
                 scrollState.animateScrollTo(0)  // Make sure this executes correctly
                 viewModel.resetFields()
                 snackbarHostState.showSnackbar("Sorğunuz uğurla paylaşıldı")
-                navController.navigate(BottomBarScreen.Home.route)
+                navController.navigate(Graph.MAIN_SCREEN_PAGE)
             }
 
 

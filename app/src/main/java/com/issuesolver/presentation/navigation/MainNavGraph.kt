@@ -42,10 +42,8 @@ fun MainNavGraph(navController: NavHostController,homeNavController: NavHostCont
         route = Graph.MAIN_SCREEN_PAGE,
         startDestination = BottomBarScreen.Home.route
     ) {
-        composable(
-            route=BottomBarScreen.Home.route
-        ) {
-            HomeScreen(navController = navController, paddingValues = paddingValues)
+        composable(route=BottomBarScreen.Home.route) {
+            HomeScreen(navController = navController,paddingValues)
         }
         composable(route = BottomBarScreen.MyRequest.route) {
             MyRequestScreen(navController = navController, paddingValues)
