@@ -22,6 +22,7 @@ import com.issuesolver.domain.usecase.myrequestusecase.SendCommentUceCase
 import com.issuesolver.presentation.login.qeydiyyat_page.RegisterPageState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.android.parcel.Parcelize
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -40,7 +41,7 @@ class TestViewModel @Inject constructor(private val filterUseCase: TestUseCase,
                                         private val getRequestByIdUseCase: GetRequestByIdUseCase,
                                         private val getCommentUseCase: GetCommentsUseCase,
                                         private val sendCommentUseCase: SendCommentUceCase,
-    ) : ViewModel() {
+) : ViewModel() {
     private val _filterParams = MutableStateFlow(FilterParams())
     val filterParams: StateFlow<FilterParams> = _filterParams
 
@@ -48,7 +49,7 @@ class TestViewModel @Inject constructor(private val filterUseCase: TestUseCase,
     private val _filterResults = MutableStateFlow<PagingData<FilterData>>(PagingData.empty())
     val filterResults: StateFlow<PagingData<FilterData>> = _filterResults
 
-        //private val uiState = MutableLiveData<YourUiState>()
+    //private val uiState = MutableLiveData<YourUiState>()
 
     fun filter(status: String, categoryName: String, organizationName: String, days: String) {
         viewModelScope.launch {
@@ -68,7 +69,6 @@ class TestViewModel @Inject constructor(private val filterUseCase: TestUseCase,
     fun setFilterParams(params: FilterParams) {
         _filterParams.value = params
     }
-
 
 
     private val _uiState = MutableStateFlow(Params())
