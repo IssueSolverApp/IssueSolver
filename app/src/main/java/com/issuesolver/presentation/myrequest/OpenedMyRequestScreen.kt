@@ -117,7 +117,9 @@ fun OpenedMyRequestScreen(navController:NavController,  id: String,   viewModel:
                 confirm = "Bəli",
                 dismiss = "Xeyr",
                 onConfirmation = {
-                    id.toInt()?.let { viewModel.deleteRequestById(it) }
+                    id.toInt()?.let { viewModel.deleteRequestById(it)
+                        navController.popBackStack()
+                    }
                 },
                 onDismiss = { showDialog = false }
             )
@@ -429,6 +431,7 @@ fun OpenedMyRequestScreen(navController:NavController,  id: String,   viewModel:
                                     Row {
                                         IconButton(onClick = {
                                             showDialog = true
+
                                         }) {
                                             Icon(
                                                 painter = painterResource(id = R.drawable.vector),

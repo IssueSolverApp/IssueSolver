@@ -12,8 +12,6 @@ import com.issuesolver.domain.entity.networkModel.home.FilterData
 import com.issuesolver.domain.entity.networkModel.myrequestmodel.CommentData
 import com.issuesolver.domain.entity.networkModel.myrequestmodel.CommentRequest
 import com.issuesolver.domain.entity.networkModel.myrequestmodel.CommentResponse
-import com.issuesolver.domain.entity.networkModel.myrequestmodel.RequestByIdResponseModel
-import com.issuesolver.domain.entity.networkModel.organization.OrganizationData
 import com.issuesolver.domain.usecase.myrequestusecase.DeleteRequestByIdUseCase
 import com.issuesolver.domain.usecase.myrequestusecase.GetCommentsUseCase
 import com.issuesolver.domain.usecase.myrequestusecase.GetRequestByIdUseCase
@@ -29,7 +27,6 @@ import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -70,7 +67,7 @@ class MyRequestViewModel @Inject constructor(
     val isLiked: StateFlow<State> = _isLiked
 
 
-     private var _liked: MutableSharedFlow<Boolean> = MutableSharedFlow()
+    private var _liked: MutableSharedFlow<Boolean> = MutableSharedFlow()
     val liked: SharedFlow<Boolean> = _liked
 
 

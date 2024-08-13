@@ -9,7 +9,7 @@ class MyRequestPagingSource(private val myRequestService: MyRequestService): Pag
     override fun getRefreshKey(state: PagingState<Int, FilterData>): Int? {
         return state.anchorPosition?.let { anchorPosition ->
             val anchorPage = state.closestPageToPosition(anchorPosition)
-            anchorPage?.prevKey?.plus(1) ?: anchorPage?.nextKey?.minus(1)
+            anchorPage?.prevKey?.plus(0) ?: anchorPage?.nextKey?.minus(0)
         }
     }
 
@@ -22,7 +22,7 @@ class MyRequestPagingSource(private val myRequestService: MyRequestService): Pag
                 LoadResult.Page(
                     data = data,
                     prevKey = null,
-                    nextKey = if (data.isEmpty()) null else page + 1
+                    nextKey = null //if (data.isEmpty()) null else page + 1
                 )
             } else {
                 LoadResult.Error(Exception("Error: ${response.code()}"))

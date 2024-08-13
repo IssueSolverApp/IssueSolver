@@ -4,15 +4,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import androidx.paging.filter
 import com.issuesolver.common.Resource
 import com.issuesolver.common.State
 import com.issuesolver.domain.entity.networkModel.category.CategoryData
 import com.issuesolver.domain.entity.networkModel.home.FilterData
-import com.issuesolver.domain.entity.networkModel.home.FilterResponseModel
 import com.issuesolver.domain.entity.networkModel.organization.OrganizationData
 import com.issuesolver.domain.usecase.home.backend.GetFilteredResultsUseCase
-import com.issuesolver.domain.usecase.myrequestusecase.DeleteRequestByIdUseCase
 import com.issuesolver.domain.usecase.myrequestusecase.GetRequestByIdUseCase
 import com.issuesolver.domain.usecase.myrequestusecase.LikeUseCase
 import com.issuesolver.domain.usecase.myrequestusecase.RemoveLikeUseCase
@@ -80,30 +77,51 @@ class FilterViewModel @Inject constructor(
     val organization: MutableStateFlow<List<OrganizationData>?> = MutableStateFlow(null)
 
 
+    private var cachedOrganization: List<OrganizationData>? = null
     fun getOrganization() {
+
+        if (cachedOrganization != null) {
+            _organizationState.value = State.success()
+            organization.value = cachedOrganization
+            return
+        }
+
         viewModelScope.launch {
             getOrganizationUseCase.invoke().collect { resource ->
                 when (resource) {
                     is Resource.Loading -> _organizationState.emit(State.loading())
                     is Resource.Error -> _organizationState.emit(State.error(resource.message))
                     is Resource.Success -> {
+                        cachedOrganization = resource.data?.data // Кешируем данные
                         _organizationState.emit(State.success())
-                        organization.value = resource.data?.data
+                        organization.value = cachedOrganization
                     }
                 }
             }
         }
     }
 
+
+    private var cachedCategory: List<CategoryData>? = null
+
+
     fun getCategory() {
+
+        if (cachedCategory != null) {
+            _categoryState.value = State.success()
+            category.value = cachedCategory
+            return
+        }
+
         viewModelScope.launch {
             getCategoryUseCase.invoke().collect { resource ->
                 when (resource) {
                     is Resource.Loading -> _categoryState.emit(State.loading())
                     is Resource.Error -> _categoryState.emit(State.error(resource.message))
                     is Resource.Success -> {
+                        cachedCategory = resource.data?.data
                         _categoryState.emit(State.success())
-                        category.value = resource.data?.data
+                        category.value = cachedCategory
                     }
                 }
             }

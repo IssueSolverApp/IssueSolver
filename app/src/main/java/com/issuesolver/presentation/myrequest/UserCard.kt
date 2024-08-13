@@ -98,7 +98,7 @@ fun UserCard(
 
     val likeStates by viewModel.likeStates.collectAsState()
     var favoriteState = likeStates[requestId] ?: likeSuccess
-    var liked by remember { mutableStateOf(likeSuccess) }
+    var liked by rememberSaveable { mutableStateOf(likeSuccess) }
     val isLike by viewModel.isLiked.collectAsState()
 
 
