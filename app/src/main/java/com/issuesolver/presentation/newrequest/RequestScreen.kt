@@ -3,6 +3,7 @@ package com.issuesolver.presentation.newrequest
 import BottomBarScreen
 import android.annotation.SuppressLint
 import android.widget.Toast
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -118,6 +119,7 @@ fun RequestScreen(
         Column(
             Modifier
                 .verticalScroll(rememberScrollState())
+                .padding(bottom=150.dp)
 
         ) {
 
@@ -157,6 +159,10 @@ fun RequestScreen(
             Column(
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
+                    .background(color = Color(0xFFf0f4f9))
+                    .padding(top=2.dp),
+
+
             ) {
                 Button(
                     onClick = {
