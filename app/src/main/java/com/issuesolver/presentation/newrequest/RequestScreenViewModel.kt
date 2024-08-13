@@ -1,8 +1,5 @@
 package com.issuesolver.presentation.newrequest
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.issuesolver.common.Resource
@@ -106,8 +103,16 @@ class RequestScreenViewModel @Inject constructor(
 
     //--------------------------------------------------------------------------------------------------
 
+    private var cachedOrganization: List<OrganizationData>? = null
 
     fun getOrganization() {
+
+        if (cachedOrganization != null) {
+            _organizationState.value = State.success()
+            organization.value = cachedOrganization
+            return
+        }
+
         viewModelScope.launch {
             getOrganizationUseCase.invoke().collect { resource ->
                 when (resource) {
@@ -120,8 +125,9 @@ class RequestScreenViewModel @Inject constructor(
                     }
 
                     is Resource.Success -> {
+                        cachedOrganization = resource.data?.data // Кешируем данные
                         _organizationState.emit(State.success())
-                        organization.value = resource.data?.data
+                        organization.value = cachedOrganization
 
                     }
 
@@ -133,7 +139,16 @@ class RequestScreenViewModel @Inject constructor(
     }
 
 
+    private var cachedCategory: List<CategoryData>? = null
+
     fun getCategory() {
+
+        if (cachedCategory != null) {
+            _categoryState.value = State.success()
+            category.value = cachedCategory
+            return
+        }
+
         viewModelScope.launch {
             getCategoryUseCase.invoke().collect { resource ->
                 when (resource) {
@@ -146,11 +161,11 @@ class RequestScreenViewModel @Inject constructor(
                     }
 
                     is Resource.Success -> {
+                        cachedCategory = resource.data?.data
                         _categoryState.emit(State.success())
-                        category.value = resource.data?.data
+                        category.value = cachedCategory
 
                     }
-
 
                 }
 

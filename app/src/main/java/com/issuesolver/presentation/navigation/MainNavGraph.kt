@@ -6,6 +6,7 @@ import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavBackStackEntry
@@ -26,6 +27,7 @@ import com.issuesolver.presentation.newrequest.RequestScreen
 import com.issuesolver.presentation.home.home.HomeScreen
 import com.issuesolver.presentation.myrequest.MyRequestScreen
 import com.issuesolver.presentation.myrequest.MyRequestScreen
+import com.issuesolver.presentation.myrequest.MyRequestViewModel
 import com.issuesolver.presentation.myrequest.OpenedMyRequestScreen
 import com.issuesolver.presentation.profile.enter_password.DeleteAccountScreen
 import com.issuesolver.presentation.profile.my_account.MyAccountScreen
@@ -34,7 +36,7 @@ import com.issuesolver.presentation.profile.profile.ProfileScreen
 
 
 @Composable
-fun MainNavGraph(navController: NavHostController,homeNavController: NavHostController, paddingValues: PaddingValues,
+fun MainNavGraph(navController: NavHostController,homeNavController: NavHostController, paddingValues: PaddingValues
 
 ) {
     NavHost(
