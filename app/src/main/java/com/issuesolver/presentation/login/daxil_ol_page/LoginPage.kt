@@ -20,6 +20,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -63,6 +65,11 @@ fun LoginPage(
     val loginState by viewModel.signInState.collectAsState()
 
     var showLoading by remember { mutableStateOf(false) }
+
+
+    val focusManager = LocalFocusManager.current
+    val keyboardController = LocalSoftwareKeyboardController.current
+
 
     when(loginState?.status){
 
@@ -306,6 +313,9 @@ fun LoginPage(
                                 password = uiState.password
                             )
                         )
+
+                        focusManager.clearFocus()
+                        keyboardController?.hide()
                     },
                     enabled = uiState.isInputValid,
                     modifier = Modifier
