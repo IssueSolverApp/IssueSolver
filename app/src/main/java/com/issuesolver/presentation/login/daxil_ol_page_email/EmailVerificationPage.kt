@@ -144,7 +144,6 @@ fun EmailVerificationPage(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(top = 10.dp)
-                            .border(1.dp, Color.White, RoundedCornerShape(12.dp))
                             .then(
                                 if (isEmailError) Modifier.border(
                                     1.dp,
