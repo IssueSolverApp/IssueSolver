@@ -108,7 +108,7 @@ fun PasswordChangePage(
                         textAlign = TextAlign.Start,
                         color = Color(0xFF9D9D9D),
                         modifier = Modifier
-                            .padding(top = 10.dp),
+                            .padding(top = 10.dp,bottom = 20.dp),
                     )
                 }
                 Divider(

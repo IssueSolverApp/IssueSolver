@@ -144,7 +144,19 @@ fun EmailVerificationPage(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(top = 10.dp)
-                            .border(1.dp, Color.White, RoundedCornerShape(12.dp)),
+                            .border(1.dp, Color.White, RoundedCornerShape(12.dp))
+                            .then(
+                                if (isEmailError) Modifier.border(
+                                    1.dp,
+                                    Color.Red,
+                                    RoundedCornerShape(12.dp)
+                                )
+                                else Modifier.border(
+                                    1.dp,
+                                    Color.White,
+                                    RoundedCornerShape(12.dp)
+                                )
+                            ),
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
                         colors = TextFieldDefaults.colors(
                             disabledTextColor = Color(0xFF2981FF),
