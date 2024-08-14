@@ -162,6 +162,7 @@ fun FilterScreen(
                                 days,
                                 status
                             )
+                            navController.popBackStack()
                         },
                         modifier = Modifier.fillMaxWidth(),
                     )
